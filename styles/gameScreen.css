@@ -1,0 +1,317 @@
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+a,
+a:focus,
+a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #00C988;
+}
+
+body,
+input,
+select,
+button {
+    font-family: "Courier New", Courier, monospace;
+    letter-spacing: 1px;
+    font-size: 13px;
+}
+
+body {
+    text-transform: uppercase;
+    overflow: auto;
+    white-space: nowrap;
+    /**background-color: #d3d3d3;**/
+    background-image:  repeating-linear-gradient(45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0), repeating-linear-gradient(45deg, #d0d0d0 25%, #d3d3d3 25%, #d3d3d3 75%, #d0d0d0 75%, #d0d0d0);
+    background-position: 0 0, 32px 32px;
+    background-size: 64px 64px;
+}
+
+button:active {
+    outline: none;
+    border: none;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.cameraXSlider {
+    width: 766px;
+}
+
+.cameraYSliderWrapper {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.cameraYSlider {
+    display: block;
+    width: 14px;
+    -webkit-appearance: none;
+    height: 410px;
+    writing-mode: bt-lr;
+    /* IE */
+    -webkit-appearance: slider-vertical;
+    /* WebKit */
+    transform: rotate(180deg);
+}
+
+.checkBoxText {
+    vertical-align: top;
+}
+
+details summary:hover {
+    cursor: pointer;
+    color: darkgrey;
+}
+
+#twitterLink {
+    color: #1DA1F2;
+}
+
+#discordLink, .textAsLink {
+    color: #5865F2
+}
+
+#twitterLink:hover,
+#discordLink:hover,
+.textAsLink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.finishedText {
+    color: lightgrey;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.flexGap12 {
+    display: flex;
+    gap: 12px;
+}
+
+.marginTop4 {
+    margin-top: 4px;
+}
+
+.marginTop8 {
+    margin-top: 8px;
+}
+
+.marginTop12 {
+    margin-top: 12px;
+}
+
+.marginTop16 {
+    margin-top: 16px;
+}
+
+.sectionHeading {
+    background: grey;
+    color: white;
+    padding: 8px;
+    border: 1px solid black;
+}
+
+#myCanvas {
+    background: black;
+    position: relative;
+}
+
+#importExportWrapper {
+    width: 200px;
+}
+
+.importExportButton {
+    display: block;
+}
+
+.iconInButtonWithText {
+    vertical-align: text-bottom;
+}
+
+#exportButton {
+    width: 100%;
+}
+
+#header {
+    border-left: none;
+    border-right: none;
+    padding: 4px 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.levelNavigationButton {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    position: relative;
+    background: #DCDCDC;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.levelNavigationButton:hover:not(.active) {
+    background-color: #bab8b8;
+    cursor: pointer;
+}
+
+
+.levelNavigationButton.activeButton {
+    border: 3px solid green;
+}
+
+.linkWithIcon {
+    vertical-align: top;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.buttonWithIconAndText {
+    padding: 11px 10px;
+}
+
+.currentLevel {
+    display: inline-block;
+    min-width: 115px;
+    padding: 11px;
+    vertical-align: top;
+    text-align: center;
+}
+
+.playerAttrSlider {
+    width: 80%;
+}
+
+.playerAttrSliderValue {
+    vertical-align: top;
+    float: right;
+}
+
+.halfWidth {
+    display: inline-block;
+    width: 49%;
+}
+
+.secondaryText {
+    text-transform: none;
+    color: darkgrey;
+    white-space: normal;
+}
+
+.input {
+    display: block;
+    width: 184px;
+}
+
+input[type=text],
+input[type=number],
+select {
+    padding: 6px;
+}
+
+.menuSection {
+    display: flex;
+    margin-bottom: 8px;
+    max-width: 792px;
+}
+
+.levelNavigation {
+    flex: 1;
+    display: inline-block;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#protipSection {
+    position: fixed;
+    width: 100%;
+    background: white;
+    margin-top: 24px;
+    padding: 8px 12px;
+    margin-left: -8px;
+    margin-right: -8px;
+    text-transform: none;
+    border-top: 1px solid black;
+}
+
+#scrollMenu {
+    padding: 8px;
+}
+
+.section {
+    border: 1px solid lightgrey;
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+}
+
+.songInput {
+    width: 156px;
+    display: inline-block;
+}
+
+.songInputInfo {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.subSection {
+    border-top: 1px solid lightgrey;
+    margin-top: 8px;
+    padding-top: 8px;
+}
+
+.sectionContent {
+    padding: 8px;
+    border: 1px solid black;
+    background: white;
+    border-top: none;
+    box-shadow: 0px 3px 0px darkgrey;
+}
+
+#sprites {
+    position: absolute;
+    top: -4000px;
+    left: -400px;
+}
+
+.spritesTitle {
+    text-align: center;
+    padding-top: 12px;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 19px;
+}
+
+.textOverflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#viewChangerWrapper {
+    padding: 0 13px 0 5px;
+    margin-left: 5px;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+}

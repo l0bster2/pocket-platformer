@@ -1,0 +1,44 @@
+.modal {
+    position: fixed;
+    top: 10%;
+    padding: 8px;
+    background-color: white;
+    z-index: 60000;
+    width: 420px;
+    min-height: 100px;
+    left: 50%;
+    margin-left: -200px;
+    max-height: 80%;
+    box-sizing: border-box;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-50px);
+    /*overflow-x: hidden;
+    overflow-y: auto;*/
+}
+
+.modal.on {
+    transition: all 0.3s ease-in-out;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible; 
+    display: block;
+    transition: 0;
+}
+
+.modal-js-overlay {
+    background: #444;
+    opacity: .8;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 1000px;
+    z-index: 20000;
+    left: 0px;
+}
+
+#modalCloseButton {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}

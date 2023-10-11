@@ -1,0 +1,78 @@
+.animationFrameCanvas {
+    background: black;
+    margin: 0 4px;
+    padding: 8px;
+}
+
+#additionalFrameButton {
+    margin: 0 4px;
+    vertical-align: top;
+}
+
+#animationText {
+    line-height: 36px;
+    vertical-align: top;
+}
+
+.canvasInSpriteSelector {
+    padding: 6px;
+    margin: 2px;
+    background: black;
+}
+
+.canvasInSpriteSelector:hover {
+    outline: 2px solid green;
+    cursor: pointer;
+}
+
+#checkboxDesc {
+    margin-left: 6px;
+}
+
+#deleteImg {
+    position: absolute;
+    right: -1px;
+    top: -4px;
+}
+
+#drawSection {
+    width: min-content;
+}
+
+.frameWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.frameWrapper:hover {
+    cursor: pointer;
+}
+
+#example-picker {
+    position: absolute;
+    top: 10px;
+    left: 32px;
+}
+
+#redrawSpriteCanvas {
+    display: block;
+    background: black;
+    margin: 8px auto;
+    border: 3px solid black;
+    border-width: 4px 4px 5px 5px;
+}
+
+#selectedColor {
+    padding: 8px;
+    background: lightblue;
+    border: 2px solid black;
+}
+
+.normalText {
+    text-transform: none;
+    white-space: normal;
+}
+
+#spriteAnimation {
+    display: inline-block;
+}
