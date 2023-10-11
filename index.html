@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pocket Platformer</title>
+    <script>
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+            // For IE and Firefox prior to version 4
+            if (e) {
+                e.returnValue = 'Are you sure you want to close? Your progress will be lost.';
+            }
+            return 'Are you sure you want to close? Your progress will be lost.';
+        };
+    </script>
+</head>
+
+<body>
+    <div id="header" class="sectionContent" style="display: none">
+        <img src="images/icons/pp.png" height="26px" />
+        <div id="viewChangerWrapper">
+            <select name="view" id="view" style="border: none" onchange="BuildMode.changeView(event)">
+                <option value="game">Game</option>
+                <option value="sounds">Sounds</option>
+            </select>
+        </div>
+    </div>
+    <div id="scrollMenu">
+        <div id="gameView">
+            <div class="section">
+                <h2 class="sectionHeading">BUILD TOOLS</h2>
+                <div id="buildMenu" class="sectionContent">
+                    <div id="tabWrapper">
+                        <button class="levelNavigationButton tabButton active"
+                            onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.tile)">
+                            <img src="images/icons/tile.svg" alt="tile" width="16" height="16">
+                        </button>
+                        <button class="levelNavigationButton tabButton"
+                            onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.object)">
+                            <img src="images/icons/objects.svg" alt="object" width="16" height="16">
+                        </button>
+                        <button class="levelNavigationButton tabButton"
+                            onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.deko)">
+                            <img src="images/icons/deko.svg" alt="deko" width="16" height="16">
+                        </button>
+                        <button class="levelNavigationButton tabButton"
+                            onclick="TabNavigation.changeTab(event, SpritePixelArrays.customType)">
+                            <img src="images/icons/plus.svg" alt="custom" width="16" height="16" style="width: 55%;">
+                        </button>
+                    </div>
+                    <div id="tabContent">
+                        <div id="tabTitleContent">
+                            <img src="images/icons/left.svg" class="tabPaginationIcon hoverableGreySvg"
+                                id="tabPaginationLeft" alt="left" width="14" height="14" style="display: none;"
+                                onclick="TabPagination.changePage(-1)">
+                            <img src="images/icons/right.svg" class="tabPaginationIcon hoverableGreySvg"
+                                id="tabPaginationRight" alt="right" width="14" height="14" style="display: none;"
+                                onclick="TabPagination.changePage(1)">
+                            <div class="spritesTitle">
+                                <span id="spritesTitle" style="margin-left: 10px">TILES</span>
+                                <span id="currentPage"></span>
+                            </div>
+                        </div>
+                        <div id="buildSpritesCanvasWrapper">
+                            <button id="createNewSpriteButton" class="levelNavigationButton"
+                                onClick="CustomSpriteHandler.initializeModal()">
+                                <img src="images/icons/plus.svg" alt="plus" width="14" height="14">
+                            </button>
+                            <canvas id="buildSpritesCanvas" width="180" height="304"
+                                onclick="TabNavigation.selectSprite(event)"></canvas>
+                        </div>
+                        <div id="drawStyle" class="subSection">
+                            <span>Draw-style:</span>
+                            <label for="pencilDrawStyle" class="radioButtonAsSvg">
+                                <input type="radio" checked="checked" id="pencilDrawStyle" name="drawStyleRadioGroup"
+                                    value="pencilDrawStyle" onclick="BuildMode.changeDrawStyle('pencil')">
+                                <img src="images/icons/pencil.svg" class="iconInButtonWithText" alt="pencilDrawStyle"
+                                    width="16" height="16"></label>
+                            <label for="rectangleDrawStyle" class="radioButtonAsSvg">
+                                <input type="radio" id="rectangleDrawStyle" name="drawStyleRadioGroup"
+                                    value="rectangleDrawStyle" onclick="BuildMode.changeDrawStyle('rectangle')">
+                                <img src="images/icons/rectangle.svg" class="iconInButtonWithText"
+                                    alt="rectangleDrawStyle" width="16" height="16"></label>
+                            </label>
+                        </div>
+                    </div>
+                    <button id="changeGameMode" class="levelNavigationButton fullWidth buttonWithIconAndText"
+                        onclick="Game.changeGameMode()">
+                        <div>
+                            <img src="images/icons/right.svg" class="iconInButtonWithText" alt="play" width="14"
+                                height="14">
+                            <span id="playPauseText">Play</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="sectionHeading">GAME SCREEN</h2>
+                <div class="sectionContent">
+                    <div class="menuSection">
+                        <div class="levelNavigation">
+                            <button class="levelNavigationButton" onClick="LevelNavigationHandler.switchToLevel(-1)">
+                                <img src="images/icons/left.svg" alt="left" width="14" height="14">
+                            </button>
+                            <span class="currentLevel" id="currentLevel">level 1</span>
+                            <button class="levelNavigationButton" onClick="LevelNavigationHandler.switchToLevel(1)">
+                                <img src="images/icons/right.svg" alt="right" width="14" height="14">
+                            </button>
+                            <button id="createNewLevelButton" class="levelNavigationButton"
+                                onClick="LevelNavigationHandler.createNewEmptyLevel()">
+                                <img src="images/icons/plus.svg" alt="plus" width="14" height="14">
+                            </button>
+                            <button id="levelHelpersButton" class="levelNavigationButton"
+                                onClick="LevelNavigationHandler.showLevelHelpersTooltip()">
+                                <img src="images/icons/drawHelpers.svg" alt="levelHelpers" width="14" height="14">
+                                <div id="levelHelpersTooltip"></div>
+                            </button>
+                        </div>
+                        <div id="levelEditSection">
+                            <button id="worldColorButton" class="levelNavigationButton"
+                                onClick="WorldColorHandler.initializeModal();">
+                                <img src="images/icons/multicolor.svg" alt="multicolor" width="16" height="16">
+                            </button>
+                            <button id="levelSizeButton" class="levelNavigationButton"
+                                onClick="LevelNavigationHandler.initializeLevelSizeSection();">
+                                <img src="images/icons/resize.svg" alt="resize" width="16" height="16">
+                            </button>
+                        </div>
+                    </div>
+                    <canvas id="myCanvas" onWheel="LevelSizeHandler.mouseWheelSizeChange(event)"></canvas>
+                    <div id="canvasObjectToolTip" class="tooltipWithSpeechBubble">
+                    </div>
+                    <div class="cameraYSliderWrapper" style="display: none" id="cameraYSliderWrapper">
+                        <img src="images/icons/camera.svg" alt="camera" width="18" height="18">
+                        <input sliderOrientation="verticalInverted" class="cameraYSlider"
+                            oninput="LevelSizeHandler.moveCamera(event)" type="range" min="1" max="100" value="0"
+                            id="cameraYSlider">
+                    </div>
+                    <div class="marginTop8" style="display: none" id="cameraXSliderWrapper">
+                        <img src="images/icons/camera.svg" alt="camera" width="18" height="18">
+                        <input class="cameraXSlider" oninput="LevelSizeHandler.moveCamera(event)" type="range" min="1"
+                            max="100" value="0" id="cameraXSlider">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="sectionHeading">DRAW</h2>
+                <div class="sectionContent" id="drawSection">
+                    <select name="spriteSelector" id="spriteSelectEl" class="fullWidth"
+                        onChange="DrawSectionHandler.changeSelectedSprite(event)" onkeydown="event.preventDefault();">
+                    </select>
+                    <div class="subSection">
+                        <div style="position: relative;">
+                            <button id="pencilButton" class="color-button levelNavigationButton buttonWithIconAndText"
+                                onClick="DrawSectionHandler.selectPencilTool()">
+                                <img id="pencilIcon" src="images/icons/pencil.svg" class="iconInButtonWithText"
+                                    alt="colorpicker" width="16" height="16">
+                            </button>
+                            <button id="eyeDropperButton" class="levelNavigationButton buttonWithIconAndText"
+                                onClick="DrawSectionHandler.selectEyeDropperTool()">
+                                <img src="images/icons/colorpicker.svg" class="iconInButtonWithText" alt="colorpicker"
+                                    width="16" height="16">
+                            </button>
+                            <button id="drawHelpers" class="color-button levelNavigationButton buttonWithIconAndText"
+                                onClick="DrawSectionHandler.showDrawHelpersToolTip()">
+                                <img src="images/icons/drawHelpers.svg" class="iconInButtonWithText" alt="drawHelpers"
+                                    width="16" height="16">
+                                <div id="transformTooltip"></div>
+                            </button>
+                            <button id="otherSpritesButton" class="levelNavigationButton buttonWithIconAndText"
+                                onClick="DrawSectionHandler.showOtherSpritesTooltip(event)">
+                                <img src="images/icons/otherSprites.svg" class="iconInButtonWithText" alt="otherSprites"
+                                    width="16" height="16">
+                                <div id="otherSpriteTooltip">
+                                </div>
+                            </button>
+                            <div id="example-picker"></div>
+                        </div>
+                        <canvas id="redrawSpriteCanvas" class="pencilCursor" width="192" height="192"></canvas>
+                    </div>
+                    <div id="spriteAnimationWrapper" class="subSection">
+                        <span id="animationText">Animation: </span>
+                        <div id="spriteAnimationEl"></div>
+                    </div>
+                    <div id="spriteDescriptionWrapper" class="subSection normalText">
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="sectionHeading">SETTINGS</h2>
+                <div class="sectionContent">
+                    <div id="importExportWrapper">
+                        <label for="gamesname">Game's name </label>
+                        <input id="gamesname" class="input" type="text" size="15" value="Example name"
+                            oninput="changeTitleOrEnding(event, 'gamesName')" />
+                        <div class="marginTop8">
+                            <label for="endingmessage">Ending message</label>
+                            <input id="endingmessage" class="input" type="text" size="15" value="Thx for playing!"
+                                oninput="changeTitleOrEnding(event, 'endingMessage')" />
+                        </div>
+                        <div class="subSection">
+                            <details>
+                                <summary>Player attributes</summary>
+                                <div class="marginTop8">
+                                    <div class="marginTop4">
+                                        <input type="checkbox" id="jumpChecked" checked>
+                                        <label for="jumpChecked" class="checkBoxText">Jump</label>
+                                    </div>
+                                    <div class="marginTop4">
+                                        <input type="checkbox" id="doubleJumpChecked" checked>
+                                        <label for="doubleJumpChecked" class="checkBoxText">Double-jump</label>
+                                    </div>
+                                    <div class="marginTop4">
+                                        <input type="checkbox" id="wallJumpChecked" checked>
+                                        <label for="wallJumpChecked" class="checkBoxText">Wall-jump</label>
+                                    </div>
+                                    <div class="marginTop8 subSection">Alternative action:</div>
+                                    <div class="marginTop8">
+                                        <input type="checkbox" id="dashChecked" checked>
+                                        <label for="dashChecked" class="checkBoxText">Dash</label>
+                                    </div>
+                                    <div class="marginTop8" style="display: none;">
+                                        <input type="checkbox" id="runChecked" checked>
+                                        <label for="runChecked" class="checkBoxText">Run</label>
+                                    </div>
+                                    <div class="playerAttributeWrapper subSection">
+                                        <label for="maxSpeed">max-speed: </label>
+                                        <input class="playerAttrSlider" type="range" min="1" max="6" value="1"
+                                            id="maxSpeed" step="0.1">
+                                        <span id="maxSpeedValue" class="playerAttrSliderValue">1</span>
+                                    </div>
+                                    <div class="playerAttributeWrapper">
+                                        <label for="groundAcceleration">acceleration: </label>
+                                        <input class="playerAttrSlider" type="range" min="0.01" max="1" value="0.6"
+                                            step="0.01" id="groundAcceleration">
+                                        <span id="groundAccelerationValue" class="playerAttrSliderValue">88</span>
+                                    </div>
+                                    <div class="playerAttributeWrapper">
+                                        <label for="air_acceleration">in-air acceleration: </label>
+                                        <input class="playerAttrSlider" type="range" min="0.01" max="1" value="0.6"
+                                            step="0.01" id="air_acceleration">
+                                        <span id="air_accelerationValue" class="playerAttrSliderValue">0.6</span>
+                                    </div>
+                                    <div class="playerAttributeWrapper">
+                                        <label for="groundFriction">slipperiness: </label>
+                                        <input class="playerAttrSlider" type="range" min="0" max="1" value="0.6"
+                                            step="0.03" id="groundFriction">
+                                        <span id="groundFrictionValue" class="playerAttrSliderValue">65</span>
+                                    </div>
+                                    <div class="playerAttributeWrapper">
+                                        <label for="air_friction">in air slipperiness: </label>
+                                        <input class="playerAttrSlider" type="range" min="0" max="1" value="0.6"
+                                            step="0.03" id="air_friction">
+                                        <span id="air_frictionValue" class="playerAttrSliderValue">0.6</span>
+                                    </div>
+                                    <div class="playerAttributeWrapper">
+                                        <label for="jumpSpeed">jump height: </label>
+                                        <input class="playerAttrSlider" type="range" min="1" max="10" value="3" step="1"
+                                            id="jumpSpeed">
+                                        <span id="jumpSpeedValue" class="playerAttrSliderValue">65</span>
+                                    </div>
+                                    <div class="playerAttributeWrapper">
+                                        <label for="maxFallSpeed">Max fall speed: </label>
+                                        <input class="playerAttrSlider" type="range" min="1" max="23" value="16"
+                                            step="1" id="maxFallSpeed">
+                                        <span id="maxFallSpeedValue" class="playerAttrSliderValue">16</span>
+                                    </div>
+                                </div>
+                            </details>
+                            <details class="marginTop12">
+                                <summary>Add music</summary>
+                                <div class="marginTop12" id="songSummary" style="display: none">
+                                    <span id="songUrl" class="finishedText songInput textOverflow"
+                                        style="width: 170px"></span>
+                                    <img src="images/icons/delete.svg" class="hovereableRedSvg" alt="info" width="16"
+                                        height="16" onClick="MusicHandler.deleteSong()">
+                                </div>
+                                <div class="marginTop12" id="addSong">
+                                    <label for="addUrl">Add URL: </label>
+                                    <div>
+                                        <input id="addUrl" class="songInput" type="text" />
+                                        <span data-microtip-size="large"
+                                            aria-label="Currently it is only possible to add external URL's as music. It has to be a direct download link to a valid audio file format (Mp3, Wav etc.)"
+                                            data-microtip-position="top-left" role="tooltip" class="songInputInfo"><img
+                                                src="images/icons/info.svg" alt="info" width="16" height="16">
+                                        </span>
+                                    </div>
+                                    <button class="levelNavigationButton marginTop8 fullWidth"
+                                        onClick="MusicHandler.addSong()">Add Song</button>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="subSection">
+                            <label class="levelNavigationButton importExportButton marginTop4">
+                                <input type="file" id="importButton" onChange="importGame(tileMapHandler)" />
+                                Import
+                                <img src="images/icons/import.svg" class="iconInButtonWithText" alt="import" width="16"
+                                    height="16">
+                            </label>
+                            <button class="levelNavigationButton importExportButton marginTop8" id="exportButton"
+                                onClick="exportGame()">
+                                Export
+                                <img src="images/icons/export.svg" class="iconInButtonWithText" alt="export" width="16"
+                                    height="16">
+                            </button>
+                        </div>
+                        <div class="subSection">
+                            <a href="https://twitter.com/the_l0bster" target="_blank">
+                                <img src="images/icons/twitter.svg" alt="twitter" width="24" height="24">
+                                <span class="linkWithIcon" id="twitterLink">Follow on Twitter</span>
+                            </a>
+                            <a href="https://discord.gg/g8QAW2VK5C" target="_blank">
+                                <img src="images/icons/discord.svg" alt="discord" width="24" height="24">
+                                <span class="linkWithIcon" id="discordLink">Join discord</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="soundView" style="display: none;">
+            <div class="section">
+                <h2 class="sectionHeading">Sounds</h2>
+                <div class="sectionContent">
+                    
+                </div>
+            </div>
+        </div>
+        <div id="protipSection" class="sectionContent">
+            <b>ProTip: </b><span id="proTip"></span>
+            <img src="images/icons/longArrowRight.svg" class="hoverableGreySvg" alt="discord" width="16" height="16"
+                style="vertical-align: bottom;" onclick="ProTipHandler.nextTip()">
+        </div>
+        <div class='modal' id='deleteLevelModal'>
+            <div class="headerWrapper">
+                <div class="tooltipHeading">Delete level</div>
+            </div>
+            <div class="marginTop8">Are you sure?</div>
+            <div class="marginTop8">
+                <button class="levelNavigationButton halfWidth" type="submit"
+                    onclick="LevelNavigationHandler.deleteLevel();">Yes</button>
+                <button class="levelNavigationButton halfWidth secondaryButton"
+                    onclick="event.preventDefault(); ModalHandler.closeModal('deleteLevelModal');">No</button>
+            </div>
+        </div>
+        <div class='modal' id='pasteLevelModal'>
+            <div class="headerWrapper">
+                <div class="tooltipHeading">Paste level</div>
+            </div>
+            <div class="marginTop8" style="text-wrap: wrap">
+                Are you sure?
+                <br /><br />
+                This will replace all objects from your current level with data from level
+                <span id="pasteLevelIndex">1</span>
+            </div>
+            <div class="marginTop12 subSection">
+                <button class="levelNavigationButton halfWidth" type="submit"
+                    onclick="LevelNavigationHandler.pasteLevel(event);">Yes</button>
+                <button class="levelNavigationButton halfWidth secondaryButton"
+                    onclick="event.preventDefault(); ModalHandler.closeModal('pasteLevelModal');">No</button>
+            </div>
+        </div>
+        <div class='modal' id='worldColorModal'>
+            <div class="headerWrapper">
+                <div class="tooltipHeading">Change world appearance</div>
+            </div>
+            <div id="worldColorModalColorSection">
+                <details class="marginTop8" style="padding: 8px 0;" open>
+                    <summary style="font-weight: bold;">General settings</summary>
+                    <div class="marginTop8">Background-color:
+                        <button class="color-input-background buttonWithIconAndText">
+                            Transparent
+                        </button>
+                    </div>
+                    <div class="marginTop8">Text-color:
+                        <button class="color-input-text buttonWithIconAndText" value="#FFFFFF"
+                            style="margin-left: 52px" />
+                    </div>
+                </details>
+                <div class="subSection">
+                    <div class="flexGap12">
+                        <div style="margin: auto 0">
+                            Level background-color:</div>
+                        <button class="color-input-level-background" value="transp" id="levelColorButton">
+                            <img alt="plus" width="80" height="40" src="images/icons/transparentIcon.svg"
+                                class="iconInButtonWithText">
+                        </button>
+                        <img id="deleteLevelColorButton" alt="delete" width="16" height="16"
+                            src="images/icons/delete.svg" class="marginTop8 hovereableRedSvg" style="margin: auto 0"
+                            onClick="WorldColorHandler.deleteLevelColor()">
+                    </div>
+                </div>
+                <div class="subSection">
+                    <h4>Effects</h4>
+                    <div id="existingEffects"></div>
+                    <button id="addEffectButton" class="levelNavigationButton tertiaryButton marginTop8"
+                        onclick="EffectsHandler.addEffectTemplate()">
+                        Add<img alt="plus" width="14" height="14" src="images/icons/plus.svg"
+                            class="iconInButtonWithText" style="padding-left: 8px">
+                    </button>
+                </div>
+            </div>
+            <div id="editingEffects"></div>
+            <div class="subSection" id="worldColorsSubmitButton">
+                <button class="levelNavigationButton fullWidth"
+                    onclick="event.preventDefault(); ModalHandler.closeModal('worldColorModal');">Ok</button>
+            </div>
+        </div>
+
+        <div class='modal' id='deleteCustomSpriteConfirmation'>
+            <div class="headerWrapper">
+                <div class="tooltipHeading">Are you sure?</div>
+            </div>
+            <div class="normalText marginTop8 flexGap12">
+                <img src="images/icons/info.svg" alt="info" width="16" height="16">
+                <span>By deleting a custom sprite, all of it's instances in the game will be deleted as well.</span>
+            </div>
+            <div class="subSection">
+                <button class="levelNavigationButton halfWidth" onclick="event.preventDefault(); 
+            CustomSpriteHandler.deleteSpriteConfirmed();">Ok</button>
+                <button class="levelNavigationButton secondaryButton halfWidth"
+                    onclick="event.preventDefault(); ModalHandler.closeModal('deleteCustomSpriteConfirmation');">Cancel</button>
+            </div>
+        </div>
+
+        <div class='modal' id='customSpriteModal'>
+            <div class="headerWrapper">
+                <div class="tooltipHeading">Create custom sprite</div>
+            </div>
+            <form onsubmit="CustomSpriteHandler.addSprite(event)">
+                <div class="marginTop12" style="text-transform: none;">
+                    Copy behaviour of:
+                    <select name="customSpriteSelector" id="customSpriteSelector" class="fullWidth" style="width: 59%;"
+                        onkeydown="event.preventDefault();">
+                    </select>
+                </div>
+                <div class="subSection">
+                    <button class="levelNavigationButton halfWidth" type="submit">Ok</button>
+                    <button class="levelNavigationButton secondaryButton halfWidth"
+                        onclick="event.preventDefault(); ModalHandler.closeModal('customSpriteModal');">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class='modal' id='levelSizeModal'>
+            <div class="headerWrapper">
+                <div class="tooltipHeading">Change level size</div>
+            </div>
+            <form class="marginTop16" onsubmit="LevelNavigationHandler.changeLevelSize(event)">
+                <div><label for="widthSize">Width <span class="secondaryText">(33-99)</span>:</label>
+                    <input id="widthSize" required min="33" max="99" step="1" class="input" type="number" size="15"
+                        value="33" />
+                </div>
+                <div class="marginTop8">
+                    <label for="heightSize">Height <span class="secondaryText">(18-99)</span>:</label>
+                    <input id="heightSize" required min="18" max="99" step="1" class="input" type="number" size="15"
+                        value="17" />
+                </div>
+                <span data-microtip-size="large" data-microtip-position="right" aria-label="Be aware: if you make your level smaller than it is, all objects 
+                outside the bounds will be deleted." data-microtip-position="top" role="tooltip"
+                    class="marginTop8 smallTooltipIcon"><img src="images/icons/info.svg" alt="info" width="24"
+                        height="24">
+                </span>
+                <div class="subSection">
+                    <button class="levelNavigationButton halfWidth" type="submit">Ok</button>
+                    <button class="levelNavigationButton secondaryButton halfWidth"
+                        onclick="event.preventDefault(); ModalHandler.closeModal('levelSizeModal');">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div id="musicPlayer" style="display: none">
+            <button id="stopMusic" class="levelNavigationButton" onClick="MusicHandler.stopMusic()">
+                <img src="images/icons/pause.svg" width="14" height="14">
+            </button>
+            <button id="startMusic" class="levelNavigationButton" onClick="MusicHandler.startMusic()"
+                style="display: none">
+                <img src="images/icons/right.svg" width="14" height="14">
+            </button>
+            <span>Music player</span>
+        </div>
+        <div id="copyNotification" style="display: none;">
+            <img src="images/icons/checkmark.svg" id="checkmark" class="iconInButtonWithText" width="14" height="14"
+                style="margin-bottom: 3px;">
+            <span>Level <span id="copiedLevelIndex">1</span> copied</span>
+        </div>
+        <canvas id="noiseCanvas" width="900px" height="520px" style="display: none"></canvas>
+        <canvas id="sprites" width="200" height="2000"></canvas>
+        <script src="Game.js"></script>
+        <script src="BuildMode.js"></script>
+        <script src="Display.js"></script>
+        <script src="Camera.js"></script>
+        <script src="AnimationHelper.js"></script>
+        <script src="handlers/CustomSpriteHandler.js"></script>
+        <script src="utils/huebee.min.js"></script>
+        <script src="utils/jszip.min.js"></script>
+        <script src="utils/FileSaver.js"></script>
+        <script src="Collision.js"></script>
+        <script src="CharacterCollision.js"></script>
+        <script src="handlers/WorldDataHandler.js"></script>
+        <script src="handlers/TileMapHandler.js"></script>
+        <script src="Controller.js"></script>
+        <script src="Player.js"></script>
+        <script src="PlayLoop/PlayMode.js"></script>
+        <script src="PlayLoop/WalkHandler.js"></script>
+        <script src="PlayLoop/FallHandler.js"></script>
+        <script src="PlayLoop/AlternativeActionHandler.js"></script>
+        <script src="PlayLoop/JumpHandler.js"></script>
+        <script src="objects/LevelObject.js"></script>
+        <script src="objects/InteractiveLevelObject.js"></script>
+        <script src="objects/Spike.js"></script>
+        <script src="objects/FinishFlag.js"></script>
+        <script src="objects/Checkpoint.js"></script>
+        <script src="objects/StartFlag.js"></script>
+        <script src="objects/Trampoline.js"></script>
+        <script src="objects/Npc.js"></script>
+        <script src="objects/ShootingObject.js"></script>
+        <script src="objects/Canon.js"></script>
+        <script src="objects/CanonBall.js"></script>
+        <script src="objects/LaserCanon.js"></script>
+        <script src="objects/Laser.js"></script>
+        <script src="objects/BarrelCannon.js"></script>
+        <script src="objects/Stomper.js"></script>
+        <script src="objects/ToggleMine.js"></script>
+        <script src="objects/RocketLauncher.js"></script>
+        <script src="objects/Rocket.js"></script>
+        <script src="objects/SwitchableBlock.js"></script>
+        <script src="objects/RedBlueSwitch.js"></script>
+        <script src="objects/RedBlock.js"></script>
+        <script src="objects/BlueBlock.js"></script>
+        <script src="objects/DisappearingBlock.js"></script>
+        <script src="objects/Treadmill.js"></script>
+        <script src="objects/IceBlock.js"></script>
+        <script src="objects/Portal.js"></script>
+        <script src="objects/Collectible.js"></script>
+        <script src="objects/JumpReset.js"></script>
+        <script src="objects/FixedSpeedRight.js"></script>
+        <script src="objects/FixedSpeedStopper.js"></script>
+        <script src="objects/Water.js"></script>
+        <script src="objects/Deko.js"></script>
+        <script src="objects/SFX.js"></script>
+        <script src="SpriteSheetCreator.js"></script>
+        <script src="utils/ObjectTypes.js"></script>
+        <script src="ImportExport.js"></script>
+        <script src="utils/SpritePixelArrays.js"></script>
+        <script src="handlers/LevelNavigationHandler.js"></script>
+        <script src="Sound.js"></script>
+        <script src="handlers/SoundHandler.js"></script>
+        <script src="handlers/EffectsHandler.js"></script>
+        <script src="EffectsRenderer.js"></script>
+        <script src="handlers/DialogueHandler.js"></script>
+        <script src="handlers/SFXHandler.js"></script>
+        <script src="TabNavigation.js"></script>
+        <script src="TabPagination.js"></script>
+        <script src="handlers/DrawSectionHandler.js"></script>
+        <script src="handlers/ProTipHandler.js"></script>
+        <script src="handlers/TooltipHandler.js"></script>
+        <script src="handlers/ModalHandler.js"></script>
+        <script src="handlers/LevelSizeHandler.js"></script>
+        <script src="handlers/MusicHandler.js"></script>
+        <script src="handlers/PlayerAttributesHandler.js"></script>
+        <script src="handlers/PathBuildHandler.js"></script>
+        <script src="MathHelpers.js"></script>
+        <script src="DrawHelpers.js"></script>
+        <script src="objects/Path.js"></script>
+        <script src="objects/PathPoint.js"></script>
+        <script src="GameStatistics.js"></script>
+        <script src="handlers/WorldColorHandler.js"></script>
+        <script src="handlers/WorldColorChanger.js"></script>
+        <script src="handlers/PauseHandler.js"></script>
+        <script src="TilemapHelpers.js"></script>
+        <script src="TransitionAnimationHandler"></script>
+        <script src="utils/helpers.js"></script>
+        <script src="htmlRenderers/ObjectsTooltipElementsRenderer.js"></script>
+        <script src="htmlRenderers/EffectHtmlRenderer.js"></script>
+        <script src="htmlRenderers/CustomSpritesElementsRenderer.js"></script>
+        <link rel="stylesheet" type="text/css" href="styles/gameScreen.css">
+        <link rel="stylesheet" type="text/css" href="styles/buildMenu.css">
+        <link rel="stylesheet" type="text/css" href="styles/drawSection.css">
+        <link rel="stylesheet" type="text/css" href="styles/tooltip.css">
+        <link rel="stylesheet" type="text/css" href="styles/modal.css">
+        <link rel="stylesheet" type="text/css" href="styles/huebee.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=DotGothic16">
+        <script>
+            //startRemoval 
+            WorldDataHandler.insideTool = true;
+            //endRemoval
+            const canvas = document.getElementById("myCanvas");
+            WorldDataHandler.staticConstructor();
+            const spriteCanvas = document.getElementById("sprites");
+            SoundHandler.staticConstructor();
+            AnimationHelper.staticConstructor();
+            SpritePixelArrays.staticConstructor();
+            const player = new Player(WorldDataHandler.initialPlayerPosition.x,
+                WorldDataHandler.initialPlayerPosition.y, WorldDataHandler.tileSize, spriteCanvas);
+            Game.staticConstructor();
+
+            //putVersionHere
+            //putInitialLevelsInExportHere
+            //putChangedSpritesHere
+            //putPlayerAttributesHere
+            //putMainSongHere
+            let startLevel = 0;
+            //startRemoval 
+            startLevel = 1;
+            //endRemoval
+            const canvasSize = WorldDataHandler.calucalteCanvasSize();
+            canvas.width = canvasSize.width;
+            canvas.height = canvasSize.height;
+            const canvasWidth = canvasSize.width;
+            const canvasHeight = canvasSize.height;
+            canvas.style.backgroundColor = WorldDataHandler.backgroundColor;
+            var canvasOffsetLeft = canvas.offsetLeft;
+            var canvasOffsetTop = canvas.offsetTop;
+            const ctx = canvas.getContext("2d");
+            Camera.staticConstructor(ctx, canvasSize.width, canvasHeight, WorldDataHandler.levels[startLevel].tileData[0].length * WorldDataHandler.tileSize,
+                WorldDataHandler.levels[startLevel].tileData.length * WorldDataHandler.tileSize);
+            EffectsHandler.staticConstructor();
+            let tileMapHandler = new TileMapHandler(WorldDataHandler.tileSize, startLevel, spriteCanvas, player);
+            DialogueHandler.staticConstructor(tileMapHandler);
+            Display.staticConstructor(ctx, canvasWidth, canvasHeight);
+            Controller.staticConstructor();
+            Collision.staticConstructor(tileMapHandler);
+            const spriteSheetCreator = new SpriteSheetCreator(tileMapHandler, spriteCanvas);
+            CharacterCollision.staticConstructor(tileMapHandler);
+            PlayMode.staticConstructor(player, tileMapHandler);
+            SFXHandler.staticConstructor(tileMapHandler.tileSize, spriteCanvas);
+            GameStatistics.staticConstructor();
+            PauseHandler.staticConstructor();
+            EffectsRenderer.staticConstructor(tileMapHandler);
+            TransitionAnimationHandler.staticConstructor();
+
+            //startRemoval 
+            BuildMode.staticConstructor(tileMapHandler, player);
+            PathBuildHandler.staticConstructor(tileMapHandler);
+            LevelNavigationHandler.staticConstructor();
+            WorldColorHandler.staticConstructor();
+            DrawSectionHandler.staticConstructor(tileMapHandler);
+            TabPagination.staticConstructor();
+            TabNavigation.staticConstructor(spriteCanvas);
+            ProTipHandler.staticConstructor();
+            TooltipHandler.staticConstructor();
+            LevelSizeHandler.staticConstructor(tileMapHandler);
+            PlayerAttributesHandler.staticConstructor(player);
+            CustomSpriteHandler.staticConstructor();
+
+            canvas.addEventListener("mouseenter", (e) => { Controller.mouseEnter(e) });
+            canvas.addEventListener("mouseleave", (e) => { Controller.mouseLeave(e) });
+
+            function build() {
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                Camera.begin();
+                tileMapHandler.drawGrid();
+                tileMapHandler.displayLevel();
+                if (tileMapHandler.currentLevel === 0) {
+                    PlayMode.runStartScreenLogic();
+                    Display.displayStartScreen(tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
+                }
+                else if (tileMapHandler.currentLevel === WorldDataHandler.levels.length - 1) {
+                    player.x = 0;
+                    player.y = 0;
+                    Display.displayEndingScreen(spriteCanvas, tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
+                }
+                else {
+                    player.draw();
+                }
+                DrawSectionHandler.draw();
+                BuildMode.runBuildLogic();
+                SFXHandler.updateSfxAnimations();
+                Camera.end();
+
+                if (Game.playMode === Game.BUILD_MODE) {
+                    window.requestAnimationFrame(build);
+                }
+            }
+            //endRemoval
+
+            function play(timestamp) {
+                Game.updateFPSInterval(timestamp);
+                // if enough time has elapsed, draw the next frame
+                if (!Game.refreshRateHigher60 || Game.elapsed > Game.fpsInterval) {
+                    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                    Camera.begin();
+                    tileMapHandler.displayLevel();
+                    if (tileMapHandler.currentLevel === 0) {
+                        Controller.handleGamepadInput();
+                        PlayMode.runStartScreenLogic();
+                        Display.displayStartScreen(tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
+                        EffectsRenderer.displayEffects(1);
+                    }
+                    else if (tileMapHandler.currentLevel === WorldDataHandler.levels.length - 1) {
+                        Controller.handleGamepadInput();
+                        Display.displayEndingScreen(spriteCanvas, tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
+                        EffectsRenderer.displayEffects(1);
+                    }
+                    else {
+                        Controller.handleGamepadInput();
+                        PlayMode.runPlayLogic();
+                        SFXHandler.updateSfxAnimations();
+                        player.draw();
+                        EffectsRenderer.displayEffects(1);
+                        DialogueHandler.handleDialogue();
+                        PlayMode.pauseFramesHandler();
+                        EffectsRenderer.displayEffects(2);
+                        Camera.followObject(player.x, player.y);
+                    }
+                    //startRemoval 
+                    DrawSectionHandler.draw();
+                    //endRemoval
+                    Camera.end();
+                    Game.resetFpsInterval();
+                }
+
+                if (Game.playMode === Game.PLAY_MODE) {
+                    window.requestAnimationFrame(play);
+                }
+            }
+
+            function loading() {
+                let loadedAssets = 0;
+                SoundHandler.sounds.forEach(soundRawData => {
+                    const sound = SoundHandler[soundRawData.key];
+                    if (sound.loaded || sound.errorWhileLoading) {
+                        loadedAssets++;
+                    }
+                })
+                if (loadedAssets === SoundHandler.sounds.length) {
+                    Game.startAnimating(60);
+                    WorldDataHandler.insideTool ? Game.changeGameMode(true) : Game.executeGameMode();
+                }
+                else {
+                    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                    Display.displayLoadingScreen(loadedAssets, SoundHandler.sounds.length);
+                    window.requestAnimationFrame(loading);
+                }
+            }
+
+            window.requestAnimationFrame(loading);
+        </script>
+</body>
+
+</html>

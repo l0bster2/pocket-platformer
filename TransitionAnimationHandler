@@ -1,0 +1,51 @@
+class TransitionAnimationHandler {
+    static staticConstructor() {
+        this.animationFrames = 48;
+    }
+
+    static displayTransition() {
+        const halfAnimationFrames = this.animationFrames / 2;
+        const totalBlackFrames = 4;
+        if (tileMapHandler.checkIfStartOrEndingLevel()) {
+            PlayMode.currentPauseFrames = 0;
+        }
+        const fadeInFrames = halfAnimationFrames + totalBlackFrames;
+        const fadeOutFrames = halfAnimationFrames - totalBlackFrames;
+
+        if (PlayMode.currentPauseFrames > fadeInFrames) {
+            //fade in
+            this.animateFade(fadeInFrames - (PlayMode.currentPauseFrames - fadeInFrames),
+                fadeInFrames);
+        }
+        else if (PlayMode.currentPauseFrames < fadeOutFrames) {
+            //fade out
+            this.animateFade(PlayMode.currentPauseFrames,
+                fadeOutFrames);
+        }
+        else {
+            //stay black for some frames
+            this.animateFade(halfAnimationFrames,
+                halfAnimationFrames);
+        }
+        if (PlayMode.currentPauseFrames === halfAnimationFrames) {
+            tileMapHandler.switchToNextLevel();
+        }
+    }
+
+    static animateFade(currentFrame, totalFrames) {
+        const percent = currentFrame / totalFrames * 100;
+        const parcelAmount = 10;
+        const parcelHeight = Display.canvasHeight / parcelAmount;
+        const widthParcelAmount = Math.ceil(Display.canvasWidth / parcelHeight);
+
+        for (var i = 0; i <= widthParcelAmount; i++) {
+            for (var j = 0; j <= parcelAmount; j++) {
+                const relativeWidth = parcelHeight / 100 * percent + 1;
+                Display.drawRectangle(i * parcelHeight + ((parcelHeight - relativeWidth) / 2) + Camera.viewport.left,
+                    j * parcelHeight + ((parcelHeight - relativeWidth) / 2) + Camera.viewport.top,
+                    relativeWidth,
+                    relativeWidth);
+            }
+        }
+    }
+}
