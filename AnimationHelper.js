@@ -65,7 +65,6 @@ class AnimationHelper {
     static setSquishValues(obj, squishWidth, squishHeight, squishFrames = 10, direction = this.facingDirections.bottom) {
         const squishAble = obj.type === "player" ? obj?.spriteObject?.squishAble
             : obj?.spriteObject?.[0]?.squishAble;
-            
         if (squishAble) {
             let newSquishWidth = squishWidth;
             let newSquishHeight = squishHeight;
