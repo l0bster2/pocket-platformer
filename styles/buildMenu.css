@@ -37,6 +37,10 @@
     line-height: 28px;
 }
 
+.colorModalAttribute {
+    margin-right: 8px;
+}
+
 #copyNotification {
     position: fixed;
     bottom: 16px;
@@ -68,7 +72,7 @@
     padding: 2px;
 }
 
-.drawHelpers {
+.flexRows {
     display: flex;
     gap: 8px;
     flex-direction: row;
