@@ -314,7 +314,7 @@ class ObjectsTooltipElementsRenderer {
             document.createElement(`div`),
             {
                 innerHTML: `
-                    <div class="drawHelpers">
+                    <div class="flexRows">
                         <button id="copyLevelButton" title="copy level" class="levelNavigationButton buttonWithIconAndText"
                             onClick="LevelNavigationHandler.copyLevel(event)">
                             <img src="images/icons/copy.svg" class="iconInButtonWithText" alt="copyLevel"
@@ -343,7 +343,7 @@ class ObjectsTooltipElementsRenderer {
             {
                 innerHTML: `
                     <div>
-                        <div class="drawHelpers">
+                        <div class="flexRows">
                             <button id="rotateLeftHelper" title="rotate left" class="levelNavigationButton buttonWithIconAndText"
                                 onClick="DrawHelpers.rotateRight()">
                                 <img src="images/icons/rotateLeft.svg" class="iconInButtonWithText" alt="rotateLeftHelper"
@@ -360,7 +360,7 @@ class ObjectsTooltipElementsRenderer {
                                 width="16" height="16">
                             </button>
                         </div>
-                        <div class="drawHelpers marginTop8">
+                        <div class="flexRows marginTop8">
                             <button id="longArrowLeftHelper" title="move left" class="levelNavigationButton buttonWithIconAndText"
                                 onClick="DrawHelpers.moveLeft()">
                                 <img src="images/icons/longArrowLeft.svg" class="iconInButtonWithText" alt="longArrowLeftHelper"
@@ -378,7 +378,7 @@ class ObjectsTooltipElementsRenderer {
                             </button>
                         </div>
                     </div>
-                    <div class="drawHelpers subSection">
+                    <div class="flexRows subSection">
                         <button id="mirrorHelper" title="mirror horizontally" class="levelNavigationButton buttonWithIconAndText"
                             onClick="DrawHelpers.flipHorzontally()">
                             <img src="images/icons/mirror.svg" class="iconInButtonWithText" alt="mirrorHelper"
