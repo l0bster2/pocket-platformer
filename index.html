@@ -323,7 +323,7 @@
             <div class="section">
                 <h2 class="sectionHeading">Sounds</h2>
                 <div class="sectionContent">
-                    
+
                 </div>
             </div>
         </div>
@@ -368,14 +368,30 @@
             <div id="worldColorModalColorSection">
                 <details class="marginTop8" style="padding: 8px 0;" open>
                     <summary style="font-weight: bold;">General settings</summary>
-                    <div class="marginTop8">Background-color:
+                    <div class="marginTop8">
+                        <span class="colorModalAttribute">Background-color:</span>
                         <button class="color-input-background buttonWithIconAndText">
                             Transparent
                         </button>
                     </div>
-                    <div class="marginTop8">Text-color:
+                    <div class="marginTop8">
+                        <span class="colorModalAttribute">Text-color:</span>
                         <button class="color-input-text buttonWithIconAndText" value="#FFFFFF"
                             style="margin-left: 52px" />
+                    </div>
+                    <div class="marginTop8">
+                        <span class="colorModalAttribute">Level-transition:</span>
+                        <select name="transitionType" id="transitionType" onchange="TransitionAnimationHandler.changeAnimationType(event)">
+                            <option value="none">None</option>
+                            <option value="tiles" selected="selected">Fading tiles</option>
+                            <option value="wholeScreen">Screen fade</option>
+                        </select>
+                    </div>
+                    <div class="marginTop12 changeableAttributesWrapper">
+                        <span class="colorModalAttribute">Transition-length:</span>
+                        <input style="margin: 0 12px 0 0" type="range" min="2" max="48" value="48" step="2" 
+                            class="slider" id="transitionDuration" onchange="TransitionAnimationHandler.changeAnimationDuration(event)">
+                        <span id="transitionDurationValue">48</span>
                     </div>
                 </details>
                 <div class="subSection">
@@ -570,6 +586,8 @@
         <script src="handlers/PauseHandler.js"></script>
         <script src="TilemapHelpers.js"></script>
         <script src="TransitionAnimationHandler"></script>
+        <script src="ExportedGameInitializer.js"></script>
+        <script src="LegacyImporter.js"></script>
         <script src="utils/helpers.js"></script>
         <script src="htmlRenderers/ObjectsTooltipElementsRenderer.js"></script>
         <script src="htmlRenderers/EffectHtmlRenderer.js"></script>
@@ -594,16 +612,16 @@
             const player = new Player(WorldDataHandler.initialPlayerPosition.x,
                 WorldDataHandler.initialPlayerPosition.y, WorldDataHandler.tileSize, spriteCanvas);
             Game.staticConstructor();
-
-            //putVersionHere
-            //putInitialLevelsInExportHere
-            //putChangedSpritesHere
-            //putPlayerAttributesHere
-            //putMainSongHere
+            TransitionAnimationHandler.staticConstructor();
             let startLevel = 0;
-            //startRemoval 
-            startLevel = 1;
-            //endRemoval
+
+            //putAllDataHere
+            if(WorldDataHandler.insideTool) {
+                startLevel = 1;
+            }
+            else {
+                ExportedGameInitializer.initializeExportedGame(allData);
+            }
             const canvasSize = WorldDataHandler.calucalteCanvasSize();
             canvas.width = canvasSize.width;
             canvas.height = canvasSize.height;
@@ -628,7 +646,6 @@
             GameStatistics.staticConstructor();
             PauseHandler.staticConstructor();
             EffectsRenderer.staticConstructor(tileMapHandler);
-            TransitionAnimationHandler.staticConstructor();
 
             //startRemoval 
             BuildMode.staticConstructor(tileMapHandler, player);

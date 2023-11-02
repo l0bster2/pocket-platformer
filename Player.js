@@ -278,13 +278,14 @@ class Player {
         const wallJumpBottomRightTile = tileMapHandler.getTileLayerValueByIndex(this.bottom, wallJumpRightPos);
         const wallJumpTopLeftTile = tileMapHandler.getTileLayerValueByIndex(this.top, wallJumpLeftPos);
         const wallJumpBottomLeftTile = tileMapHandler.getTileLayerValueByIndex(this.bottom, wallJumpLeftPos);
-        this.wallJumpRight = wallJumpTopRightTile !== 0 && wallJumpTopRightTile !== 5 || wallJumpBottomRightTile !== 0 && wallJumpBottomRightTile !== 5;
-        this.wallJumpLeft = wallJumpTopLeftTile !== 0 && wallJumpTopLeftTile !== 5 || wallJumpBottomLeftTile !== 0 && wallJumpBottomLeftTile !== 5;
-        
+        this.wallJumpRight = (wallJumpTopRightTile !== 0 && wallJumpTopRightTile !== 5 ||
+            wallJumpBottomRightTile !== 0 && wallJumpBottomRightTile !== 5) && this.x < (tileMapHandler.levelWidth - 1) * tileMapHandler.tileSize - 5;
+        this.wallJumpLeft = (wallJumpTopLeftTile !== 0 && wallJumpTopLeftTile !== 5 ||
+            wallJumpBottomLeftTile !== 0 && wallJumpBottomLeftTile !== 5) && this.x > tileMapHandler.tileSize - 5;
         this.iceOnSide = false;
         if (this.wallJumpLeft || this.wallJumpRight) {
             this.iceOnSide = wallJumpTopRightTile === ObjectTypes.SPECIAL_BLOCK_VALUES.iceBlock || wallJumpBottomRightTile === ObjectTypes.SPECIAL_BLOCK_VALUES.iceBlock
-            || wallJumpTopLeftTile === ObjectTypes.SPECIAL_BLOCK_VALUES.iceBlock || wallJumpBottomLeftTile === ObjectTypes.SPECIAL_BLOCK_VALUES.iceBlock;
+                || wallJumpTopLeftTile === ObjectTypes.SPECIAL_BLOCK_VALUES.iceBlock || wallJumpBottomLeftTile === ObjectTypes.SPECIAL_BLOCK_VALUES.iceBlock;
         }
     }
 

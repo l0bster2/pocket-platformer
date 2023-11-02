@@ -1,35 +1,88 @@
 class TransitionAnimationHandler {
     static staticConstructor() {
         this.animationFrames = 48;
+        this.animationType = "tiles";
+        this.animationTypes = {
+            none: "none",
+            tiles: "tiles",
+            wholeScreen: "wholeScreen"
+        }
+    }
+
+    static changeAnimationType(event) {
+        this.animationType = event.target.value;
+    }
+
+    static changeAnimationDuration(event) {
+        const value = parseInt(event.target.value);
+        this.animationFrames = value;
+        document.getElementById("transitionDurationValue").innerHTML = value;
     }
 
     static displayTransition() {
         const halfAnimationFrames = this.animationFrames / 2;
-        const totalBlackFrames = 4;
+        const totalBlackFrames = this.animationFrames > 24 ? 4 : 0;
+        
         if (tileMapHandler.checkIfStartOrEndingLevel()) {
             PlayMode.currentPauseFrames = 0;
         }
         const fadeInFrames = halfAnimationFrames + totalBlackFrames;
         const fadeOutFrames = halfAnimationFrames - totalBlackFrames;
 
+        //fade in
         if (PlayMode.currentPauseFrames > fadeInFrames) {
-            //fade in
-            this.animateFade(fadeInFrames - (PlayMode.currentPauseFrames - fadeInFrames),
-                fadeInFrames);
+            const currentFrame = fadeInFrames - (PlayMode.currentPauseFrames - fadeInFrames);
+            switch (this.animationType) {
+                case this.animationTypes.tiles:
+                    this.animateFade(currentFrame, fadeInFrames);
+                    break;
+                case this.animationTypes.wholeScreen:
+                    this.animateFadeWholeScreen(currentFrame, fadeInFrames);
+                    break;
+            }
         }
+        //fade out
         else if (PlayMode.currentPauseFrames < fadeOutFrames) {
-            //fade out
-            this.animateFade(PlayMode.currentPauseFrames,
-                fadeOutFrames);
+            switch (this.animationType) {
+                case this.animationTypes.tiles:
+                    this.animateFade(PlayMode.currentPauseFrames, fadeOutFrames);
+                    break;
+                case this.animationTypes.wholeScreen:
+                    this.animateFadeWholeScreen(PlayMode.currentPauseFrames, fadeInFrames);
+                    break;
+            }
         }
+        //stay black for some frames
         else {
-            //stay black for some frames
-            this.animateFade(halfAnimationFrames,
-                halfAnimationFrames);
+            if (this.animationType !== this.animationTypes.none) {
+                Display.drawRectangle(Camera.viewport.left,
+                    Camera.viewport.top,
+                    Camera.viewport.width,
+                    Camera.viewport.height, "000000");
+            }
         }
         if (PlayMode.currentPauseFrames === halfAnimationFrames) {
             tileMapHandler.switchToNextLevel();
         }
+    }
+
+    static animateFadeWholeScreen(currentFrame, totalFrames) {
+        const percent = currentFrame / totalFrames;
+        Display.drawRectangleWithAlpha(Camera.viewport.left,
+            Camera.viewport.top,
+            Camera.viewport.width,
+            Camera.viewport.height, "000000", Display.ctx, percent);
+    }
+
+    static setTypeElementValue(type) {
+        this.animationType = type;
+        document.getElementById("transitionType").value = type;
+    }
+
+    static setDurationElementValue(value) {
+        this.animationFrames = value;
+        document.getElementById("transitionDuration").value = value;
+        document.getElementById("transitionDurationValue").innerHTML = value;
     }
 
     static animateFade(currentFrame, totalFrames) {

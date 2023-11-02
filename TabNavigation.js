@@ -87,7 +87,7 @@ class TabNavigation {
       && !(startIndex === endIndex)) {
       this.createNewSpriteButton.style.display = "none";
     }
-    else {
+    else if(this.currentSelectedTab === 'custom'){
       const { x, y } = this.getPositionForSingleSprite(customSpritesAmount);
       this.createNewSpriteButton.style.display = "block";
       this.createNewSpriteButton.style.left = `${x}px`;
