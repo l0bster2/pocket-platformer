@@ -8,7 +8,6 @@ class TileMapHandler {
         this.player = player;
         this.effects = [];
         this.currentLevel = startingLevel;
-        this.resetLevel(startingLevel)
         this.spriteCanvas = spriteCanvas;
         this.currentGeneralFrameCounter = 0;
         this.generalFrameCounterMax = 480;
@@ -34,6 +33,8 @@ class TileMapHandler {
         this.currentGeneralFrameCounter = 0;
         this.player.resetAll();
         WorldColorChanger.changeLevelColor(levelIndex);
+        this.changeTileCanvasSize();
+        this.createStaticTiles();
     }
 
     setInitialPlayerAndCameraPos(levelIndex) {
@@ -105,7 +106,14 @@ class TileMapHandler {
         Display.drawGrid(this.levelWidth, this.levelHeight, this.tileSize);
     }
 
-    displayTiles() {
+    changeTileCanvasSize() {
+        tileCanvas.width = this.levelWidth * this.tileSize;
+        tileCanvas.height = this.levelHeight * this.tileSize;
+        this.createStaticTiles();
+    }
+
+    createStaticTiles() {
+        Display.tileCtx.clearRect(0, 0, this.levelWidth * this.tileSize, this.levelHeight * this.tileSize);
         for (var tilePosY = 0; tilePosY < this.levelHeight; tilePosY++) {
             for (var tilePosX = 0; tilePosX < this.levelWidth; tilePosX++) {
 
@@ -120,10 +128,17 @@ class TileMapHandler {
 
                 if (tileType !== 0) {
                     Display.drawImage(this.spriteCanvas, 0, this.TILE_TYPES[tileType] * this.tileSize,
-                        this.tileSize, this.tileSize, tilePosX * this.tileSize, tilePosY * this.tileSize, this.tileSize, this.tileSize);
+                        this.tileSize, this.tileSize, tilePosX * this.tileSize, tilePosY * this.tileSize, this.tileSize, this.tileSize, Display.tileCtx);
                 }
             }
         }
+    }
+
+    displayStaticTiles() {
+        const width = this.levelWidth * this.tileSize;
+        const height = this.levelHeight * this.tileSize;
+        Display.drawImage(tileCanvas, 0, 0, width, height,
+            0, 0, width, height);
     }
 
     displayObjects(arr) {
@@ -144,8 +159,8 @@ class TileMapHandler {
 
     displayLevel() {
         const isPlayMode = Game.playMode === Game.PLAY_MODE;
-        if(isPlayMode) {
-            if(PauseHandler.paused) {
+        if (isPlayMode) {
+            if (PauseHandler.paused) {
                 return;
             }
         }
@@ -156,7 +171,7 @@ class TileMapHandler {
         this.displayObjects(backgroundObjects);
         this.displayObjectsOrDeko(this.paths);
         this.displayObjects(foregroundObjects);
-        this.displayTiles();
+        this.displayStaticTiles();
     }
 
     switchToNextLevel() {

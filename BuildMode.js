@@ -239,6 +239,7 @@ class BuildMode {
             //if setting tile at edge and not a special block, set a 1 tile, otherwise the selected tile
             tileMapHandler.tileMap[tilePosY][tilePosX] = tileMapHandler.checkIfPositionAtTheEdge(tilePosX, tilePosY)
                 && name !== 5 && !Helpers.objectHasValue(ObjectTypes.SPECIAL_BLOCK_VALUES, name) ? 1 : name;
+            tileMapHandler.createStaticTiles();
         }
     }
 
@@ -453,6 +454,7 @@ class BuildMode {
                 PathBuildHandler.removePathFromData(tilePosX, tilePosY, this.objectsDeletedInOneGo);
             })
         }
+        tileMapHandler.createStaticTiles();
     }
 
     static findAdditionalObjectsToRemove(allObjectsAtCurrentTile, positionsToRemove) {

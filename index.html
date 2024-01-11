@@ -129,6 +129,7 @@
                         </div>
                     </div>
                     <canvas id="myCanvas" onWheel="LevelSizeHandler.mouseWheelSizeChange(event)"></canvas>
+                    <canvas id="tileCanvas" style="display: none;"></canvas>
                     <div id="canvasObjectToolTip" class="tooltipWithSpeechBubble">
                     </div>
                     <div class="cameraYSliderWrapper" style="display: none" id="cameraYSliderWrapper">
@@ -609,6 +610,7 @@
             WorldDataHandler.insideTool = true;
             //endRemoval
             const canvas = document.getElementById("myCanvas");
+            const tileCanvas = document.getElementById("tileCanvas");
             WorldDataHandler.staticConstructor();
             const spriteCanvas = document.getElementById("sprites");
             SoundHandler.staticConstructor();
@@ -630,18 +632,21 @@
             const canvasSize = WorldDataHandler.calucalteCanvasSize();
             canvas.width = canvasSize.width;
             canvas.height = canvasSize.height;
+            tileCanvas.width = canvasSize.width;
+            tileCanvas.height = canvasSize.height;
             const canvasWidth = canvasSize.width;
             const canvasHeight = canvasSize.height;
             canvas.style.backgroundColor = WorldDataHandler.backgroundColor;
             var canvasOffsetLeft = canvas.offsetLeft;
             var canvasOffsetTop = canvas.offsetTop;
             const ctx = canvas.getContext("2d");
-            Camera.staticConstructor(ctx, canvasSize.width, canvasHeight, WorldDataHandler.levels[startLevel].tileData[0].length * WorldDataHandler.tileSize,
+            const tileCtx = tileCanvas.getContext("2d");
+            Camera.staticConstructor(ctx, canvasWidth, canvasHeight, WorldDataHandler.levels[startLevel].tileData[0].length * WorldDataHandler.tileSize,
                 WorldDataHandler.levels[startLevel].tileData.length * WorldDataHandler.tileSize);
             EffectsHandler.staticConstructor();
             let tileMapHandler = new TileMapHandler(WorldDataHandler.tileSize, startLevel, spriteCanvas, player);
             DialogueHandler.staticConstructor(tileMapHandler);
-            Display.staticConstructor(ctx, canvasWidth, canvasHeight);
+            Display.staticConstructor(ctx, canvasWidth, canvasHeight, tileCtx);
             Controller.staticConstructor();
             Collision.staticConstructor(tileMapHandler);
             const spriteSheetCreator = new SpriteSheetCreator(tileMapHandler, spriteCanvas);
@@ -651,6 +656,7 @@
             GameStatistics.staticConstructor();
             PauseHandler.staticConstructor();
             EffectsRenderer.staticConstructor(tileMapHandler);
+            tileMapHandler.resetLevel(startLevel)
 
             //startRemoval 
             BuildMode.staticConstructor(tileMapHandler, player);

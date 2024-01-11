@@ -33,6 +33,7 @@ class LevelSizeHandler {
         this.updateCameraSliders(this.tileMapHandler.levelWidth * this.tileMapHandler.tileSize,
             this.tileMapHandler.levelHeight * this.tileMapHandler.tileSize,
             { x: this.tileMapHandler.player.x, y: this.tileMapHandler.player.y });
+        this.tileMapHandler.changeTileCanvasSize();
     }
 
     static changeWidth(currentWidth, currentHeight, newWidth, newHeight) {

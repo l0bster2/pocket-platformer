@@ -213,6 +213,11 @@ function createHtmlDocoumentWithCanvas() {
   Helpers.addAttributesToHTMLElement(gameCanvas, { "id": "myCanvas" });
   gameScreen.appendChild(gameCanvas);
 
+  var tileCanvas = emptyHtmlDocument.createElement("canvas");
+  Helpers.addAttributesToHTMLElement(tileCanvas, { "id": "tileCanvas" });
+  tileCanvas.style.display = "none";
+  gameScreen.appendChild(tileCanvas);
+
   var noiseCanvas = emptyHtmlDocument.createElement("canvas");
   Helpers.addAttributesToHTMLElement(noiseCanvas, { "id": "noiseCanvas", "width": "900ox", height: "520px" });
   noiseCanvas.style.display = "none";

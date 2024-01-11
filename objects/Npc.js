@@ -33,6 +33,7 @@ class Npc extends InteractiveLevelObject {
                     DialogueHandler.active = true;
                     DialogueHandler.calculateDialogueWindowPosition();
                     SoundHandler.dialogueSound.stopAndPlay();
+                    player.fixedSpeed = false;
                     player.xspeed = 0;
                     player.yspeed = 0;
                 }

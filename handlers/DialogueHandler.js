@@ -11,6 +11,7 @@ class DialogueHandler {
         this.animationDurationFrames = 2;
         this.linesAmount = 4;
         this.maxLineLength = 60;
+        this.maxDialogueLength = 240;
     }
 
     static setDialogueWindowToInactive() {

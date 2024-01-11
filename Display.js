@@ -1,7 +1,8 @@
 class Display {
 
-    static staticConstructor(canvas, canvasWidth, canvasHeight) {
+    static staticConstructor(canvas, canvasWidth, canvasHeight, tileCtx) {
         this.ctx = canvas;
+        this.tileCtx = tileCtx
         //this.ctx.imageSmoothingEnabled = false;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -39,8 +40,8 @@ class Display {
         ctx.closePath();
     }
 
-    static drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh) {
-        this.ctx.drawImage(
+    static drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh, destinationCanvas = this.ctx) {
+        destinationCanvas.drawImage(
             img,
             Math.round(sx),
             Math.round(sy),
