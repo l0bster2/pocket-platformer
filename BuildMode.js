@@ -43,6 +43,7 @@ class BuildMode {
 
     static changeView(event) {
         const {value} = event.target;
+        event.preventDefault();
         if(value === "sounds") {
             document.getElementById("gameView").style.display = "none";
             document.getElementById("soundView").style.display = "block";

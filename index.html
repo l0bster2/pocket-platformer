@@ -21,6 +21,7 @@
         <img src="images/icons/pp.png" height="26px" />
         <div id="viewChangerWrapper">
             <select name="view" id="view" style="border: none" onchange="BuildMode.changeView(event)">
+                <option disabled selected value style="display: none">Tools</option>
                 <option value="game">Game</option>
                 <option value="sounds">Sounds</option>
             </select>
@@ -51,12 +52,14 @@
                     </div>
                     <div id="tabContent">
                         <div id="tabTitleContent">
-                            <img src="images/icons/left.svg" class="tabPaginationIcon hoverableGreySvg"
-                                id="tabPaginationLeft" alt="left" width="14" height="14" style="display: none;"
-                                onclick="TabPagination.changePage(-1)">
-                            <img src="images/icons/right.svg" class="tabPaginationIcon hoverableGreySvg"
-                                id="tabPaginationRight" alt="right" width="14" height="14" style="display: none;"
-                                onclick="TabPagination.changePage(1)">
+                            <button id="tabPaginationLeft" class="tabPaginationIcon levelNavigationButton" style="display: none;"
+                                class="levelNavigationButton tabButton" onclick="TabPagination.changePage(-1)">
+                                <img src="images/icons/left.svg" alt="left" width="14" height="14">
+                            </button>
+                            <button id="tabPaginationRight" class="tabPaginationIcon levelNavigationButton "
+                                class="levelNavigationButton tabButton" onclick="TabPagination.changePage(1)">
+                                <img src="images/icons/right.svg" alt="right" width="14" height="14">
+                            </button>
                             <div class="spritesTitle">
                                 <span id="spritesTitle" style="margin-left: 10px">TILES</span>
                                 <span id="currentPage"></span>

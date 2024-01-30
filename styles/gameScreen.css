@@ -154,7 +154,7 @@ details summary:hover {
 #header {
     border-left: none;
     border-right: none;
-    border-top: 1px solid black;
+    border-top: 1px solid lightgrey;
     padding: 4px 10px;
     display: flex;
     gap: 8px;

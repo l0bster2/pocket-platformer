@@ -380,5 +380,6 @@ class DrawSectionHandler {
         }
         //redraw in big sprite sheet
         spriteSheetCreator.redrawSprite(this.currentSprite, this.currentSprite.spriteIndexInArray);
+        this.tileMapHandler.createStaticTiles();
     }
 }

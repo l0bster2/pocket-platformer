@@ -336,7 +336,8 @@ input:checked+.switchSlider:before {
 
 .tabPaginationIcon {
     position: absolute;
-    padding: 12px 10px 10px;
+    padding: 8px 8px 8px;
+    top: 3px;
 }
 
 .tabPaginationIcon:hover {

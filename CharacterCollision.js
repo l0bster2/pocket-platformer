@@ -115,7 +115,9 @@ class CharacterCollision {
         else if (obj.xspeed > 0) {
             if (!this.passableTiles.includes(obj.top_right)
                 || !this.passableTiles.includes(obj.bottom_right)) {
-                obj.x = obj.right * tileMapHandler.tileSize - (obj.width + 1);
+                //this fix is needed to prevednt "stuttering". 
+                const extra = obj.groundAcceleration < 1 ? obj.speed - 0.01 : 1;
+                obj.x = obj.right * tileMapHandler.tileSize - (obj.width + extra);
                 obj.hitWall(AnimationHelper.facingDirections.right);
             }
         }
