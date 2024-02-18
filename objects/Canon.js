@@ -27,7 +27,8 @@ class Canon extends ShootingObject {
             var canonBallStartingTile = this.tileMapHandler.getTileLayerValueByIndex(canonBallY, canonBallX);
             if (canonBallStartingTile === 0 || canonBallStartingTile === 5) {
                 const canonBall = new CanonBall(canonBallX, canonBallY, this.tileSize, ObjectTypes.CANON_BALL,
-                    this.tileMapHandler, this.currentFacingDirection, this[SpritePixelArrays.changeableAttributeTypes.speed]);
+                    this.tileMapHandler, this.currentFacingDirection, this[SpritePixelArrays.changeableAttributeTypes.speed], 
+                    this[SpritePixelArrays.changeableAttributeTypes.collidesWithWalls]);
                 this.tileMapHandler.levelObjects.push(canonBall);
                 AnimationHelper.setSquishValues(this, this.tileSize * 1.2,
                     this.tileSize * 0.8, 5, this.currentFacingDirection);

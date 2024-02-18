@@ -70,6 +70,27 @@ class ObjectsTooltipElementsRenderer {
         return startFlagWrapper;
     }
 
+    static createCheckbox(changeableAttribute, description, currentObject) {
+        const name = changeableAttribute.name;
+        const checkboxWrapper = document.createElement("div");
+        checkboxWrapper.className = "subSection";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = name;
+        checkbox.onclick = (event) => {
+            const checkboxValue = event.target.checked;
+            currentObject.addChangeableAttribute(name, checkboxValue);
+        };
+        checkbox.checked = currentObject[name] || currentObject?.extraAttributes[name] || false;
+        const checkboxLabel = document.createElement("label");
+        checkboxLabel.className = "checkBoxText";
+        checkboxLabel.style.marginLeft = "8px";
+        Helpers.addAttributesToHTMLElement(checkboxLabel, { "for": changeableAttribute.name });
+        checkboxLabel.innerHTML = description;
+        checkboxWrapper.append(checkbox, checkboxLabel);
+        return checkboxWrapper;
+    }
+
     static finishFlagToolTip(currentObject) {
         const finishFlagWrapper = document.createElement("div");
         finishFlagWrapper.className = "marginTop8";
@@ -150,25 +171,13 @@ class ObjectsTooltipElementsRenderer {
             currentObject.changeExit(event.target.value);
         }
 
-        const collectiblesWrapper = document.createElement("div");
-        collectiblesWrapper.className = "subSection";
-
         const changeableAttribute = currentObject.spriteObject[0].changeableAttributes[0];
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.id = changeableAttribute.name;
-        checkbox.onclick = (event) => {
-            const checkboxValue = event.target.checked;
-            currentObject.addChangeableAttribute(changeableAttribute.name, checkboxValue);
-        };
-        const checkboxLabel = document.createElement("label");
-        checkboxLabel.className = "checkBoxText";
-        checkboxLabel.style.marginLeft = "8px";
-        Helpers.addAttributesToHTMLElement(checkboxLabel, { "for": changeableAttribute.name });
-        checkboxLabel.innerHTML = "Collectibles needed for opening";
 
-        collectiblesWrapper.append(checkbox, checkboxLabel);
-        finishFlagWrapper.append(firstButtonWrapper, secondButtonWrapper, collectiblesWrapper);
+        const checkboxWrapper = this.createCheckbox(changeableAttribute,
+            "Collectibles needed for opening", 
+            currentObject);
+
+        finishFlagWrapper.append(firstButtonWrapper, secondButtonWrapper, checkboxWrapper);
 
         return finishFlagWrapper;
     }

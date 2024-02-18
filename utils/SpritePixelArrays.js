@@ -14,6 +14,7 @@ class SpritePixelArrays {
 
     this.changeableAttributeFormElements = {
       toggle: "toggle",
+      checkbox: "checkbox"
     }
 
     this.tilesWithAnimation = [
@@ -33,7 +34,8 @@ class SpritePixelArrays {
       rotationSpeed: "rotationSpeed",
       collectiblesNeeded: "collectiblesNeeded",
       laserDuration: "laserDuration",
-      pauseDuration: "pauseDuration"
+      pauseDuration: "pauseDuration",
+      collidesWithWalls: "collidesWithWalls",
     };
 
     this.backgroundSprites = [
@@ -601,7 +603,9 @@ class SpritePixelArrays {
       name: ObjectTypes.CANON,
       changeableAttributes: [
         { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 10 },
-        { name: this.changeableAttributeTypes.frequency, defaultValue: 3, minValue: 1, maxValue: 8 }
+        { name: this.changeableAttributeTypes.frequency, defaultValue: 3, minValue: 1, maxValue: 8 },
+        { name: this.changeableAttributeTypes.collidesWithWalls, defaultValue: true, 
+          formElement: this.changeableAttributeFormElements.checkbox, checkboxDescription: "Cannonball collides with walls" }
       ],
       descriptiveName: "Cannon",
       description: "A cannon. It shoots <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Cannon ball'} }, true)\">cannonballs</span> at certain time intervals. Click on it after placing it again, to change the attributes of the individual cannon.",

@@ -164,14 +164,33 @@ class TileMapHandler {
                 return;
             }
         }
-        const [backgroundObjects, foregroundObjects] = TilemapHelpers.splitArrayIn2(this.levelObjects, (e) => SpritePixelArrays.backgroundSprites.includes(e.type));
+        const layers = this.splitLevelObjectsInLayers();
         this.displayObjectsOrDeko(this.deko);
         SFXHandler.updateSfxAnimations("backgroundSFX");
         isPlayMode && this.effects.length && EffectsRenderer.displayEffects();
-        this.displayObjects(backgroundObjects);
+        this.displayObjects(layers[0]);
         this.displayObjectsOrDeko(this.paths);
-        this.displayObjects(foregroundObjects);
+        this.displayObjects(layers[1]);
         this.displayStaticTiles();
+        this.displayObjects(layers[2]);
+    }
+
+    splitLevelObjectsInLayers() {
+        const layers = [
+            [], [], []
+        ];
+        this.levelObjects.forEach(levelObject => {
+            if(SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
+                layers[0].push(levelObject);
+            }
+            else if(levelObject.type === ObjectTypes.CANON_BALL) {
+                layers[2].push(levelObject);
+            }
+            else {
+                layers[1].push(levelObject);
+            }
+        });
+        return layers;
     }
 
     switchToNextLevel() {

@@ -336,6 +336,10 @@ class BuildMode {
                     const toggleSwitch = ObjectsTooltipElementsRenderer.createToggleSwitch(attribute, currentObject);
                     content.appendChild(toggleSwitch);
                 }
+                else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.checkbox) {
+                    const checkboxWrapper = ObjectsTooltipElementsRenderer.createCheckbox(attribute, attribute.checkboxDescription, currentObject);
+                    content.appendChild(checkboxWrapper);
+                }
                 else {
                     const sliderWrapper = ObjectsTooltipElementsRenderer.createSliderForChangeableAttribute(attribute, currentObject);
                     content.appendChild(sliderWrapper);

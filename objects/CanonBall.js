@@ -1,6 +1,6 @@
 class CanonBall extends InteractiveLevelObject {
 
-    constructor(x, y, tileSize, type, tileMapHandler, facingDirection, speed = 3) {
+    constructor(x, y, tileSize, type, tileMapHandler, facingDirection, speed = 3, collidesWithWalls = true) {
         const hitBoxOffset = -tileSize / 6;
         super(x, y, tileSize, type, hitBoxOffset, { currentFacingDirection: facingDirection });
         this.tileMapHandler = tileMapHandler;
@@ -8,6 +8,7 @@ class CanonBall extends InteractiveLevelObject {
         this.movingSpeed = speed;
         this.yCenter = tileSize / 2;
         this.key = this.makeid(5);
+        this.collidesWithWalls = collidesWithWalls;
     }
 
     collisionEvent() {
@@ -45,7 +46,8 @@ class CanonBall extends InteractiveLevelObject {
     checkWallCollission(x, y, tileArray = [0, 5]) {
         const { xPos, yPos } = this.getTilePositions(x, y);
         var currentTileValue = this.tileMapHandler.getTileLayerValueByIndex(yPos, xPos);
-        if (!!typeof currentTileValue === 'undefined' || !tileArray.includes(currentTileValue)) {
+
+        if ((!tileArray.includes(currentTileValue) && this.collidesWithWalls) || typeof currentTileValue === 'undefined') {
             if(currentTileValue === ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch) {
                 const switchBlock = this.tileMapHandler.levelObjects.find(levelObject => levelObject.initialX === xPos && levelObject.initialY === yPos);
                 switchBlock && switchBlock.switchWasHit(this.facingDirection);
