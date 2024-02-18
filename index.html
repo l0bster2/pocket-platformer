@@ -17,19 +17,44 @@
 </head>
 
 <body>
-    <div id="header" class="sectionContent" style="display: none">
+    <div id="header" class="sectionContent">
         <img src="images/icons/pp.png" height="26px" />
         <div id="viewChangerWrapper">
-            <select name="view" id="view" style="border: none" onchange="BuildMode.changeView(event)">
-                <option disabled selected value style="display: none">Tools</option>
-                <option value="game">Game</option>
+            <select name="view" id="view" style="border: none" onchange="changeView(event)">
+                <option value="game">Game screen</option>
                 <option value="sounds">Sounds</option>
             </select>
         </div>
+        <!--<div class="topnav" id="myTopnav">
+            <div class="dropdown navElement">
+                <button class="dropbtn" onclick="navDropDownClick()">
+                    TOOLS
+                    <img src="images/icons/right.svg" alt="right" width="10" height="10"
+                        style="transform: rotate(90deg);">
+                </button>
+                <ul class="dropdown-content" id="myDropdown">
+                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event, 'buildTools')">Build tools
+                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10">
+                    </li>
+                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event, 'gameScreen')">Game screen
+                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10">
+                    </li>
+                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event,'drawSection')">Draw
+                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10">
+                    </li>
+                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event,'settingsSection')">Settings
+                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10">
+                    </li>
+                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event, 'soundSection')">Sounds
+                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10" style="display: none">
+                    </li>
+                </ul>
+            </div>
+        </div>-->
     </div>
     <div id="scrollMenu">
         <div id="gameView">
-            <div class="section">
+            <div class="section" id="buildTools">
                 <h2 class="sectionHeading">BUILD TOOLS</h2>
                 <div id="buildMenu" class="sectionContent">
                     <div id="tabWrapper">
@@ -52,8 +77,9 @@
                     </div>
                     <div id="tabContent">
                         <div id="tabTitleContent">
-                            <button id="tabPaginationLeft" class="tabPaginationIcon levelNavigationButton" style="display: none;"
-                                class="levelNavigationButton tabButton" onclick="TabPagination.changePage(-1)">
+                            <button id="tabPaginationLeft" class="tabPaginationIcon levelNavigationButton"
+                                style="display: none;" class="levelNavigationButton tabButton"
+                                onclick="TabPagination.changePage(-1)">
                                 <img src="images/icons/left.svg" alt="left" width="14" height="14">
                             </button>
                             <button id="tabPaginationRight" class="tabPaginationIcon levelNavigationButton "
@@ -98,7 +124,7 @@
                     </button>
                 </div>
             </div>
-            <div class="section">
+            <div class="section" id="gameScreen">
                 <h2 class="sectionHeading">GAME SCREEN</h2>
                 <div class="sectionContent">
                     <div class="menuSection">
@@ -148,7 +174,7 @@
                     </div>
                 </div>
             </div>
-            <div class="section">
+            <div class="section" id="drawSection">
                 <h2 class="sectionHeading">DRAW</h2>
                 <div class="sectionContent" id="drawSection">
                     <select name="spriteSelector" id="spriteSelectEl" class="fullWidth"
@@ -191,7 +217,7 @@
                     </div>
                 </div>
             </div>
-            <div class="section">
+            <div class="section" id="settingsSection">
                 <h2 class="sectionHeading">SETTINGS</h2>
                 <div class="sectionContent">
                     <div id="importExportWrapper">
@@ -323,13 +349,9 @@
                 </div>
             </div>
         </div>
-        <div id="soundView" style="display: none;">
-            <div class="section">
-                <h2 class="sectionHeading">Sounds</h2>
-                <div class="sectionContent">
-
-                </div>
-            </div>
+        <div class="section" style="display: none;" id="soundView">
+            <h2 class="sectionHeading">Sound handler</h2>
+            <div class="sectionContent" id="soundContent"></div>
         </div>
         <div id="protipSection" class="sectionContent">
             <b>ProTip: </b><span id="proTip"></span>
@@ -594,6 +616,7 @@
         <script src="handlers/WorldColorChanger.js"></script>
         <script src="handlers/PauseHandler.js"></script>
         <script src="TilemapHelpers.js"></script>
+        <script src="HeaderNavigationHandler.js"></script>
         <script src="TransitionAnimationHandler"></script>
         <script src="ExportedGameInitializer.js"></script>
         <script src="LegacyImporter.js"></script>
@@ -601,6 +624,7 @@
         <script src="htmlRenderers/ObjectsTooltipElementsRenderer.js"></script>
         <script src="htmlRenderers/EffectHtmlRenderer.js"></script>
         <script src="htmlRenderers/CustomSpritesElementsRenderer.js"></script>
+        <script src="htmlRenderers/SoundHandlerRenderer.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/gameScreen.css">
         <link rel="stylesheet" type="text/css" href="styles/buildMenu.css">
         <link rel="stylesheet" type="text/css" href="styles/drawSection.css">

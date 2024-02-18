@@ -289,8 +289,8 @@ function checkIfSoundEmptyOrExternal(url) {
 function bundleAllScripts() {
   var scriptTexts = '';
   const unNeededScripts = ['ImportExport', 'LegacyImporter', 'WorldColorHandler', 'DrawHelpers', 'BuildMode', 'CustomSpritesElementsRenderer',
-    'LevelNavigationHandler', 'TabNavigation', 'TabPagination', 'DrawSectionHandler', 'helpers', 'ObjectsTooltipElementsRenderer',
-    'huebee.min', 'jszip.min', 'ProTipHandler', 'TooltipHandler', 'LevelSizeHandler', 'MusicHandler', 'EffectHtmlRenderer', 'PathBuildHandler', 'FileSaver'];
+    'LevelNavigationHandler', 'TabNavigation', 'TabPagination', 'DrawSectionHandler', 'helpers', 'ObjectsTooltipElementsRenderer', 'HeaderNavigationHandler',
+    'huebee.min', 'jszip.min', 'ProTipHandler', 'TooltipHandler', 'LevelSizeHandler', 'MusicHandler', 'EffectHtmlRenderer', 'SoundHandlerRenderer', 'PathBuildHandler', 'FileSaver'];
 
   const scripts = document.getElementsByTagName("script");
   for (var i = 0; i < scripts.length; i++) {

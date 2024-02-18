@@ -29,6 +29,10 @@ button {
     font-size: 13px;
 }
 
+select:hover {
+    cursor: pointer;
+}
+
 body {
     text-transform: uppercase;
     overflow: auto;
@@ -152,12 +156,16 @@ details summary:hover {
 }
 
 #header {
+    position: fixed;
+    width: 100%;
+    top: 0;
     border-left: none;
     border-right: none;
     border-top: 1px solid lightgrey;
     padding: 4px 10px;
     display: flex;
     gap: 8px;
+    z-index: 100;
 }
 
 .levelNavigationButton {
@@ -256,6 +264,7 @@ input[type="file"] {
 }
 
 #scrollMenu {
+    margin-top: 38px;
     padding: 8px;
 }
 

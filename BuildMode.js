@@ -41,19 +41,6 @@ class BuildMode {
         this.objectsWithoutSFXAfterPlacing = [ObjectTypes.DISAPPEARING_BLOCK, ObjectTypes.BLUE_BLOCK, ObjectTypes.RED_BLOCK];
     }
 
-    static changeView(event) {
-        const {value} = event.target;
-        event.preventDefault();
-        if(value === "sounds") {
-            document.getElementById("gameView").style.display = "none";
-            document.getElementById("soundView").style.display = "block";
-        }
-        else {
-            document.getElementById("gameView").style.display = "block";
-            document.getElementById("soundView").style.display = "none";
-        }
-    }
-
     static setCurrentSelectedObject(object) {
         this.currentSelectedObject = object;
         if (this.currentSelectedObject.sprite?.directions) {

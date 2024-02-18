@@ -79,7 +79,7 @@
 }
 
 #drawStyle {
-    padding-top: 0; 
+    padding-top: 0;
     margin-top: 14px;
 }
 
@@ -270,6 +270,20 @@ input:checked+.switchSlider:before {
     border-left: 1px solid lightgrey;
 }
 
+.soundControls {
+    padding: 2px 0;
+    display: flex;
+}
+
+.soundControlsDescription {
+    flex: 1; 
+    padding: 12px;
+}
+
+#soundView {
+    width: 580px;
+}
+
 .switch {
     position: relative;
     display: inline-block;
@@ -438,4 +452,57 @@ details[open]>summary:before {
 
 details summary::-webkit-details-marker {
     display: none;
+}
+
+.topnav {
+    margin-left: 5px;
+}
+
+.navElement {
+    cursor: pointer;
+    height: 100%;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+}
+
+.dropbtn {
+    cursor: pointer;
+    padding: 4px 16px 0px;
+    border: none;
+    outline: none;
+    height: 100%;
+    background-color: white;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    list-style-type: none;
+}
+
+.dropdown:hover .dropbtn,
+.dropbtn:focus {
+    background-color: #DCDCDC;
+}
+
+.show {
+    display: block;
+}
+
+.dropdown-nav-item {
+    padding: 12px 8px;
+}
+
+.dropdown-nav-item:hover {
+    background-color: #DCDCDC;
+    cursor: pointer;
+}
+
+.dropdown-nav-item > img {
+    float: right;
+    padding-right: 4px;
 }
