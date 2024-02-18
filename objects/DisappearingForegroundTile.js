@@ -8,6 +8,7 @@ class DisappearingForegroundTile extends InteractiveLevelObject {
 
     resetObject() {
         this.setToInvisible = false;
+        this.setToVisible = false;
         this.currentAlpha = 1;
         this.currentInvisibleTimerFrame = 0;
     }
@@ -15,7 +16,7 @@ class DisappearingForegroundTile extends InteractiveLevelObject {
     collisionEvent() {
         this.setSelfAndNeightboursToCollided();
         this.collidedWithPlayer = true;
-        this.currentInvisibleTimerFrame = 10;
+        this.currentInvisibleTimerFrame = 20;
     }
 
     setSelfAndNeightboursToCollided() {
@@ -25,6 +26,7 @@ class DisappearingForegroundTile extends InteractiveLevelObject {
             if (levelObject.type === ObjectTypes.DISAPPEARING_FOREGROUND_TILE) {
                 levelObject.collidedWithPlayer = false;
                 levelObject.currentInvisibleTimerFrame = 0;
+                levelObject.setToVisible = false;
 
                 const sameVertical = levelObject.initialX === this.initialX &&
                     (levelObject.initialY === this.initialY + 1 || levelObject.initialY === this.initialY - 1);
@@ -40,8 +42,10 @@ class DisappearingForegroundTile extends InteractiveLevelObject {
 
     resetAllDisappearingForegroundTiles() {
         this.tileMapHandler.levelObjects.forEach(levelObject => {
-            if (levelObject.type === ObjectTypes.DISAPPEARING_FOREGROUND_TILE) {
-                levelObject.resetObject();
+            if (levelObject.type === ObjectTypes.DISAPPEARING_FOREGROUND_TILE && levelObject.setToInvisible) {
+                levelObject.setToInvisible = false;
+                levelObject.setToVisible = true;
+                levelObject.currentInvisibleTimerFrame = 0;
             }
         });
     }
@@ -50,13 +54,25 @@ class DisappearingForegroundTile extends InteractiveLevelObject {
         if (this.setToInvisible) {
             this.currentAlpha = this.currentAlpha - 0.04 > 0 ? this.currentAlpha - 0.04 : 0;
         }
-        if(this.currentInvisibleTimerFrame > 0) {
+        if(this.setToVisible) {
+            if(this.currentAlpha + 0.04 < 1) {
+                this.currentAlpha += 0.04;
+            }
+            else {
+                this.currentAlpha = 1;
+                this.setToVisible = false;
+            }
+        }
+        if (this.currentInvisibleTimerFrame > 0) {
             this.currentInvisibleTimerFrame--;
-            if(this.currentInvisibleTimerFrame === 1) {
+            if (this.currentInvisibleTimerFrame === 1) {
                 this.resetAllDisappearingForegroundTiles();
+                this.setToInvisible = false;
+                this.setToVisible = true;
+                this.currentInvisibleTimerFrame = 0;
             }
         }
         Game.playMode === Game.PLAY_MODE ? super.drawWithAlpha(spriteCanvas, this.currentAlpha)
-            : super.drawWithAlpha(spriteCanvas, 0.7);
+            : super.drawWithAlpha(spriteCanvas, 0.2);
     }
 }
