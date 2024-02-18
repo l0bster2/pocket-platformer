@@ -259,8 +259,8 @@ class BuildMode {
     }
 
     static checkIfPlacementAllowedHere(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY) {
-        const objectsHoveringOver = allObjectsAtCurrentTile.filter(o => o.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.object &&
-            o.type !== ObjectTypes.PATH_POINT && !SpritePixelArrays.backgroundSprites.includes(o.type));
+        const objectsHoveringOver = allObjectsAtCurrentTile.filter(o => o.spriteObject[0].type === (SpritePixelArrays.SPRITE_TYPES.object &&
+            o.type !== ObjectTypes.PATH_POINT && !SpritePixelArrays.backgroundSprites.includes(o.type)) || o.type === ObjectTypes.DISAPPEARING_FOREGROUND_TILE);
         const pathsHoveringOver = allObjectsAtCurrentTile.filter(o => o.type === ObjectTypes.PATH_POINT);
         const backgroundObjectsHoveringOver = allObjectsAtCurrentTile.filter(o => SpritePixelArrays.backgroundSprites.includes(o.type));
         const decoHoveringOver = allObjectsAtCurrentTile.filter(o => o.type === SpritePixelArrays.SPRITE_TYPES.deko);
