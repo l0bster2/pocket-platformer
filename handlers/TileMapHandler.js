@@ -168,11 +168,15 @@ class TileMapHandler {
         this.displayObjectsOrDeko(this.deko);
         SFXHandler.updateSfxAnimations("backgroundSFX");
         isPlayMode && this.effects.length && EffectsRenderer.displayEffects();
+        //background objects, like water
         this.displayObjects(layers[0]);
         this.displayObjectsOrDeko(this.paths);
+        //normal objects
         this.displayObjects(layers[1]);
         this.displayStaticTiles();
+        //projectiles
         this.displayObjects(layers[2]);
+        //foreground objects
         this.displayObjects(layers[3]);
     }
 

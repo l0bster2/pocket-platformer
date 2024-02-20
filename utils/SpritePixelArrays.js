@@ -909,7 +909,7 @@ class SpritePixelArrays {
     this.DISAPPEARING_FOREGROUND_TILE = {
       name: ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
       descriptiveName: "Disappearing foreground",
-      description: "It will be displayed above all objects and deko. Once the player touches it, the tile and all it's neighbours disappear. You can hide secrets behind it.",
+      description: "It will be displayed above all objects and deco. Once the player touches it, the tile and all it's neighbours disappear. You can hide secrets behind it.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:
