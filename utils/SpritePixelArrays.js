@@ -42,6 +42,10 @@ class SpritePixelArrays {
       ObjectTypes.WATER,
     ];
 
+    this.foregroundSprites = [
+      ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
+    ];
+
     this.customType = "custom";
 
     this.TILE_1 = {
@@ -1807,8 +1811,11 @@ class SpritePixelArrays {
     this.SFX2 = {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 2",
-      description: "SFX when <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Cannon ball'} }, true)\">cannon ball</span> or " +
-        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Rocket'} }, true)\">rocket</span> hit a wall.",
+      description: "SFX when <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Cannon ball'} }, true)\">cannon ball</span>, " +
+        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Rocket'} }, true)\">rocket</span> or " +
+        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Stomper'} }, true)\">stomper</span> hit a wall, or player is shot out of a " +
+        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Barrel'} }, true)\">barrel</span>",
+
       animation: [{
         sprite:
           [

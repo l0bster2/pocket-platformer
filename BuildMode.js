@@ -259,10 +259,11 @@ class BuildMode {
     }
 
     static checkIfPlacementAllowedHere(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY) {
-        const objectsHoveringOver = allObjectsAtCurrentTile.filter(o => o.spriteObject[0].type === (SpritePixelArrays.SPRITE_TYPES.object &&
-            o.type !== ObjectTypes.PATH_POINT && !SpritePixelArrays.backgroundSprites.includes(o.type)) || o.type === ObjectTypes.DISAPPEARING_FOREGROUND_TILE);
+        const objectsHoveringOver = allObjectsAtCurrentTile.filter(o => o.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.object &&
+            o.type !== ObjectTypes.PATH_POINT && !SpritePixelArrays.backgroundSprites.includes(o.type));
         const pathsHoveringOver = allObjectsAtCurrentTile.filter(o => o.type === ObjectTypes.PATH_POINT);
         const backgroundObjectsHoveringOver = allObjectsAtCurrentTile.filter(o => SpritePixelArrays.backgroundSprites.includes(o.type));
+        const foregroundObjectsHoveringOver = allObjectsAtCurrentTile.filter(o => SpritePixelArrays.foregroundSprites.includes(o.type));
         const decoHoveringOver = allObjectsAtCurrentTile.filter(o => o.type === SpritePixelArrays.SPRITE_TYPES.deko);
 
         //Objects
@@ -284,6 +285,10 @@ class BuildMode {
         //Background objects
         else if (SpritePixelArrays.backgroundSprites.includes(this.currentSelectedObject?.name)) {
             return backgroundObjectsHoveringOver.length === 0;
+        }
+        //Foreground objects
+        else if (SpritePixelArrays.foregroundSprites.includes(this.currentSelectedObject?.name)) {
+            return foregroundObjectsHoveringOver.length === 0 && currentTile === 0;
         }
         //Deko - not allowed to put on top of other deko
         else if (this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.deko) {
@@ -388,11 +393,13 @@ class BuildMode {
     }
 
     static dragPlayerHandler(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY) {
+
         if (this.draggingPlayer && currentTile === 0 &&
             (allObjectsAtCurrentTile.length === 0 ||
                 allObjectsAtCurrentTile.every(objectAtCurrentTile =>
                     objectAtCurrentTile.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.deko ||
-                    SpritePixelArrays.backgroundSprites.includes(objectAtCurrentTile.spriteObject[0]?.name)
+                    SpritePixelArrays.backgroundSprites.includes(objectAtCurrentTile.spriteObject[0]?.name) ||
+                    SpritePixelArrays.foregroundSprites.includes(objectAtCurrentTile.spriteObject[0]?.name) 
                 ))) {
             this.player.x = tilePosX * this.tileMapHandler.tileSize;
             this.player.y = tilePosY * this.tileMapHandler.tileSize;

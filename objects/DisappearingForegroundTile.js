@@ -51,28 +51,32 @@ class DisappearingForegroundTile extends InteractiveLevelObject {
     }
 
     draw(spriteCanvas) {
-        if (this.setToInvisible) {
-            this.currentAlpha = this.currentAlpha - 0.04 > 0 ? this.currentAlpha - 0.04 : 0;
-        }
-        if(this.setToVisible) {
-            if(this.currentAlpha + 0.04 < 1) {
-                this.currentAlpha += 0.04;
+        if (Game.playMode === Game.PLAY_MODE) {
+            if (this.setToInvisible) {
+                this.currentAlpha = this.currentAlpha - 0.04 > 0 ? this.currentAlpha - 0.04 : 0;
             }
-            else {
-                this.currentAlpha = 1;
-                this.setToVisible = false;
+            if (this.setToVisible) {
+                if (this.currentAlpha + 0.04 < 1) {
+                    this.currentAlpha += 0.04;
+                }
+                else {
+                    this.currentAlpha = 1;
+                    this.setToVisible = false;
+                }
             }
-        }
-        if (this.currentInvisibleTimerFrame > 0) {
-            this.currentInvisibleTimerFrame--;
-            if (this.currentInvisibleTimerFrame === 1) {
-                this.resetAllDisappearingForegroundTiles();
-                this.setToInvisible = false;
-                this.setToVisible = true;
-                this.currentInvisibleTimerFrame = 0;
+            if (this.currentInvisibleTimerFrame > 0 && !DialogueHandler.active) {
+                this.currentInvisibleTimerFrame--;
+                if (this.currentInvisibleTimerFrame === 1) {
+                    this.resetAllDisappearingForegroundTiles();
+                    this.setToInvisible = false;
+                    this.setToVisible = true;
+                    this.currentInvisibleTimerFrame = 0;
+                }
             }
+            super.drawWithAlpha(spriteCanvas, this.currentAlpha)
         }
-        Game.playMode === Game.PLAY_MODE ? super.drawWithAlpha(spriteCanvas, this.currentAlpha)
-            : super.drawWithAlpha(spriteCanvas, 0.2);
+        else {
+            super.drawWithAlpha(spriteCanvas, 0.2);
+        }
     }
 }

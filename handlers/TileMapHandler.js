@@ -173,11 +173,12 @@ class TileMapHandler {
         this.displayObjects(layers[1]);
         this.displayStaticTiles();
         this.displayObjects(layers[2]);
+        this.displayObjects(layers[3]);
     }
 
     splitLevelObjectsInLayers() {
         const layers = [
-            [], [], []
+            [], [], [], []
         ];
         this.levelObjects.forEach(levelObject => {
             if(SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
@@ -185,6 +186,9 @@ class TileMapHandler {
             }
             else if(levelObject.type === ObjectTypes.CANON_BALL) {
                 layers[2].push(levelObject);
+            }
+            else if(SpritePixelArrays.foregroundSprites.includes(levelObject.type)) {
+                layers[3].push(levelObject);
             }
             else {
                 layers[1].push(levelObject);
