@@ -9,6 +9,7 @@ class CanonBall extends InteractiveLevelObject {
         this.yCenter = tileSize / 2;
         this.key = this.makeid(5);
         this.collidesWithWalls = collidesWithWalls;
+        this.currentIndex = 0;
     }
 
     collisionEvent() {
@@ -16,6 +17,13 @@ class CanonBall extends InteractiveLevelObject {
     }
 
     draw() {
+        this.currentIndex++;
+        if(this.currentIndex % 20 === 0) {
+            SFXHandler.createSFX(this.x, this.y, 9, this.facingDirection, 0, 0, true, 12, 1, "backgroundSFX")
+        }
+        if(this.currentIndex === 101) {
+            this.currentIndex = 0;
+        }
         super.draw(spriteCanvas);
         if (Game.playMode === Game.PLAY_MODE) {
 

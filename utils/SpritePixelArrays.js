@@ -914,14 +914,14 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["fbe7cf", "fbe7cf", "transp", "transp", "eeb39e", "eeb39e", "eeb39e", "eeb39e"],
+            ["fbe7cf", "fbe7cf", "eeb39e", "fbe7cf", "eeb39e", "eeb39e", "eeb39e", "eeb39e"],
+            ["fbe7cf", "f6c992", "eeb39e", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
+            ["fbe7cf", "eeb39e", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
             ["fbe7cf", "f6c992", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
-            ["transp", "f6c992", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
-            ["transp", "f6c992", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
-            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "f6c992", "transp"],
-            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "f6c992", "transp"],
             ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "f6c992", "e1a45b"],
-            ["c26241", "c26241", "c26241", "c26241", "transp", "transp", "e1a45b", "e1a45b"],
+            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "eeb39e", "e1a45b"],
+            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "eeb39e", "f6c992", "e1a45b"],
+            ["c26241", "c26241", "c26241", "c26241", "e1a45b", "eeb39e", "e1a45b", "e1a45b"],
           ]
       },
       ]
@@ -988,7 +988,8 @@ class SpritePixelArrays {
       descriptiveName: "Cannon ball",
       directions: [AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.bottom],
       description: "A cannonball. The <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Cannon'} }, true)\">cannon</span> shoots it. <br/>" +
-        "When it hits a wall, <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 2'} }, true)\">explosion</span> will be displayed.",
+        "When it hits a wall, <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 2'} }, true)\">explosion</span> will be displayed. " +
+        "Leaves <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 9'} }, true)\">trail</span>.",
       animation: [{
         sprite:
           [
@@ -1810,6 +1811,7 @@ class SpritePixelArrays {
 
     this.SFX2 = {
       name: ObjectTypes.SFX,
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       descriptiveName: "SFX 2",
       description: "SFX when <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Cannon ball'} }, true)\">cannon ball</span>, " +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Rocket'} }, true)\">rocket</span> or " +
@@ -1847,6 +1849,7 @@ class SpritePixelArrays {
 
     this.SFX3 = {
       name: ObjectTypes.SFX,
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       descriptiveName: "SFX 3",
       description: "SFX when player dashes",
       animation: [{
@@ -1881,6 +1884,7 @@ class SpritePixelArrays {
     this.SFX4 = {
       name: ObjectTypes.SFX,
       descriptiveName: "Build SFX",
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       hiddenEverywhere: true,
       description: "SFX when an object is placed in build mode",
       animation: [{
@@ -1902,6 +1906,7 @@ class SpritePixelArrays {
     this.SFX5 = {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 4",
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       description: "Plays when the player touches a <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Collectible'} }, true)\">collectible</span>.",
       animation: [{
         sprite:
@@ -1935,6 +1940,7 @@ class SpritePixelArrays {
     this.SFX6 = {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 5",
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       description: "Used for shaders",
       animation: [{
         sprite:
@@ -1957,6 +1963,7 @@ class SpritePixelArrays {
     this.SFX7 = {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 6",
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       description: "Used for shaders",
       animation: [{
         sprite:
@@ -1978,6 +1985,7 @@ class SpritePixelArrays {
     this.SFX8 = {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 7",
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       description: "Used for shaders",
       animation: [{
         sprite:
@@ -2011,6 +2019,7 @@ class SpritePixelArrays {
     this.SFX9 = {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 8",
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       description: "Will be displayed behind the player, if the player is in auto-run mode.",
       animation: [{
         sprite:
@@ -2035,6 +2044,40 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "FFAA55", "transp", "transp", "transp", "transp", "FFAA55", "transp"],
             ["transp", "transp", "FFAA55", "transp", "transp", "FFAA55", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.SFX10 = {
+      name: ObjectTypes.SFX,
+      descriptiveName: "SFX 9",
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
+      description: "Cannon ball will leave this trail.",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55AA", "FF55AA", "transp", "transp", "transp"],
+            ["transp", "transp", "FF55AA", "transp", "transp", "FF55AA", "transp", "transp"],
+            ["transp", "transp", "FF55AA", "transp", "transp", "FF55AA", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55AA", "FF55AA", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55AA", "FF55AA", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "FF55AA", "transp", "transp", "transp", "transp", "FF55AA", "transp"],
+            ["transp", "FF55AA", "transp", "transp", "transp", "transp", "FF55AA", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55AA", "FF55AA", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       }
