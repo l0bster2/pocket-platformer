@@ -611,8 +611,10 @@ class SpritePixelArrays {
       changeableAttributes: [
         { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 10 },
         { name: this.changeableAttributeTypes.frequency, defaultValue: 3, minValue: 1, maxValue: 8 },
-        { name: this.changeableAttributeTypes.collidesWithWalls, defaultValue: true, 
-          formElement: this.changeableAttributeFormElements.checkbox, checkboxDescription: "Cannonball collides with walls" }
+        {
+          name: this.changeableAttributeTypes.collidesWithWalls, defaultValue: true,
+          formElement: this.changeableAttributeFormElements.checkbox, checkboxDescription: "Cannonball collides with walls"
+        }
       ],
       descriptiveName: "Cannon",
       description: "A cannon. It shoots <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Cannon ball'} }, true)\">cannonballs</span> at certain time intervals. Click on it after placing it again, to change the attributes of the individual cannon.",
@@ -908,6 +910,40 @@ class SpritePixelArrays {
       },
       ]
     };
+    
+    this.FOREGROUND_TILE = {
+      name: ObjectTypes.FOREGROUND_TILE,
+      descriptiveName: "Foreground tile",
+      description: "It will be displayed above all objects and deco. It doesn't have any collision. ",
+      type: this.SPRITE_TYPES.tile,
+      animation: [{
+        sprite:
+          [
+            ["55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF"],
+            ["C6E3FF", "55AAFF", "55AAFF", "C6E3FF", "C6E3FF", "55AAFF", "55AAFF", "C6E3FF"],
+            ["55AAFF", "C6E3FF", "C6E3FF", "55AAFF", "55AAFF", "C6E3FF", "C6E3FF", "55AAFF"],
+            ["55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF"],
+            ["55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF"],
+            ["C6E3FF", "55AAFF", "55AAFF", "C6E3FF", "C6E3FF", "55AAFF", "55AAFF", "C6E3FF"],
+            ["55AAFF", "C6E3FF", "C6E3FF", "55AAFF", "55AAFF", "C6E3FF", "C6E3FF", "55AAFF"],
+            ["55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["55AAFF", "C6E3FF", "C6E3FF", "55AAFF", "55AAFF", "C6E3FF", "C6E3FF", "55AAFF"],
+            ["55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF"],
+            ["55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF"],
+            ["C6E3FF", "55AAFF", "55AAFF", "C6E3FF", "C6E3FF", "55AAFF", "55AAFF", "C6E3FF"],
+            ["55AAFF", "C6E3FF", "C6E3FF", "55AAFF", "55AAFF", "C6E3FF", "C6E3FF", "55AAFF"],
+            ["55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF"],
+            ["55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF", "55AAFF"],
+            ["C6E3FF", "55AAFF", "55AAFF", "C6E3FF", "C6E3FF", "55AAFF", "55AAFF", "C6E3FF"],
+          ]
+      },
+      ]
+    };
 
     this.DISAPPEARING_FOREGROUND_TILE = {
       name: ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
@@ -923,28 +959,7 @@ class SpritePixelArrays {
             ["fbe7cf", "f6c992", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
             ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "f6c992", "e1a45b"],
             ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "eeb39e", "e1a45b"],
-            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "eeb39e", "f6c992", "e1a45b"],
-            ["c26241", "c26241", "c26241", "c26241", "e1a45b", "eeb39e", "e1a45b", "e1a45b"],
-          ]
-      },
-      ]
-    };
-
-    this.FOREGROUND_TILE = {
-      name: ObjectTypes.FOREGROUND_TILE,
-      descriptiveName: "Foreground tile",
-      description: "It will be displayed above all objects and deco.",
-      type: this.SPRITE_TYPES.tile,
-      animation: [{
-        sprite:
-          [
-            ["fbe7cf", "fbe7cf", "eeb39e", "fbe7cf", "eeb39e", "eeb39e", "eeb39e", "eeb39e"],
-            ["fbe7cf", "f6c992", "eeb39e", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
-            ["fbe7cf", "eeb39e", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
-            ["fbe7cf", "f6c992", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
-            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "f6c992", "e1a45b"],
-            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "eeb39e", "e1a45b"],
-            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "eeb39e", "f6c992", "e1a45b"],
+            ["eeb39e", "ee8764", "c26241", "ee8764", "f6c992", "eeb39e", "f6c992", "e1a45b"],
             ["c26241", "c26241", "c26241", "c26241", "e1a45b", "eeb39e", "e1a45b", "e1a45b"],
           ]
       },
