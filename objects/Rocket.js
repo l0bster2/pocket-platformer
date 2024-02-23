@@ -10,6 +10,7 @@ class Rocket extends InteractiveLevelObject {
         this.rotationSpeed = rotationSpeed;
         this.rotationCounter = 0;
         this.maxRotationCounter = 3;
+        this.currentTrailFrame = 0;
         this.setInitialPosition();
     }
 
@@ -55,6 +56,13 @@ class Rocket extends InteractiveLevelObject {
     }
 
     draw(spriteCanvas) {
+        this.currentTrailFrame++;
+        if(this.currentTrailFrame % 10 === 0) {
+            SFXHandler.createSFX(this.x, this.y, 9, this.facingDirection, 0, 0, true, 14, 1, "backgroundSFX")
+        }
+        if(this.currentTrailFrame === 101) {
+            this.currentTrailFrame = 0;
+        }
         this.rotationCounter++;
         const newAngle = this.tileMapHandler?.player ?
             MathHelpers.getAngle(this.tileMapHandler.player.x, this.tileMapHandler.player.y, this.x, this.y) : 0;

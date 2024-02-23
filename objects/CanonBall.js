@@ -9,7 +9,8 @@ class CanonBall extends InteractiveLevelObject {
         this.yCenter = tileSize / 2;
         this.key = this.makeid(5);
         this.collidesWithWalls = collidesWithWalls;
-        this.currentIndex = 0;
+        this.currentTrailFrame = 0;
+        this.trailModulo = Math.floor(35 / speed); 
     }
 
     collisionEvent() {
@@ -17,12 +18,12 @@ class CanonBall extends InteractiveLevelObject {
     }
 
     draw() {
-        this.currentIndex++;
-        if(this.currentIndex % 20 === 0) {
-            SFXHandler.createSFX(this.x, this.y, 9, this.facingDirection, 0, 0, true, 12, 1, "backgroundSFX")
+        this.currentTrailFrame++;
+        if(this.currentTrailFrame % this.trailModulo === 0) {
+            SFXHandler.createSFX(this.x, this.y, 9, this.facingDirection, 0, 0, true, 16, 1, "backgroundSFX")
         }
-        if(this.currentIndex === 101) {
-            this.currentIndex = 0;
+        if(this.currentTrailFrame === 101) {
+            this.currentTrailFrame = 0;
         }
         super.draw(spriteCanvas);
         if (Game.playMode === Game.PLAY_MODE) {

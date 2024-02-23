@@ -2054,16 +2054,16 @@ class SpritePixelArrays {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 9",
       directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
-      description: "Cannon ball will leave this trail.",
+      description: "Cannon ball and rocket will leave this trail.",
       animation: [{
         sprite:
           [
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55AA", "FF55AA", "transp", "transp", "transp"],
-            ["transp", "transp", "FF55AA", "transp", "transp", "FF55AA", "transp", "transp"],
-            ["transp", "transp", "FF55AA", "transp", "transp", "FF55AA", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55AA", "FF55AA", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "AA0055", "AA0055", "transp", "transp", "transp"],
+            ["transp", "transp", "AA0055", "AA0055", "AA0055", "AA0055", "transp", "transp"],
+            ["transp", "transp", "AA0055", "AA0055", "AA0055", "AA0055", "transp", "transp"],
+            ["transp", "transp", "transp", "AA0055", "AA0055", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
@@ -2072,12 +2072,12 @@ class SpritePixelArrays {
         sprite:
           [
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55AA", "FF55AA", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "FF55AA", "transp", "transp", "transp", "transp", "FF55AA", "transp"],
-            ["transp", "FF55AA", "transp", "transp", "transp", "transp", "FF55AA", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55AA", "FF55AA", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "AA0055", "AA0055", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "AA0055", "AA0055", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       }
