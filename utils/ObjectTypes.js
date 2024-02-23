@@ -135,6 +135,10 @@ class ObjectTypes {
     return 'disappearingForegroundTile'
   }
 
+  static get FOREGROUND_TILE() {
+    return 'foregroundTile'
+  }
+
   static get PATH() {
     return 'path';
   }
@@ -181,6 +185,7 @@ class ObjectTypes {
       [this.TREADMILL]: Treadmill,
       [this.ICE_BLOCK]: IceBlock,
       [this.DISAPPEARING_FOREGROUND_TILE]: DisappearingForegroundTile,
+      [this.FOREGROUND_TILE]: ForegroundTile,
       [this.RED_BLOCK]: RedBlock,
       [this.BLUE_BLOCK]: BlueBlock,
       [this.FIXED_SPEED_RIGHT]: FixedSpeedRight,

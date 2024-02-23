@@ -23,6 +23,8 @@ class SpritePixelArrays {
       ObjectTypes.BLUE_BLOCK,
       ObjectTypes.TREADMILL,
       ObjectTypes.ICE_BLOCK,
+      ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
+      ObjectTypes.FOREGROUND_TILE,
     ];
 
     this.changeableAttributeTypes = {
@@ -44,6 +46,7 @@ class SpritePixelArrays {
 
     this.foregroundSprites = [
       ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
+      ObjectTypes.FOREGROUND_TILE,
     ];
 
     this.customType = "custom";
@@ -910,6 +913,27 @@ class SpritePixelArrays {
       name: ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
       descriptiveName: "Disappearing foreground",
       description: "It will be displayed above all objects and deco. Once the player touches it, the tile and all it's neighbours disappear. You can hide secrets behind it.",
+      type: this.SPRITE_TYPES.tile,
+      animation: [{
+        sprite:
+          [
+            ["fbe7cf", "fbe7cf", "eeb39e", "fbe7cf", "eeb39e", "eeb39e", "eeb39e", "eeb39e"],
+            ["fbe7cf", "f6c992", "eeb39e", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
+            ["fbe7cf", "eeb39e", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
+            ["fbe7cf", "f6c992", "f6c992", "f6c992", "ee8764", "ee8764", "ee8764", "c26241"],
+            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "f6c992", "e1a45b"],
+            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "f6c992", "eeb39e", "e1a45b"],
+            ["eeb39e", "ee8764", "ee8764", "ee8764", "f6c992", "eeb39e", "f6c992", "e1a45b"],
+            ["c26241", "c26241", "c26241", "c26241", "e1a45b", "eeb39e", "e1a45b", "e1a45b"],
+          ]
+      },
+      ]
+    };
+
+    this.FOREGROUND_TILE = {
+      name: ObjectTypes.FOREGROUND_TILE,
+      descriptiveName: "Foreground tile",
+      description: "It will be displayed above all objects and deco.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:
