@@ -1010,7 +1010,8 @@ class SpritePixelArrays {
       name: ObjectTypes.ROCKET,
       descriptiveName: "Rocket",
       description: "A rocket. The <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Rocket launcher'} }, true)\">rocket launcher</span> shoots it.<br/>" +
-        "When it hits a wall, <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 2'} }, true)\">explosion</span> will be displayed.",
+        "When it hits a wall, <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 2'} }, true)\">explosion</span> will be displayed. " +
+        "Leaves <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 9'} }, true)\">trail</span>.",
       animation: [{
         sprite:
           [
