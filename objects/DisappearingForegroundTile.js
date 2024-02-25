@@ -76,7 +76,7 @@ class DisappearingForegroundTile extends InteractiveLevelObject {
             super.drawWithAlpha(spriteCanvas, this.currentAlpha)
         }
         else {
-            super.drawWithAlpha(spriteCanvas, 0.2);
+            super.drawWithAlpha(spriteCanvas, 0.1);
         }
     }
 }

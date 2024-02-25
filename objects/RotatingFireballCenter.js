@@ -73,8 +73,8 @@ class RotatingFireballCenter extends InteractiveLevelObject {
         }
         else {
             // Reset the angle after 360 degree turn
-            this.angle = MathHelpers.normalizeAngle(this.angle);
             this.angle += this.movementDirection === AnimationHelper.possibleDirections.forwards ? this.speed : this.speed * -1;
+            this.angle = MathHelpers.normalizeAngle(this.angle);
         }
         for (var i = 1; i < this.fireBallsAmount; i++) {
             this.handleAdditionalFireball(i, spriteCanvas);

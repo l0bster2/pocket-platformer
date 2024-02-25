@@ -23,7 +23,7 @@ class MathHelpers {
       return Math.abs(360 - newAngle);
     }
     else if (newAngle < 0) {
-      return 360 - newAngle;
+      return 360 - Math.abs(newAngle);
     }
     return newAngle;
   }
