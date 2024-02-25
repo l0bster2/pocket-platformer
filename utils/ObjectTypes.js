@@ -147,6 +147,10 @@ class ObjectTypes {
     return 'pathPoint';
   }
 
+  static get ROTATING_FIREBALL_CENTER() {
+    return 'rotatingFireballCenter';
+  }
+
   static get COLLECTIBLE() {
     return 'collectible';
   }
@@ -190,6 +194,7 @@ class ObjectTypes {
       [this.BLUE_BLOCK]: BlueBlock,
       [this.FIXED_SPEED_RIGHT]: FixedSpeedRight,
       [this.FIXED_SPEED_STOPPER]: FixedSpeedStopper,
+      [this.ROTATING_FIREBALL_CENTER]: RotatingFireballCenter,
       [this.WATER]: Water,
       [this.TOGGLE_MINE]: ToggleMine,
       [this.ROCKET_LAUNCHER]: RocketLauncher,

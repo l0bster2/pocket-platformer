@@ -70,10 +70,14 @@ class LevelObject {
         this.checkFrameAndDraw(drawFunction);
     }
 
+    checkFrame() {
+        const frameModulo = tileMapHandler.currentGeneralFrameCounter % 40;
+        return frameModulo < AnimationHelper.defaultFrameDuration;
+    }
+
     checkFrameAndDraw(drawFunction) {
         if (this?.spriteObject?.[0].animation.length > 1 && Game.playMode === Game.PLAY_MODE) {
-            const frameModulo = tileMapHandler.currentGeneralFrameCounter % 40;
-            if (frameModulo < AnimationHelper.defaultFrameDuration) {
+            if (this.checkFrame()) {
                 drawFunction(this.canvasXSpritePos);
             }
             else {

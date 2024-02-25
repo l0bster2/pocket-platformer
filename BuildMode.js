@@ -37,6 +37,7 @@ class BuildMode {
             ObjectTypes.COLLECTIBLE,
             ObjectTypes.BARREL_CANNON,
             ObjectTypes.JUMP_RESET,
+            ObjectTypes.ROTATING_FIREBALL_CENTER,
         ];
         this.objectsWithoutSFXAfterPlacing = [ObjectTypes.DISAPPEARING_BLOCK, ObjectTypes.BLUE_BLOCK, ObjectTypes.RED_BLOCK];
     }

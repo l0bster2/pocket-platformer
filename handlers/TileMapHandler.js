@@ -186,7 +186,7 @@ class TileMapHandler {
             if(SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
                 layers[0].push(levelObject);
             }
-            else if(levelObject.type === ObjectTypes.CANON_BALL) {
+            else if(SpritePixelArrays.projectileSprites.includes(levelObject.type)) {
                 layers[2].push(levelObject);
             }
             else if(SpritePixelArrays.foregroundSprites.includes(levelObject.type)) {
@@ -221,7 +221,8 @@ class TileMapHandler {
     resetDynamicObjects() {
         for (var i = this.levelObjects.length; i >= 0; i--) {
             const laserObject = this.levelObjects[i]?.type === ObjectTypes.LASER;
-            if (this.levelObjects[i]?.type === ObjectTypes.CANON_BALL || this.levelObjects[i]?.type === ObjectTypes.ROCKET || laserObject) {
+            if (this.levelObjects[i]?.type === ObjectTypes.CANON_BALL || this.levelObjects[i]?.type === ObjectTypes.ROCKET
+                || laserObject) {
                 !laserObject && SFXHandler.createSFX(this.levelObjects[i].x, this.levelObjects[i].y, 1)
                 this.levelObjects.splice(i, 1);
             }

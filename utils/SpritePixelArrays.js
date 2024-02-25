@@ -38,6 +38,7 @@ class SpritePixelArrays {
       laserDuration: "laserDuration",
       pauseDuration: "pauseDuration",
       collidesWithWalls: "collidesWithWalls",
+      fireBallsAmount: "fireBallsAmount",
     };
 
     this.backgroundSprites = [
@@ -48,6 +49,11 @@ class SpritePixelArrays {
       ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
       ObjectTypes.FOREGROUND_TILE,
     ];
+
+    this.projectileSprites = [
+      ObjectTypes.CANON_BALL_SPRITE, 
+      ObjectTypes.ROTATING_FIREBALL_CENTER,
+    ]
 
     this.customType = "custom";
 
@@ -1375,6 +1381,48 @@ class SpritePixelArrays {
             ['transp', 'transp', 'transp', 'transp', 'transp', 'transp', 'transp', 'transp'],
           ]
       },
+      ]
+    };
+
+    this.ROTATING_FIREBALL_CENTER = {
+      name: ObjectTypes.ROTATING_FIREBALL_CENTER,
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 10 },
+        { name: this.changeableAttributeTypes.fireBallsAmount, defaultValue: 3, minValue: 1, maxValue: 8, descriptiveName: "amount" },
+        {
+          name: this.changeableAttributeTypes.movementDirection, formElement: this.changeableAttributeFormElements.toggle, defaultValue: AnimationHelper.possibleDirections.forwards,
+          options: [{ "true": AnimationHelper.possibleDirections.forwards }, { "false": AnimationHelper.possibleDirections.backwards }]
+        },
+      ],
+      descriptiveName: "Rotating fireball",
+      description: "Several fireballs will rotate around a center point. Click on it after placing it again, to change it's attributes.",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
+            ["transp", "FFC6C6", "390000", "390000", "390000", "390000", "FFC6C6", "transp"],
+            ["FFC6C6", "390000", "FFC6C6", "390000", "390000", "390000", "390000", "FFC6C6"],
+            ["FFC6C6", "390000", "390000", "FFC6C6", "390000", "390000", "390000", "FFC6C6"],
+            ["FFC6C6", "390000", "390000", "390000", "FFC6C6", "390000", "390000", "FFC6C6"],
+            ["FFC6C6", "390000", "390000", "390000", "390000", "FFC6C6", "390000", "FFC6C6"],
+            ["transp", "FFC6C6", "390000", "390000", "390000", "390000", "FFC6C6", "transp"],
+            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
+            ["transp", "FFC6C6", "710000", "710000", "710000", "710000", "FFC6C6", "transp"],
+            ["FFC6C6", "710000", "FFC6C6", "710000", "710000", "710000", "710000", "FFC6C6"],
+            ["FFC6C6", "710000", "710000", "FFC6C6", "710000", "710000", "710000", "FFC6C6"],
+            ["FFC6C6", "710000", "710000", "710000", "FFC6C6", "710000", "710000", "FFC6C6"],
+            ["FFC6C6", "710000", "710000", "710000", "710000", "FFC6C6", "710000", "FFC6C6"],
+            ["transp", "FFC6C6", "710000", "710000", "710000", "710000", "FFC6C6", "transp"],
+            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
+          ]
+      }
       ]
     };
 
