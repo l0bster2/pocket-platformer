@@ -51,7 +51,7 @@ class SpritePixelArrays {
     ];
 
     this.projectileSprites = [
-      ObjectTypes.CANON_BALL_SPRITE, 
+      ObjectTypes.CANON_BALL_SPRITE,
       ObjectTypes.ROTATING_FIREBALL_CENTER,
     ]
 
@@ -916,7 +916,7 @@ class SpritePixelArrays {
       },
       ]
     };
-    
+
     this.FOREGROUND_TILE = {
       name: ObjectTypes.FOREGROUND_TILE,
       descriptiveName: "Foreground tile",
@@ -1400,27 +1400,27 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
-            ["transp", "FFC6C6", "390000", "390000", "390000", "390000", "FFC6C6", "transp"],
-            ["FFC6C6", "390000", "FFC6C6", "390000", "390000", "390000", "390000", "FFC6C6"],
-            ["FFC6C6", "390000", "390000", "FFC6C6", "390000", "390000", "390000", "FFC6C6"],
-            ["FFC6C6", "390000", "390000", "390000", "FFC6C6", "390000", "390000", "FFC6C6"],
-            ["FFC6C6", "390000", "390000", "390000", "390000", "FFC6C6", "390000", "FFC6C6"],
-            ["transp", "FFC6C6", "390000", "390000", "390000", "390000", "FFC6C6", "transp"],
-            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
+            ["transp", "transp", "FF1C1C", "FF1C1C", "FF1C1C", "transp", "transp", "transp"],
+            ["transp", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "transp"],
+            ["FF1C1C", "FF1C1C", "FF1C1C", "transp", "transp", "transp", "transp", "FF1C1C"],
+            ["FF1C1C", "FF1C1C", "transp", "transp", "FF1C1C", "FF1C1C", "transp", "transp"],
+            ["FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FFFF55", "FFFF55", "FF1C1C", "transp"],
+            ["FF1C1C", "FF1C1C", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "FF1C1C", "transp"],
+            ["transp", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "transp"],
+            ["transp", "transp", "FF1C1C", "FF1C1C", "FF1C1C", "transp", "transp", "transp"]
           ]
       },
       {
         sprite:
           [
-            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
-            ["transp", "FFC6C6", "710000", "710000", "710000", "710000", "FFC6C6", "transp"],
-            ["FFC6C6", "710000", "FFC6C6", "710000", "710000", "710000", "710000", "FFC6C6"],
-            ["FFC6C6", "710000", "710000", "FFC6C6", "710000", "710000", "710000", "FFC6C6"],
-            ["FFC6C6", "710000", "710000", "710000", "FFC6C6", "710000", "710000", "FFC6C6"],
-            ["FFC6C6", "710000", "710000", "710000", "710000", "FFC6C6", "710000", "FFC6C6"],
-            ["transp", "FFC6C6", "710000", "710000", "710000", "710000", "FFC6C6", "transp"],
-            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
+            ["transp", "transp", "transp", "FF1C1C", "FF1C1C", "FF1C1C", "transp", "transp"],
+            ["transp", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "transp"],
+            ["transp", "FF1C1C", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "FF1C1C", "FF1C1C"],
+            ["transp", "FF1C1C", "FFFF55", "FFFF55", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C"],
+            ["transp", "transp", "FF1C1C", "FF1C1C", "transp", "transp", "FF1C1C", "FF1C1C"],
+            ["FF1C1C", "transp", "transp", "transp", "transp", "FF1C1C", "FF1C1C", "FF1C1C"],
+            ["transp", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "transp"],
+            ["transp", "transp", "transp", "FF1C1C", "FF1C1C", "FF1C1C", "transp", "transp"]
           ]
       }
       ]

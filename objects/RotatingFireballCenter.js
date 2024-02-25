@@ -6,16 +6,11 @@ class RotatingFireballCenter extends InteractiveLevelObject {
         this.hitBoxOffset = hitBoxOffset;
         this.tilemapHandler = tilemapHandler;
         this.key = this.makeid(5);
-        this.angle = 0;
-        this.reset(tilemapHandler);
+        this.resetObject();
     }
 
-    reset() {
-        this.angle = 0;
-    }
-
-    addChangeableAttribute(attribute, value, levelToChange = null) {
-        super.addChangeableAttribute(attribute, value, levelToChange);
+    resetObject() {
+        this.angle = 270;
     }
 
     collisionEvent() {
@@ -24,19 +19,9 @@ class RotatingFireballCenter extends InteractiveLevelObject {
 
     getAdditionalFireballPos(index) {
         var radius = index * this.tileSize;
-
-        if (Game.playMode === Game.BUILD_MODE) {
-            this.angle = 90;
-        }
-        else {
-            // Reset the angle after 360 degree turn
-            if (this.angle > Math.PI * 2) {
-                this.angle = 0;
-            }
-            this.angle += this.movementDirection === AnimationHelper.possibleDirections.forwards ? 0.01 : -0.01;
-        }
-        const x = this.x + radius * Math.cos(this.angle);
-        const y = this.y + radius * Math.sin(this.angle);
+        const radians = MathHelpers.getRadians(this.angle);
+        const x = this.x + radius * Math.cos(radians);
+        const y = this.y + radius * Math.sin(radians);
         return { dx: x, dy: y };
     }
 
@@ -82,7 +67,15 @@ class RotatingFireballCenter extends InteractiveLevelObject {
         }
     }
 
-    draw(spriteCanvas) {
+    draw(spriteCanvas) {    
+        if (Game.playMode === Game.BUILD_MODE) {
+            this.angle = 270;
+        }
+        else {
+            // Reset the angle after 360 degree turn
+            this.angle = MathHelpers.normalizeAngle(this.angle);
+            this.angle += this.movementDirection === AnimationHelper.possibleDirections.forwards ? this.speed : this.speed * -1;
+        }
         for (var i = 1; i < this.fireBallsAmount; i++) {
             this.handleAdditionalFireball(i, spriteCanvas);
         }
