@@ -24,6 +24,7 @@ class CustomSpriteHandler {
         this.addOptionToSelect(SpritePixelArrays.TREADMILL.name, SpritePixelArrays.TREADMILL.descriptiveName);
         this.addOptionToSelect(SpritePixelArrays.ICE_BLOCK.name, SpritePixelArrays.ICE_BLOCK.descriptiveName);
         this.addOptionToSelect(SpritePixelArrays.DISAPPEARING_FOREGROUND_TILE.name, SpritePixelArrays.DISAPPEARING_FOREGROUND_TILE.descriptiveName);
+        this.addOptionToSelect(SpritePixelArrays.FOREGROUND_TILE.name, SpritePixelArrays.FOREGROUND_TILE.descriptiveName);
         const notCopyableSprites = [ObjectTypes.FINISH_FLAG_CLOSED, ObjectTypes.PORTAL2, ObjectTypes.PORTAL, ObjectTypes.PATH_POINT, ObjectTypes.COLLECTIBLE];
         const copyableObjects = SpritePixelArrays.allSprites.filter(sprite =>
             sprite.type === SpritePixelArrays.SPRITE_TYPES.object && !notCopyableSprites.includes(sprite.name)

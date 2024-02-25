@@ -914,7 +914,7 @@ class SpritePixelArrays {
     this.FOREGROUND_TILE = {
       name: ObjectTypes.FOREGROUND_TILE,
       descriptiveName: "Foreground tile",
-      description: "It will be displayed above all objects and deco. It doesn't have any collision. ",
+      description: "It will be displayed above tiles, objects and even the player. It doesn't have any collision. You can hide secret passages behind them.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:
@@ -948,7 +948,7 @@ class SpritePixelArrays {
     this.DISAPPEARING_FOREGROUND_TILE = {
       name: ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
       descriptiveName: "Disappearing foreground",
-      description: "It will be displayed above all objects and deco. Once the player touches it, the tile and all it's neighbours disappear. You can hide secrets behind it.",
+      description: "It will be displayed above tiles, objects and even the player. Once the player touches it, the tile and all it's neighbours disappear. You can hide secrets behind it.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:
