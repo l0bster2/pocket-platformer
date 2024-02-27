@@ -38,11 +38,9 @@ class SoundHandler {
       if (sound.key === "song" && WorldDataHandler.insideTool) {
         this.song = new Sound("", "mainSong", true);
       } else {
-        this[sound.key] = new Sound(sound.value);
+        this[sound.key] = new Sound(sound.value, sound.key);
       }
     });
-
-    SoundHandlerRenderer.createSoundOverview();
   }
 
   static setVolume(audoElementId, volume = 1) {

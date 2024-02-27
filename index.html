@@ -701,6 +701,8 @@
             LevelSizeHandler.staticConstructor(tileMapHandler);
             PlayerAttributesHandler.staticConstructor(player);
             CustomSpriteHandler.staticConstructor();
+            SoundHandlerRenderer.createSoundOverview();
+
 
             canvas.addEventListener("mouseenter", (e) => { Controller.mouseEnter(e) });
             canvas.addEventListener("mouseleave", (e) => { Controller.mouseLeave(e) });

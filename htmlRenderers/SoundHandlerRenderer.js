@@ -7,17 +7,25 @@ class SoundHandlerRenderer {
         </div>`;
     }
 
-    static startSound(key) {
+    static stopSound(key) {
+        SoundHandler[key].stop();
         document.getElementById(key + "Stop").style.display = "none";
         document.getElementById(key + "Start").style.display = "block";
     }
 
-    static stopSound(key) {
-        document.getElementById(key + "Stop").style.display = "block";
-        document.getElementById(key + "Start").style.display = "none";
+    static startSound(key) {
+        SoundHandler[key].stopAndPlay();
+        //document.getElementById(key + "Stop").style.display = "block";
+        //document.getElementById(key + "Start").style.display = "none";
     }
 
     static uploadCustom(key) {
+        var file = document.getElementById("uploadSound" + key).files[0];
+        if (file) {
+            const audioElement = document.getElementById(key);
+            audioElement.src = URL.createObjectURL(file);
+            audioElement.load();
+        }
         document.getElementById(key + "Upload").innerHTML = `<button id="addEffectButton" class="levelNavigationButton tertiaryButton marginTop8"
         onclick="SoundHandlerRenderer.deleteCustom('${key}')" style="padding: 8px 12px;">
         DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
@@ -31,10 +39,10 @@ class SoundHandlerRenderer {
 
     static createSoundControls(sound) {
         return `<div class="soundControls">
-            <button id="${sound.key}Stop" style="display: none" class="levelNavigationButton" onClick="SoundHandlerRenderer.startSound('${sound.key}')">
+            <button id="${sound.key}Stop" style="display: none" class="levelNavigationButton" onClick="SoundHandlerRenderer.stopSound('${sound.key}')">
                 <img src="images/icons/pause.svg" width="14" height="14">
             </button>
-            <button id="${sound.key}Start" class="levelNavigationButton" onClick="SoundHandlerRenderer.stopSound('${sound.key}')">
+            <button id="${sound.key}Start" class="levelNavigationButton" onClick="SoundHandlerRenderer.startSound('${sound.key}')">
                 <img src="images/icons/right.svg" width="14" height="14">
             </button>
             <span class="soundControlsDescription">${sound.descriptiveName}</span>
@@ -46,7 +54,7 @@ class SoundHandlerRenderer {
 
     static createUploadButton(key) {
         return `<label class="levelNavigationButton importExportButton">
-        <input type="file" id="importButton" onChange="SoundHandlerRenderer.uploadCustom('${key}')" />
+        <input type="file" id="uploadSound${key}" onChange="SoundHandlerRenderer.uploadCustom('${key}')" />
         Import custom
         <img src="images/icons/import.svg" class="iconInButtonWithText" alt="import" width="16"
             height="16">
