@@ -261,7 +261,7 @@ class BuildMode {
 
     static checkIfPlacementAllowedHere(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY) {
         const objectsHoveringOver = allObjectsAtCurrentTile.filter(o => o.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.object &&
-            o.type !== ObjectTypes.PATH_POINT && !SpritePixelArrays.backgroundSprites.includes(o.type));
+            o.type !== ObjectTypes.PATH_POINT && !SpritePixelArrays.backgroundSprites.includes(o.type) && !SpritePixelArrays.foregroundSprites.includes(o.type));
         const pathsHoveringOver = allObjectsAtCurrentTile.filter(o => o.type === ObjectTypes.PATH_POINT);
         const backgroundObjectsHoveringOver = allObjectsAtCurrentTile.filter(o => SpritePixelArrays.backgroundSprites.includes(o.type));
         const foregroundObjectsHoveringOver = allObjectsAtCurrentTile.filter(o => SpritePixelArrays.foregroundSprites.includes(o.type));
@@ -289,7 +289,7 @@ class BuildMode {
         }
         //Foreground objects
         else if (SpritePixelArrays.foregroundSprites.includes(this.currentSelectedObject?.name)) {
-            return foregroundObjectsHoveringOver.length === 0 && currentTile === 0;
+            return foregroundObjectsHoveringOver.length === 0;
         }
         //Deko - not allowed to put on top of other deko
         else if (this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.deko) {
