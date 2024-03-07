@@ -126,7 +126,7 @@ class CharacterCollision {
     }
 
     static correctTopPosition(obj) {
-        obj.y = obj.bottom * tileMapHandler.tileSize + 1;
+        obj.y = (obj.top + 1) * tileMapHandler.tileSize + 1;
         obj.hitWall(AnimationHelper.facingDirections.top)
     }
 
