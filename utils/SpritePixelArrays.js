@@ -51,7 +51,7 @@ class SpritePixelArrays {
     ];
 
     this.projectileSprites = [
-      ObjectTypes.CANON_BALL_SPRITE,
+      ObjectTypes.CANON_BALL,
       ObjectTypes.ROTATING_FIREBALL_CENTER,
     ]
 
