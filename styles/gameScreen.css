@@ -87,6 +87,11 @@ details summary:hover {
     color: #1DA1F2;
 }
 
+#discordLinkWrapper {
+    margin-left: auto;
+    padding-right: 16px;
+}
+
 #discordLink, .textAsLink {
     color: #5865F2
 }
