@@ -1,19 +1,19 @@
 class SoundHandler {
 
   static staticConstructor() {
-    this.shortJumpDefault = shortSwooshBase64;
-    this.longJumpDefault = longJumpBase64;
-    this.hitDefault = hitBase64;
-    this.winDefault = winBase64;
-    this.pickupDefault = collectibleBase64;
-    this.guiSelectDefault = startBase64;
-    this.dashDefault = dashBase64;
-    this.checkpointDefault = checkPointBase64;
-    this.allCoinsCollectedDefault = allCoinsCollectedBase64;
-    this.dialogueSoundDefault = dialogueBase64;
-    this.bubbleDefault = bubbleBase64;
-    this.barrelDefault = barrelBase64;
-    this.jumpResetDefault = jumpResetBase64;
+    this.shortJumpDefault = Base64Sounds.shortSwooshBase64;
+    this.longJumpDefault = Base64Sounds.longJumpBase64;
+    this.hitDefault = Base64Sounds.hitBase64;
+    this.winDefault = Base64Sounds.winBase64;
+    this.pickupDefault = Base64Sounds.collectibleBase64;
+    this.guiSelectDefault = Base64Sounds.startBase64;
+    this.dashDefault = Base64Sounds.dashBase64;
+    this.checkpointDefault = Base64Sounds.checkPointBase64;
+    this.allCoinsCollectedDefault = Base64Sounds.allCoinsCollectedBase64;
+    this.dialogueSoundDefault = Base64Sounds.dialogueBase64;
+    this.bubbleDefault = Base64Sounds.bubbleBase64;
+    this.barrelDefault = Base64Sounds.barrelBase64;
+    this.jumpResetDefault = Base64Sounds.jumpResetBase64;
     this.songDefault = "";
 
     this.sounds = [
