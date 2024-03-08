@@ -1,19 +1,19 @@
 class SoundHandler {
 
   static staticConstructor() {
-    this.shortJumpDefault = "https://drive.google.com/uc?export=download&id=1Q54bi8oothHVvLPrqOMT5fmJA8tpoXLa";
-    this.longJumpDefault = "https://drive.google.com/uc?export=download&id=12m9FxLjEyBORA4FP3xwb6rxjBQvBb3U2";
-    this.hitDefault = "https://drive.google.com/uc?export=download&id=11AUmOV0mBVP6LWb6sd_g1C88rkzLIGrV";
-    this.winDefault = "https://drive.google.com/uc?export=download&id=1xk9DMqJDWj-4urGLw6jig8H9-U_RwA_v";
-    this.pickupDefault = "https://drive.google.com/uc?export=download&id=1U81-o2IpSH1SGN4B492ztpoq2uQLGHvt";
-    this.guiSelectDefault = "https://drive.google.com/uc?export=download&id=13INaCaIZpL3EIXayJr-lRzCNptqFDjYp";
-    this.dashDefault = "https://drive.google.com/uc?export=download&id=1L9FUOzkYmXwOAzHrqJTw6Rwhg6LI0hHm";
-    this.checkpointDefault = "https://drive.google.com/uc?export=download&id=1aM3MbC-D2lxTnIEqpLoevxsE1WiiAdKQ";
-    this.allCoinsCollectedDefault = "https://drive.google.com/uc?export=download&id=13G9ILQvGiMyBczD8K39SzYpAnHgZOElU";
-    this.dialogueSoundDefault = "https://drive.google.com/uc?export=download&id=16lQ6U0MN1xTAc263JmM-LIJnY1uI6JGx";
-    this.bubbleDefault = "https://drive.google.com/uc?export=download&id=1LLScpBZq_Ukjxl03ifdHYVIYttYv4iBo";
-    this.barrelDefault = "https://drive.google.com/uc?export=download&id=1APTVswGa7ZD6DpmI5mo-yO5JWUnKWBdc";
-    this.jumpResetDefault = "https://drive.google.com/uc?export=download&id=1pAl98sb2QSaAZImdGmBdcBAY_zNBFawG";
+    this.shortJumpDefault = shortSwooshBase64;
+    this.longJumpDefault = longJumpBase64;
+    this.hitDefault = hitBase64;
+    this.winDefault = winBase64;
+    this.pickupDefault = collectibleBase64;
+    this.guiSelectDefault = startBase64;
+    this.dashDefault = dashBase64;
+    this.checkpointDefault = checkPointBase64;
+    this.allCoinsCollectedDefault = allCoinsCollectedBase64;
+    this.dialogueSoundDefault = dialogueBase64;
+    this.bubbleDefault = bubbleBase64;
+    this.barrelDefault = barrelBase64;
+    this.jumpResetDefault = jumpResetBase64;
     this.songDefault = "";
 
     this.sounds = [
