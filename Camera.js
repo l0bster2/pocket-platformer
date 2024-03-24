@@ -3,6 +3,8 @@ class Camera {
     static staticConstructor(context, canvasWidth, canvasHeight, worldWidth, worldHeight) {
         this.follow = { x: 0, y: 0 };
         this.context = context;
+        this.originalHeight = canvasHeight;
+        this.originalWidth = canvasWidth;
         this.viewport = {
             left: 0,
             right: 0,
@@ -12,17 +14,17 @@ class Camera {
             halfWidth: canvasWidth / 2,
             height: canvasHeight,
             halfHeight: canvasHeight / 2,
-            scale: [1.0, 1.0],
+            scale: 1,
             worldWidth: worldWidth,
             worldHeight: worldHeight
         };
-
         this.moveTo(this.viewport.halfWidth, this.viewport.halfHeight);
         this.updateViewport();
     }
 
     static begin() {
         this.context.save();
+        this.applyZoom();
         this.applyTranslation();
     }
 
@@ -30,19 +32,29 @@ class Camera {
         this.context.restore();
     }
 
+    static updateViewportRelatedToScale(scale) {
+        this.viewport.scale = scale;
+        this.viewport.height = this.originalHeight / this.viewport.scale;
+        this.viewport.width = this.originalWidth / this.viewport.scale;
+        this.viewport.halfHeight = this.originalHeight / 2 / this.viewport.scale;
+        this.viewport.halfWidth = this.originalWidth / 2 / this.viewport.scale;
+        player.x && player.y && this.followObject(player.x, player.y);
+        Display.ctx.imageSmoothingEnabled = this.viewport.scale === 1;
+    }
+
     static applyTranslation() {
-        //this.context.scale(2, 2)
         this.context.translate(-this.viewport.left, -this.viewport.top);
+    }
+
+    static applyZoom() {
+        if (this.viewport.scale !== 1) {
+            this.context.scale(this.viewport.scale, this.viewport.scale)
+        }
     }
 
     static updateViewport() {
         this.viewport.left = this.follow.x - this.viewport.halfWidth;
         this.viewport.top = this.follow.y - this.viewport.halfHeight;
-    }
-
-    static zoomTo(z) {
-        this.canvasWidth = z;
-        this.updateViewport();
     }
 
     static followObject(x, y) {
@@ -53,15 +65,15 @@ class Camera {
         newFollowX = this.outOfBoundsXCorrection(x);
         newFollowY = this.outOfBoundsYCorrection(y);
 
-        if(newFollowX && newFollowX !== this.follow.x){
+        if (newFollowX && newFollowX !== this.follow.x) {
             this.follow.x = newFollowX;
-            positionChanged= true;
+            positionChanged = true;
         }
-        if(newFollowY && newFollowY !== this.follow.y){
+        if (newFollowY && newFollowY !== this.follow.y) {
             this.follow.y = newFollowY;
-            positionChanged= true;
+            positionChanged = true;
         }
-        if(positionChanged) {
+        if (positionChanged) {
             this.updateViewport();
         }
     }
@@ -70,7 +82,7 @@ class Camera {
         if (x <= this.viewport.halfWidth) {
             return Math.round(this.viewport.halfWidth);
         }
-        else if(x >= this.viewport.worldWidth - this.viewport.halfWidth) {
+        else if (x >= this.viewport.worldWidth - this.viewport.halfWidth) {
             return Math.round(this.viewport.worldWidth - this.viewport.halfWidth);
         }
         else {
@@ -79,10 +91,10 @@ class Camera {
     }
 
     static outOfBoundsYCorrection(y) {
-        if(y <= this.viewport.halfHeight){
+        if (y <= this.viewport.halfHeight) {
             return Math.round(this.viewport.halfHeight);
         }
-        else if(y >= this.viewport.worldHeight - this.viewport.halfHeight) {
+        else if (y >= this.viewport.worldHeight - this.viewport.halfHeight) {
             return Math.round(this.viewport.worldHeight - this.viewport.halfHeight);
         }
         else {
@@ -101,6 +113,9 @@ class Camera {
     }
 
     static worldToScreen(x, y) {
-        return { x: x + this.viewport.left, y: y + this.viewport.top };
+        return {
+            x: x / this.viewport.scale + this.viewport.left,
+            y: y / this.viewport.scale + this.viewport.top
+        };
     }
 }

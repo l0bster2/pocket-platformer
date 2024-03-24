@@ -24,8 +24,9 @@ class DialogueHandler {
     }
 
     static calculateDialogueWindowPosition() {
-        this.leftPos = Camera.viewport.left + this.paddingFromBorder;
-        this.topPos = Camera.viewport.top + Camera.viewport.height - this.dialogueHeight - this.paddingFromBorder;
+        const border = this.paddingFromBorder / Camera.viewport.scale;
+        this.leftPos = Camera.viewport.left + border;
+        this.topPos = Camera.viewport.top + Camera.viewport.height - (this.dialogueHeight / Camera.viewport.scale) - border;
     }
 
     static handleDialogue() {
@@ -63,16 +64,18 @@ class DialogueHandler {
     static displayDialogue() {
         const { leftPos, topPos } = this;
         const currentLine = Math.floor(this.currentAnimationFrame / this.animationDurationFrames / this.maxLineLength);
+        const calculatedDialogueWidth = this.dialogueWidth / Camera.viewport.scale;
+        const calculatedDialogueHeight = this.dialogueHeight / Camera.viewport.scale;
 
         Display.drawRectangle(leftPos, topPos,
-            this.dialogueWidth, this.dialogueHeight, "000000");
+            calculatedDialogueWidth, calculatedDialogueHeight, "000000");
         Display.drawRectangleBorder(leftPos, topPos,
-            this.dialogueWidth, this.dialogueHeight, "FFFFFF");
-        Display.drawLine(leftPos + this.dialogueWidth - 80, topPos, leftPos + this.dialogueWidth - 20, topPos,
+            calculatedDialogueWidth, calculatedDialogueHeight, "FFFFFF");
+        Display.drawLine(leftPos + calculatedDialogueWidth - 80, topPos, leftPos + calculatedDialogueWidth - 20, topPos,
             "000000", 2)
 
         for (var i = 0; i <= currentLine; i++) {
-            if(i < this.dialogue[this.currentIndex].lines.length) {
+            if (i < this.dialogue[this.currentIndex].lines.length) {
                 this.animateText(leftPos, topPos, i);
             }
         }
@@ -86,19 +89,23 @@ class DialogueHandler {
         this.arrowUpFrameIndex++;
         const frameModulo = this.arrowUpFrameIndex % 60;
         if (frameModulo < 30) {
-            this.showDialogueUpArrow(leftPos + this.dialogueWidth - 60, topPos - 15);
+            this.showDialogueUpArrow(leftPos + (this.dialogueWidth / Camera.viewport.scale) - 60, topPos - 15);
         }
     }
 
     static animateText(leftPos, topPos, lineIndex) {
         let previousLinesLength = 0;
+        const topPadding = 35 / Camera.viewport.scale;
+        const lineBreakHeight = 30 / Camera.viewport.scale;
         const dialoguesLines = this.dialogue[this.currentIndex].lines;
-        for(var i = 0; i < lineIndex; i++) {
+        for (var i = 0; i < lineIndex; i++) {
             previousLinesLength += dialoguesLines[i].length;
         }
         const currentText = dialoguesLines[lineIndex].substring(0,
             Math.ceil(this.currentAnimationFrame / this.animationDurationFrames - previousLinesLength));
-        Display.displayText(currentText, leftPos + 20, topPos + 30 + (lineIndex * 30), 17, "#FFFFFF", "left");
+        Display.displayText(currentText, leftPos + (20 / Camera.viewport.scale),
+            topPos + topPadding + (lineIndex * lineBreakHeight),
+            17 / Camera.viewport.scale, "#FFFFFF", "left");
     }
 
     static calculateTextLines(dialogue) {

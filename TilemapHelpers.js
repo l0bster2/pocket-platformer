@@ -57,7 +57,7 @@ class TilemapHelpers {
         let pass = [], fail = [];
         array.forEach((e, idx, arr) => (filter(e, idx, arr) ? pass : fail).push(e));
         return [pass, fail];
-      }
+    }
 
     static resortPath(pathPoints, startPoint, endPoint) {
         let arr = [...pathPoints];
@@ -86,8 +86,27 @@ class TilemapHelpers {
         if (startPoint.initialX > endPoint.initialX || (startPoint.initialX === endPoint.initialX && startPoint.initialY > endPoint.initialY)) {
             startPoint = endpoints[1];
             endPoint = endpoints[0];
-         }
+        }
         return { startPoint, endPoint };
+    }
+
+    static findFirstFreePosition(tileMapHandler) {
+        const { tileMap, levelHeight, levelWidth } = tileMapHandler;
+        let posX = 0;
+        let posY = 0;
+
+        loop1:
+        for (var tilePosY = 0; tilePosY < levelHeight; tilePosY++) {
+            for (var tilePosX = 0; tilePosX < levelWidth; tilePosX++) {
+                var tileType = tileMap[tilePosY][tilePosX];
+                if (tileType === 0) {
+                    posX = tilePosX;
+                    posY = tilePosY;
+                    break loop1;
+                }
+            }
+        }
+        return { x: posX, y: posY };
     }
 
     static findStartAndEndPointForEnclosedPath(pathPoints) {

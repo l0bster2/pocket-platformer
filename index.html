@@ -499,20 +499,31 @@
                 <div class="tooltipHeading">Change level size</div>
             </div>
             <form class="marginTop16" onsubmit="LevelNavigationHandler.changeLevelSize(event)">
-                <div><label for="widthSize">Width <span class="secondaryText">(33-99)</span>:</label>
-                    <input id="widthSize" required min="33" max="99" step="1" class="input" type="number" size="15"
-                        value="33" />
+                <div class="flexRows" style="padding-bottom: 8px">
+                    <div style="flex: 1">
+                        <label for="widthSize">Width <span class="secondaryText">(33-99)</span>:</label>
+                        <input id="widthSize" required min="33" max="99" step="1" class="flexibleInput" type="number"
+                            size="15" value="33" />
+                    </div>
+                    <div style="flex: 1">
+                        <label for="heightSize">Height <span class="secondaryText">(18-99)</span>:</label>
+                        <input id="heightSize" required min="18" max="99" step="1" class="flexibleInput" type="number"
+                            size="15" value="17" />
+                    </div>
+                    <span style="padding: 10px 4px 0;" data-microtip-size="large" data-microtip-position="right"
+                        aria-label="Be aware: if you make your level smaller than it is, all objects 
+                    outside the bounds will be deleted." data-microtip-position="top" role="tooltip"
+                        class="marginTop8 smallTooltipIcon"><img src="images/icons/info.svg" alt="info" width="24"
+                            height="24">
+                    </span>
                 </div>
-                <div class="marginTop8">
-                    <label for="heightSize">Height <span class="secondaryText">(18-99)</span>:</label>
-                    <input id="heightSize" required min="18" max="99" step="1" class="input" type="number" size="15"
-                        value="17" />
+                <div class="subSection">
+                    <div class="changeableAttributesWrapper" style="padding: 8px 0; gap: 12px">
+                        <label for="speed">zoom factor</label>
+                        <input type="range" min="1" max="2" value="1" name="speed" step="0.1" id="zoomFactor" onchange="LevelSizeHandler.changeZoomHtmlValue(event)">
+                        <span id="zoomFactorValue">1</span>
+                    </div>
                 </div>
-                <span data-microtip-size="large" data-microtip-position="right" aria-label="Be aware: if you make your level smaller than it is, all objects 
-                outside the bounds will be deleted." data-microtip-position="top" role="tooltip"
-                    class="marginTop8 smallTooltipIcon"><img src="images/icons/info.svg" alt="info" width="24"
-                        height="24">
-                </span>
                 <div class="subSection">
                     <button class="levelNavigationButton halfWidth" type="submit">Ok</button>
                     <button class="levelNavigationButton secondaryButton halfWidth"

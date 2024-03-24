@@ -2,20 +2,26 @@ class PauseHandler {
 
     static staticConstructor() {
         this.options = ["Continue", "Restart game"];
-        this.resetPauseHandler();
+        this.resetAttributes();
         this.downArrowReleased = true;
         this.restartedGame = false;
         this.upArrowReleased = true;
         this.restartGameMaxFrames = 50;
         this.justClosedPauseScreen = false;
+        this.cameraScaleBeforePause = 1;
     }
 
-    static resetPauseHandler() {
+    static resetAttributes() {
         this.paused = false;
         this.currentRestartGameFrameCounter = 0;
         this.currentOptionIndex = 0;
         this.restartedGame = false;
         this.justClosedPauseScreen = true;
+    }
+
+    static resetPauseHandler() {
+        this.resetAttributes();
+        Camera.updateViewportRelatedToScale(this.cameraScaleBeforePause)
     }
 
     static checkPause() {
@@ -26,6 +32,8 @@ class PauseHandler {
                 GameStatistics.stopTimer();
                 GameStatistics.updateTimeBetweenPauses();
                 //stop timer
+                this.cameraScaleBeforePause = Camera.viewport.scale;
+                Camera.updateViewportRelatedToScale(1)
             }
             Controller.pauseReleased = Controller.pause ? false : true;
             Controller.enterReleased = Controller.enter ? false : true;

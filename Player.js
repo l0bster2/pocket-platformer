@@ -69,11 +69,32 @@ class Player {
     resetPosition(checkCheckpoints = false) {
         if (checkCheckpoints) {
             const activeCheckPointPos = PlayMode.checkActiveCheckPoints();
+            this.checkIfPlayerInitialPositionExists();
             this.x = activeCheckPointPos ? activeCheckPointPos.x : this.initialX;
             this.y = activeCheckPointPos ? activeCheckPointPos.y : this.initialY;
         } else {
+            this.checkIfPlayerInitialPositionExists();
             this.x = this.initialX;
             this.y = this.initialY;
+        }
+    }
+
+    checkIfPlayerInitialPositionExists() {
+        try {
+            if (!!tileMapHandler) {
+                const tileValue = tileMapHandler.getTileTypeByPosition(this.initialX, this.initialY);
+                /* 
+                    players initial values could not exist anymore (f.e. because flag was removed by changing level width/height)
+                    or it was moved to a place, that is occupied by a solid tile
+                */
+                if (typeof tileValue === 'undefined' || (tileValue && tileValue !== 0)) {
+                    const { x, y } = TilemapHelpers.findFirstFreePosition(tileMapHandler);
+                    this.initialX = x * tileMapHandler.tileSize;
+                    this.initialY = y * tileMapHandler.tileSize;
+                }
+            }
+        } catch {
+            //tilemapHandler not defined yet (on tool initialization)
         }
     }
 

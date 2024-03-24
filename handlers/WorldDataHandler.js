@@ -38,7 +38,8 @@ class WorldDataHandler {
             levelObjects: [],
             deko: [],
             paths: [],
-            backgroundColor: "transp"
+            backgroundColor: "transp",
+            zoomFactor: 1,
         };
     }
 
@@ -61,7 +62,8 @@ class WorldDataHandler {
             levelObjects: levelObjects,
             deko: [],
             paths: [],
-            backgroundColor: "transp"
+            backgroundColor: "transp",
+            zoomFactor: 1,
         };
     }
 

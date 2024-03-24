@@ -3,7 +3,6 @@ class Display {
     static staticConstructor(canvas, canvasWidth, canvasHeight, tileCtx) {
         this.ctx = canvas;
         this.tileCtx = tileCtx
-        //this.ctx.imageSmoothingEnabled = false;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
     }

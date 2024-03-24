@@ -23,6 +23,7 @@ class TileMapHandler {
     resetLevel(levelIndex) {
         SFXHandler.resetSfx();
         this.tileMap = WorldDataHandler.levels[levelIndex].tileData;
+        Camera.updateViewportRelatedToScale(WorldDataHandler.levels[levelIndex].zoomFactor || 1)
         this.updateLevelDimensions();
         this.setInitialPlayerAndCameraPos(levelIndex);
         this.levelObjects = [];
@@ -165,11 +166,11 @@ class TileMapHandler {
             }
         }
         this.layers = this.splitLevelObjectsInLayers();
+        this.displayObjects(this.layers[0]);
         this.displayObjectsOrDeko(this.deko);
         SFXHandler.updateSfxAnimations("backgroundSFX");
         isPlayMode && this.effects.length && EffectsRenderer.displayEffects();
         //background objects, like water
-        this.displayObjects(this.layers[0]);
         this.displayObjectsOrDeko(this.paths);
         //normal objects
         this.displayObjects(this.layers[1]);
@@ -252,6 +253,12 @@ class TileMapHandler {
 
     getTileLayerValueByIndex(y, x) {
         return this.tileMap[y]?.[x];
+    }
+
+    getTileTypeByPosition(x, y) {
+        const xVal = this.getTileValueForPosition(x);
+        const yVal = this.getTileValueForPosition(y);
+        return this.getTileLayerValueByIndex(yVal, xVal);
     }
 
     checkIfPositionAtTheEdge(tilePosX, tilePosY) {

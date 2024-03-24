@@ -15,7 +15,7 @@ class LevelSizeHandler {
         this.xSliderStepAmount = 40;
     }
 
-    static changeLevelSize(newWidth, newHeight) {
+    static changeLevelSize(newWidth, newHeight, zoomFactor) {
         const { currentLevel } = this.tileMapHandler;
         const currentWidth = this.tileMapHandler.getLevelWidth();
         const currentHeight = this.tileMapHandler.getLevelHeight();
@@ -27,13 +27,21 @@ class LevelSizeHandler {
             this.changeHeight(newWidth, currentHeight, newHeight);
         }
         WorldDataHandler.levels[currentLevel].tileData = this.tileMapHandler.tileMap;
+        WorldDataHandler.levels[currentLevel].zoomFactor = zoomFactor;
         this.tileMapHandler.updateLevelDimensions();
+        Camera.updateViewportRelatedToScale(zoomFactor)
+
         //Run it again, to correct values, is camera is out of bounds, due to shrinked level size
         Camera.moveTo(Camera.follow.x, Camera.follow.y);
         this.updateCameraSliders(this.tileMapHandler.levelWidth * this.tileMapHandler.tileSize,
             this.tileMapHandler.levelHeight * this.tileMapHandler.tileSize,
             { x: this.tileMapHandler.player.x, y: this.tileMapHandler.player.y });
+
         this.tileMapHandler.changeTileCanvasSize();
+    }
+
+    static changeZoomHtmlValue(event) {
+        document.getElementById('zoomFactorValue').innerHTML = event.target.value;
     }
 
     static changeWidth(currentWidth, currentHeight, newWidth, newHeight) {
@@ -71,7 +79,7 @@ class LevelSizeHandler {
     static removePlayerOutOfBounds(newWidth, newHeight) {
         if (this.tileMapHandler.player.x > newWidth * this.tileMapHandler.tileSize - this.tileMapHandler.tileSize
             || this.tileMapHandler.player.y < newHeight * this.tileMapHandler.tileSize - this.tileMapHandler.tileSize) {
-            this.tileMapHandler.player.resetAll();
+                this.tileMapHandler.player.resetAll();
         }
     }
 
@@ -146,6 +154,7 @@ class LevelSizeHandler {
         let sizeChanged = false;
         if (width > Camera.viewport.width) {
             this.xSliderWrapperEl.style.display = "block";
+            this.xSliderEl.min = Camera.viewport.halfWidth;
             this.xSliderEl.max = width - Camera.viewport.halfWidth;
             this.calculateSliderValues(this.xSliderEl, initialPlayerPosition.x, this.xSliderStepAmount, this.xSliderStepAmount);
             sizeChanged = true;
@@ -157,6 +166,7 @@ class LevelSizeHandler {
         }
         if (height > Camera.viewport.height) {
             this.ySliderWrapperEl.style.display = "inline-block";
+            this.ySliderEl.min = Camera.viewport.halfHeight;
             this.ySliderEl.max = height - Camera.viewport.halfHeight;
             this.calculateSliderValues(this.ySliderEl, initialPlayerPosition.y, this.ySliderStepAmount, this.ySliderStepAmount);
             sizeChanged = true;
@@ -190,7 +200,8 @@ class LevelSizeHandler {
     }
 
     static moveCamera(event) {
-        event.target.id === "cameraXSlider" ? Camera.moveTo(event.target.value, this.ySliderEl.value)
+        event.target.id === "cameraXSlider"
+            ? Camera.moveTo(event.target.value, this.ySliderEl.value)
             : Camera.moveTo(this.xSliderEl.value, event.target.value)
     }
 

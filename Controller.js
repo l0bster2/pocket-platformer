@@ -214,9 +214,10 @@ class Controller {
     }
 
     static mouseMove(e) {
-        const coordinatesWithoutTranslation = Camera.worldToScreen(e.clientX, e.clientY);
-        this.mouseX = coordinatesWithoutTranslation.x - canvasOffsetLeft + this.xScroll;
-        this.mouseY = coordinatesWithoutTranslation.y - canvasOffsetTop + this.yScroll;
+        const coordinatesWithoutTranslation = Camera.worldToScreen(e.clientX - canvasOffsetLeft, 
+            e.clientY - canvasOffsetTop);
+        this.mouseX = coordinatesWithoutTranslation.x + this.xScroll;
+        this.mouseY = coordinatesWithoutTranslation.y + this.yScroll;
     }
 
     static mouseMoveDrawInCanvas(e) {

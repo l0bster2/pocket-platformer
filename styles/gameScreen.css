@@ -160,6 +160,12 @@ details summary:hover {
     width: 100%;
 }
 
+.flexibleInput {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 #header {
     position: fixed;
     width: 100%;

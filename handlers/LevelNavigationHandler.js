@@ -123,7 +123,7 @@ class LevelNavigationHandler {
     }
 
     static showPasteLevelModal() {
-        if(!Helpers.isObjEmpty(this.copiedLevel)) {
+        if (!Helpers.isObjEmpty(this.copiedLevel)) {
             document.getElementById("pasteLevelIndex").innerHTML = document.getElementById("copiedLevelIndex").innerHTML;
             ModalHandler.showModal('pasteLevelModal');
         }
@@ -164,12 +164,15 @@ class LevelNavigationHandler {
         evt.preventDefault();
         const width = evt.target?.elements?.widthSize?.value;
         const height = evt.target?.elements?.heightSize?.value;
+        const zoomFactor = evt.target?.elements?.zoomFactor?.value;
 
         if (width && height) {
             const newWidth = parseInt(width);
             const newHeight = parseInt(height);
-            if (newWidth !== tileMapHandler.getLevelWidth() || newHeight !== tileMapHandler.getLevelHeight()) {
-                LevelSizeHandler.changeLevelSize(newWidth, newHeight);
+            if (newWidth !== tileMapHandler.getLevelWidth()
+                || newHeight !== tileMapHandler.getLevelHeight()
+                || zoomFactor !== WorldDataHandler.levels[tileMapHandler.currentLevel].zoomFactor) {
+                LevelSizeHandler.changeLevelSize(newWidth, newHeight, zoomFactor);
             }
             ModalHandler.closeModal('levelSizeModal');
         }
@@ -179,5 +182,8 @@ class LevelNavigationHandler {
         ModalHandler.showModal('levelSizeModal');
         document.getElementById("widthSize").value = tileMapHandler.getLevelWidth();
         document.getElementById("heightSize").value = tileMapHandler.getLevelHeight();
+        const zoomFactorValue = WorldDataHandler.levels[tileMapHandler.currentLevel].zoomFactor || 1;
+        document.getElementById("zoomFactor").value = zoomFactorValue;
+        document.getElementById("zoomFactorValue").innerHTML = zoomFactorValue;
     }
 }
