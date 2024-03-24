@@ -12,6 +12,8 @@ class DialogueHandler {
         this.linesAmount = 4;
         this.maxLineLength = 60;
         this.maxDialogueLength = 240;
+        this.currentAnimationHeight = 0;
+        this.frameDurationToShowDialogueBox = 8;
     }
 
     static setDialogueWindowToInactive() {
@@ -19,6 +21,7 @@ class DialogueHandler {
         this.dialogue = [];
         this.currentIndex = 0;
         this.currentAnimationFrame = 0;
+        this.currentAnimationHeight = 0;
         this.arrowUpFrameIndex = 0;
         this.calculateDialogueWindowPosition();
     }
@@ -64,23 +67,29 @@ class DialogueHandler {
     static displayDialogue() {
         const { leftPos, topPos } = this;
         const currentLine = Math.floor(this.currentAnimationFrame / this.animationDurationFrames / this.maxLineLength);
-        const calculatedDialogueWidth = this.dialogueWidth / Camera.viewport.scale;
-        const calculatedDialogueHeight = this.dialogueHeight / Camera.viewport.scale;
+        const calculatedDialogueWidth = Math.floor(this.dialogueWidth / Camera.viewport.scale);
+        const calculatedDialogueHeight = Math.floor(this.dialogueHeight / Camera.viewport.scale);
+        const currentBoxTopPosition = topPos + ((calculatedDialogueHeight - this.currentAnimationHeight) / 2);
 
-        Display.drawRectangle(leftPos, topPos,
-            calculatedDialogueWidth, calculatedDialogueHeight, "000000");
-        Display.drawRectangleBorder(leftPos, topPos,
-            calculatedDialogueWidth, calculatedDialogueHeight, "FFFFFF");
-        Display.drawLine(leftPos + calculatedDialogueWidth - 80, topPos, leftPos + calculatedDialogueWidth - 20, topPos,
+        Display.drawRectangle(leftPos, currentBoxTopPosition,
+            calculatedDialogueWidth, this.currentAnimationHeight, "000000");
+        Display.drawRectangleBorder(leftPos, currentBoxTopPosition,
+            calculatedDialogueWidth, this.currentAnimationHeight, "FFFFFF");
+        Display.drawLine(leftPos + calculatedDialogueWidth - 80, currentBoxTopPosition, leftPos + calculatedDialogueWidth - 20, topPos,
             "000000", 2)
 
-        for (var i = 0; i <= currentLine; i++) {
-            if (i < this.dialogue[this.currentIndex].lines.length) {
-                this.animateText(leftPos, topPos, i);
+        if (this.currentAnimationHeight >= calculatedDialogueHeight) {
+            for (var i = 0; i <= currentLine; i++) {
+                if (i < this.dialogue[this.currentIndex].lines.length) {
+                    this.animateText(leftPos, topPos, i);
+                }
             }
+            this.displayArrowUpIcon();
         }
-
-        this.displayArrowUpIcon();
+        else {
+            const step = calculatedDialogueHeight / this.frameDurationToShowDialogueBox;
+            this.currentAnimationHeight += step;
+        }
     }
 
     static displayArrowUpIcon() {
