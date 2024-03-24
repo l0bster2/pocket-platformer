@@ -39,7 +39,10 @@ class Camera {
         this.viewport.halfHeight = this.originalHeight / 2 / this.viewport.scale;
         this.viewport.halfWidth = this.originalWidth / 2 / this.viewport.scale;
         player.x && player.y && this.followObject(player.x, player.y);
-        Display.ctx.imageSmoothingEnabled = this.viewport.scale === 1;
+        //Could be removed if there was a transition after pressing start on first screen
+        window.setTimeout(() => {
+            Display.ctx.imageSmoothingEnabled = this.viewport.scale === 1;
+        }, 10);
     }
 
     static applyTranslation() {

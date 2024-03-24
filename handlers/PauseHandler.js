@@ -21,11 +21,11 @@ class PauseHandler {
 
     static resetPauseHandler() {
         this.resetAttributes();
-        Camera.updateViewportRelatedToScale(this.cameraScaleBeforePause)
     }
 
     static checkPause() {
         if(!this.paused) {
+            // pause mid-game activated
             if (Controller.enterReleased && Controller.enter && Controller.gamepadIndex !== null || 
                 Controller.gamepadIndex === null && Controller.pause && Controller.pauseReleased) {
                 this.paused = true;
@@ -33,7 +33,7 @@ class PauseHandler {
                 GameStatistics.updateTimeBetweenPauses();
                 //stop timer
                 this.cameraScaleBeforePause = Camera.viewport.scale;
-                Camera.updateViewportRelatedToScale(1)
+                Camera.updateViewportRelatedToScale(1);
             }
             Controller.pauseReleased = Controller.pause ? false : true;
             Controller.enterReleased = Controller.enter ? false : true;
@@ -59,10 +59,12 @@ class PauseHandler {
 
             this.handleRestart();
 
+            //if escape key (or similar key) was just pressed again to close pause menu
             if (Controller.enterReleased && Controller.enter && Controller.gamepadIndex !== null || 
                 Controller.gamepadIndex === null && Controller.pause && Controller.pauseReleased) {
                 GameStatistics.startTimer();
                 this.resetPauseHandler();
+                Camera.updateViewportRelatedToScale(this.cameraScaleBeforePause)
                 //continue timer
             }
             Controller.pauseReleased = Controller.pause ? false : true;
@@ -86,15 +88,18 @@ class PauseHandler {
             this.upArrowReleased = Controller.up ? false : true;
             
             if((Controller.confirm || (Controller.gamepadIndex === null && Controller.enter)) && !this.restartedGame) {
+                //restart game
                 if(this.currentOptionIndex === 1) {
                     this.restartedGame = true;
                     this.currentRestartGameFrameCounter = this.restartGameMaxFrames;
                     SoundHandler.setVolume("mainSong", 0.3);
                     SoundHandler.guiSelect.stopAndPlay();
                 }
+                //continue
                 else {
                     GameStatistics.startTimer();
                     this.resetPauseHandler();
+                    Camera.updateViewportRelatedToScale(this.cameraScaleBeforePause)
                 }
             }
         }

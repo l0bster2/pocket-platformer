@@ -26,10 +26,11 @@ class LevelSizeHandler {
         if (newHeight !== currentHeight) {
             this.changeHeight(newWidth, currentHeight, newHeight);
         }
+        const calculatedZoom = this.adaptZoomForSmallerThanDefaultLevels(newWidth, newHeight, zoomFactor);
         WorldDataHandler.levels[currentLevel].tileData = this.tileMapHandler.tileMap;
-        WorldDataHandler.levels[currentLevel].zoomFactor = zoomFactor;
+        WorldDataHandler.levels[currentLevel].zoomFactor = calculatedZoom;
         this.tileMapHandler.updateLevelDimensions();
-        Camera.updateViewportRelatedToScale(zoomFactor)
+        Camera.updateViewportRelatedToScale(calculatedZoom)
 
         //Run it again, to correct values, is camera is out of bounds, due to shrinked level size
         Camera.moveTo(Camera.follow.x, Camera.follow.y);
@@ -38,6 +39,22 @@ class LevelSizeHandler {
             { x: this.tileMapHandler.player.x, y: this.tileMapHandler.player.y });
 
         this.tileMapHandler.changeTileCanvasSize();
+    }
+
+    static adaptZoomForSmallerThanDefaultLevels(width, height, zoom) {
+        const defaultWidthTiles = Camera.originalWidth / this.tileMapHandler.tileSize;
+        const defaultHeightTiles = Camera.originalHeight / this.tileMapHandler.tileSize;
+
+        if(width < defaultWidthTiles || height < defaultHeightTiles) {
+            const widthZoom = defaultWidthTiles / width;
+            const heightZoom = defaultHeightTiles / height;
+            const sortedZooms = MathHelpers.sortNumbers([widthZoom, heightZoom]);
+
+            if(sortedZooms[1] > zoom) {
+                return sortedZooms[1].toFixed(2);
+            }
+        }
+        return zoom;
     }
 
     static changeZoomHtmlValue(event) {

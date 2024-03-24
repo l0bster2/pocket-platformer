@@ -95,7 +95,7 @@ class PlayMode {
     }
 
     static playerDeath() {
-        if(this.animateToNextLevel) {
+        if (this.animateToNextLevel) {
             return null;
         }
         SoundHandler.hit.stopAndPlay();
