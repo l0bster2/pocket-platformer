@@ -22,9 +22,18 @@ class SoundHandlerRenderer {
     static uploadCustom(key) {
         var file = document.getElementById("uploadSound" + key).files[0];
         if (file) {
-            const audioElement = document.getElementById(key);
-            audioElement.src = URL.createObjectURL(file);
-            audioElement.load();
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                const audioElement = document.getElementById(key);
+                audioElement.src = reader.result;
+                audioElement.load();
+                const soundIndex = SoundHandler.sounds.findIndex(sound => sound.key = key);
+                SoundHandler.sounds[soundIndex].value = reader.result;
+            };
+            reader.onerror = function (error) {
+              console.log('Error: ', error);
+            };
         }
         document.getElementById(key + "Upload").innerHTML = `<button id="addEffectButton" class="levelNavigationButton tertiaryButton marginTop8"
         onclick="SoundHandlerRenderer.deleteCustom('${key}')" style="padding: 8px 12px;">
@@ -34,6 +43,9 @@ class SoundHandlerRenderer {
     }
 
     static deleteCustom(key) {
+        const audioElement = document.getElementById(key);
+        audioElement.src = SoundHandler[key + "Default"];
+        audioElement.load();
         document.getElementById(key + "Upload").innerHTML = this.createUploadButton(key);
     }
 
