@@ -45,20 +45,37 @@ class LevelSizeHandler {
         const defaultWidthTiles = Camera.originalWidth / this.tileMapHandler.tileSize;
         const defaultHeightTiles = Camera.originalHeight / this.tileMapHandler.tileSize;
 
-        if(width < defaultWidthTiles || height < defaultHeightTiles) {
+        if (width < defaultWidthTiles || height < defaultHeightTiles) {
             const widthZoom = defaultWidthTiles / width;
             const heightZoom = defaultHeightTiles / height;
             const sortedZooms = MathHelpers.sortNumbers([widthZoom, heightZoom]);
-
-            if(sortedZooms[1] > zoom) {
-                return sortedZooms[1].toFixed(2);
+            if(sortedZooms[1] >= zoom) {
+                const shortenedZoom = sortedZooms[1].toFixed(4);
+                document.getElementById("zoomFactor").min = shortenedZoom;
+                return shortenedZoom;
             }
         }
+        document.getElementById("zoomFactor").min = 1;
         return zoom;
     }
 
+    static changeUIElementsBasedOnZoom(zoomFactorValue) {
+        const width = document.getElementById("widthSize").value;
+        const height = document.getElementById("heightSize").value;
+        const adaptedZoom = this.adaptZoomForSmallerThanDefaultLevels(width, height, parseFloat(zoomFactorValue).toFixed(4));
+        const displayedZoom = adaptedZoom > 1.91 ? 2 : adaptedZoom;
+        document.getElementById('zoomFactorValue').innerHTML = parseFloat(displayedZoom).toFixed(2);
+        document.getElementById("zoomFactor").value = parseFloat(adaptedZoom);
+    }
+
+    static sizeChangedInUI() {
+        const zoomFactorValue = WorldDataHandler.levels[tileMapHandler.currentLevel].zoomFactor || 1;
+        this.changeUIElementsBasedOnZoom(zoomFactorValue);
+    }
+
     static changeZoomHtmlValue(event) {
-        document.getElementById('zoomFactorValue').innerHTML = event.target.value;
+        const zoomFactorValue = event.target.value;
+        this.changeUIElementsBasedOnZoom(zoomFactorValue);
     }
 
     static changeWidth(currentWidth, currentHeight, newWidth, newHeight) {
@@ -96,7 +113,7 @@ class LevelSizeHandler {
     static removePlayerOutOfBounds(newWidth, newHeight) {
         if (this.tileMapHandler.player.x > newWidth * this.tileMapHandler.tileSize - this.tileMapHandler.tileSize
             || this.tileMapHandler.player.y < newHeight * this.tileMapHandler.tileSize - this.tileMapHandler.tileSize) {
-                this.tileMapHandler.player.resetAll();
+            this.tileMapHandler.player.resetAll();
         }
     }
 

@@ -503,12 +503,12 @@
                     <div style="flex: 1">
                         <label for="widthSize">Width <span class="secondaryText">(18-99)</span>:</label>
                         <input id="widthSize" required min="18" max="99" step="1" class="flexibleInput" type="number"
-                            size="15" value="33" />
+                            size="15" value="33" onchange="LevelSizeHandler.sizeChangedInUI()" />
                     </div>
                     <div style="flex: 1">
                         <label for="heightSize">Height <span class="secondaryText">(10-99)</span>:</label>
                         <input id="heightSize" required min="10" max="99" step="1" class="flexibleInput" type="number"
-                            size="15" value="17" />
+                            size="15" value="17" onchange="LevelSizeHandler.sizeChangedInUI()" />
                     </div>
                     <span style="padding: 10px 4px 0;" data-microtip-size="large" data-microtip-position="right"
                         aria-label="Be aware: if you make your level smaller than it is, all objects 

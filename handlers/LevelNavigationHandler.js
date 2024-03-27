@@ -183,7 +183,6 @@ class LevelNavigationHandler {
         document.getElementById("widthSize").value = tileMapHandler.getLevelWidth();
         document.getElementById("heightSize").value = tileMapHandler.getLevelHeight();
         const zoomFactorValue = WorldDataHandler.levels[tileMapHandler.currentLevel].zoomFactor || 1;
-        document.getElementById("zoomFactor").value = zoomFactorValue;
-        document.getElementById("zoomFactorValue").innerHTML = zoomFactorValue;
+        LevelSizeHandler.changeUIElementsBasedOnZoom(zoomFactorValue);
     }
 }
