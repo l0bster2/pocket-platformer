@@ -462,12 +462,11 @@ details summary::-webkit-details-marker {
     cursor: pointer;
     height: 100%;
     border-left: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
 }
 
 .dropbtn {
     cursor: pointer;
-    padding: 4px 16px 0px;
+    padding: 0 16px;
     border: none;
     outline: none;
     height: 100%;
@@ -493,8 +492,20 @@ details summary::-webkit-details-marker {
     display: block;
 }
 
-.dropdown-nav-item {
+.dropdown-nav-item:not(:last-child) {
+    border-bottom: 1px solid lightgrey;
+}
+
+.dropdown-nav-item > * {
+    position: relative;
+    display: block;
     padding: 12px 8px;
+}
+
+.dropdown-nav-item * img {
+    position: absolute;
+    top: 14px;
+    right: 12px;
 }
 
 .dropdown-nav-item:hover {

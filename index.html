@@ -19,42 +19,56 @@
 <body>
     <div id="header" class="sectionContent">
         <img src="images/icons/pp.png" height="26px" />
-        <div id="viewChangerWrapper">
-            <select name="view" id="view" style="border: none" onchange="changeView(event)">
-                <option value="game">Game screen</option>
-                <option value="sounds">Sounds</option>
-            </select>
+        <div class="topnav" id="myTopnav">
+            <div class="dropdown navElement">
+                <button class="dropbtn" onclick="navDropDownClick(event)">
+                    File
+                    <img src="images/icons/right.svg" alt="right" width="10" height="10"
+                        style="transform: rotate(90deg); vertical-align: middle;">
+                </button>
+                <ul class="dropdown-content" id="myDropdown">
+                    <li class="dropdown-nav-item">
+                        <label>
+                            <input type="file" id="importButton" onChange="importGame(tileMapHandler)" />
+                            <span>Import </span>
+                            <img src="images/icons/import.svg" class="iconInButtonWithText" alt="import" width="12"
+                                height="12">
+                        </label>
+                    </li>
+                    <li class="dropdown-nav-item" onClick="exportGame()">
+                        <div>
+                            Export
+                            <img src="images/icons/export.svg" alt="right" width="12" height="12">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="viewChangerWrapper" style="border-right: 1px solid lightgrey;">
+            <div class="dropdown navElement">
+                <button class="dropbtn" onclick="navDropDownClick(event, 'myDropdown2')">
+                    View
+                    <img src="images/icons/right.svg" alt="right" width="10" height="10"
+                        style="transform: rotate(90deg); vertical-align: middle;">
+                </button>
+                <ul class="dropdown-content" id="myDropdown2">
+                    <li class="dropdown-nav-item" onClick="changeView('game')">
+                        <div>Game-screen
+                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12" id="gameViewCheckmark">
+                        </div>
+                    </li>
+                    <li class="dropdown-nav-item" onClick="changeView('sounds')">
+                        <div>Sounds
+                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12" style="display: none;" id="soundViewCheckmark">
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
         <a href="https://discord.gg/g8QAW2VK5C" target="_blank" id="discordLinkWrapper">
             <span class="linkWithIcon" id="discordLink">Join discord</span>
             <img src="images/icons/discord.svg" alt="discord" width="24" height="24">
         </a>
-        <!--<div class="topnav" id="myTopnav">
-            <div class="dropdown navElement">
-                <button class="dropbtn" onclick="navDropDownClick()">
-                    TOOLS
-                    <img src="images/icons/right.svg" alt="right" width="10" height="10"
-                        style="transform: rotate(90deg);">
-                </button>
-                <ul class="dropdown-content" id="myDropdown">
-                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event, 'buildTools')">Build tools
-                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10">
-                    </li>
-                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event, 'gameScreen')">Game screen
-                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10">
-                    </li>
-                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event,'drawSection')">Draw
-                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10">
-                    </li>
-                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event,'settingsSection')">Settings
-                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10">
-                    </li>
-                    <li class="dropdown-nav-item" onclick="toolVisibilityClick(event, 'soundSection')">Sounds
-                        <img src="images/icons/checkmark.svg" alt="right" width="10" height="10" style="display: none">
-                    </li>
-                </ul>
-            </div>
-        </div>-->
     </div>
     <div id="scrollMenu">
         <div id="gameView">
@@ -527,7 +541,8 @@
                                 <span id="zoomFactorValue">1</span>
                             </div>
                         </div>
-                        <span style="margin: 4px 4px 0; float: right" data-microtip-size="large" data-microtip-position="right"
+                        <span style="margin: 4px 4px 0; float: right" data-microtip-size="large"
+                            data-microtip-position="right"
                             aria-label="If you make your level smaller than the default size, the zoom-factor will adapt automatically."
                             data-microtip-position="top" role="tooltip" class="marginTop8 smallTooltipIcon"><img
                                 src="images/icons/info.svg" alt="info" width="24" height="24">

@@ -329,10 +329,3 @@ input[type="file"] {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-#viewChangerWrapper {
-    padding: 0 13px 0 5px;
-    margin-left: 5px;
-    border-left: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
-}
