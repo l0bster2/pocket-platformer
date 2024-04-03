@@ -25,21 +25,13 @@ class SoundHandlerRenderer {
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
-                const audioElement = document.getElementById(key);
-                audioElement.src = reader.result;
-                audioElement.load();
-                const soundIndex = SoundHandler.sounds.findIndex(sound => sound.key = key);
-                SoundHandler.sounds[soundIndex].value = reader.result;
+                SoundHandler.reloadSound(key, reader.result)
             };
             reader.onerror = function (error) {
-              console.log('Error: ', error);
+                console.log('Error: ', error);
             };
         }
-        document.getElementById(key + "Upload").innerHTML = `<button id="addEffectButton" class="levelNavigationButton tertiaryButton marginTop8"
-        onclick="SoundHandlerRenderer.deleteCustom('${key}')" style="padding: 8px 12px;">
-        DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
-            class="iconInButtonWithText" style="padding-left: 8px">
-        </button>`;
+        document.getElementById(key + "Upload").innerHTML = this.createDeleteButton(key);
     }
 
     static deleteCustom(key) {
@@ -47,6 +39,9 @@ class SoundHandlerRenderer {
         audioElement.src = SoundHandler[key + "Default"];
         audioElement.load();
         document.getElementById(key + "Upload").innerHTML = this.createUploadButton(key);
+        const soundIndex = SoundHandler.sounds.findIndex(sound => sound.key = key);
+        SoundHandler.sounds[soundIndex].value = SoundHandler[key + "Default"];
+        SoundHandler.sounds[soundIndex].customValue = false;
     }
 
     static createSoundControls(sound) {
@@ -59,9 +54,20 @@ class SoundHandlerRenderer {
             </button>
             <span class="soundControlsDescription">${sound.descriptiveName}</span>
             <div id="${sound.key}Upload">
-                ${this.createUploadButton(sound.key)}
+            ${sound?.customValue 
+                ? this.createDeleteButton(sound.key)
+                : this.createUploadButton(sound.key)
+            }
             </div>
         </div>`;
+    }
+
+    static createDeleteButton(key) {
+        return `<button id="addEffectButton" class="levelNavigationButton tertiaryButton marginTop8"
+        onclick="SoundHandlerRenderer.deleteCustom('${key}')" style="padding: 8px 12px;">
+        DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
+            class="iconInButtonWithText" style="padding-left: 8px">
+        </button>`;
     }
 
     static createUploadButton(key) {

@@ -31,6 +31,7 @@ function importGame() {
           gameData = gameData.replace("const allData = ", "");
           const gameDataJson = JSON.parse(gameData);
           ExportedGameInitializer.initializeExportedGame(gameDataJson);
+          SoundHandlerRenderer.createSoundOverview();
         }
         else {
           legacyImporter(fileContent);
@@ -93,6 +94,16 @@ function createPlayerAttributesSectionForAllData() {
   return playerObject;
 }
 
+function getCustomSounds() {
+  const customSounds = [];
+  SoundHandler.sounds.forEach(sound => {
+    if(sound?.customValue) {
+      customSounds.push(sound);
+    }
+  });
+  return customSounds;
+}
+
 function exportGame() {
   const fileAsDocObject = createHtmlDocoumentWithCanvas();
   let bundledScripts = bundleAllScripts();
@@ -111,6 +122,7 @@ function exportGame() {
   if (SoundHandler?.song?.src) {
     allData.mainSong = SoundHandler.song.src;
   }
+  allData.sounds = getCustomSounds();
   allData.sprites = createChangedSpitesObject();
   bundledScripts = bundledScripts.replace("//putAllDataHere",
     `${allDataStartComment}

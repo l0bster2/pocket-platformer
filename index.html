@@ -339,6 +339,7 @@
                                 </div>
                             </details>
                         </div>
+                        <!--
                         <div class="subSection">
                             <label class="levelNavigationButton importExportButton marginTop4">
                                 <input type="file" id="importButton" onChange="importGame(tileMapHandler)" />
@@ -352,7 +353,7 @@
                                 <img src="images/icons/export.svg" class="iconInButtonWithText" alt="export" width="16"
                                     height="16">
                             </button>
-                        </div>
+                        </div>-->
                         <div class="subSection">
                             <a href="https://twitter.com/the_l0bster" target="_blank">
                                 <img src="images/icons/twitter.svg" alt="twitter" width="24" height="24">
@@ -742,8 +743,6 @@
             LevelSizeHandler.staticConstructor(tileMapHandler);
             PlayerAttributesHandler.staticConstructor(player);
             CustomSpriteHandler.staticConstructor();
-            SoundHandlerRenderer.createSoundOverview();
-
 
             canvas.addEventListener("mouseenter", (e) => { Controller.mouseEnter(e) });
             canvas.addEventListener("mouseleave", (e) => { Controller.mouseLeave(e) });

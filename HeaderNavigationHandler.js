@@ -17,6 +17,7 @@ function changeView(value) {
         document.getElementById("soundView").style.display = "block";
         document.getElementById("gameViewCheckmark").style.display = "none";
         document.getElementById("soundViewCheckmark").style.display = "block";
+        SoundHandlerRenderer.createSoundOverview();
     }
     else {
         document.getElementById("gameView").style.display = "block";

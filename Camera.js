@@ -20,6 +20,10 @@ class Camera {
         };
         this.moveTo(this.viewport.halfWidth, this.viewport.halfHeight);
         this.updateViewport();
+        this.screenShake = {
+            currentFrame: 0,
+            intensity: 0,
+        };
     }
 
     static begin() {
@@ -60,6 +64,11 @@ class Camera {
         this.viewport.top = this.follow.y - this.viewport.halfHeight;
     }
 
+    static setScreenShake(frames, intensity) {
+        this.screenShake.currentFrame = frames;
+        this.screenShake.intensity = intensity;
+    }
+
     static followObject(x, y) {
         let newFollowX;
         let newFollowY;
@@ -75,6 +84,12 @@ class Camera {
         if (newFollowY && newFollowY !== this.follow.y) {
             this.follow.y = newFollowY;
             positionChanged = true;
+        }
+        if(this.screenShake.currentFrame > 0) {
+            this.screenShake.currentFrame--;
+            positionChanged = true;
+            this.follow.x += MathHelpers.getSometimesNegativeRandomNumber(0, this.screenShake.intensity, false);
+            this.follow.y += MathHelpers.getSometimesNegativeRandomNumber(0, this.screenShake.intensity, false);
         }
         if (positionChanged) {
             this.updateViewport();

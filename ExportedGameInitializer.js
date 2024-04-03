@@ -12,6 +12,11 @@ class ExportedGameInitializer {
             SoundHandler.mainSong = new Sound(allData.mainSong, "mainSong", true);
             WorldDataHandler.insideTool && MusicHandler.addSong(allData.mainSong);
         }
+        if(allData?.sounds) {
+            allData.sounds.forEach(sound => {
+                SoundHandler.reloadSound(sound.key, sound.value);
+            })
+        }
         for (const [key, value] of Object.entries(allData.playerObject)) {
             player[key] = value;
         }

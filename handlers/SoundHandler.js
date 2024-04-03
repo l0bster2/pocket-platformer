@@ -66,4 +66,19 @@ class SoundHandler {
       }
     }
   }
+
+  static reloadSound(key, value) {
+    const audioElement = document.getElementById(key);
+    audioElement.src = value;
+    audioElement.load();
+    let foundIndex = 0;
+    this.sounds.forEach((sound, index) => {
+      if(sound.key === key) {
+        foundIndex = index;
+      }
+    });
+    console.log(foundIndex, this.sounds[foundIndex])
+    this.sounds[foundIndex].customValue = true;
+    this.sounds[foundIndex].value = value;
+  }
 }
