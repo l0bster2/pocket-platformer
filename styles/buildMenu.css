@@ -152,6 +152,10 @@ input:checked+.switchSlider:before {
     background-color: white;
 }
 
+#playerAnimationWrapper > * {
+    margin-top: 8px;
+}
+
 .radioButtonAsSvg>input[type="radio"] {
     position: absolute;
     opacity: 0;
@@ -281,7 +285,7 @@ input:checked+.switchSlider:before {
 }
 
 #soundView {
-    width: 580px;
+    gap: 8px;
 }
 
 .switch {

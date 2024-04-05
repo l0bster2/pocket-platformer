@@ -54,12 +54,14 @@
                 <ul class="dropdown-content" id="myDropdown2">
                     <li class="dropdown-nav-item" onClick="changeView('game')">
                         <div>Game-screen
-                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12" id="gameViewCheckmark">
+                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12"
+                                id="gameViewCheckmark">
                         </div>
                     </li>
                     <li class="dropdown-nav-item" onClick="changeView('sounds')">
                         <div>Sounds
-                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12" style="display: none;" id="soundViewCheckmark">
+                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12"
+                                style="display: none;" id="soundViewCheckmark">
                         </div>
                     </li>
                 </ul>
@@ -316,7 +318,31 @@
                                     </div>
                                 </div>
                             </details>
-                            <details class="marginTop12">
+                            <details class="marginTop12" id="playerAnimationWrapper">
+                                <summary>Player animation</summary>
+                                <div class='textAsLink'
+                                    onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'Player idle'} }, true)">
+                                    Player idle</div>
+                                <div class='textAsLink'
+                                    onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'Player jump'} }, true)">
+                                    Player jump</div>
+                                <div class='textAsLink'
+                                    onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'Player walk'} }, true)">
+                                    Player walk</div>
+                                <div class='textAsLink'
+                                    onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 1'} }, true)">
+                                    Jump SFX</div>
+                                <div class='textAsLink'
+                                    onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 10'} }, true)">
+                                    Run trail</div>
+                                <div class='textAsLink'
+                                    onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 3'} }, true)">
+                                    Dash trail</div>
+                                <div class='textAsLink'
+                                    onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 11'} }, true)">
+                                    Swimming trail</div>
+                            </details>
+                            <!--<details class="marginTop12">
                                 <summary>Add music</summary>
                                 <div class="marginTop12" id="songSummary" style="display: none">
                                     <span id="songUrl" class="finishedText songInput textOverflow"
@@ -337,7 +363,7 @@
                                     <button class="levelNavigationButton marginTop8 fullWidth"
                                         onClick="MusicHandler.addSong()">Add Song</button>
                                 </div>
-                            </details>
+                            </details>-->
                         </div>
                         <!--
                         <div class="subSection">
@@ -369,8 +395,14 @@
             </div>
         </div>
         <div class="section" style="display: none;" id="soundView">
-            <h2 class="sectionHeading">Sound handler</h2>
-            <div class="sectionContent" id="soundContent"></div>
+            <div style="width: 580px">
+                <h2 class="sectionHeading">Sounds</h2>
+                <div class="sectionContent" id="soundContent"></div>
+            </div>
+            <div style="width: 580px">
+                <h2 class="sectionHeading">Music</h2>
+                <div class="sectionContent" id="musicContent"></div>
+            </div>
         </div>
         <div id="protipSection" class="sectionContent">
             <b>ProTip: </b><span id="proTip"></span>

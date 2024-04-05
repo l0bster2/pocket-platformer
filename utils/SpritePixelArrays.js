@@ -2175,7 +2175,7 @@ class SpritePixelArrays {
     this.SFX11 = {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 10",
-      directions: [AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.bottom],
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top],
       description: "Trail that player leaves while walking.",
       animation: [{
         sprite:
@@ -2198,8 +2198,8 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       }

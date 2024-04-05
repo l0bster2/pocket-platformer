@@ -14,7 +14,7 @@ function navDropDownClick(event, id = "myDropdown") {
 function changeView(value) {
     if(value === "sounds") {
         document.getElementById("gameView").style.display = "none";
-        document.getElementById("soundView").style.display = "block";
+        document.getElementById("soundView").style.display = "flex";
         document.getElementById("gameViewCheckmark").style.display = "none";
         document.getElementById("soundViewCheckmark").style.display = "block";
         SoundHandlerRenderer.createSoundOverview();

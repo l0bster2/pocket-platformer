@@ -1,10 +1,12 @@
 class SoundHandlerRenderer {
     static createSoundOverview() {
-        const wrapper = document.getElementById("soundContent");
-        wrapper.innerHTML =
+        document.getElementById("soundContent").innerHTML =
             `<div> 
             ${SoundHandler.sounds.filter((sound) => sound.type === 'sound').map(sound => this.createSoundControls(sound)).join(' ')}
         </div>`;
+        document.getElementById("musicContent").innerHTML =
+        `
+        `;
     }
 
     static stopSound(key) {

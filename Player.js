@@ -201,7 +201,7 @@ class Player {
 
     checkTrailType() {
         if (this.swimming) {
-            return { finalFrame: 8, sfxIndex: 11 };
+            return { finalFrame: 12, sfxIndex: 11 };
         }
         else if (this.fixedSpeed || this.fixedSpeedLeft || this.fixedSpeedRight) {
             return { finalFrame: 12, sfxIndex: 8 };
