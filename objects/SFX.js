@@ -43,6 +43,9 @@ class SFX {
                 this.x -= this.growAmountByStep / 2
                 this.y -= this.growAmountByStep / 2
             }
+            this.x = Math.round(this.x);
+            this.y = Math.round(this.y);
+
             this.reduceAlpha ?
                 Display.drawImageWithAlpha(spriteCanvas, Math.floor(this.currentFrame / this.animationLength) * this.tileSize + this.xCanvasOffset,
                     this.canvasYSpritePos, this.tileSize, this.tileSize, this.x, this.y, this.width,

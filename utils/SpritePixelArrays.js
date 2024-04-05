@@ -1876,9 +1876,9 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "FFFFFF", "FFFFFF", "FFFFFF", "transp", "transp"],
+            ["transp", "FFFFFF", "FFFFFF", "FFFFFF", "FFFFFF", "FFFFFF", "FFFFFF", "transp"],
           ]
       },
       {
@@ -1887,11 +1887,11 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "FFFFFF", "transp", "transp", "transp", "transp", "FFFFFF", "transp"],
-            ["transp", "FFFFFF", "transp", "transp", "transp", "transp", "FFFFFF", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       }
       ]
