@@ -2199,7 +2199,7 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "FFFFFF", "FFFFFF", "FFFFFF", "transp", "transp", "transp", "transp"],
+            ["transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       }

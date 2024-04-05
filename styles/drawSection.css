@@ -2,6 +2,7 @@
     background: black;
     margin: 0 4px;
     padding: 8px;
+    border: 1px solid lightgrey;
 }
 
 #additionalFrameButton {
