@@ -121,6 +121,7 @@ class Player {
         this.fixedSpeed = false;
         this.onIce = false;
         this.temporaryDoubleJump = false;
+        this.currentTrailFrame = 0;
         if (resetAutoRun) {
             this.fixedSpeedLeft = false;
             this.fixedSpeedRight = false;
@@ -188,8 +189,6 @@ class Player {
     }
 
     resetAnimationAttributes() {
-        this.clearAnimationInterval("runningAnimationInterval");
-        this.clearAnimationInterval("walljumpAnimationInterval");
         AnimationHelper.setInitialSquishValues(this, this.tileSize);
     }
 
@@ -200,32 +199,39 @@ class Player {
         this.currentSpriteIndex = newAnimationState;
     }
 
-    activateAnimationInterval(intervalName, xOffset = 0, yOffset = 0, intervalTime = 200, animationIndex = 8) {
-        if (!this[intervalName]) {
-            this[intervalName] = setInterval(() => {
-                SFXHandler.createSFX(this.x + xOffset, this.y + yOffset, animationIndex, AnimationHelper.facingDirections.bottom, 0, 0, true, 12);
-            }, intervalTime);
+    checkTrailType() {
+        if (this.swimming) {
+            return { finalFrame: 8, sfxIndex: 11 };
         }
+        else if (this.fixedSpeed || this.fixedSpeedLeft || this.fixedSpeedRight) {
+            return { finalFrame: 12, sfxIndex: 8 };
+        }
+        return { finalFrame: 16, sfxIndex: 10 };
     }
 
-    clearAnimationInterval(intervalName) {
-        if (this[intervalName]) {
-            clearInterval(this[intervalName]);
-            this[intervalName] = null;
+    checkTrailAnimation() {
+        const { finalFrame, sfxIndex } = this.checkTrailType();
+
+        if (this.xspeed !== 0 || this.fixedSpeed || this.swimming) {
+            this.currentTrailFrame++;
+        }
+        if ((this.yspeed === 0 && this.swimming) ||
+            (this.yspeed !== 0 && !this.swimming && !this.fixedSpeed && !this.fixedSpeedLeft && !this.fixedSpeedLeft)) {
+            this.currentTrailFrame = 0;
+        }
+
+        if (this.currentTrailFrame === finalFrame) {
+            SFXHandler.createSFX(this.x, this.y - 2, sfxIndex, this.facingDirection, 0, 0, true)
+            this.currentTrailFrame = 0;
         }
     }
 
     draw() {
         if (this.xspeed > 0) {
-            this.fixedSpeedRight && this.activateAnimationInterval("runningAnimationInterval");
             this.facingDirection = AnimationHelper.facingDirections.right;
         }
         else if (this.xspeed < 0) {
-            this.fixedSpeedLeft && this.activateAnimationInterval("runningAnimationInterval");
             this.facingDirection = AnimationHelper.facingDirections.left;
-        }
-        else {
-            this.clearAnimationInterval("runningAnimationInterval");
         }
 
         if (this.xspeed === 0 && this.yspeed === 0) {
@@ -235,7 +241,6 @@ class Player {
             this.setAnimationState(this.spriteIndexWalk);
         }
         if (this.yspeed !== 0 || this.falling) {
-            //this.clearAnimationInterval("runningAnimationInterval");
             this.setAnimationState(this.spriteIndexJump);
         }
 
@@ -245,6 +250,8 @@ class Player {
         else {
             //this.clearAnimationInterval("walljumpAnimationInterval");
         }
+
+        this.checkTrailAnimation();
 
         const animationLength = this.animationLengths[this.currentSpriteIndex];
 
@@ -270,14 +277,12 @@ class Player {
 
         if (this.fixedSpeed) {
             this.radians += 0.25;
-            this.activateAnimationInterval("fixedSpeedAnimationInterval");
             Display.drawImageWithRotation(this.spriteCanvas, animationIndex * this.tileSize,
                 this.currentSpriteIndex * this.tileSize, this.tileSize,
                 this.tileSize - 1, this.x - this.squishXOffset, this.y - 2 - this.squishYOffset,
                 this.drawWidth, this.drawHeight, this.radians);
         }
         else {
-            this.clearAnimationInterval("fixedSpeedAnimationInterval");
             !this.invisible && Display.drawImage(this.spriteCanvas, animationIndex * this.tileSize,
                 this.currentSpriteIndex * this.tileSize, this.tileSize,
                 this.tileSize - 1, this.x - this.squishXOffset, this.y - 2 - this.squishYOffset,
