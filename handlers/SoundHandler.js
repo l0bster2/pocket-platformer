@@ -77,7 +77,6 @@ class SoundHandler {
         foundIndex = index;
       }
     });
-    console.log(foundIndex, this.sounds[foundIndex])
     this.sounds[foundIndex].customValue = true;
     this.sounds[foundIndex].value = value;
   }

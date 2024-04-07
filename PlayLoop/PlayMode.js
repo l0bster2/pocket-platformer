@@ -99,7 +99,7 @@ class PlayMode {
             return null;
         }
         SoundHandler.hit.stopAndPlay();
-        //Camera.setScreenShake(10, 5);
+        //Camera.setScreenShake(10, 2);
         this.currentPauseFrames = this.deathPauseFrames;
         this.player.death = true;
         const direction = AnimationHelper.facingDirections.bottom;

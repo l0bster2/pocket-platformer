@@ -88,8 +88,8 @@ class Camera {
         if(this.screenShake.currentFrame > 0) {
             this.screenShake.currentFrame--;
             positionChanged = true;
-            this.follow.x += MathHelpers.getSometimesNegativeRandomNumber(0, this.screenShake.intensity, false);
-            this.follow.y += MathHelpers.getSometimesNegativeRandomNumber(0, this.screenShake.intensity, false);
+            this.follow.x += MathHelpers.getSometimesNegativeRandomNumber(1, this.screenShake.intensity, false);
+            this.follow.y += MathHelpers.getSometimesNegativeRandomNumber(1, this.screenShake.intensity, false);
         }
         if (positionChanged) {
             this.updateViewport();

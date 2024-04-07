@@ -6,6 +6,7 @@ class SoundHandlerRenderer {
         </div>`;
         document.getElementById("musicContent").innerHTML =
         `
+            ${this.createMusicControls()}
         `;
     }
 
@@ -21,29 +22,49 @@ class SoundHandlerRenderer {
         //document.getElementById(key + "Start").style.display = "none";
     }
 
-    static uploadCustom(key) {
-        var file = document.getElementById("uploadSound" + key).files[0];
+    static uploadCustomMusic() {
+        var file = document.getElementById("uploadMusic").files[0];
         if (file) {
             var reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = function () {
-                SoundHandler.reloadSound(key, reader.result)
+            reader.onload = () => {
+                SoundHandler.reloadSound("mainSong", reader.result)
             };
             reader.onerror = function (error) {
                 console.log('Error: ', error);
             };
         }
-        document.getElementById(key + "Upload").innerHTML = this.createDeleteButton(key);
+    }
+
+    static uploadCustomSound(key) {
+        var file = document.getElementById("uploadSound" + key).files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                SoundHandler.reloadSound(key, reader.result)
+                document.getElementById(key + "Upload").innerHTML = this.createSoundDeleteButton(key);
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
     }
 
     static deleteCustom(key) {
         const audioElement = document.getElementById(key);
         audioElement.src = SoundHandler[key + "Default"];
         audioElement.load();
-        document.getElementById(key + "Upload").innerHTML = this.createUploadButton(key);
+        document.getElementById(key + "Upload").innerHTML = this.createSoundUploadButton(key);
         const soundIndex = SoundHandler.sounds.findIndex(sound => sound.key = key);
         SoundHandler.sounds[soundIndex].value = SoundHandler[key + "Default"];
         SoundHandler.sounds[soundIndex].customValue = false;
+    }
+
+    static createMusicControls() {
+        return `<div class="musicControls">
+            ${this.createMusicUploadButton()}
+        </div>`;
     }
 
     static createSoundControls(sound) {
@@ -57,14 +78,14 @@ class SoundHandlerRenderer {
             <span class="soundControlsDescription">${sound.descriptiveName}</span>
             <div id="${sound.key}Upload">
             ${sound?.customValue 
-                ? this.createDeleteButton(sound.key)
-                : this.createUploadButton(sound.key)
+                ? this.createSoundDeleteButton(sound.key)
+                : this.createSoundUploadButton(sound.key)
             }
             </div>
         </div>`;
     }
 
-    static createDeleteButton(key) {
+    static createSoundDeleteButton(key) {
         return `<button id="addEffectButton" class="levelNavigationButton tertiaryButton marginTop8"
         onclick="SoundHandlerRenderer.deleteCustom('${key}')" style="padding: 8px 12px;">
         DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
@@ -72,9 +93,18 @@ class SoundHandlerRenderer {
         </button>`;
     }
 
-    static createUploadButton(key) {
+    static createMusicUploadButton() {
         return `<label class="levelNavigationButton importExportButton">
-        <input type="file" id="uploadSound${key}" onChange="SoundHandlerRenderer.uploadCustom('${key}')" />
+        <input type="file" id="uploadMusic" onChange="SoundHandlerRenderer.uploadCustomMusic()" />
+        Import custom
+        <img src="images/icons/import.svg" class="iconInButtonWithText" alt="import" width="16"
+            height="16">
+        </label>`
+    }
+
+    static createSoundUploadButton(key) {
+        return `<label class="levelNavigationButton importExportButton">
+        <input type="file" id="uploadSound${key}" onChange="SoundHandlerRenderer.uploadCustomSound('${key}')" />
         Import custom
         <img src="images/icons/import.svg" class="iconInButtonWithText" alt="import" width="16"
             height="16">
