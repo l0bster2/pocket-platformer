@@ -36,7 +36,7 @@ class SoundHandler {
 
     this.sounds.forEach(sound => {
       if (sound.key === "song" && WorldDataHandler.insideTool) {
-        this.song = new Sound("", "mainSong", true);
+        this.song = new Sound("", "song", true);
       } else {
         this[sound.key] = new Sound(sound.value, sound.key);
       }
@@ -67,13 +67,17 @@ class SoundHandler {
     }
   }
 
+  static stopAllSounds() {
+    this.sounds.forEach(sound => this[sound.key].stop());
+  }
+
   static reloadSound(key, value) {
     const audioElement = document.getElementById(key);
     audioElement.src = value;
     audioElement.load();
     let foundIndex = 0;
     this.sounds.forEach((sound, index) => {
-      if(sound.key === key) {
+      if (sound.key === key) {
         foundIndex = index;
       }
     });

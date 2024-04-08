@@ -85,15 +85,20 @@ class Camera {
             this.follow.y = newFollowY;
             positionChanged = true;
         }
-        if(this.screenShake.currentFrame > 0) {
-            this.screenShake.currentFrame--;
+        if (this.screenShake.currentFrame > 0) {
+            this.doScreenShake();
             positionChanged = true;
-            this.follow.x += MathHelpers.getSometimesNegativeRandomNumber(1, this.screenShake.intensity, false);
-            this.follow.y += MathHelpers.getSometimesNegativeRandomNumber(1, this.screenShake.intensity, false);
         }
         if (positionChanged) {
             this.updateViewport();
         }
+    }
+
+    static doScreenShake() {
+        this.screenShake.currentFrame--;
+        this.follow.x += MathHelpers.getSometimesNegativeRandomNumber(1, this.screenShake.intensity, false);
+        this.follow.y += MathHelpers.getSometimesNegativeRandomNumber(1, this.screenShake.intensity, false);
+
     }
 
     static outOfBoundsXCorrection(x) {

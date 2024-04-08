@@ -2,12 +2,9 @@ class SoundHandlerRenderer {
     static createSoundOverview() {
         document.getElementById("soundContent").innerHTML =
             `<div> 
-            ${SoundHandler.sounds.filter((sound) => sound.type === 'sound').map(sound => this.createSoundControls(sound)).join(' ')}
+            ${SoundHandler.sounds.filter(sound => sound.type === 'sound').map(sound => this.createSoundControls(sound)).join(' ')}
         </div>`;
-        document.getElementById("musicContent").innerHTML =
-        `
-            ${this.createMusicControls()}
-        `;
+        this.createMusicSection();
     }
 
     static stopSound(key) {
@@ -18,8 +15,18 @@ class SoundHandlerRenderer {
 
     static startSound(key) {
         SoundHandler[key].stopAndPlay();
-        //document.getElementById(key + "Stop").style.display = "block";
-        //document.getElementById(key + "Start").style.display = "none";
+    }
+
+    static startMusic(key) {
+        SoundHandler[key].stopAndPlay();
+        document.getElementById(key + "MusicStop").style.display = "block";
+        document.getElementById(key + "MusicStart").style.display = "none";
+    }
+
+    static stopMusic(key) {
+        SoundHandler[key].stop();
+        document.getElementById(key + "MusicStop").style.display = "none";
+        document.getElementById(key + "MusicStart").style.display = "block";
     }
 
     static uploadCustomMusic() {
@@ -28,7 +35,9 @@ class SoundHandlerRenderer {
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => {
-                SoundHandler.reloadSound("mainSong", reader.result)
+                SoundHandler.reloadSound("song", reader.result);
+                this.createMusicSection();
+                SoundHandler.stopAllSounds();
             };
             reader.onerror = function (error) {
                 console.log('Error: ', error);
@@ -61,10 +70,37 @@ class SoundHandlerRenderer {
         SoundHandler.sounds[soundIndex].customValue = false;
     }
 
-    static createMusicControls() {
-        return `<div class="musicControls">
+    static deleteCustomMusic(key) {
+        SoundHandler.sounds[key].value = "";
+        this.createMusicSection();
+    }
+
+    static createMusicSection() {
+        document.getElementById("musicContent").innerHTML = `<div class="musicContent">
+        ${SoundHandler.sounds.filter(sound => sound.type === 'music' && sound.value).map((song, index) => {
+            return this.createMusicControls(song, index);
+        })}
             ${this.createMusicUploadButton()}
         </div>`;
+    }
+
+    static createMusicControls(sound, index) {
+        return `<div class="soundControls">
+        <button id="${sound.key}MusicStop" style="display: none" class="levelNavigationButton" onClick="SoundHandlerRenderer.stopMusic('${sound.key}')">
+            <img src="images/icons/pause.svg" width="14" height="14">
+        </button>
+        <button id="${sound.key}MusicStart" class="levelNavigationButton" onClick="SoundHandlerRenderer.startMusic('${sound.key}')">
+            <img src="images/icons/right.svg" width="14" height="14">
+        </button>
+        <span class="soundControlsDescription">Song ${index + 1}</span>
+        <div id="${sound.key}Upload">
+        <button id="addEffectButton" class="levelNavigationButton tertiaryButton marginTop8"
+        onclick="SoundHandlerRenderer.deleteCustomMusic('${sound.key}')" style="padding: 8px 12px;">
+        DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
+            class="iconInButtonWithText" style="padding-left: 8px">
+        </button>
+        </div>
+    </div>`;
     }
 
     static createSoundControls(sound) {
@@ -77,7 +113,7 @@ class SoundHandlerRenderer {
             </button>
             <span class="soundControlsDescription">${sound.descriptiveName}</span>
             <div id="${sound.key}Upload">
-            ${sound?.customValue 
+            ${sound?.customValue
                 ? this.createSoundDeleteButton(sound.key)
                 : this.createSoundUploadButton(sound.key)
             }

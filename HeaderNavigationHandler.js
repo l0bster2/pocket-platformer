@@ -25,6 +25,7 @@ function changeView(value) {
         document.getElementById("gameViewCheckmark").style.display = "block";
         document.getElementById("soundViewCheckmark").style.display = "none";
     }
+    SoundHandler.stopAllSounds();
 }
 
 function closeSpecificDropdown(id) {

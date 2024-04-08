@@ -29,7 +29,7 @@ class EffectsRenderer {
 
     static getSFXSpeedFromEffect(speedObject) {
         return speedObject.speedFrom === speedObject.speedTo ? speedObject.speedFrom
-            : MathHelpers.getRandomNumberBetweenTwoNumbers(speedObject.speedFrom, speedObject.speedTo + 1, false);
+            : MathHelpers.getRandomNumberBetweenTwoNumbers(speedObject.speedFrom, speedObject.speedTo, false);
     }
 
     static displayGreyScale() {
