@@ -65,13 +65,14 @@ class SoundHandlerRenderer {
         audioElement.src = SoundHandler[key + "Default"];
         audioElement.load();
         document.getElementById(key + "Upload").innerHTML = this.createSoundUploadButton(key);
-        const soundIndex = SoundHandler.sounds.findIndex(sound => sound.key = key);
+        const soundIndex = SoundHandler.sounds.findIndex(function(sound){return sound.key === key});
         SoundHandler.sounds[soundIndex].value = SoundHandler[key + "Default"];
         SoundHandler.sounds[soundIndex].customValue = false;
     }
 
     static deleteCustomMusic(key) {
-        SoundHandler.sounds[key].value = "";
+		const soundIndex = SoundHandler.sounds.findIndex(function(sound){return sound.key === key});
+        SoundHandler.sounds[soundIndex].value = "";
         this.createMusicSection();
     }
 
