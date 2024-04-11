@@ -71,7 +71,7 @@ class SoundHandlerRenderer {
     }
 
     static deleteCustomMusic(key) {
-		const soundIndex = SoundHandler.sounds.findIndex(function(sound){return sound.key === key});
+        const soundIndex = SoundHandler.sounds.findIndex(sound => sound.key === key);
         SoundHandler.sounds[soundIndex].value = "";
         this.createMusicSection();
     }
