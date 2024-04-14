@@ -8,9 +8,9 @@ class ExportedGameInitializer {
         WorldDataHandler.textColor = allData.textColor;
         TransitionAnimationHandler.animationFrames = allData.animationFrames;
         TransitionAnimationHandler.animationType = allData.animationType;
-        if (allData?.mainSong) {
-            SoundHandler.mainSong = new Sound(allData.mainSong, "mainSong", true);
-            WorldDataHandler.insideTool && MusicHandler.addSong(allData.mainSong);
+        if (allData?.song) {
+            SoundHandler.song = new Sound(allData.song, "song", true);
+            //WorldDataHandler.insideTool && MusicHandler.addSong(allData.mainSong);
         }
         if(allData?.sounds) {
             allData.sounds.forEach(sound => {

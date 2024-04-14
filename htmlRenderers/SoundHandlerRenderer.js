@@ -77,11 +77,12 @@ class SoundHandlerRenderer {
     }
 
     static createMusicSection() {
+        const firstSongExists = SoundHandler.doesSoundExist("song");
         document.getElementById("musicContent").innerHTML = `<div class="musicContent">
         ${SoundHandler.sounds.filter(sound => sound.type === 'music' && sound.value).map((song, index) => {
             return this.createMusicControls(song, index);
         })}
-            ${this.createMusicUploadButton()}
+            ${!firstSongExists ? this.createMusicUploadButton() : ''}
         </div>`;
     }
 

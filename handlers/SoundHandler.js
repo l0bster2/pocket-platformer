@@ -68,7 +68,15 @@ class SoundHandler {
   }
 
   static stopAllSounds() {
-    this.sounds.forEach(sound => this[sound.key].stop());
+    this.sounds.forEach(sound => {
+      this[sound.key].stop();
+      this[sound.key].currentTime = 0;
+    });
+  }
+
+  static doesSoundExist(key) {
+    const soundIndex = SoundHandler.sounds.findIndex(sound => sound.key === key);
+    return SoundHandler.sounds[soundIndex].value;
   }
 
   static reloadSound(key, value) {
