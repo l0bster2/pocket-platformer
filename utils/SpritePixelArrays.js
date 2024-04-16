@@ -1422,9 +1422,30 @@ class SpritePixelArrays {
             ["transp", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "transp"],
             ["transp", "transp", "transp", "FF1C1C", "FF1C1C", "FF1C1C", "transp", "transp"]
           ]
-      }
+      },
       ]
     };
+	
+	this.LADDER = {
+	  name: ObjectTypes.LADDER,
+	  descriptiveName: "Ladder",
+	  description: "The player can climb up and down.",
+	  type: this.SPRITE_TYPES.object,
+	  animation: [{
+	    sprite:
+		  [
+		    ["AA5500", "E37100", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "E37100", "AA5500"],
+			["AA5500", "E37100", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "E37100", "AA5500"],
+			["AA5500", "E37100", "transp", "transp", "transp", "transp", "E37100", "AA5500"],
+			["AA5500", "E37100", "transp", "transp", "transp", "transp", "E37100", "AA5500"],
+			["AA5500", "E37100", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "E37100", "AA5500"],
+			["AA5500", "E37100", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "E37100", "AA5500"],
+			["AA5500", "E37100", "transp", "transp", "transp", "transp", "E37100", "AA5500"],
+			["AA5500", "E37100", "transp", "transp", "transp", "transp", "E37100", "AA5500"]
+		  ]
+	  },
+	  ]
+	};
 
     this.DEKO_SPRITE = {
       name: ObjectTypes.DEKO,
