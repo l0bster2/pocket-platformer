@@ -154,6 +154,10 @@ class ObjectTypes {
   static get COLLECTIBLE() {
     return 'collectible';
   }
+  
+  static get LADDER() {
+	  return 'ladder';
+  }
 
   static get SPECIAL_BLOCK_VALUES() {
     return {
@@ -199,7 +203,8 @@ class ObjectTypes {
       [this.TOGGLE_MINE]: ToggleMine,
       [this.ROCKET_LAUNCHER]: RocketLauncher,
       [this.PORTAL]: Portal,
-      [this.COLLECTIBLE]: Collectible
+      [this.COLLECTIBLE]: Collectible,
+	    [this.LADDER]: Ladder
     };
   }
 }
