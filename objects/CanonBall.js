@@ -57,7 +57,9 @@ class CanonBall extends InteractiveLevelObject {
 
         if ((!tileArray.includes(currentTileValue) && this.collidesWithWalls) || typeof currentTileValue === 'undefined') {
             if(currentTileValue === ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch) {
-                const switchBlock = this.tileMapHandler.levelObjects.find(levelObject => levelObject.initialX === xPos && levelObject.initialY === yPos);
+                const switchBlock = this.tileMapHandler.levelObjects.find(levelObject => levelObject.initialX === xPos && 
+                    levelObject.initialY === yPos && 
+                    levelObject.type === ObjectTypes.RED_BLUE_BLOCK_SWITCH);
                 switchBlock && switchBlock.switchWasHit(this.facingDirection);
             }
             this.deleteObjectFromLevel(this.tileMapHandler);

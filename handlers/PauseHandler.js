@@ -92,7 +92,7 @@ class PauseHandler {
                 if(this.currentOptionIndex === 1) {
                     this.restartedGame = true;
                     this.currentRestartGameFrameCounter = this.restartGameMaxFrames;
-                    SoundHandler.setVolume("mainSong", 0.3);
+                    SoundHandler.setVolume("song", 0.3);
                     SoundHandler.guiSelect.stopAndPlay();
                 }
                 //continue
@@ -116,7 +116,7 @@ class PauseHandler {
                 PlayMode.startGame();
                 this.resetPauseHandler();
                 SoundHandler.song.stopAndPlay();
-                SoundHandler.setVolume("mainSong", 1);
+                SoundHandler.setVolume("song", 1);
             }
         }
     }

@@ -25,7 +25,7 @@ class FinishFlag extends InteractiveLevelObject {
 
             if (this.tilemapHandler.currentLevel === WorldDataHandler.levels.length - 2 && !this.customExit
                 && !WorldDataHandler.insideTool) {
-                SoundHandler.fadeAudio("mainSong");
+                SoundHandler.fadeAudio("song");
             }
         }
     }
