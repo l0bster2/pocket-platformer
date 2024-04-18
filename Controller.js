@@ -179,8 +179,9 @@ class Controller {
             case "d": this.right = pressed; break;
             case "Left": case "ArrowLeft": this.left = pressed; e.preventDefault(); break;
             case "a": this.left = pressed; break;
-            case "Up": case "ArrowUp": case "w": this.up = pressed; this.jump = pressed; break;
-            case "z": case "j": case "c": this.jump = pressed; this.confirm = pressed; break;
+            case "Up": case "ArrowUp": case "w": this.up = pressed; break;
+            case "z": case "j" : this.jump = pressed; break;
+            case "c": case "l" : this.confirm = pressed; break;
             case "x": case "k": this.alternativeActionButton = pressed; break;
             case "Down": case "ArrowDown": this.down = pressed; break;
             case "Control": this.ctrlPressed = pressed; break;
