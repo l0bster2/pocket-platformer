@@ -60,7 +60,7 @@ class JumpHandler extends PlayMode {
             }
         }
     }
-    
+
     static resetWallJump(wallJumpDirection) {
         this.player.wallJumpFrames = 0;
         this.player.currentWallJumpCoyoteFrame = 0;
@@ -78,7 +78,7 @@ class JumpHandler extends PlayMode {
         if (!player.jumpPressedToTheMax && !(player.jumpframes === 0 && !player.jumpReleased) && !player.dashing && player.forcedJumpSpeed === 0 && !player.flapped &&
             player.currentCoyoteJumpFrame < player.coyoteJumpFrames && player.jumpframes < player.maxJumpFrames && !player.invisible) {
 
-            if (!player.jumping && player.jumpframes === 0 && player.jumpReleased ) {
+            if (!player.jumping && player.jumpframes === 0 && player.jumpReleased) {
                 player.jumpReleased = false;
                 this.jumpInitialized();
             }
@@ -144,6 +144,11 @@ class JumpHandler extends PlayMode {
         }
     }
 
+    static fullySubmergedInWater() {
+        return this.player.top_right_pos_in_water && this.player.top_left_pos_in_water
+            && this.player.bottom_right_pos_in_water && this.player.bottom_left_pos_in_water;
+    }
+
     static swimHandler() {
         player.wallJumping = false;
         player.jumping = false;
@@ -163,6 +168,7 @@ class JumpHandler extends PlayMode {
         }
         else if (!this.player.flapped && Controller.jumpReleased) {
             SoundHandler.bubble.stopAndPlay();
+            this.fullySubmergedInWater() && SFXHandler.createSFX(player.x, player.y, 11, AnimationHelper.facingDirections.bottom, 0, 0, true, 14);
 
             if (this.player.yspeed - this.player.flapHeight > this.player.maxSwimHeight) {
                 this.player.yspeed -= this.player.flapHeight;

@@ -2228,10 +2228,10 @@ class SpritePixelArrays {
         sprite:
           [
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FFFFFF", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "C6E3FF", "C6E3FF", "transp", "transp", "transp"],
+            ["transp", "transp", "C6E3FF", "transp", "transp", "C6E3FF", "transp", "transp"],
+            ["transp", "transp", "C6E3FF", "transp", "transp", "C6E3FF", "transp", "transp"],
+            ["transp", "transp", "transp", "C6E3FF", "C6E3FF", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],

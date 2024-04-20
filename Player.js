@@ -200,10 +200,7 @@ class Player {
     }
 
     checkTrailType() {
-        if (this.swimming) {
-            return { finalFrame: 12, sfxIndex: 11 };
-        }
-        else if (this.fixedSpeed || this.fixedSpeedLeft || this.fixedSpeedRight) {
+        if (this.fixedSpeed || this.fixedSpeedLeft || this.fixedSpeedRight) {
             return { finalFrame: 12, sfxIndex: 8 };
         }
         return { finalFrame: 16, sfxIndex: 10 };
@@ -212,11 +209,10 @@ class Player {
     checkTrailAnimation() {
         const { finalFrame, sfxIndex } = this.checkTrailType();
 
-        if (this.xspeed !== 0 || this.fixedSpeed || this.swimming) {
+        if (this.xspeed !== 0 || this.fixedSpeed) {
             this.currentTrailFrame++;
         }
-        if ((this.yspeed === 0 && this.swimming) ||
-            (this.yspeed !== 0 && !this.swimming && !this.fixedSpeed && !this.fixedSpeedLeft && !this.fixedSpeedLeft)) {
+        if (this.swimming || (this.yspeed !== 0 && !this.fixedSpeed && !this.fixedSpeedLeft && !this.fixedSpeedRight)) {
             this.currentTrailFrame = 0;
         }
 
