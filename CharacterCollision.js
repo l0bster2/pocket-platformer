@@ -90,6 +90,14 @@ class CharacterCollision {
                     }
                 }
             }
+            if (!obj.previouslyTouchedTrampolines) {
+                tileMapHandler.layers[2].forEach(objectWithCollision => {
+                    if (Collision.objectsColliding(obj, objectWithCollision)
+                        && obj.bottom_right_pos.y > objectWithCollision.y + (this.tileMapHandler.tileSize / 2.1)) {
+                        obj.y = objectWithCollision.y - obj.height / 2;
+                    }
+                })
+            }
         }
         // collision to the top
         else if (obj.yspeed < 0) {
@@ -123,6 +131,15 @@ class CharacterCollision {
         }
 
         obj.prev_bottom = obj.bottom;
+        /*obj.previouslyCollided = false;
+        tileMapHandler.layers[2].forEach(objectWithCollision => {
+            const { top_right_pos, top_left_pos, bottom_right_pos, bottom_left_pos } = obj;
+            [top_right_pos, top_left_pos, bottom_right_pos, bottom_left_pos].forEach(point => {
+                if (Collision.pointAndObjectColliding(point, objectWithCollision)) {
+                    obj.previouslyCollided = true;
+                }
+            })
+        });*/
     }
 
     static correctTopPosition(obj) {
@@ -156,10 +173,10 @@ class CharacterCollision {
         const left_foot_x = this.tileMapHandler.getTileValueForPosition(obj.x);
         const right_foot_x = this.tileMapHandler.getTileValueForPosition(obj.x + obj.width);
         const foot_y = this.tileMapHandler.getTileValueForPosition(obj.y + (obj.height + 1));
-  
+
         let current_tile = 1;
 
-        if(foot_y < this.tileMapHandler.levelHeight) {
+        if (foot_y < this.tileMapHandler.levelHeight) {
             const left_foot = this.tileMapHandler.tileMap[foot_y][left_foot_x];
             const right_foot = this.tileMapHandler.tileMap[foot_y][right_foot_x];
             current_tile = left_foot !== 0 ? left_foot : right_foot;
@@ -169,12 +186,12 @@ class CharacterCollision {
 
         switch (current_tile) {
             case 0:
-                if(obj.swimming) {
+                if (obj.swimming) {
                     obj.speed = obj.air_acceleration / 2;
                     obj.currentMaxSpeed = obj.maxSpeed;
                     obj.friction = obj.air_friction;
                 }
-                else if(!obj.onIce) {
+                else if (!obj.onIce) {
                     obj.speed = obj.air_acceleration;
                     obj.currentMaxSpeed = obj.maxSpeed;
                     obj.friction = obj.air_friction;

@@ -345,54 +345,7 @@
                                     onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 8'} }, true)">
                                     Fixed speed trail</div>
                             </details>
-                            <!--<details class="marginTop12">
-                                <summary>Add music</summary>
-                                <div class="marginTop12" id="songSummary" style="display: none">
-                                    <span id="songUrl" class="finishedText songInput textOverflow"
-                                        style="width: 170px"></span>
-                                    <img src="images/icons/delete.svg" class="hovereableRedSvg" alt="info" width="16"
-                                        height="16" onClick="MusicHandler.deleteSong()">
-                                </div>
-                                <div class="marginTop12" id="addSong">
-                                    <label for="addUrl">Add URL: </label>
-                                    <div>
-                                        <input id="addUrl" class="songInput" type="text" />
-                                        <span data-microtip-size="large"
-                                            aria-label="Currently it is only possible to add external URL's as music. It has to be a direct download link to a valid audio file format (Mp3, Wav etc.)"
-                                            data-microtip-position="top-left" role="tooltip" class="songInputInfo"><img
-                                                src="images/icons/info.svg" alt="info" width="16" height="16">
-                                        </span>
-                                    </div>
-                                    <button class="levelNavigationButton marginTop8 fullWidth"
-                                        onClick="MusicHandler.addSong()">Add Song</button>
-                                </div>
-                            </details>-->
                         </div>
-                        <!--
-                        <div class="subSection">
-                            <label class="levelNavigationButton importExportButton marginTop4">
-                                <input type="file" id="importButton" onChange="importGame(tileMapHandler)" />
-                                Import
-                                <img src="images/icons/import.svg" class="iconInButtonWithText" alt="import" width="16"
-                                    height="16">
-                            </label>
-                            <button class="levelNavigationButton importExportButton marginTop8" id="exportButton"
-                                onClick="exportGame()">
-                                Export
-                                <img src="images/icons/export.svg" class="iconInButtonWithText" alt="export" width="16"
-                                    height="16">
-                            </button>
-                        </div>-->
-                        <!--<div class="subSection">
-                            <a href="https://twitter.com/the_l0bster" target="_blank">
-                                <img src="images/icons/twitter.svg" alt="twitter" width="24" height="24">
-                                <span class="linkWithIcon" id="twitterLink">Follow on Twitter</span>
-                            </a>
-                            <a href="https://discord.gg/g8QAW2VK5C" target="_blank">
-                                <img src="images/icons/discord.svg" alt="discord" width="24" height="24">
-                                <span class="linkWithIcon" id="discordLink">Join discord</span>
-                            </a>
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -800,7 +753,7 @@
                     player.draw();
                 }
                 //foreground objects
-                tileMapHandler.displayObjects(tileMapHandler.layers[3]);
+                tileMapHandler.displayObjects(tileMapHandler.layers[4]);
                 DrawSectionHandler.draw();
                 BuildMode.runBuildLogic();
                 SFXHandler.updateSfxAnimations();
@@ -819,24 +772,22 @@
                     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
                     Camera.begin();
                     tileMapHandler.displayLevel();
+                    Controller.handleGamepadInput();
                     if (tileMapHandler.currentLevel === 0) {
-                        Controller.handleGamepadInput();
                         PlayMode.runStartScreenLogic();
                         Display.displayStartScreen(tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
                         EffectsRenderer.displayEffects(1);
                     }
                     else if (tileMapHandler.currentLevel === WorldDataHandler.levels.length - 1) {
-                        Controller.handleGamepadInput();
                         Display.displayEndingScreen(spriteCanvas, tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
                         EffectsRenderer.displayEffects(1);
                     }
                     else {
-                        Controller.handleGamepadInput();
                         PlayMode.runPlayLogic();
                         SFXHandler.updateSfxAnimations();
                         player.draw();
                         //foreground objects
-                        tileMapHandler.displayObjects(tileMapHandler.layers[3]);
+                        tileMapHandler.displayObjects(tileMapHandler.layers[4]);
                         EffectsRenderer.displayEffects(1);
                         DialogueHandler.handleDialogue();
                         PlayMode.pauseFramesHandler();

@@ -174,24 +174,28 @@ class TileMapHandler {
         this.displayObjectsOrDeko(this.paths);
         //normal objects
         this.displayObjects(this.layers[1]);
+        this.displayObjects(this.layers[2]);
         this.displayStaticTiles();
         //projectiles
-        this.displayObjects(this.layers[2]);
+        this.displayObjects(this.layers[3]);
     }
 
     splitLevelObjectsInLayers() {
         const layers = [
-            [], [], [], []
+            [], [], [], [], []
         ];
         this.levelObjects.forEach(levelObject => {
             if(SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
                 layers[0].push(levelObject);
             }
             else if(SpritePixelArrays.projectileSprites.includes(levelObject.type)) {
-                layers[2].push(levelObject);
+                layers[3].push(levelObject);
             }
             else if(SpritePixelArrays.foregroundSprites.includes(levelObject.type)) {
-                layers[3].push(levelObject);
+                layers[4].push(levelObject);
+            }
+            else if(levelObject.type === ObjectTypes.TRAMPOLINE) {
+                layers[2].push(levelObject);
             }
             else {
                 layers[1].push(levelObject);

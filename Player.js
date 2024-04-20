@@ -133,6 +133,7 @@ class Player {
     resetTemporaryAttributes() {
         this.currentGravity = this.gravity;
         this.currentMaxFallSpeed = this.maxFallSpeed;
+        this.previouslyTouchedTrampolines = false;
 
         if (this.swimming) {
             //if only the side of player is in water, we set this attribute. so next frame, we can reset coyote jump
