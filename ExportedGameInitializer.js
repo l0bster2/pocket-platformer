@@ -10,7 +10,6 @@ class ExportedGameInitializer {
         TransitionAnimationHandler.animationType = allData.animationType;
         if (allData?.song) {
             SoundHandler.song = new Sound(allData.song, "song", true);
-            //WorldDataHandler.insideTool && MusicHandler.addSong(allData.mainSong);
         }
         if(allData?.sounds) {
             allData.sounds.forEach(sound => {

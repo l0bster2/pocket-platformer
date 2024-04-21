@@ -57,10 +57,6 @@ function legacyImporter(fileContent) {
     if (textColor) {
         WorldColorChanger.setTextColor("#" + textColor);
     }
-    /*const songUrl = parseMusicFromGameFile(fileContent);
-    if (songUrl) {
-        MusicHandler.addSong(songUrl);
-    }*/
 
     const { value: effects, worldDataPart: withoutEffects } = getWorldDataPartValue(worldDataPart, gameEffectsInitialization, '];');
     worldDataPart = withoutEffects;
