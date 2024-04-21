@@ -141,4 +141,25 @@ class Camera {
             y: y / this.viewport.scale + this.viewport.top
         };
     }
+
+    static zoomToObject(scaleSpeed = 0.0025, obj) {
+        Display.ctx.imageSmoothingEnabled = true;
+        if (Camera.viewport.scale < 2) {
+            Camera.updateViewportRelatedToScale(Camera.viewport.scale + scaleSpeed);
+            const cameraMovementSpeed = Math.floor(Camera.viewport.width / 100 * (scaleSpeed * 100));
+            const cameraXCenter = Camera.viewport.left + Camera.viewport.halfWidth;
+            const cameraYCenter = Camera.viewport.top + Camera.viewport.halfHeight;
+            const newAngle = MathHelpers.getAngle(obj.x, obj.y, cameraXCenter, cameraYCenter);
+            const angle = MathHelpers.normalizeAngle(newAngle);
+            const radians = MathHelpers.getRadians(angle);
+            if (MathHelpers.getDistanceBetween2Objects({ x: cameraXCenter, y: cameraYCenter }, obj) < cameraMovementSpeed) {
+                Camera.viewport.left = obj.x;
+                Camera.viewport.top = obj.y;
+            }
+            else {
+                Camera.viewport.left -= Math.cos(radians) * cameraMovementSpeed;
+                Camera.viewport.top -= Math.sin(radians) * cameraMovementSpeed;
+            }
+        }
+    }
 }

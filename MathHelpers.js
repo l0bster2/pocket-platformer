@@ -10,7 +10,7 @@ class MathHelpers {
   }
 
   static sortNumbers(numberArray) {
-    return numberArray.sort((a,b)=>a-b)
+    return numberArray.sort((a, b) => a - b)
   }
 
   static getAngle(x1, y1, x2, y2) {
@@ -30,5 +30,11 @@ class MathHelpers {
 
   static getRadians(angle) {
     return angle * Math.PI / 180;
+  }
+
+  static getDistanceBetween2Objects(obj1, obj2) {
+    var a = obj1.x - obj2.x;
+    var b = obj1.y - obj2.y;
+    return Math.sqrt(a * a + b * b);
   }
 }
