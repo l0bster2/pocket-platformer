@@ -90,6 +90,7 @@ class CharacterCollision {
                     }
                 }
             }
+            //if player has not touched trampoline previously (is falling down from top of the trampoline), correct his position
             if (!obj.previouslyTouchedTrampolines) {
                 tileMapHandler.layers[2].forEach(objectWithCollision => {
                     if (Collision.objectsColliding(obj, objectWithCollision)
@@ -131,15 +132,6 @@ class CharacterCollision {
         }
 
         obj.prev_bottom = obj.bottom;
-        /*obj.previouslyCollided = false;
-        tileMapHandler.layers[2].forEach(objectWithCollision => {
-            const { top_right_pos, top_left_pos, bottom_right_pos, bottom_left_pos } = obj;
-            [top_right_pos, top_left_pos, bottom_right_pos, bottom_left_pos].forEach(point => {
-                if (Collision.pointAndObjectColliding(point, objectWithCollision)) {
-                    obj.previouslyCollided = true;
-                }
-            })
-        });*/
     }
 
     static correctTopPosition(obj) {
