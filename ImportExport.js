@@ -240,16 +240,16 @@ function createHtmlDocoumentWithCanvas() {
     {
       innerHTML: `
         <div id="mobileArrowControls">
-          <img draggable='false' src="https://drive.google.com/uc?export=download&id=1muOTz3lpcRtNNTeM9CBVC4rPcfEJ5EsY" id="mobileArrows"/>
+          <img draggable='false' src="${Base64Images.mobileArrows}" id="mobileArrows"/>
         </div>
         <div id="mobileButtonControls">
           <div id="mobileStartSelect">
-            <img draggable='false' src="https://drive.google.com/uc?export=download&id=1gy7JwmI6KsvP0YHfV5Nh_NoFiSj49Acf" id="selectMobileControls" style="margin-right: 8px"/>
-            <img draggable='false' src="https://drive.google.com/uc?export=download&id=1gy7JwmI6KsvP0YHfV5Nh_NoFiSj49Acf" id="startMobileControls"/>
+            <img draggable='false' src="${Base64Images.mobileControlStart}" id="selectMobileControls" style="margin-right: 8px"/>
+            <img draggable='false' src="${Base64Images.mobileControlStart}" id="startMobileControls"/>
           </div>
           <div>
-            <img draggable='false' src="https://drive.google.com/uc?export=download&id=1qSEy4VdASr9eUHNpNWFsCoq-6VqaOM3P" id="jumpMobileControls"style="margin-right: 8px" />
-            <img draggable='false' src="https://drive.google.com/uc?export=download&id=1XoREvqEvyuNnHmUs1MHtEpOzDwfFWsf1" id="alternativeMobileControls"/>
+            <img draggable='false' src="${Base64Images.mobileControlA}" id="jumpMobileControls"style="margin-right: 8px" />
+            <img draggable='false' src="${Base64Images.mobileControlB}" id="alternativeMobileControls"/>
           </div>
         </div>`
     });
@@ -304,7 +304,7 @@ function bundleAllScripts() {
   var scriptTexts = '';
   const unNeededScripts = ['ImportExport', 'LegacyImporter', 'WorldColorHandler', 'DrawHelpers', 'BuildMode', 'CustomSpritesElementsRenderer',
     'LevelNavigationHandler', 'TabNavigation', 'TabPagination', 'DrawSectionHandler', 'helpers', 'ObjectsTooltipElementsRenderer', 'HeaderNavigationHandler',
-    'huebee.min', 'jszip.min', 'ProTipHandler', 'TooltipHandler', 'LevelSizeHandler', 'EffectHtmlRenderer', 'SoundHandlerRenderer', 'PathBuildHandler', 'FileSaver'];
+    'huebee.min', 'jszip.min', 'ProTipHandler', 'TooltipHandler', 'LevelSizeHandler', 'EffectHtmlRenderer', 'SoundHandlerRenderer', 'PathBuildHandler', 'FileSaver', 'Base64Images'];
 
   const scripts = document.getElementsByTagName("script");
   for (var i = 0; i < scripts.length; i++) {
