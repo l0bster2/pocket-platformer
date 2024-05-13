@@ -91,6 +91,43 @@ class EffectsRenderer {
         }
     }
 
+    static displayVignette(effect) {
+        const { left, top, width, height } = Camera.viewport;
+        const vignetteAlpha = 0.7;
+        const percentage = 40;
+        const coveringPercenatgeOfScreen = 1 - percentage / 100;
+
+        Display.ctx.rect(left, top, width, height);
+
+        // create radial gradient
+        var outerRadius = width * coveringPercenatgeOfScreen;
+        var innerRadius = width * .2;
+        var grd = Display.ctx.createRadialGradient(left + width / 2, top + height / 2,
+            innerRadius, left + width / 2, top + height / 2, outerRadius);
+        // light blue
+        grd.addColorStop(0, 'rgba(0,0,0,0)');
+        // dark blue
+        grd.addColorStop(1, 'rgba(0,0,0,' + vignetteAlpha + ')');
+
+        Display.ctx.fillStyle = grd;
+        Display.ctx.fill();
+    }
+
+    static displayScanlines(effect) {
+        const maxSpeed = 4;
+        const speed = maxSpeed - effect.movementSpeed;
+        const spaceBetweenLines = 5;
+        const yOffset = effect.movementSpeed ? tileMapHandler.currentGeneralFrameCounter % (spaceBetweenLines * speed) / speed : 0;
+        const lineHeight = 3;
+        // +3 just to make sure offset lines don't disappear when they move out of bounds
+        const linesNeeded = Math.round(Camera.viewport.height / spaceBetweenLines) + 3;
+
+        for (var i = 0; i <= linesNeeded; i++) {
+            Display.drawRectangleWithAlpha(Camera.viewport.left, Camera.viewport.top + ((i - 2) * spaceBetweenLines) + yOffset,
+                Camera.viewport.width, lineHeight, "000000", Display.ctx, effect.alpha)
+        }
+    }
+
 
     static displayEffects(layer = 0) {
         this.tileMapHandler.effects.forEach(effect => {
@@ -115,6 +152,9 @@ class EffectsRenderer {
             else {
                 if (effect.type === EffectsHandler.effectTypes.BlackAndWhite) {
                     EffectsRenderer.displayGreyScale();
+                }
+                else if (effect.type === EffectsHandler.effectTypes.Scanlines) {
+                    EffectsRenderer.displayScanlines(effect);
                 }
             }
         });

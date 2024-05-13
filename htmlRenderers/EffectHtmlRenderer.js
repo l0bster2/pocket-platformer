@@ -194,6 +194,21 @@ class EffectHtmlRenderer {
         </div>`;
     }
 
+    static createScanlinesTemplate(effectsObject) {
+        const alpha = this.createAttributeSlider({
+            name: "Alpha", id: "scanlinesAlpha",
+            value: effectsObject.alpha, min: 0.02, max: 0.2, step: 0.02
+        })
+        const movementSpeed = this.createAttributeSlider({
+            name: "Movement speed", id: "scanLinesMovementSpeed",
+            value: effectsObject.movementSpeed, min: 0, max: 3, step: 1
+        })
+        return `<div class="sfxTemplateSection" class="sfxTemplateSection" style="line-height: 34px;">
+            ${movementSpeed}
+            ${alpha}
+        </div>`;
+    }
+
     static chooseSfxAttributesTemplate(effectsObject) {
         if (effectsObject.type in EffectsHandler.htmlTemplateObject) {
             return EffectsHandler.htmlTemplateObject[effectsObject.type](effectsObject);
