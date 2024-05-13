@@ -113,6 +113,11 @@ class EffectsRenderer {
         Display.ctx.fill();
     }
 
+    static flipCameraVertically() {
+        Camera.context.translate(0, Camera.viewport.height);
+        Camera.context.scale(1, -1);
+    }
+
     static displayScanlines(effect) {
         const maxSpeed = 4;
         const speed = maxSpeed - effect.movementSpeed;
