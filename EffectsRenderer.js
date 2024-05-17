@@ -6,7 +6,8 @@ class EffectsRenderer {
         this.noisePositions = {
             left: 0,
             top: 0,
-        }
+        };
+        this.rayCastingTriangles = [];
     }
 
     static displayBackgroundSFX(effect, currentFrame, tileSize = 24) {
@@ -85,54 +86,60 @@ class EffectsRenderer {
         let previousY = null;
         const checkStep = this.tileMapHandler.tileSize;
 
-        for (var i = 0; i <= rayCastAmounth; i++) {
-            const currentAngle = i * degreeStep;
+        if (this.tileMapHandler.currentGeneralFrameCounter % 3 == 0) {
+            this.rayCastingTriangles = [];
+            for (var i = 0; i <= rayCastAmounth; i++) {
+                const currentAngle = i * degreeStep;
 
-            loop2:
-            for (var j = 0; j <= maxTileWidth; j++) {
-                const radians = MathHelpers.getRadians(currentAngle);
-                const left = Math.floor(playerCenter.x - Math.cos(radians) * (checkStep * j));
-                const top = Math.floor(playerCenter.y - Math.sin(radians) * (checkStep * j));
-                const leftTilePos = this.tileMapHandler.getTileValueForPosition(left);
-                const topTilePos = this.tileMapHandler.getTileValueForPosition(top);
+                loop2:
+                for (var j = 0; j <= maxTileWidth; j++) {
+                    const radians = MathHelpers.getRadians(currentAngle);
+                    const left = Math.floor(playerCenter.x - Math.cos(radians) * (checkStep * j));
+                    const top = Math.floor(playerCenter.y - Math.sin(radians) * (checkStep * j));
+                    const leftTilePos = this.tileMapHandler.getTileValueForPosition(left);
+                    const topTilePos = this.tileMapHandler.getTileValueForPosition(top);
 
-                const currentTileValue = this.tileMapHandler.getTileLayerValueByIndex(topTilePos, leftTilePos);
-                if ((currentTileValue !== 0 && currentTileValue !== 5) || j === maxTileWidth) {
-                    let newX = leftTilePos * this.tileMapHandler.tileSize;
-                    let newY = topTilePos * this.tileMapHandler.tileSize;
-                    
-                    newX += this.tileMapHandler.player.x < newX ? 24 : 0;
-                    newY += this.tileMapHandler.player.y > newY ? 24 : 0;
+                    const currentTileValue = this.tileMapHandler.getTileLayerValueByIndex(topTilePos, leftTilePos);
+                    if ((currentTileValue !== 0 && currentTileValue !== 5) || j === maxTileWidth) {
+                        let newX = leftTilePos * this.tileMapHandler.tileSize;
+                        let newY = topTilePos * this.tileMapHandler.tileSize;
 
-                    if (previousX !== null && previousY !== null) {
-                        triangles.push({
-                            center: playerCenter,
-                            old: { x: previousX, y: previousY },
-                            new: { x: newX, y: newY },
-                        });
+                        newX += this.tileMapHandler.player.x < newX ? 24 : 0;
+                        newY += this.tileMapHandler.player.y > newY ? 24 : 0;
+
+                        if (previousX !== null && previousY !== null) {
+                            this.rayCastingTriangles.push({
+                                center: playerCenter,
+                                old: { x: previousX, y: previousY },
+                                new: { x: newX, y: newY },
+                            });
+                        }
+                        previousX = newX;
+                        previousY = newY;
+
+                        break loop2;
                     }
-                    previousX = newX;
-                    previousY = newY;
-
-                    break loop2;
                 }
-            }
 
+            }
         }
 
-        Display.ctx.fillStyle = `rgba(0 ,0, 0, 0.1)`;
         Display.ctx.beginPath();
-        Display.ctx.rect(Camera.viewport.left, Camera.viewport.top, Camera.viewport.width, Camera.viewport.height);
-        Display.ctx.closePath();
+        var radialGradient = Display.ctx.createRadialGradient(playerCenter.x, playerCenter.y, 1, playerCenter.x, playerCenter.y, radius * 1.7);
+        radialGradient.addColorStop(0, `rgba(0,0,0,0.3)`);
+        radialGradient.addColorStop(0.5, `rgba(70,70,70,0.01)`);
+        radialGradient.addColorStop(0.51, `rgba(0,0,0,0)`);
+        Display.ctx.fillStyle = radialGradient;
 
-        triangles.forEach(trialge => {
-            Display.ctx.moveTo(trialge.new.x, trialge.new.y);
+        this.rayCastingTriangles.forEach(trialge => {
+            Display.ctx.moveTo(playerCenter.x, playerCenter.y);
             Display.ctx.lineTo(trialge.old.x, trialge.old.y);
-            Display.ctx.lineTo(playerCenter.x, playerCenter.y);
+            Display.ctx.lineTo(trialge.new.x, trialge.new.y);
         });
         //Display.ctx.arc(playerCenter.x, playerCenter.y, 75, 0, 2 * Math.PI, true);
-        Display.ctx.closePath();
         Display.ctx.fill();
+        Display.ctx.closePath();
+        Display.ctx.restore();
     }
 
     static createNoiseCanvas() {
