@@ -73,73 +73,73 @@ class EffectsRenderer {
     }
 
     static displayRaycasting() {
-        const radius = 200;
-        const maxTileWidth = Math.floor(radius / this.tileMapHandler.tileSize);
-        const rayCastAmounth = 128;
-        const playerCenter = {
-            x: this.tileMapHandler.player.x + this.tileMapHandler.player.width / 2,
-            y: this.tileMapHandler.player.y + this.tileMapHandler.player.height / 2
-        };
-        const degreeStep = 360 / rayCastAmounth;
-        const triangles = [];
-        let previousX = null;
-        let previousY = null;
-        const checkStep = this.tileMapHandler.tileSize;
+        if (this.tileMapHandler.currentLevel !== 0 && this.tileMapHandler.currentLevel !== WorldDataHandler.levels.length - 1) {
+            const radius = 200;
+            const maxTileWidth = Math.floor(radius / this.tileMapHandler.tileSize);
+            const rayCastAmounth = 128;
+            const playerCenter = {
+                x: this.tileMapHandler.player.x + this.tileMapHandler.player.width / 2,
+                y: this.tileMapHandler.player.y + this.tileMapHandler.player.height / 2
+            };
+            const degreeStep = 360 / rayCastAmounth;
+            let previousX = null;
+            let previousY = null;
+            const checkStep = this.tileMapHandler.tileSize;
 
-        if (this.tileMapHandler.currentGeneralFrameCounter % 3 == 0) {
-            this.rayCastingTriangles = [];
-            for (var i = 0; i <= rayCastAmounth; i++) {
-                const currentAngle = i * degreeStep;
+            if (this.tileMapHandler.currentGeneralFrameCounter % 5 == 0) {
+                this.rayCastingTriangles = [];
+                for (var i = 0; i <= rayCastAmounth; i++) {
+                    const currentAngle = i * degreeStep;
 
-                loop2:
-                for (var j = 0; j <= maxTileWidth; j++) {
-                    const radians = MathHelpers.getRadians(currentAngle);
-                    const left = Math.floor(playerCenter.x - Math.cos(radians) * (checkStep * j));
-                    const top = Math.floor(playerCenter.y - Math.sin(radians) * (checkStep * j));
-                    const leftTilePos = this.tileMapHandler.getTileValueForPosition(left);
-                    const topTilePos = this.tileMapHandler.getTileValueForPosition(top);
+                    loop2:
+                    for (var j = 0; j <= maxTileWidth; j++) {
+                        const radians = MathHelpers.getRadians(currentAngle);
+                        const left = Math.floor(playerCenter.x - Math.cos(radians) * (checkStep * j));
+                        const top = Math.floor(playerCenter.y - Math.sin(radians) * (checkStep * j));
+                        const leftTilePos = this.tileMapHandler.getTileValueForPosition(left);
+                        const topTilePos = this.tileMapHandler.getTileValueForPosition(top);
 
-                    const currentTileValue = this.tileMapHandler.getTileLayerValueByIndex(topTilePos, leftTilePos);
-                    if ((currentTileValue !== 0 && currentTileValue !== 5) || j === maxTileWidth) {
-                        let newX = leftTilePos * this.tileMapHandler.tileSize;
-                        let newY = topTilePos * this.tileMapHandler.tileSize;
+                        const currentTileValue = this.tileMapHandler.getTileLayerValueByIndex(topTilePos, leftTilePos);
+                        if ((currentTileValue !== 0 && currentTileValue !== 5) || j === maxTileWidth) {
+                            let newX = leftTilePos * this.tileMapHandler.tileSize;
+                            let newY = topTilePos * this.tileMapHandler.tileSize;
 
-                        newX += this.tileMapHandler.player.x < newX ? 24 : 0;
-                        newY += this.tileMapHandler.player.y > newY ? 24 : 0;
+                            newX += this.tileMapHandler.player.x < newX ? 24 : 0;
+                            newY += this.tileMapHandler.player.y > newY ? 24 : 0;
 
-                        if (previousX !== null && previousY !== null) {
-                            this.rayCastingTriangles.push({
-                                center: playerCenter,
-                                old: { x: previousX, y: previousY },
-                                new: { x: newX, y: newY },
-                            });
+                            if (previousX !== null && previousY !== null) {
+                                this.rayCastingTriangles.push({
+                                    center: playerCenter,
+                                    old: { x: previousX, y: previousY },
+                                    new: { x: newX, y: newY },
+                                });
+                            }
+                            previousX = newX;
+                            previousY = newY;
+
+                            break loop2;
                         }
-                        previousX = newX;
-                        previousY = newY;
-
-                        break loop2;
                     }
+
                 }
-
             }
+
+            Display.ctx.beginPath();
+            var radialGradient = Display.ctx.createRadialGradient(playerCenter.x, playerCenter.y, 1, playerCenter.x, playerCenter.y, radius * 1.7);
+            radialGradient.addColorStop(0, `rgba(120,120,120,0.5)`);
+            radialGradient.addColorStop(0.5, `rgba(120,120,120,0.01)`);
+            radialGradient.addColorStop(0.51, `rgba(0,0,0,0)`);
+            Display.ctx.fillStyle = radialGradient;
+
+            this.rayCastingTriangles.forEach(trialge => {
+                Display.ctx.moveTo(playerCenter.x, playerCenter.y);
+                Display.ctx.lineTo(trialge.old.x, trialge.old.y);
+                Display.ctx.lineTo(trialge.new.x, trialge.new.y);
+            });
+            //Display.ctx.arc(playerCenter.x, playerCenter.y, 75, 0, 2 * Math.PI, true);
+            Display.ctx.fill();
+            Display.ctx.closePath();
         }
-
-        Display.ctx.beginPath();
-        var radialGradient = Display.ctx.createRadialGradient(playerCenter.x, playerCenter.y, 1, playerCenter.x, playerCenter.y, radius * 1.7);
-        radialGradient.addColorStop(0, `rgba(0,0,0,0.3)`);
-        radialGradient.addColorStop(0.5, `rgba(70,70,70,0.01)`);
-        radialGradient.addColorStop(0.51, `rgba(0,0,0,0)`);
-        Display.ctx.fillStyle = radialGradient;
-
-        this.rayCastingTriangles.forEach(trialge => {
-            Display.ctx.moveTo(playerCenter.x, playerCenter.y);
-            Display.ctx.lineTo(trialge.old.x, trialge.old.y);
-            Display.ctx.lineTo(trialge.new.x, trialge.new.y);
-        });
-        //Display.ctx.arc(playerCenter.x, playerCenter.y, 75, 0, 2 * Math.PI, true);
-        Display.ctx.fill();
-        Display.ctx.closePath();
-        Display.ctx.restore();
     }
 
     static createNoiseCanvas() {
