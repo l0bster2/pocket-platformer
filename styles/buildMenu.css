@@ -41,6 +41,10 @@
     margin-right: 8px;
 }
 
+.colorModalSection {
+    padding: 12px 0 8px;
+}
+
 #copyNotification {
     position: fixed;
     bottom: 16px;

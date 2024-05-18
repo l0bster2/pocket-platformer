@@ -16,6 +16,7 @@ class TabNavigation {
     this.maxSpritesPerTab = 18;
     this.changeTab(null, SpritePixelArrays.SPRITE_TYPES.tile);
     this.handleSelectedSprite(0, 0);
+    this.colorModalSections = ["colorModalColorsSection", "colorModalTransitionSection", "colorModalEffectsSection"];
   }
 
   static redrawAfterAddedOrDeletedSprite() {
@@ -196,5 +197,14 @@ class TabNavigation {
     this.selectableSpritesCtx.strokeStyle = 'green';
     this.selectableSpritesCtx.lineWidth = 4;
     this.selectableSpritesCtx.strokeRect(markedSpriteX, markedSpriteY, tileSize + padding * 2, tileSize + padding * 2);
+  }
+
+  static changeColorModalSectionVisibility(_, selectedSection) {
+    this.colorModalSections.forEach(colorModalSection => {
+      document.getElementById(colorModalSection + 'Button').classList.remove("active");
+      document.getElementById(colorModalSection).style.display = 'none';
+    })
+    document.getElementById(selectedSection + 'Button').classList.add("active");
+    document.getElementById(selectedSection).style.display = 'block';
   }
 }
