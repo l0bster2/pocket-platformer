@@ -330,17 +330,11 @@ input:checked+.switchSlider:before {
     transition: .4s;
 }
 
-.tabButton {
+.tabButton, .colorTabButton {
     flex: 1;
-    /*transition: scale 0.2s;*/
 }
 
-/*
-.tabButton:hover img {
-    transform: scale(1.2);
-}*/
-
-.tabButton.active {
+.tabButton.active, .colorTabButton.active {
     border-bottom: none;
     background: white;
 }

@@ -140,9 +140,9 @@ class TabNavigation {
     // Get all elements with class="tablinks" and remove the class "active"
     const tablinks = document.getElementsByClassName("tabButton");
     for (var i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
+      tablinks[i].classList.remove("active");
     }
-    evt.currentTarget.className += " active";
+    evt.currentTarget.classList.add("active");
   }
 
   static selectSprite(evt) {
