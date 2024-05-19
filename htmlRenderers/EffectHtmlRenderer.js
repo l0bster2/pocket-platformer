@@ -105,9 +105,9 @@ class EffectHtmlRenderer {
         const range = document.getElementById(sliderName + "Selected");
         const totalValue = Math.abs(min) + Math.abs(max);
         const maxValue = parseFloat(max);
-        const startValueInSlider = sliderValues[0] < 0 ? 
-            maxValue- Math.abs(sliderValues[0]) : Math.abs(sliderValues[0]) + maxValue;
-        const endValueInSlider = sliderValues[1] < 0 ? 
+        const startValueInSlider = sliderValues[0] < 0 ?
+            maxValue - Math.abs(sliderValues[0]) : Math.abs(sliderValues[0]) + maxValue;
+        const endValueInSlider = sliderValues[1] < 0 ?
             maxValue - Math.abs(sliderValues[1]) : Math.abs(sliderValues[1]) + maxValue;
         range.style.left = (parseFloat(startValueInSlider) / totalValue) * 100 + "%";
         range.style.right = 100 - (parseFloat(endValueInSlider) / totalValue) * 100 + "%";
@@ -131,7 +131,7 @@ class EffectHtmlRenderer {
         const sliderValues = MathHelpers.sortNumbers([attributeObject1.value, attributeObject2.value])
         setTimeout(() => {
             this.setSliderValueFor2Slider(attributeObject1.name, sliderValues, attributeObject1.min, attributeObject1.max);
-          }, "100");
+        }, "100");
 
         return `
             <div class="changeableEffectAttributeWrapper">
@@ -223,7 +223,7 @@ class EffectHtmlRenderer {
                 innerHTML: `       
                 <div class="marginTop8" id="sfxTemplate">
                     <form onsubmit="EffectsHandler.addEffect(event, ${index})">
-                        <select style="margin-right: -2px" onChange="EffectsHandler.changeTemplate()" id="templateHandler">
+                        <select style="margin-right: -2px; display: ${index === null ? 'block' : 'none'}" onChange="EffectsHandler.changeTemplate()" id="templateHandler">
                             ${this.createEffectsSelect(effectsObject)}
                         </select>
                         <details class="marginTop4">
