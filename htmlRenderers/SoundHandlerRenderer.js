@@ -99,7 +99,7 @@ class SoundHandlerRenderer {
         <button class="levelNavigationButton tertiaryButton marginTop8"
         onclick="SoundHandlerRenderer.deleteCustomMusic('${sound.key}')" style="padding: 8px 12px;">
         DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
-            class="iconInButtonWithText" style="padding-left: 8px">
+            class="iconInButtonWithText">
         </button>
         </div>
     </div>`;
@@ -127,7 +127,7 @@ class SoundHandlerRenderer {
         return `<button class="levelNavigationButton tertiaryButton marginTop8"
         onclick="SoundHandlerRenderer.deleteCustom('${key}')" style="padding: 8px 12px;">
         DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
-            class="iconInButtonWithText" style="padding-left: 8px">
+            class="iconInButtonWithText">
         </button>`;
     }
 

@@ -248,9 +248,13 @@ input:checked+.switchSlider:before {
     padding: 4px 0 4px 20px;
 }
 
-.sfxTemplateSection {
+.sfxTemplateSection, .sfxAttributeSection {
     padding: 2px;
     background: #fdfde9;
+}
+
+.sfxAttributeSection {
+    line-height: 34px;
 }
 
 .sliderValue {
@@ -374,6 +378,10 @@ input:checked+.switchSlider:before {
     text-underline-offset: 4px;
     padding: 8px 0;
     border: none;
+
+    > img {
+        padding-left: 8px;
+    }
 }
 
 .tertiaryButton:hover:not(.active) {
@@ -424,10 +432,19 @@ input:checked+.switchSlider:before {
     animation-duration: 0.4s;
 }
 
+.rotate90Degrees {
+    transform: rotate(90deg); 
+    vertical-align: middle;
+}
+
 summary {
     display: block;
     padding-left: 20px;
     position: relative;
+}
+
+.soundSection {
+    width: 580px
 }
 
 summary:before {

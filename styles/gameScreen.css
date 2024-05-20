@@ -295,6 +295,12 @@ input[type="file"] {
     padding-top: 8px;
 }
 
+.subSection12Gap {
+    border-top: 1px solid lightgrey;
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
 .sectionContent {
     padding: 8px;
     border: 1px solid black;

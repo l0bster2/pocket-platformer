@@ -76,7 +76,7 @@ class EffectHtmlRenderer {
         );
 
         return `
-        <div class="sfxTemplateSection" class="sfxTemplateSection" style="line-height: 34px;">
+        <div class="sfxAttributeSection">
             Sprite:  
             <select id="sfxIndex">
                 <option value="5" ${effectsObject.sfxIndex === 5 && "selected"}>SFX 5</option>
@@ -189,7 +189,7 @@ class EffectHtmlRenderer {
             name: "Flicker", id: "flickerRadius", flex: "1",
             value: effectsObject.flickerRadius, min: 0, max: 30, step: 1
         });
-        return `<div class="sfxTemplateSection" class="sfxTemplateSection" style="line-height: 34px;">
+        return `<div class="sfxAttributeSection">
             ${radius}
             ${flickerRadius}
             <div style="line-height: 22px" class="subSection">
@@ -210,7 +210,7 @@ class EffectHtmlRenderer {
             name: "Alpha", id: "noiseAlpha",
             value: effectsObject.alpha, min: 0.01, max: 0.20, step: 0.01
         })
-        return `<div class="sfxTemplateSection" class="sfxTemplateSection" style="line-height: 34px;">
+        return `<div class="sfxAttributeSection">
             ${flickerIntensity}
             ${alpha}
         </div>`;
@@ -225,7 +225,7 @@ class EffectHtmlRenderer {
             name: "Movement speed", id: "scanLinesMovementSpeed",
             value: effectsObject.movementSpeed, min: 0, max: 3, step: 1
         })
-        return `<div class="sfxTemplateSection" class="sfxTemplateSection" style="line-height: 34px;">
+        return `<div class="sfxAttributeSection">
             ${movementSpeed}
             ${alpha}
         </div>`;
@@ -243,7 +243,7 @@ class EffectHtmlRenderer {
         const colorSelection = this.createColorSelection({
             name: "RayCastingColor", hex: effectsObject.color.hex, id: "rayCastingColor"
         });
-        return `<div class="sfxTemplateSection" class="sfxTemplateSection" style="line-height: 34px;">
+        return `<div class="sfxAttributeSection">
             ${movementSpeed}
             ${alpha}
             ${colorSelection}
@@ -269,7 +269,7 @@ class EffectHtmlRenderer {
                         </select>
                         <details class="marginTop4">
                             <summary class="sfxTemplateSummary">Select levels</summary>
-                            <div style="padding-left: 4px" class="sfxTemplateSection">
+                            <div class="sfxTemplateSection">
                                 <div style="display: grid; grid-template-columns: auto auto;">
                                     ${this.createLevelSelectCheckboxes(index, effectsObject.activeLevels)}
                                 </div>
@@ -277,7 +277,7 @@ class EffectHtmlRenderer {
                         </details>
                         <details id="attributesAccordion" open>
                             <summary class="sfxTemplateSummary">Adjust attributes</summary>
-                            <div id="sfxTemplateSummary" class="sfxTemplateSection">
+                            <div id="sfxTemplateSummary" class="sfxAttributeSection">
                                 ${this.chooseSfxAttributesTemplate(effectsObject)}
                             </div>
                         </details>

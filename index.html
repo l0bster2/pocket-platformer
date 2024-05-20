@@ -23,8 +23,7 @@
             <div class="dropdown navElement">
                 <button class="dropbtn" onclick="navDropDownClick(event)">
                     File
-                    <img src="images/icons/right.svg" alt="right" width="10" height="10"
-                        style="transform: rotate(90deg); vertical-align: middle;">
+                    <img src="images/icons/right.svg" alt="right" width="10" height="10" class="rotate90Degrees">
                 </button>
                 <ul class="dropdown-content" id="myDropdown">
                     <li class="dropdown-nav-item">
@@ -48,8 +47,7 @@
             <div class="dropdown navElement">
                 <button class="dropbtn" onclick="navDropDownClick(event, 'myDropdown2')">
                     View
-                    <img src="images/icons/right.svg" alt="right" width="10" height="10"
-                        style="transform: rotate(90deg); vertical-align: middle;">
+                    <img src="images/icons/right.svg" alt="right" width="10" height="10" class="rotate90Degrees">
                 </button>
                 <ul class="dropdown-content" id="myDropdown2">
                     <li class="dropdown-nav-item" onClick="changeView('game')">
@@ -134,7 +132,8 @@
                             </label>
                         </div>
                     </div>
-                    <button id="changeGameMode" class="levelNavigationButton fullWidth buttonWithIconAndText marginTop16"
+                    <button id="changeGameMode"
+                        class="levelNavigationButton fullWidth buttonWithIconAndText marginTop16"
                         onclick="Game.changeGameMode()">
                         <div>
                             <img src="images/icons/right.svg" class="iconInButtonWithText" alt="play" width="14"
@@ -351,11 +350,11 @@
             </div>
         </div>
         <div class="section" style="display: none;" id="soundView">
-            <div style="width: 580px">
+            <div class="soundSection">
                 <h2 class="sectionHeading">Sounds</h2>
                 <div class="sectionContent" id="soundContent"></div>
             </div>
-            <div style="width: 580px">
+            <div class="soundSection">
                 <h2 class="sectionHeading">Music</h2>
                 <div class="sectionContent" id="musicContent"></div>
             </div>
@@ -423,10 +422,9 @@
                         <button class="color-input-text buttonWithIconAndText" value="#FFFFFF"
                             style="margin-left: 52px" />
                     </div>
-                    <div class="subSection" style="margin-top: 12px; padding-top: 12px;">
+                    <div class="subSection12Gap">
                         <div class="flexGap12">
-                            <div style="margin: auto 0">
-                                Level background-color:</div>
+                            <div style="margin: auto 0">Level background-color:</div>
                             <button class="color-input-level-background" value="transp" id="levelColorButton">
                                 <img alt="plus" width="80" height="40" src="images/icons/transparentIcon.svg"
                                     class="iconInButtonWithText">
@@ -447,7 +445,7 @@
                     </select>
                     <div class="marginTop12 changeableAttributesWrapper">
                         <span class="colorModalAttribute">Transition-length:</span>
-                        <input style="margin: 0 12px 0 0" type="range" min="2" max="48" value="48" step="2"
+                        <input style="margin-right:12px" type="range" min="2" max="48" value="48" step="2"
                             class="slider" id="transitionDuration"
                             onchange="TransitionAnimationHandler.changeAnimationDuration(event)">
                         <span id="transitionDurationValue">48</span>
@@ -458,7 +456,7 @@
                     <button id="addEffectButton" class="levelNavigationButton tertiaryButton marginTop8"
                         onclick="EffectsHandler.addEffectTemplate()">
                         Add<img alt="plus" width="14" height="14" src="images/icons/plus.svg"
-                            class="iconInButtonWithText" style="padding-left: 8px">
+                            class="iconInButtonWithText">
                     </button>
                 </div>
             </div>
@@ -492,7 +490,7 @@
             <form onsubmit="CustomSpriteHandler.addSprite(event)">
                 <div class="marginTop12" style="text-transform: none;">
                     Copy behaviour of:
-                    <select name="customSpriteSelector" id="customSpriteSelector" class="fullWidth" style="width: 59%;"
+                    <select name="customSpriteSelector" id="customSpriteSelector" style="width: 59%;"
                         onkeydown="event.preventDefault();">
                     </select>
                 </div>
