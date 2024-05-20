@@ -17,7 +17,7 @@ class EffectHtmlRenderer {
         });
     }
 
-    static createLevelSelectCheckboxes(levelIndex, activeLevels) {
+    static createLevelSelectCheckboxes(effectIndex, activeLevels) {
         let result = "";
         WorldDataHandler.levels.forEach((_, index) => {
             let text = `Level ${index}`;
@@ -27,10 +27,12 @@ class EffectHtmlRenderer {
             if (index === WorldDataHandler.levels.length - 1) {
                 text = "End screen"
             }
+            // If new effect created, select all checkboxes by expect start and finish by default. Otherwise check where checked by user
+            const checkCheckbox = (effectIndex === null && index !== 0 && index !== WorldDataHandler.levels.length - 1) ||
+                activeLevels.includes(index);
             result += `<div class="marginTop4">
                 <input type="checkbox" id="levelChecked${index}" 
-                ${(levelIndex === null && index !== 0 && index !== WorldDataHandler.levels.length - 1) ||
-                    activeLevels.includes(index) ? "checked" : ""}>
+                ${checkCheckbox ? "checked" : ""}>
                 <label for="levelChecked${index}" class="checkBoxText">${text}</label>
             </div>`;
         })
@@ -279,7 +281,7 @@ class EffectHtmlRenderer {
                                 ${this.chooseSfxAttributesTemplate(effectsObject)}
                             </div>
                         </details>
-                        <div class="marginTop8 subSection" style="display: flex; gap: 8px">
+                        <div class="marginTop8 subSection flexGap8">
                             <button class="levelNavigationButton" type="submit" style="flex: 1">${index != null ? "Apply changes" : "Add effect"}</button>
                             <button class="levelNavigationButton secondaryButton" style="flex: 1"
                             onclick="event.preventDefault(); EffectsHandler.cancelEffect();">Cancel</button>

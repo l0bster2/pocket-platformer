@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <div id="header" class="sectionContent">
+    <div id="header" class="sectionContent flexGap8">
         <img src="images/icons/pp.png" height="26px" />
         <div class="topnav" id="myTopnav">
             <div class="dropdown navElement">
@@ -134,7 +134,7 @@
                             </label>
                         </div>
                     </div>
-                    <button id="changeGameMode" class="levelNavigationButton fullWidth buttonWithIconAndText"
+                    <button id="changeGameMode" class="levelNavigationButton fullWidth buttonWithIconAndText marginTop16"
                         onclick="Game.changeGameMode()">
                         <div>
                             <img src="images/icons/right.svg" class="iconInButtonWithText" alt="play" width="14"
@@ -530,7 +530,7 @@
                 <div class="subSection">
                     <div>
                         <div style="display: inline-block;">
-                            <div class="changeableAttributesWrapper" style="padding: 8px 0; gap: 12px">
+                            <div class="flexGap12" style="padding: 8px 0;">
                                 <label for="speed">zoom factor</label>
                                 <input type="range" min="1" max="2" value="1" name="speed" step="0.1" id="zoomFactor"
                                     onchange="LevelSizeHandler.changeZoomHtmlValue(event)">

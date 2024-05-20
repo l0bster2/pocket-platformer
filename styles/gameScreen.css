@@ -83,10 +83,6 @@ details summary:hover {
     color: darkgrey;
 }
 
-#twitterLink {
-    color: #1DA1F2;
-}
-
 #discordLinkWrapper {
     margin-left: auto;
     padding-right: 16px;
@@ -96,7 +92,6 @@ details summary:hover {
     color: #5865F2
 }
 
-#twitterLink:hover,
 #discordLink:hover,
 .textAsLink:hover {
     cursor: pointer;
@@ -109,6 +104,11 @@ details summary:hover {
 
 .fullWidth {
     width: 100%;
+}
+
+.flexGap8 {
+    display: flex;
+    gap: 8px;
 }
 
 .flexGap12 {
@@ -148,16 +148,12 @@ details summary:hover {
     width: 200px;
 }
 
-.importExportButton {
+.block {
     display: block;
 }
 
 .iconInButtonWithText {
     vertical-align: text-bottom;
-}
-
-#exportButton {
-    width: 100%;
 }
 
 .flexibleInput {
@@ -174,8 +170,6 @@ details summary:hover {
     border-right: none;
     border-top: 1px solid lightgrey;
     padding: 4px 10px;
-    display: flex;
-    gap: 8px;
     z-index: 100;
 }
 
@@ -192,7 +186,6 @@ details summary:hover {
     background-color: #bab8b8;
     cursor: pointer;
 }
-
 
 .levelNavigationButton.activeButton {
     border: 3px solid green;

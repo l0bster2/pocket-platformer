@@ -132,7 +132,7 @@ class SoundHandlerRenderer {
     }
 
     static createMusicUploadButton() {
-        return `<label class="levelNavigationButton importExportButton">
+        return `<label class="levelNavigationButton block">
         <input type="file" id="uploadMusic" onChange="SoundHandlerRenderer.uploadCustomMusic()" />
         Import custom
         <img src="images/icons/import.svg" class="iconInButtonWithText" alt="import" width="16"
@@ -141,7 +141,7 @@ class SoundHandlerRenderer {
     }
 
     static createSoundUploadButton(key) {
-        return `<label class="levelNavigationButton importExportButton">
+        return `<label class="levelNavigationButton block">
         <input type="file" id="uploadSound${key}" onChange="SoundHandlerRenderer.uploadCustomSound('${key}')" />
         Import custom
         <img src="images/icons/import.svg" class="iconInButtonWithText" alt="import" width="16"

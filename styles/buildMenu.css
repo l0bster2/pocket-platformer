@@ -24,10 +24,6 @@
     cursor: pointer;
 }
 
-#changeGameMode {
-    margin-top: 16px;
-}
-
 .changeableAttributesWrapper {
     display: flex;
 }
