@@ -96,7 +96,7 @@ class EffectsHandler {
             ...this.getBasicAttributes(this.effectTypes.Scanlines),
             alpha: 0.1,
             movementSpeed: 0,
-        } 
+        }
     }
 
     static getFieldOfViewObject() {
@@ -104,7 +104,11 @@ class EffectsHandler {
             ...this.getBasicAttributes(this.effectTypes.FieldOfView),
             alpha: 0.3,
             radius: 200,
-        } 
+            color: {
+                hex: "#FFFFFF",
+                rgb: { r: 255, g: 255, b: 255 },
+            }
+        }
     }
 
     static changeTemplate() {
@@ -181,6 +185,12 @@ class EffectsHandler {
     static parseFieldOfViewValues(attributesObject) {
         attributesObject.alpha = parseFloat(document.getElementById("fieldOfViewAlpha").value) || 0.3;
         attributesObject.radius = parseInt(document.getElementById("fieldOfViewRadius").value) || 200;
+        const color = document.getElementById("rayCastingColor").innerHTML || '#FFFFFF';
+        const rgbColor = AnimationHelper.hexToRGB(color.replace("#", ""));
+        attributesObject.color = {
+            hex: color,
+            rgb: rgbColor,
+        };
         return attributesObject;
     }
 

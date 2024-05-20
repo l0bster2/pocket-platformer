@@ -127,6 +127,26 @@ class EffectHtmlRenderer {
         `
     }
 
+    static createColorSelection(attributeObject) {
+        window.setTimeout(() => {
+            const huebeeProperties = Helpers.getHuebeeDefaultProperties();
+            const editableNewColorSection = new Huebee("." + attributeObject.name, {
+                ...huebeeProperties
+            });
+            editableNewColorSection.on('change', () => {
+                editableNewColorSection.close();
+            });
+            editableNewColorSection.setColor(attributeObject.hex);
+        }, 50);
+        return `
+            <div class="marginTop8">
+                <span class="colorModalAttribute">Color:</span>
+                <button type="button" id="${attributeObject.id}" class="${attributeObject.name} buttonWithIconAndText" 
+                value="${attributeObject.hex}"/>
+            </div>
+        `
+    }
+
     static createAttributeSliderWith2Handles(attributeObject1, attributeObject2) {
         const sliderValues = MathHelpers.sortNumbers([attributeObject1.value, attributeObject2.value])
         setTimeout(() => {
@@ -217,10 +237,14 @@ class EffectHtmlRenderer {
         const movementSpeed = this.createAttributeSlider({
             name: "Radius", id: "fieldOfViewRadius",
             value: effectsObject.radius, min: 100, max: 400, step: 10
-        })
+        });
+        const colorSelection = this.createColorSelection({
+            name: "RayCastingColor", hex: effectsObject.color.hex, id: "rayCastingColor"
+        });
         return `<div class="sfxTemplateSection" class="sfxTemplateSection" style="line-height: 34px;">
             ${movementSpeed}
             ${alpha}
+            ${colorSelection}
         </div>`;
     }
 

@@ -126,8 +126,9 @@ class EffectsRenderer {
 
             Display.ctx.beginPath();
             var radialGradient = Display.ctx.createRadialGradient(playerCenter.x, playerCenter.y, 1, playerCenter.x, playerCenter.y, radius * 1.7);
-            radialGradient.addColorStop(0, `rgba(120,120,120,${effect.alpha})`);
-            radialGradient.addColorStop(0.5, `rgba(120,120,120,0.01)`);
+            const { rgb } = effect.color;
+            radialGradient.addColorStop(0, `rgba(${rgb.r},${rgb.g},${rgb.b},${effect.alpha})`);
+            radialGradient.addColorStop(0.5, `rgba(${rgb.r},${rgb.g},${rgb.b},0.01)`);
             radialGradient.addColorStop(0.51, `rgba(0,0,0,0)`);
             Display.ctx.fillStyle = radialGradient;
 
