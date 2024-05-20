@@ -133,9 +133,9 @@ details summary:hover {
 }
 
 .sectionHeading {
+    padding: 8px;
     background: grey;
     color: white;
-    padding: 8px;
     border: 1px solid black;
 }
 

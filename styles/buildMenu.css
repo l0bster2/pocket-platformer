@@ -138,15 +138,6 @@ input:checked+.switchSlider:before {
     transform: translateX(14px);
 }
 
-#musicPlayer {
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-    border: 1px solid black;
-    padding: 8px;
-    background-color: white;
-}
-
 #playerAnimationWrapper > * {
     margin-top: 8px;
 }
