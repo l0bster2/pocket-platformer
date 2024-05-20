@@ -10,24 +10,28 @@ class EffectsHandler {
             BlackAndWhite: "Black and white",
             Noise: "Noise",
             Scanlines: "Scanlines",
+            FieldOfView: "Field of view",
         }
         this.defaultAttributeObjects = {
             [this.effectTypes.SFXLayer]: () => { return this.getSfxLayerObject() },
             [this.effectTypes.Flashlight]: () => { return this.getFlashlightObject() },
             [this.effectTypes.Noise]: () => { return this.getNoiseObject() },
             [this.effectTypes.Scanlines]: () => { return this.getScanlinesObject() },
+            [this.effectTypes.FieldOfView]: () => { return this.getFieldOfViewObject() },
         };
         this.parsersObject = {
             [this.effectTypes.SFXLayer]: (attributesObject) => { return this.parseSFXLayerValues(attributesObject) },
             [this.effectTypes.Flashlight]: (attributesObject) => { return this.parseFlashlightValues(attributesObject) },
             [this.effectTypes.Noise]: (attributesObject) => { return this.parseNoiseValues(attributesObject) },
             [this.effectTypes.Scanlines]: (attributesObject) => { return this.parseScanlinesValues(attributesObject) },
+            [this.effectTypes.FieldOfView]: (attributesObject) => { return this.parseFieldOfViewValues(attributesObject) },
         };
         this.htmlTemplateObject = {
             [this.effectTypes.SFXLayer]: (effectsObject) => { return EffectHtmlRenderer.createSFXLayerTemplate(effectsObject) },
             [this.effectTypes.Flashlight]: (effectsObject) => { return EffectHtmlRenderer.createFlashlightTemplate(effectsObject) },
             [this.effectTypes.Noise]: (effectsObject) => { return EffectHtmlRenderer.createNoiseTemplate(effectsObject) },
             [this.effectTypes.Scanlines]: (effectsObject) => { return EffectHtmlRenderer.createScanlinesTemplate(effectsObject) },
+            [this.effectTypes.FieldOfView]: (effectsObject) => { return EffectHtmlRenderer.createFieldOfViewTemplate(effectsObject) },
         }
         this.noiseFlickerIntensities = {
             1: 32,
@@ -92,6 +96,14 @@ class EffectsHandler {
             ...this.getBasicAttributes(this.effectTypes.Scanlines),
             alpha: 0.1,
             movementSpeed: 0,
+        } 
+    }
+
+    static getFieldOfViewObject() {
+        return {
+            ...this.getBasicAttributes(this.effectTypes.FieldOfView),
+            alpha: 0.3,
+            radius: 200,
         } 
     }
 
@@ -163,6 +175,12 @@ class EffectsHandler {
     static parseScanlinesValues(attributesObject) {
         attributesObject.alpha = parseFloat(document.getElementById("scanlinesAlpha").value) || 0.1;
         attributesObject.movementSpeed = parseFloat(document.getElementById("scanLinesMovementSpeed").value) || 0;
+        return attributesObject;
+    }
+
+    static parseFieldOfViewValues(attributesObject) {
+        attributesObject.alpha = parseFloat(document.getElementById("fieldOfViewAlpha").value) || 0.3;
+        attributesObject.radius = parseInt(document.getElementById("fieldOfViewRadius").value) || 200;
         return attributesObject;
     }
 

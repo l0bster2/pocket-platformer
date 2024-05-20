@@ -209,6 +209,21 @@ class EffectHtmlRenderer {
         </div>`;
     }
 
+    static createFieldOfViewTemplate(effectsObject) {
+        const alpha = this.createAttributeSlider({
+            name: "Alpha", id: "fieldOfViewAlpha",
+            value: effectsObject.alpha, min: 0.1, max: 0.5, step: 0.02
+        })
+        const movementSpeed = this.createAttributeSlider({
+            name: "Radius", id: "fieldOfViewRadius",
+            value: effectsObject.radius, min: 100, max: 400, step: 10
+        })
+        return `<div class="sfxTemplateSection" class="sfxTemplateSection" style="line-height: 34px;">
+            ${movementSpeed}
+            ${alpha}
+        </div>`;
+    }
+
     static chooseSfxAttributesTemplate(effectsObject) {
         if (effectsObject.type in EffectsHandler.htmlTemplateObject) {
             return EffectsHandler.htmlTemplateObject[effectsObject.type](effectsObject);

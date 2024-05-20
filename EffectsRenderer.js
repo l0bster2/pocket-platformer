@@ -72,11 +72,11 @@ class EffectsRenderer {
         }
     }
 
-    static displayRaycasting() {
+    static displayRaycasting(effect) {
         if (this.tileMapHandler.currentLevel !== 0 && this.tileMapHandler.currentLevel !== WorldDataHandler.levels.length - 1) {
-            const radius = 200;
+            const { radius } = effect;
             const maxTileWidth = Math.floor(radius / this.tileMapHandler.tileSize);
-            const rayCastAmounth = 128;
+            const rayCastAmounth = 64;
             const playerCenter = {
                 x: this.tileMapHandler.player.x + this.tileMapHandler.player.width / 2,
                 y: this.tileMapHandler.player.y + this.tileMapHandler.player.height / 2
@@ -126,7 +126,7 @@ class EffectsRenderer {
 
             Display.ctx.beginPath();
             var radialGradient = Display.ctx.createRadialGradient(playerCenter.x, playerCenter.y, 1, playerCenter.x, playerCenter.y, radius * 1.7);
-            radialGradient.addColorStop(0, `rgba(120,120,120,0.5)`);
+            radialGradient.addColorStop(0, `rgba(120,120,120,${effect.alpha})`);
             radialGradient.addColorStop(0.5, `rgba(120,120,120,0.01)`);
             radialGradient.addColorStop(0.51, `rgba(0,0,0,0)`);
             Display.ctx.fillStyle = radialGradient;
@@ -214,6 +214,9 @@ class EffectsRenderer {
                 else if (effect.type === EffectsHandler.effectTypes.Flashlight && effect.position === "background") {
                     EffectsRenderer.displayFleshlight(this.tileMapHandler.currentLevel, this.tileMapHandler.player.x + (this.tileMapHandler.player.width / 2),
                         this.tileMapHandler.player.y + (this.tileMapHandler.player.height / 2), effect.radius, effect.flickerRadius, effect.color, effect.lighterColor);
+                }
+                else if (effect.type === EffectsHandler.effectTypes.FieldOfView) {
+                    EffectsRenderer.displayRaycasting(effect);
                 }
             }
             else if (layer === 1) {
