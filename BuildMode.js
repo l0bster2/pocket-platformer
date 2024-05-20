@@ -353,11 +353,14 @@ class BuildMode {
             })
         }
 
+        const submitButtonWrapper = document.createElement("div");
+        submitButtonWrapper.className = "subSection";
         const submitButton = document.createElement("button");
         submitButton.innerHTML = "ok";
         submitButton.onclick = (e) => { TooltipHandler.closeTooltip(e, "canvasObjectToolTip"); };
-        submitButton.className = "levelNavigationButton fullWidth marginTop8";
-        content.appendChild(submitButton);
+        submitButton.className = "levelNavigationButton fullWidth";
+        submitButtonWrapper.append(submitButton);
+        content.appendChild(submitButtonWrapper);
 
         const xPos = canvasOffsetLeft + (tilePosX * this.tileMapHandler.tileSize) - 120 - Camera.viewport.left;
         const yPos = canvasOffsetTop + (tilePosY * this.tileMapHandler.tileSize) + this.tileMapHandler.tileSize + 6 - Camera.viewport.top;
