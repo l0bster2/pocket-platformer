@@ -21,7 +21,7 @@ class Player {
         this.coyoteJumpFrames = 6;
         this.extraTrampolineJumpFrames = Math.round(this.maxJumpFrames / 6);
         this.pushToSideWhileWallJumpingFrames = this.maxJumpFrames / 2 - 4;
-        this.jumpSpeed = 7.8;
+        this.jumpSpeed = 7.92;
         this.maxSpeed = 3.2;
         this.groundFriction = 0.65;
         this.air_friction = 0.75;
