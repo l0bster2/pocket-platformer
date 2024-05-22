@@ -31,7 +31,7 @@ class PlayerAttributesHandler {
     static setInitialSliderValue(sliderValue){
         let playerAttrValue = this.player[sliderValue];
         if(sliderValue === "jumpSpeed" && playerAttrValue < 1) {
-            playerAttrValue = playerAttrValue * this.player.maxJumpFrames;
+            playerAttrValue = parseFloat(playerAttrValue * player.maxJumpFrames).toFixed(2)
         }
         this[sliderValue + "Slider"] = document.getElementById(sliderValue);
         this[sliderValue + "Slider"].value = playerAttrValue;
