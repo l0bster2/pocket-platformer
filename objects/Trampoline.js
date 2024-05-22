@@ -19,7 +19,9 @@ class Trampoline extends InteractiveLevelObject {
             AnimationHelper.setSquishValues(this, this.tileSize * 0.8,
                 this.tileSize * 1.2, 7);
             this.player.setStretchAnimation();
-            this.player.forcedJumpSpeed = this.player.jumpSpeed + (this.player.jumpSpeed / 3.75);
+            const oldJumpSpeed = this.player.jumpSpeed / this.player.maxJumpFrames;
+            const oldTrampJumpSpeed = oldJumpSpeed * (this.player.maxJumpFrames + this.player.extraTrampolineJumpFrames);
+            this.player.forcedJumpSpeed = oldTrampJumpSpeed + (oldTrampJumpSpeed / 3.75);
             this.player.jumpframes = 0;
             this.player.fixedSpeed = false;
             this.player.temporaryDoubleJump = false;

@@ -76,6 +76,8 @@ function resetUIValuesInTool() {
   PlayerAttributesHandler.sliderValues.forEach(sliderValue => {
       sliderValue !== "maxJumpFrames" && PlayerAttributesHandler.setInitialSliderValue(sliderValue);
   })
+  //needed as legacy solution for old games
+  PlayerAttributesHandler.setInitialSliderValue("jumpSpeed");
   PlayerAttributesHandler.checkBoxValues.forEach(checkBoxValue => {
     PlayerAttributesHandler.setInitialCheckboxValue(checkBoxValue);
   });

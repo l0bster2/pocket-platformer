@@ -21,7 +21,7 @@ class Player {
         this.coyoteJumpFrames = 6;
         this.extraTrampolineJumpFrames = Math.round(this.maxJumpFrames / 6);
         this.pushToSideWhileWallJumpingFrames = this.maxJumpFrames / 2 - 4;
-        this.jumpSpeed = 0.44;
+        this.jumpSpeed = 7.8;
         this.maxSpeed = 3.2;
         this.groundFriction = 0.65;
         this.air_friction = 0.75;
@@ -43,7 +43,7 @@ class Player {
     }
 
     adjustSwimAttributes(maxJumpFrames, jumpSpeed) {
-        const onePerfectOfMaxJumpHeight = -(maxJumpFrames - 1) * jumpSpeed / 100;
+        const onePerfectOfMaxJumpHeight = -jumpSpeed / 100;
         this.maxSwimHeight = onePerfectOfMaxJumpHeight * 90;
         this.flapHeight = onePerfectOfMaxJumpHeight * 60 * -1;
     }

@@ -19,6 +19,10 @@ class ExportedGameInitializer {
         for (const [key, value] of Object.entries(allData.playerObject)) {
             player[key] = value;
         }
+        //needed as legacy solution for old games
+        if(allData.playerObject?.jumpSpeed < 1) {
+            player.jumpSpeed = player.jumpSpeed * player.maxJumpFrames;
+        }
         for (const [key, value] of Object.entries(allData.sprites)) {
             if (key !== "TELEPORT" && key !== "TELEPORT2" && key !== "SFX4") {
                 SpritePixelArrays[key] = value;

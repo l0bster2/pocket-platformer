@@ -58,7 +58,7 @@ class PlayerAttributesHandler {
 
     static staticConstructor(player) {
         this.player = player;
-        this.sliderValues = ["groundAcceleration", "air_acceleration", "maxSpeed", "groundFriction", "air_friction", "jumpSpeed", "maxFallSpeed"];
+        this.sliderValues = ["groundAcceleration", "air_acceleration", "maxSpeed", "groundFriction", "air_friction", "jumpSpeed", "maxJumpFrames", "maxFallSpeed"];
         this.checkBoxValues = ["jumpChecked", "wallJumpChecked", "doubleJumpChecked", dashChecked, runChecked];
 
         this.sliderValues.forEach(sliderValue => {
@@ -68,11 +68,7 @@ class PlayerAttributesHandler {
                 let newValue = Number(event.target.value);
                 //If value has decimals, put at least 2 decimals after coma
                 this[sliderValue + "Value"].innerHTML = newValue % 1 != 0 ? newValue.toFixed(2) : newValue;
-
                 if(sliderValue === "jumpSpeed") {
-                    const jumpValueObj = this.mapJumpSliderValueToRealValue(newValue)[0];
-                    newValue = Number(jumpValueObj.jumpSpeed);
-                    this.player.maxJumpFrames = jumpValueObj.maxJumpFrames;
                     this.player.adjustSwimAttributes(this.player.maxJumpFrames, newValue);
                 }
                 this.player[sliderValue] = newValue;
@@ -87,9 +83,9 @@ class PlayerAttributesHandler {
 
     static setInitialSliderValue(sliderValue){
         let playerAttrValue = this.player[sliderValue];
-        if(sliderValue === "jumpSpeed") {
-            const jumpSliderValueObj = this.mapJumpValueToSliderValue(playerAttrValue)[0];
-            playerAttrValue = jumpSliderValueObj.sliderValue;
+        if(sliderValue === "jumpSpeed" && playerAttrValue < 1) {
+            //const jumpSliderValueObj = this.mapJumpValueToSliderValue(playerAttrValue)[0];
+            playerAttrValue = playerAttrValue * this.player.maxJumpFrames;
         }
         this[sliderValue + "Slider"] = document.getElementById(sliderValue);
         this[sliderValue + "Slider"].value = playerAttrValue;

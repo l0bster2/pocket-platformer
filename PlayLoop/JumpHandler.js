@@ -38,8 +38,10 @@ class JumpHandler extends PlayMode {
 
     static performJump(jumpSpeed, maxFrames) {
         player.jumpframes++;
-        var currentJumpSpeed = -(maxFrames - player.jumpframes) * jumpSpeed;
-        if (currentJumpSpeed !== 0) {
+
+        var currentJumpSpeed = (jumpSpeed - (jumpSpeed / maxFrames * player.jumpframes)) *-1;
+
+        if (currentJumpSpeed !== 0 && currentJumpSpeed < 0) {
             //easing: currentJumpSpeed * currentJumpSpeed * -1 (and jumpspeed much smaller)
             player.yspeed = currentJumpSpeed;
         }
@@ -105,7 +107,8 @@ class JumpHandler extends PlayMode {
 
             player.wallJumpFrames++;
 
-            var currentJumpSpeed = -(player.maxJumpFrames - player.wallJumpFrames) * player.jumpSpeed;
+            var currentJumpSpeed = (player.jumpSpeed - (player.jumpSpeed / player.maxJumpFrames * player.wallJumpFrames)) *-1;
+
             if (currentJumpSpeed !== 0) {
                 player.yspeed = currentJumpSpeed;
             }
@@ -161,7 +164,13 @@ class JumpHandler extends PlayMode {
         if (player.yspeed < 0 && waterAtTopOnly && player.forcedJumpSpeed === 0) {
             player.y = (player.top + 1) * tileMapHandler.tileSize - 4;
             SFXHandler.createSFX(player.x, player.top * tileMapHandler.tileSize, 0, AnimationHelper.facingDirections.bottom);
-            player.forcedJumpSpeed = player.jumpSpeed / 1.23;
+            
+            //calculation needs to be done for being backwards compatible
+            const oldJumpSpeed = player.jumpSpeed / player.maxJumpFrames;
+            //previously we wrongly added extra trampoline jump frames, which we need to add again
+            const oldJumpSpeedWithExtraJumpFrames = oldJumpSpeed * (player.maxJumpFrames + player.extraTrampolineJumpFrames);
+            player.forcedJumpSpeed = oldJumpSpeedWithExtraJumpFrames / 1.23;
+            
             player.jumpframes = 0;
             player.doubleJumpUsed = false;
             player.currentDashFrame = 0;
