@@ -69,7 +69,8 @@ class MathHelpers {
     }
 
     while (dof < lineSightInTiles) {
-      if (tileMapHandler.getTileTypeByPosition(rx, ry) !== 0) {
+      const tileValue = tileMapHandler.getTileTypeByPosition(rx, ry);
+      if (tileValue !== 0 && tileValue !== 5) {
         disV = this.getDistanceBetween2Objects({ x, y }, { x: rx, y: ry });
         break;
       } else {
@@ -101,7 +102,8 @@ class MathHelpers {
     }
 
     while (dof < lineSightInTiles) {
-      if (tileMapHandler.getTileTypeByPosition(rx, ry) !== 0) {
+      const tileValue = tileMapHandler.getTileTypeByPosition(rx, ry);
+      if (tileValue !== 0 && tileValue !== 5) {
         disH = this.getDistanceBetween2Objects({ x, y }, { x: rx, y: ry });
         break;
       } else {
