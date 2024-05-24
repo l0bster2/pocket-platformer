@@ -117,7 +117,6 @@ class EffectsRenderer {
                 Display.ctx.lineTo(trialge.old.x, trialge.old.y);
                 Display.ctx.lineTo(trialge.new.x, trialge.new.y);
             });
-            //Display.ctx.arc(playerCenter.x, playerCenter.y, 75, 0, 2 * Math.PI, true);
             Display.ctx.fill();
             Display.ctx.closePath();
         }
