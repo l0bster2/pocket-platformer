@@ -37,4 +37,82 @@ class MathHelpers {
     var b = obj1.y - obj2.y;
     return Math.sqrt(a * a + b * b);
   }
+
+  static raycastFindEdge(angle, origin, lineSightInTiles) {
+    const { x, y } = origin;
+    let x2 = x + Math.cos(angle);
+    let y2 = y + Math.sin(angle);
+    const tan = Math.tan(angle);
+    let rx, ry, xo, yo, vx, vy;
+    let disV = Number.MAX_VALUE;
+    let disH = Number.MAX_VALUE;
+    let dof = 0;
+    const tileWidth = tileMapHandler.tileSize;
+
+    // check horizontally, intersection against vertical, ie left or right of the tile
+    if (y === y2) {
+      rx = x;
+      ry = y;
+      dof = Number.MAX_VALUE;
+    } else {
+      if (x2 > x) { // looking right
+        rx = Math.ceil(x /  tileWidth) * tileWidth;
+        ry = y + (rx - x) * tan;
+        yo = tileWidth * tan;
+        xo = tileWidth;
+      } else {
+        rx = Math.floor(x /  tileWidth) * tileWidth - 1;
+        ry = y + (rx - x) * tan;
+        yo = -tileWidth * tan;
+        xo = -tileWidth;
+      }
+    }
+
+    while (dof < lineSightInTiles) {
+      if (tileMapHandler.getTileTypeByPosition(rx, ry) !== 0) {
+        disV = this.getDistanceBetween2Objects({ x, y }, { x: rx, y: ry });
+        break;
+      } else {
+        dof++;
+        ry += yo;
+        rx += xo;
+      }
+    }
+    vx = rx; vy = ry;
+
+    // check vertically, intersection against horizontal, ie bottom or top of the tile
+    if (x === x2) {
+      rx = x;
+      ry = y;
+      dof = Number.MAX_VALUE;
+    } else {
+      if (y2 > y) { // if looking downwards
+        ry = Math.ceil(y /  tileWidth) * tileWidth;
+        rx = x + (ry - y) / tan;
+        xo = tileWidth / tan;
+        yo = tileWidth;
+      } else {
+        ry = Math.floor(y /  tileWidth) * tileWidth - 1;
+        rx = x + (ry - y) / tan;
+        xo = -tileWidth / tan;
+        yo = -tileWidth;
+      }
+      dof = 0;
+    }
+
+    while (dof < lineSightInTiles) {
+      if (tileMapHandler.getTileTypeByPosition(rx, ry) !== 0) {
+        disH = this.getDistanceBetween2Objects({ x, y }, { x: rx, y: ry });
+        break;
+      } else {
+        dof++;
+        rx += xo;
+        ry += yo;
+      }
+    }
+    if (disV < disH) {
+      rx = vx; ry = vy; disH = disV;
+    }
+    return { x: rx, y: ry }
+  }
 }

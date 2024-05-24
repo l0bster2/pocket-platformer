@@ -84,43 +84,23 @@ class EffectsRenderer {
             const degreeStep = 360 / rayCastAmounth;
             let previousX = null;
             let previousY = null;
-            const checkStep = this.tileMapHandler.tileSize;
 
-            if (this.tileMapHandler.currentGeneralFrameCounter % 5 == 0) {
+            if (this.tileMapHandler.currentGeneralFrameCounter % 4 == 0) {
                 this.rayCastingTriangles = [];
                 for (var i = 0; i <= rayCastAmounth; i++) {
-                    const currentAngle = i * degreeStep;
+                    const currentAngle = i * degreeStep + 1;
+                    const radians = MathHelpers.getRadians(currentAngle);
+                    const { x, y } = MathHelpers.raycastFindEdge(radians, playerCenter, maxTileWidth);
 
-                    loop2:
-                    for (var j = 0; j <= maxTileWidth; j++) {
-                        const radians = MathHelpers.getRadians(currentAngle);
-                        const left = Math.floor(playerCenter.x - Math.cos(radians) * (checkStep * j));
-                        const top = Math.floor(playerCenter.y - Math.sin(radians) * (checkStep * j));
-                        const leftTilePos = this.tileMapHandler.getTileValueForPosition(left);
-                        const topTilePos = this.tileMapHandler.getTileValueForPosition(top);
-
-                        const currentTileValue = this.tileMapHandler.getTileLayerValueByIndex(topTilePos, leftTilePos);
-                        if ((currentTileValue !== 0 && currentTileValue !== 5) || j === maxTileWidth) {
-                            let newX = leftTilePos * this.tileMapHandler.tileSize;
-                            let newY = topTilePos * this.tileMapHandler.tileSize;
-
-                            newX += this.tileMapHandler.player.x < newX ? 24 : 0;
-                            newY += this.tileMapHandler.player.y > newY ? 24 : 0;
-
-                            if (previousX !== null && previousY !== null) {
-                                this.rayCastingTriangles.push({
-                                    center: playerCenter,
-                                    old: { x: previousX, y: previousY },
-                                    new: { x: newX, y: newY },
-                                });
-                            }
-                            previousX = newX;
-                            previousY = newY;
-
-                            break loop2;
-                        }
+                    if (previousX !== null && previousY !== null) {
+                        this.rayCastingTriangles.push({
+                            center: playerCenter,
+                            old: { x: previousX, y: previousY },
+                            new: { x, y },
+                        });
                     }
-
+                    previousX = x;
+                    previousY = y;
                 }
             }
 
