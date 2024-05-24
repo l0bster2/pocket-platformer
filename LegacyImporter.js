@@ -110,13 +110,17 @@ function legacyImporter(fileContent) {
         const attrValue = playerAttr.substring(playerAttr.indexOf('=') + 1, playerAttr.length);
         if (sliderValues.includes(attrName)) {
             player[attrName] = Number(attrValue);
-            attrName !== "maxJumpFrames" && PlayerAttributesHandler.setInitialSliderValue(attrName);
+            PlayerAttributesHandler.setInitialSliderValue(attrName);
         }
         else {
             player[attrName] = attrValue.includes('true') ? true : false;
             PlayerAttributesHandler.setInitialCheckboxValue(attrName);
         }
     });
+    //needed as legacy solution for old games
+    if (player.jumpSpeed < 1) {
+        player.jumpSpeed = parseFloat(player.jumpSpeed * player.maxJumpFrames).toFixed(2);
+    }
 
     const transitionStartIndex = fileContent.lastIndexOf(transitionCommentStart);
     if (transitionStartIndex) {

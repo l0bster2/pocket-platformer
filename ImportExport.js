@@ -74,7 +74,7 @@ function resetUIValuesInTool() {
   tileMapHandler.resetLevel(tileMapHandler.currentLevel);
   LevelNavigationHandler.updateLevel();
   PlayerAttributesHandler.sliderValues.forEach(sliderValue => {
-      sliderValue !== "maxJumpFrames" && PlayerAttributesHandler.setInitialSliderValue(sliderValue);
+      PlayerAttributesHandler.setInitialSliderValue(sliderValue);
   })
   //needed as legacy solution for old games
   PlayerAttributesHandler.setInitialSliderValue("jumpSpeed");
