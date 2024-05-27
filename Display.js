@@ -181,6 +181,7 @@ class Display {
             PauseHandler.restartedGame = true;
             PauseHandler.currentRestartGameFrameCounter = PauseHandler.restartGameMaxFrames;
             SoundHandler.guiSelect.stopAndPlay();
+            SoundHandler.currentSong && SoundHandler.setVolume(SoundHandler.currentSong, 0.3);
         }
         PauseHandler.handleRestart();
     }

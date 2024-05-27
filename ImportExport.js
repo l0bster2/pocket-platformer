@@ -119,9 +119,6 @@ function exportGame() {
   allData.animationFrames = TransitionAnimationHandler.animationFrames;
   allData.animationType = TransitionAnimationHandler.animationType;
   allData.playerObject = createPlayerAttributesSectionForAllData();
-  if (SoundHandler?.song?.src) {
-    allData.song = SoundHandler.song.src;
-  }
   allData.sounds = getCustomSounds();
   allData.sprites = createChangedSpitesObject();
   bundledScripts = bundledScripts.replace("//putAllDataHere",
@@ -274,18 +271,6 @@ function createHtmlDocoumentWithCanvas() {
 
 function download(filename, text) {
   var blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-  /*if (checkIfSoundEmptyOrExternal(SoundHandler.song.src)) {
-    const fileName = `${filename}.html`;
-    saveAs(blob, fileName);
-  }
-  else {
-    var zip = new JSZip();
-    zip.file("index.html", blob);
-    zip.generateAsync({ type: "blob" })
-      .then(function (zipContent) {
-        saveAs(zipContent, `${filename}.zip`);
-      });
-  }*/
   const fileName = `${filename}.html`;
   saveAs(blob, fileName);
 }

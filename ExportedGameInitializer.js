@@ -8,11 +8,15 @@ class ExportedGameInitializer {
         WorldDataHandler.textColor = allData.textColor;
         TransitionAnimationHandler.animationFrames = allData.animationFrames;
         TransitionAnimationHandler.animationType = allData.animationType;
-        if (allData?.song) {
-            SoundHandler.song = new Sound(allData.song, "song", true);
-        }
+
         if(allData?.sounds) {
             allData.sounds.forEach(sound => {
+                if(sound.type === 'music' && !SoundHandler.doesSoundExist(sound.key)) {
+                    SoundHandler.sounds.push({
+                        key: sound.key, descriptiveName: "", value: sound.value, type: "music", customValue: true,
+                    });
+                    SoundHandler[sound.key] = new Sound(sound.value, sound.key, true);
+                }
                 SoundHandler.reloadSound(sound.key, sound.value);
             })
         }

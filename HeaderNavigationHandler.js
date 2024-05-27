@@ -24,6 +24,7 @@ function changeView(value) {
         document.getElementById("soundView").style.display = "none";
         document.getElementById("gameViewCheckmark").style.display = "block";
         document.getElementById("soundViewCheckmark").style.display = "none";
+        SoundHandler.checkSongOnLevelReset(tileMapHandler.currentLevel);
     }
     SoundHandler.stopAllSounds();
 }

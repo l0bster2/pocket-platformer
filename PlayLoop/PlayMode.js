@@ -27,9 +27,6 @@ class PlayMode {
             LevelNavigationHandler.updateLevel();
         }
         else {
-            if (SoundHandler?.song?.sound?.src && !WorldDataHandler.insideTool) {
-                SoundHandler.song.stopAndPlay();
-            }
             tileMapHandler.resetLevel(tileMapHandler.currentLevel);
         }
         GameStatistics.resetPlayerStatistics();

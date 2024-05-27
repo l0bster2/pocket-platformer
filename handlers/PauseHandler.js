@@ -92,7 +92,7 @@ class PauseHandler {
                 if(this.currentOptionIndex === 1) {
                     this.restartedGame = true;
                     this.currentRestartGameFrameCounter = this.restartGameMaxFrames;
-                    SoundHandler.setVolume("song", 0.3);
+                    SoundHandler.currentSong && SoundHandler.setVolume(SoundHandler.currentSong, 0.3);
                     SoundHandler.guiSelect.stopAndPlay();
                 }
                 //continue
@@ -112,11 +112,13 @@ class PauseHandler {
             Display.drawRectangleWithAlpha(left, top, width, height, WorldDataHandler.backgroundColor, context, 1 - this.currentRestartGameFrameCounter / 100 * 2);
             this.currentRestartGameFrameCounter--;
             if(this.currentRestartGameFrameCounter === 0) {
+                if(SoundHandler.currentSong) {
+                    SoundHandler[SoundHandler.currentSong].sound.currentTime = 0;
+                    SoundHandler.setVolume(SoundHandler.currentSong, 1);
+                }
                 DialogueHandler.setDialogueWindowToInactive();
                 PlayMode.startGame();
                 this.resetPauseHandler();
-                SoundHandler.song.stopAndPlay();
-                SoundHandler.setVolume("song", 1);
             }
         }
     }

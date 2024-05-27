@@ -40,6 +40,7 @@ class WorldDataHandler {
             paths: [],
             backgroundColor: "transp",
             zoomFactor: 1,
+            song: null,
         };
     }
 
@@ -64,6 +65,7 @@ class WorldDataHandler {
             paths: [],
             backgroundColor: "transp",
             zoomFactor: 1,
+            song: null,
         };
     }
 

@@ -22,11 +22,11 @@ class Game {
 
     static executeGameMode() {
         if (this.playMode === this.PLAY_MODE) {
-            SoundHandler.doesSoundExist("song") && SoundHandler.song.play();
+            SoundHandler.currentSong && SoundHandler[SoundHandler.currentSong].play();
             window.requestAnimationFrame(play);
         }
         else if (this.playMode === this.BUILD_MODE) {
-            SoundHandler.doesSoundExist("song") && SoundHandler.song.stop();
+            SoundHandler.currentSong && SoundHandler[SoundHandler.currentSong].stop();
             window.requestAnimationFrame(build);
         }
     }

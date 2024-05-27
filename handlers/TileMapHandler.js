@@ -36,6 +36,7 @@ class TileMapHandler {
         WorldColorChanger.changeLevelColor(levelIndex);
         this.changeTileCanvasSize();
         this.createStaticTiles();
+        SoundHandler.checkSongOnLevelReset(levelIndex);
     }
 
     setInitialPlayerAndCameraPos(levelIndex) {

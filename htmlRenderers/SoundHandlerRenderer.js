@@ -35,7 +35,11 @@ class SoundHandlerRenderer {
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => {
-                SoundHandler.reloadSound("song", reader.result);
+                const fileName = file.name.substring(0, file.name.lastIndexOf('.'))
+                SoundHandler.sounds.push({
+                    key: fileName, descriptiveName: "", value: reader.result, type: "music", customValue: true,
+                });
+                SoundHandler[fileName] = new Sound(reader.result, fileName, true);
                 this.createMusicSection();
                 SoundHandler.stopAllSounds();
             };
@@ -72,37 +76,93 @@ class SoundHandlerRenderer {
 
     static deleteCustomMusic(key) {
         const soundIndex = SoundHandler.sounds.findIndex(sound => sound.key === key);
-        SoundHandler.sounds[soundIndex].value = "";
+        SoundHandler.sounds.splice(soundIndex, 1);
+        const element = document.getElementById(key);
+        element.remove();
+        //SoundHandler.sounds[soundIndex].value = "";
+        WorldDataHandler.levels.forEach(level => {
+            if(level.song === key) {
+                level.song = null;
+            }
+        })
         this.createMusicSection();
     }
 
     static createMusicSection() {
-        const firstSongExists = SoundHandler.doesSoundExist("song");
         document.getElementById("musicContent").innerHTML = `<div class="musicContent">
         ${SoundHandler.sounds.filter(sound => sound.type === 'music' && sound.value).map((song, index) => {
             return this.createMusicControls(song, index);
-        })}
-            ${!firstSongExists ? this.createMusicUploadButton() : ''}
+        }).join(' ')}
+            ${this.createMusicUploadButton()}
         </div>`;
     }
 
+    static handleLevelCheckboxClick(event, index) {
+        const soundKey = event.target.getAttribute('data-song');
+        const musicOnly = SoundHandler.sounds.filter(sound => sound.type === 'music');
+        musicOnly.forEach(music => {
+            const songElementWithSameIndex = document.getElementById(`musicLevelChecked${index}${music.key}`);
+            if(songElementWithSameIndex && songElementWithSameIndex.getAttribute('data-song') !== soundKey) {
+                songElementWithSameIndex.checked = false;
+                WorldDataHandler.levels[index].song = null;
+            }
+        })
+        this.addSongToLevel(index, soundKey);
+    }
+
+    static addSongToLevel(index, key) {
+        WorldDataHandler.levels[index].song = key;
+    }
+
+    static createLevelSelectCheckboxes(soundKey) {
+        let result = "";
+        WorldDataHandler.levels.forEach((_, index) => {
+            let text = `Level ${index}`;
+            if (index > 0) {
+                if (index === WorldDataHandler.levels.length - 1) {
+                    text = "End screen"
+                }
+                // If new effect created, select all checkboxes by expect start and finish by default. Otherwise check where checked by user
+                const checkCheckbox = WorldDataHandler.levels[index]?.song === soundKey;
+                result += `<div class="marginTop4">
+                    <input type="checkbox" id="musicLevelChecked${index}${soundKey}" name="musicLevelCheck" onclick="SoundHandlerRenderer.handleLevelCheckboxClick(event, ${index})"
+                    ${checkCheckbox ? "checked" : ""} data-song="${soundKey}">
+                    <label for="musicLevelChecked${index}${soundKey}" class="checkBoxText">${text}</label>
+                </div>`;
+            }
+        })
+        return result;
+    }
+
     static createMusicControls(sound, index) {
-        return `<div class="soundControls">
-        <button id="${sound.key}MusicStop" style="display: none" class="levelNavigationButton" onClick="SoundHandlerRenderer.stopMusic('${sound.key}')">
-            <img src="images/icons/pause.svg" width="14" height="14">
-        </button>
-        <button id="${sound.key}MusicStart" class="levelNavigationButton" onClick="SoundHandlerRenderer.startMusic('${sound.key}')">
-            <img src="images/icons/right.svg" width="14" height="14">
-        </button>
-        <span class="soundControlsDescription">Song ${index + 1}</span>
-        <div id="${sound.key}Upload">
-        <button class="levelNavigationButton tertiaryButton marginTop8"
-        onclick="SoundHandlerRenderer.deleteCustomMusic('${sound.key}')" style="padding: 8px 12px;">
-        DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
-            class="iconInButtonWithText">
-        </button>
+        return `
+        <div class="musicControls">
+        <div class="soundControls">
+           <button id="${sound.key}MusicStop" style="display: none" class="levelNavigationButton" onClick="SoundHandlerRenderer.stopMusic('${sound.key}')">
+           <img src="images/icons/pause.svg" width="14" height="14">
+           </button>
+           <button id="${sound.key}MusicStart" class="levelNavigationButton" onClick="SoundHandlerRenderer.startMusic('${sound.key}')">
+           <img src="images/icons/right.svg" width="14" height="14">
+           </button>
+           <span class="soundControlsDescription">${sound.key}</span>
+           <div id="${sound.key}Upload">
+              <button class="levelNavigationButton tertiaryButton marginTop8"
+                 onclick="SoundHandlerRenderer.deleteCustomMusic('${sound.key}')" style="padding: 8px 12px;">
+              DELETE CUSTOM<img alt="plus" width="14" height="14" src="images/icons/delete.svg"
+                 class="iconInButtonWithText">
+              </button>
+           </div>
         </div>
-    </div>`;
+        <details class="marginTop4">
+           <summary class="sfxTemplateSummary">Select levels</summary>
+           <div class="sfxTemplateSection">
+              <div style="display: grid; grid-template-columns: auto auto;">
+                 ${this.createLevelSelectCheckboxes(sound.key)}
+              </div>
+           </div>
+        </details>
+     </div>
+        `;
     }
 
     static createSoundControls(sound) {

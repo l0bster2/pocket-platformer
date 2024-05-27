@@ -138,6 +138,12 @@ input:checked+.switchSlider:before {
     transform: translateX(14px);
 }
 
+.musicControls {
+    border-bottom: 1px solid lightgrey;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+}
+
 #playerAnimationWrapper > * {
     margin-top: 8px;
 }
