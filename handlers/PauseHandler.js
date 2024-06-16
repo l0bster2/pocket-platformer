@@ -114,7 +114,11 @@ class PauseHandler {
             if(this.currentRestartGameFrameCounter === 0) {
                 if(SoundHandler.currentSong) {
                     SoundHandler[SoundHandler.currentSong].sound.currentTime = 0;
-                    SoundHandler.setVolume(SoundHandler.currentSong, 1);
+                    SoundHandler.sounds.forEach(sound => {
+                        if(sound.type === "music") {
+                            SoundHandler.setVolume(sound.key, 1);
+                        }
+                    })
                 }
                 DialogueHandler.setDialogueWindowToInactive();
                 PlayMode.startGame();
