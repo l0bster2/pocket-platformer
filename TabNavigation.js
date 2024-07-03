@@ -176,8 +176,8 @@ class TabNavigation {
         extraAttributes.customName = selectedSprite.descriptiveName;
       }
       if (selectedSprite.type === SpritePixelArrays.SPRITE_TYPES.deko) {
-        var r = /\d+/;
-        indexInSpriteArray = selectedSprite.descriptiveName.match(r) - 1;
+        const allDekoSprites = SpritePixelArrays.getSpritesByType(SpritePixelArrays.SPRITE_TYPES.deko);
+        indexInSpriteArray = allDekoSprites.findIndex((deko) => deko.descriptiveName === selectedSprite.descriptiveName);
       }
       const canvasYSpritePos = SpritePixelArrays.getIndexOfSprite(selectedSprite.descriptiveName, 0, "descriptiveName") * WorldDataHandler.tileSize;
 

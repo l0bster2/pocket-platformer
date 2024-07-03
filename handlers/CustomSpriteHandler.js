@@ -80,14 +80,14 @@ class CustomSpriteHandler {
             var r = /\d+/;
             return customTile.descriptiveName.match(r);
         })
-        const newTileValue = customTiles.length + 1;
-        const highestGenericTileValue = 17;
-        const newName = highestGenericTileValue + newTileValue;
-        clonedSprite.name = newName;
         const highestNumber = allCustomTileNumbers.length ? 
             Math.max(...allCustomTileNumbers) + 1 
             : 1;
         clonedSprite.descriptiveName = `Custom tile ${highestNumber}`;
+        const highestGenericTileValue = 17;
+        const newName = highestGenericTileValue + highestNumber;
+        clonedSprite.name = newName;
+
         return clonedSprite;
     }
 
@@ -181,6 +181,7 @@ class CustomSpriteHandler {
                 const levelWidth = level.tileData[0].length;
                 this.removeTile(levelHeight, levelWidth, level.tileData, sprite.name);
             })
+            tileMapHandler.createStaticTiles();
         }
     }
 
@@ -196,6 +197,7 @@ class CustomSpriteHandler {
         if (DrawSectionHandler?.currentSprite?.sprite.descriptiveName === spriteToRemove.descriptiveName) {
             DrawSectionHandler.changeSelectedSprite({ target: { value: SpritePixelArrays.TILE_1.descriptiveName } });
         }
+        DrawSectionHandler.redrawOutsideCanvases(true);
     }
 
     static addSprite(event) {
