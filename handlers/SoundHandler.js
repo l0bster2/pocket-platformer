@@ -46,6 +46,7 @@ class SoundHandler {
 
   static checkSongOnLevelReset(currentLevelIndex) {
     const { song } = WorldDataHandler.levels[currentLevelIndex];
+
     // if no song currently playing, set new current song
     if(!this.currentSong && song) {
       this.currentSong = song;

@@ -38,6 +38,10 @@ function importGame() {
         }
 
         resetUIValuesInTool();
+
+        if(Game.playMode === Game.PLAY_MODE) {
+          Game.changeGameMode();
+        }
       }
       catch (error) {
         alert("Could not parse file. Please try refreshing your page and importing it again.")
