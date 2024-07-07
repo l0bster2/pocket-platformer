@@ -35,6 +35,10 @@ class ObjectTypes {
     return 'disappearingBlock';
   }
 
+  static get CONNECTED_DISAPPEARING_BLOCK() {
+    return 'connectedDisappearingBlock';
+  }
+
   static get TREADMILL() {
     return 'treadmill';
   }
@@ -176,6 +180,7 @@ class ObjectTypes {
       [this.TRAMPOLINE]: Trampoline,
       [this.NPC]: Npc,
       [this.DISAPPEARING_BLOCK]: DisappearingBlock,
+      [this.CONNECTED_DISAPPEARING_BLOCK]: ConnectedDisappearingBlock,
       [this.DEKO]: Deko,
       [this.STOMPER]: Stomper,
       [this.CANON]: Canon,

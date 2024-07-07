@@ -722,36 +722,23 @@ class SpritePixelArrays {
       ]
     };
 
-    this.WATER = {
-      name: ObjectTypes.WATER,
-      descriptiveName: "Water",
-      description: "A passable block that slows down gravity and let's you jump infinitely inside it. Every object can be placed on it.",
+    this.CONNECTED_DISAPPEARING_BLOCK_SPRITE = {
+      name: ObjectTypes.CONNECTED_DISAPPEARING_BLOCK,
+      descriptiveName: "Connected Disappearing block",
+      description: "Works same as the standard disappearing block, but it will also make the neighbouring disappearing blocks disappear.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:
-          [
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "C6E3FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "C6E3FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-          ]
-      },
-      {
-        sprite:
-          [
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "C6E3FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "C6E3FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
-          ]
+        [ 
+            [ "AA5500", "E37100", "FFAA55", "FFAA55", "E37100", "AA5500", "AA5500", "AA5500" ], 
+            [ "E37100", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500", "FFAA55", "E37100" ], 
+            [ "FFAA55", "FFAA55", "FFAA55", "FFAA55", "E37100", "AA5500", "E37100", "E37100" ], 
+            [ "E37100", "FFAA55", "FFAA55", "E37100", "E37100", "AA5500", "AA5500", "AA5500" ],
+            [ "E37100", "E37100", "E37100", "E37100", "AA5500", "E37100", "FFAA55", "E37100" ], 
+            [ "AA5500", "E37100", "E37100", "AA5500", "E37100", "FFAA55", "FFAA55", "E37100" ],
+            [ "AA5500", "AA5500", "AA5500", "AA5500", "E37100", "E37100", "E37100", "AA5500" ], 
+            [ "AA5500", "E37100", "E37100", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500" ] 
+        ]
       }
       ]
     };
@@ -917,10 +904,44 @@ class SpritePixelArrays {
       ]
     };
 
+    this.WATER = {
+      name: ObjectTypes.WATER,
+      descriptiveName: "Water",
+      description: "A passable block that slows down gravity and let's you jump infinitely inside it. Every object can be placed on it.",
+      type: this.SPRITE_TYPES.tile,
+      animation: [{
+        sprite:
+          [
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "C6E3FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "C6E3FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "C6E3FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "C6E3FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+            ["8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF", "8EC6FF"],
+          ]
+      }
+      ]
+    };
+
     this.FOREGROUND_TILE = {
       name: ObjectTypes.FOREGROUND_TILE,
       descriptiveName: "Foreground tile",
-      description: "It will be displayed above tiles, objects and even the player. It doesn't have any collision. You can hide secret passages behind them.",
+      description: "You can place it above tiles, objects and even the player. It doesn't have any collision. You can hide secret passages behind them.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:
@@ -954,7 +975,7 @@ class SpritePixelArrays {
     this.DISAPPEARING_FOREGROUND_TILE = {
       name: ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
       descriptiveName: "Disappearing foreground",
-      description: "It will be displayed above tiles, objects and even the player. Once the player touches it, the tile and all it's neighbours disappear. You can hide secrets behind it.",
+      description: "You can place it above tiles, objects and even the player. Once the player touches it, the tile and all it's neighbours disappear. You can hide secrets behind it.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:

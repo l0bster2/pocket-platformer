@@ -19,6 +19,7 @@ class CustomSpriteHandler {
         }
         this.addOptionToSelect("tile", "Tile");
         this.addOptionToSelect(SpritePixelArrays.DISAPPEARING_BLOCK_SPRITE.name, SpritePixelArrays.DISAPPEARING_BLOCK_SPRITE.descriptiveName);
+        this.addOptionToSelect(SpritePixelArrays.CONNECTED_DISAPPEARING_BLOCK_SPRITE.name, SpritePixelArrays.CONNECTED_DISAPPEARING_BLOCK_SPRITE.descriptiveName);
         this.addOptionToSelect(SpritePixelArrays.RED_BLOCK.name, SpritePixelArrays.RED_BLOCK.descriptiveName);
         this.addOptionToSelect(SpritePixelArrays.BLUE_BLOCK.name, SpritePixelArrays.BLUE_BLOCK.descriptiveName);
         this.addOptionToSelect(SpritePixelArrays.TREADMILL.name, SpritePixelArrays.TREADMILL.descriptiveName);
