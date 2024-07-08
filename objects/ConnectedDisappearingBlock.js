@@ -64,7 +64,6 @@ class ConnectedDisappearingBlock extends InteractiveLevelObject {
                 if(!this.collissionAlreadyChecked) {
                     this.currentlyCollidingWithInteractiveObject = this.tileMapHandler.levelObjects.some(levelObject => {
                         if (levelObject?.type === ObjectTypes.CONNECTED_DISAPPEARING_BLOCK &&
-                            (levelObject.initialX === this.initialX || levelObject.initialY === this.initialY) &&
                             Collision.objectsColliding(this.player, levelObject)) {
                             levelObject.collissionAlreadyChecked = true;
                             return true;
