@@ -21,6 +21,8 @@ class SpritePixelArrays {
       ObjectTypes.RED_BLUE_BLOCK_SWITCH,
       ObjectTypes.RED_BLOCK,
       ObjectTypes.BLUE_BLOCK,
+      ObjectTypes.PINK_BLOCK,
+      ObjectTypes.VIOLET_BLOCK,
       ObjectTypes.TREADMILL,
       ObjectTypes.ICE_BLOCK,
       ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
@@ -843,6 +845,76 @@ class SpritePixelArrays {
             ['8E8EFF', '1C1CFF', 'FFFFFF', 'FFFFFF', 'FFFFFF', '1C1CFF', '1C1CFF', '0000AA'],
             ['8E8EFF', '1C1CFF', '1C1CFF', '1C1CFF', '1C1CFF', '1C1CFF', '1C1CFF', '0000AA'],
             ['8E8EFF', '0000AA', '0000AA', '0000AA', '0000AA', '0000AA', '0000AA', '0000AA']
+          ]
+      }
+      ]
+    };
+
+    this.VIOLET_BLOCK = {
+      name: ObjectTypes.VIOLET_BLOCK,
+      descriptiveName: "Violet block",
+      description: "There are violet blocks and pink blocks. They will alternate between passable and solid on each jump.",
+      type: this.SPRITE_TYPES.tile,
+      squishAble: false,
+      animation: [{
+        sprite:
+          [
+            ["AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF"],
+            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
+            ["AA55FF", "390071", "390071", "390071", "390071", "390071", "390071", "390071"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["632A9B", "632A9B", "transp", "632A9B", "632A9B", "transp", "632A9B", "632A9B"],
+            ["632A9B", "transp", "transp", "transp", "transp", "transp", "transp", "632A9B"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["632A9B", "transp", "transp", "transp", "transp", "transp", "transp", "632A9B"],
+            ["632A9B", "transp", "transp", "transp", "transp", "transp", "transp", "632A9B"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["632A9B", "transp", "transp", "transp", "transp", "transp", "transp", "632A9B"],
+            ["632A9B", "632A9B", "transp", "632A9B", "632A9B", "transp", "632A9B", "632A9B"],
+          ]
+      }
+      ]
+    };
+
+    this.PINK_BLOCK = {
+      name: ObjectTypes.PINK_BLOCK,
+      descriptiveName: "Pink block",
+      description: "There are violet blocks and pink blocks. They will alternate between passable and solid on each jump.",
+      type: this.SPRITE_TYPES.tile,
+      squishAble: false,
+      animation: [{
+        sprite:
+          [
+            ["FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF"],
+            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
+            ["FF8EFF", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["E300E3", "E300E3", "transp", "E300E3", "E300E3", "transp", "E300E3", "E300E3"],
+            ["E300E3", "transp", "transp", "transp", "transp", "transp", "transp", "E300E3"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["E300E3", "transp", "transp", "transp", "transp", "transp", "transp", "E300E3"],
+            ["E300E3", "transp", "transp", "transp", "transp", "transp", "transp", "E300E3"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["E300E3", "transp", "transp", "transp", "transp", "transp", "transp", "E300E3"],
+            ["E300E3", "E300E3", "transp", "E300E3", "E300E3", "transp", "E300E3", "E300E3"],
           ]
       }
       ]

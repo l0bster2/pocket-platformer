@@ -181,6 +181,7 @@ class JumpHandler extends PlayMode {
     }
 
     static jumpInitialized(direction = AnimationHelper.facingDirections.bottom) {
+        tileMapHandler.changeJumpSwitchBlockType();
         SoundHandler.shortJump.stopAndPlay();
         SFXHandler.createSFX(player.x, player.y - 2, 0, direction);
         this.player.setStretchAnimation();

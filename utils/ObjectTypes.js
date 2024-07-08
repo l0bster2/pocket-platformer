@@ -111,6 +111,14 @@ class ObjectTypes {
     return 'blueBlock';
   }
 
+  static get VIOLET_BLOCK() {
+    return 'violetBlock';
+  }
+
+  static get PINK_BLOCK() {
+    return 'pinkBlock';
+  }
+
   static get WATER() {
     return 'water'
   }
@@ -191,6 +199,8 @@ class ObjectTypes {
       [this.JUMP_RESET]: JumpReset,
       [this.SFX]: SFX,
       [this.RED_BLUE_BLOCK_SWITCH]: RedBlueSwitch,
+      [this.VIOLET_BLOCK]: VioletBlock,
+      [this.PINK_BLOCK]: PinkBlock,
       [this.TREADMILL]: Treadmill,
       [this.ICE_BLOCK]: IceBlock,
       [this.DISAPPEARING_FOREGROUND_TILE]: DisappearingForegroundTile,

@@ -11,6 +11,10 @@ class TileMapHandler {
         this.spriteCanvas = spriteCanvas;
         this.currentGeneralFrameCounter = 0;
         this.generalFrameCounterMax = 480;
+        this.jumpSwitchBlockTypes = {
+            violet: "VIOLET",
+            pink: "PINK",
+        }
     }
 
     setTileTypes() {
@@ -37,6 +41,16 @@ class TileMapHandler {
         this.changeTileCanvasSize();
         this.createStaticTiles();
         SoundHandler.checkSongOnLevelReset(levelIndex);
+        this.currentJumpSwitchBlockType = this.jumpSwitchBlockTypes.violet;
+    }
+
+    changeJumpSwitchBlockType() {
+        if(this.currentJumpSwitchBlockType === this.jumpSwitchBlockTypes.violet) {
+            this.currentJumpSwitchBlockType = this.jumpSwitchBlockTypes.pink
+        }
+        else {
+            this.currentJumpSwitchBlockType = this.jumpSwitchBlockTypes.violet;
+        }
     }
 
     setInitialPlayerAndCameraPos(levelIndex) {
