@@ -30,6 +30,24 @@ class ConnectedDisappearingBlock extends InteractiveLevelObject {
         });
     }
 
+    setSelfAndNeightboursToCheckReset() {
+        this.collissionAlreadyChecked = true;
+        if (Collision.objectsColliding(this.player, this)) {
+            this.currentlyCollidingWithInteractiveObject = true;
+        }
+        this.checkedCollisionWithplayer = true;
+        this.tileMapHandler.levelObjects.forEach(levelObject => {
+            const sameVertical = levelObject.initialX === this.initialX &&
+                (levelObject.initialY === this.initialY + 1 || levelObject.initialY === this.initialY - 1);
+            const sameHorizontal = levelObject.initialY === this.initialY &&
+                (levelObject.initialX === this.initialX + 1 || levelObject.initialX === this.initialX - 1);
+            if (levelObject.type === ObjectTypes.CONNECTED_DISAPPEARING_BLOCK && !levelObject.collissionAlreadyChecked &&
+                (sameVertical || sameHorizontal)) {
+                levelObject.setSelfAndNeightboursToCheckReset();
+            }
+        });
+    }
+
     resetObject() {
         this.tileMapHandler.tileMap[this.y / this.tileSize][this.x / this.tileSize] = ObjectTypes.SPECIAL_BLOCK_VALUES.disappearingBlock;
         this.currentDisappearingFrame = 0;
@@ -57,33 +75,21 @@ class ConnectedDisappearingBlock extends InteractiveLevelObject {
             }
 
             if (this.currentDisappearingFrame >= this.disappearingFrameAmount) {
-                if(Collision.objectsColliding(this.player, this)) {
-                    this.currentlyCollidingWithInteractiveObject = true;
-                }
-
-                if(!this.collissionAlreadyChecked) {
-                    this.currentlyCollidingWithInteractiveObject = this.tileMapHandler.levelObjects.some(levelObject => {
-                        if (levelObject?.type === ObjectTypes.CONNECTED_DISAPPEARING_BLOCK &&
-                            Collision.objectsColliding(this.player, levelObject)) {
-                            levelObject.collissionAlreadyChecked = true;
-                            return true;
-                        }
-                    });
-                }
-
-                this.tileMapHandler.levelObjects.forEach(levelObject => {
-                    if (levelObject?.type === ObjectTypes.STOMPER && (levelObject.active || levelObject.goingBack)) {
-                        if (Collision.objectsColliding(levelObject, this)) {
-                            this.currentlyCollidingWithInteractiveObject = true;
-                        }
+                this.setSelfAndNeightboursToCheckReset();
+                const playerSomewhereInTheWay = this.tileMapHandler.levelObjects.some(levelObject => {
+                    if (levelObject?.type === ObjectTypes.CONNECTED_DISAPPEARING_BLOCK &&
+                        levelObject.currentlyCollidingWithInteractiveObject) {
+                        return true;
                     }
                 });
-                !this.currentlyCollidingWithInteractiveObject && this.resetObject();
+
+                !playerSomewhereInTheWay && this.resetObject();
             }
         }
         else {
             super.draw(spriteCanvas);
         }
         this.collissionAlreadyChecked = false;
+        this.currentlyCollidingWithInteractiveObject = false;
     }
 }

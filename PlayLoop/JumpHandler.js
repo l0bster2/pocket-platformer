@@ -81,6 +81,7 @@ class JumpHandler extends PlayMode {
             if (!player.jumping && player.jumpframes === 0 && player.jumpReleased) {
                 player.jumpReleased = false;
                 this.jumpInitialized();
+                tileMapHandler.changeJumpSwitchBlockType();
             }
             this.performJump(player.jumpSpeed, player.maxJumpFrames);
             player.jumping = true;
@@ -100,6 +101,7 @@ class JumpHandler extends PlayMode {
             if (!player.wallJumping && player.wallJumpFrames === 0) {
                 player.doubleJumpUsed = false;
                 WalkHandler.reverseForcedRunSpeed();
+                tileMapHandler.changeJumpSwitchBlockType();
                 this.jumpInitialized(player.wallJumpLeft ? AnimationHelper.facingDirections.left : AnimationHelper.facingDirections.right);
             }
 
@@ -181,7 +183,6 @@ class JumpHandler extends PlayMode {
     }
 
     static jumpInitialized(direction = AnimationHelper.facingDirections.bottom) {
-        tileMapHandler.changeJumpSwitchBlockType();
         SoundHandler.shortJump.stopAndPlay();
         SFXHandler.createSFX(player.x, player.y - 2, 0, direction);
         this.player.setStretchAnimation();
