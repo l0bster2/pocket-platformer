@@ -461,5 +461,23 @@ class ObjectsTooltipElementsRenderer {
             addMoreButtonWrapper.appendChild(addMoreButton);
             dialogueWrapper.appendChild(addMoreButtonWrapper);
         }
+        const checkBoxWrapper = document.createElement("div");
+        checkBoxWrapper.className = "subSection";
+        const input = document.createElement('input');
+        input.id = "playAutomatically";
+        input.checked = currentObject.playAutomatically;
+        input.type = "checkbox";
+        input.name = "playAutomatically";
+        input.onchange = (event) => {
+            const value = event.currentTarget.checked;
+            currentObject.addChangeableAttribute("playAutomatically", value);
+        };
+        checkBoxWrapper.appendChild(input);
+        const label = document.createElement('label');
+        Helpers.addAttributesToHTMLElement(label, { "for": "playAutomatically" });
+        label.innerHTML = ' Play automatically once upon touching';
+        label.style = "vertical-align: top";
+        checkBoxWrapper.appendChild(label);
+        dialogueWrapper.appendChild(checkBoxWrapper);
     }
 }
