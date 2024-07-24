@@ -8,6 +8,7 @@ class VioletBlock extends SwitchableBlock{
     resetObject() {
         if(this.tilemapHandler && !PlayMode.checkActiveCheckPoints()) {
             this.setBlockState(0, false);
+            this.tilemapHandler.currentJumpSwitchBlockType = this.tilemapHandler.jumpSwitchBlockTypes.violet;
         }
     }
 

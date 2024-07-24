@@ -8,6 +8,7 @@ class PinkBlock extends SwitchableBlock{
     resetObject() {
         if(this.tilemapHandler && !PlayMode.checkActiveCheckPoints()) {
             this.setBlockState(this.activeTileIndex, true);
+            this.tilemapHandler.currentJumpSwitchBlockType = this.tilemapHandler.jumpSwitchBlockTypes.violet;
         }
     }
 

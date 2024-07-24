@@ -106,7 +106,6 @@ class PlayMode {
         this.player.resetAttributes();
         GameStatistics.deathCounter++;
         tileMapHandler.currentGeneralFrameCounter = 0;
-        tileMapHandler.currentJumpSwitchBlockType = tileMapHandler.jumpSwitchBlockTypes.violet;
     }
 
     static checkActiveCheckPoints() {
