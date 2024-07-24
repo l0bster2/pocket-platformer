@@ -14,8 +14,6 @@ class Npc extends InteractiveLevelObject {
     }
 
     collisionEvent() {
-        player.collidingWithNpcId = this.key;
-
         if(this.playAutomatically) {
             if(!this.collidedWithPlayer) {
                 this.collidedWithPlayer = true;
@@ -23,6 +21,7 @@ class Npc extends InteractiveLevelObject {
             }
         }
         else {
+            player.collidingWithNpcId = this.key;
             this.arrowUpFrameIndex++;
             const frameModulo = this.arrowUpFrameIndex % 60;
             if (frameModulo < 30) {
