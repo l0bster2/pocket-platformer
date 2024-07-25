@@ -93,7 +93,7 @@ class CharacterCollision {
             //if player has not touched trampoline previously (is falling down from top of the trampoline), correct his position
             if (!obj.previouslyTouchedTrampolines) {
                 tileMapHandler.layers[2].forEach(objectWithCollision => {
-                    if (Collision.objectsColliding(obj, objectWithCollision)
+                    if (Collision.objectsColliding(obj, objectWithCollision) && obj.type !== ObjectTypes.STOMPER
                         && obj.bottom_right_pos.y > objectWithCollision.y + (this.tileMapHandler.tileSize / 2.1)) {
                         obj.y = objectWithCollision.y - obj.height / 2;
                     }
