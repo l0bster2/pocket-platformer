@@ -5,6 +5,7 @@ class RedBlueSwitch extends InteractiveLevelObject {
         this.tilemapHandler = tilemapHandler;
         this.collided = false;
         this.bottomLineHitBox = { x: this.x, y: this.y + this.height, width: this.width, height: 2 };
+        this.topLineHitBox = { x: this.x, y: this.y - 1, width: this.width, height: 2 };
         this.checkOtherSwitchesCurrentColor();
         this.tilemapHandler.tileMap[this.y / this.tileSize][this.x / this.tileSize] = ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch;
         this.key = this.makeid(5);
@@ -17,9 +18,14 @@ class RedBlueSwitch extends InteractiveLevelObject {
 
     collisionEvent() {
         if (!this.collided) {
-            if (player.yspeed <= 0 && 
+            if (player.yspeed <= 0 && player.gravity > 0 && 
                 (player?.top_right_pos && Collision.pointAndObjectColliding(player.top_right_pos, this.bottomLineHitBox) ||
                 player?.top_left_pos && Collision.pointAndObjectColliding(player.top_left_pos, this.bottomLineHitBox))) {
+                this.switchWasHit()
+            }
+            else if(player.yspeed >= 0 && player.gravity < 0 && 
+                (player?.bottom_right_pos && Collision.pointAndObjectColliding(player.bottom_right_pos, this.topLineHitBox) ||
+                player?.bottom_left_pos && Collision.pointAndObjectColliding(player.bottom_left_pos, this.topLineHitBox))) {
                 this.switchWasHit()
             }
         }

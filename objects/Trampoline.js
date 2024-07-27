@@ -10,7 +10,8 @@ class Trampoline extends InteractiveLevelObject {
 
     collisionEvent() {
         this.player.previouslyTouchedTrampolines = true;
-        if (this.player.yspeed > 0 && this.player.bottom_left_pos.y < this.y + (this.tileSize / 2)) {
+        if (this.player.yspeed > 0 
+            && this.player.bottom_left_pos.y < this.y + (this.tileSize / 2)) {
             this.tilemapHandler.levelObjects.forEach(levelObject => {
                 if (levelObject.type === ObjectTypes.TRAMPOLINE) {
                     levelObject.currentAnimationFrame = this.unfoldedAnimationDuration;
@@ -19,7 +20,7 @@ class Trampoline extends InteractiveLevelObject {
             AnimationHelper.setSquishValues(this, this.tileSize * 0.8,
                 this.tileSize * 1.2, 7);
             this.player.setStretchAnimation();
-            this.player.forcedJumpSpeed = this.player.jumpSpeed + (this.player.jumpSpeed / 3.75);
+            this.player.forcedJumpSpeed = Math.abs(this.player.jumpSpeed + (this.player.jumpSpeed / 3.75));
             this.player.jumpframes = 0;
             this.player.fixedSpeed = false;
             this.player.temporaryDoubleJump = false;

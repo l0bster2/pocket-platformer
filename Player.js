@@ -166,6 +166,11 @@ class Player {
         this.resetTemporaryAttributes();
     }
 
+    reverseGravity() {
+        this.gravity *= -1;
+        this.jumpSpeed *= -1;
+    }
+
     setAbilities() {
         this.jumpChecked = true;
         this.wallJumpChecked = true;

@@ -26,10 +26,11 @@ class FallHandler extends PlayMode {
 
     static fallHandler() {
         const { player } = this;
+        const wallJumpFalling = player.gravity > 0 && player.yspeed > 0 || player.gravity < 0 && player.yspeed < 0;
 
         if (player.falling && !player.fixedSpeed) {
             //If player is falling and pressing against the wall, he will stick to the wall
-            if (!player.swimming && !player.iceOnSide && player.wallJumpChecked && player.yspeed > 0 &&
+            if (!player.swimming && !player.iceOnSide && player.wallJumpChecked && wallJumpFalling &&
                 (player.wallJumpLeft && (Controller.left || player.fixedSpeedLeft) ||
                     player.wallJumpRight && (Controller.right || player.fixedSpeedRight))) {
                 player.yspeed = player.wallJumpGravity;
@@ -67,8 +68,9 @@ class FallHandler extends PlayMode {
         if (!player.falling && player.jumpframes === 0 && !player.swimming && !player.fixedSpeed) {
             player.yspeed = 0;
         }
-        if (player.yspeed > player.currentMaxFallSpeed) {
+        if (player.yspeed > player.currentMaxFallSpeed && player.gravity > 0) {
             player.yspeed = player.currentMaxFallSpeed;
         }
+
     }
 }

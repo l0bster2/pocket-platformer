@@ -14,6 +14,7 @@ class Collectible extends InteractiveLevelObject {
 
     collisionEvent() {
         if (!this.touched && !this.collected) {
+            this.tileMapHandler.player.reverseGravity();
             this.playCorrectSound();
             this.touched = true;
             SFXHandler.createSFX(this.x, this.y, 4);

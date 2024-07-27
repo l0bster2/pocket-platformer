@@ -80,7 +80,7 @@ class CharacterCollision {
                     obj.bottom_left !== 5
                 ) {
                     obj.y = obj.bottom * tileMapHandler.tileSize - (obj.height + 1);
-                    obj.hitWall(AnimationHelper.facingDirections.bottom);
+                    obj.hitWall(obj.gravity > 0 ? AnimationHelper.facingDirections.bottom : AnimationHelper.facingDirections.top);
 
                 } else {
                     //cloud
@@ -136,7 +136,7 @@ class CharacterCollision {
 
     static correctTopPosition(obj) {
         obj.y = (obj.top + 1) * tileMapHandler.tileSize + 1;
-        obj.hitWall(AnimationHelper.facingDirections.top)
+        obj.hitWall(obj.gravity > 0 ? AnimationHelper.facingDirections.top : AnimationHelper.facingDirections.bottom)
     }
 
     static checkTopCornerCorrection(obj) {
@@ -164,7 +164,8 @@ class CharacterCollision {
     static groundUnderFeet(obj) {
         const left_foot_x = this.tileMapHandler.getTileValueForPosition(obj.x);
         const right_foot_x = this.tileMapHandler.getTileValueForPosition(obj.x + obj.width);
-        const foot_y = this.tileMapHandler.getTileValueForPosition(obj.y + (obj.height + 1));
+        const foot_y = obj.gravity > 0 ? this.tileMapHandler.getTileValueForPosition(obj.y + (obj.height + 1))
+            : this.tileMapHandler.getTileValueForPosition(obj.y - 3);
 
         let current_tile = 1;
 

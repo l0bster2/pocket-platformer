@@ -18,7 +18,8 @@ class JumpHandler extends PlayMode {
             FallHandler.jumpButtonReleasedHandler();
         }
         //If player released jump button, slowly de-accelarate the jump
-        if (player.yspeed < 0 && !player.jumping && !player.wallJumping && !player.fixedSpeed) {
+        if ((player.yspeed < 0 && player.gravity > 0) || (player.yspeed > 0 && player.gravity < 0)
+            && !player.jumping && !player.wallJumping && !player.fixedSpeed) {
             if (player.swimming) {
                 player.yspeed *= 0.90;
                 if (player.yspeed < player.maxSwimHeight) {
