@@ -174,7 +174,7 @@ class ObjectsTooltipElementsRenderer {
         const changeableAttribute = currentObject.spriteObject[0].changeableAttributes[0];
 
         const checkboxWrapper = this.createCheckbox(changeableAttribute,
-            "Collectibles needed for opening", 
+            "Collectibles needed for opening",
             currentObject);
 
         finishFlagWrapper.append(firstButtonWrapper, secondButtonWrapper, checkboxWrapper);
@@ -479,5 +479,33 @@ class ObjectsTooltipElementsRenderer {
         label.style = "vertical-align: top";
         checkBoxWrapper.appendChild(label);
         dialogueWrapper.appendChild(checkBoxWrapper);
+    }
+
+    static createSelect(attribute, currentObject) {
+        const template = document.createElement("div");
+        const label = document.createElement("label");
+        label.for = "elementSelect";
+        label.className = "leftLabel";
+        label.innerHTML = attribute.name;
+        template.appendChild(label);
+        const selectEl = document.createElement("select");
+        selectEl.name = "elementSelect";
+        selectEl.id = "elementSelect";
+        selectEl.onchange = (event) => {
+            const value = event.currentTarget.value;
+            currentObject.addChangeableAttribute(attribute.name, value);
+        }
+
+        template.appendChild(selectEl);
+        attribute.values.map(value => {
+            const optionEl = document.createElement("option");
+            optionEl.value = value;
+            optionEl.innerHTML = value;
+            selectEl.appendChild(optionEl);
+            if(value == currentObject[attribute.name]) {
+                optionEl.selected = true;
+            }
+        })
+        return template;
     }
 }

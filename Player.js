@@ -172,6 +172,15 @@ class Player {
         this.doubleJumpChecked = false;
         this.dashChecked = false;
         this.runChecked = false;
+
+        this.setInitialPowerUps();
+    }
+
+    setInitialPowerUps() {
+        this.powerUpJumpChecked = false;
+        this.powerUpWallJumpChecked = false;
+        this.powerUpDoubleJumpChecked = false;
+        this.powerUpDashChecked = false;
     }
 
     setAnimationProperties() {

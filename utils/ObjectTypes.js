@@ -167,6 +167,10 @@ class ObjectTypes {
     return 'collectible';
   }
 
+  static  get POWER_UP() {
+    return 'powerUp';
+  }
+
   static get SPECIAL_BLOCK_VALUES() {
     return {
       canon: 14,
@@ -210,6 +214,7 @@ class ObjectTypes {
       [this.FIXED_SPEED_RIGHT]: FixedSpeedRight,
       [this.FIXED_SPEED_STOPPER]: FixedSpeedStopper,
       [this.ROTATING_FIREBALL_CENTER]: RotatingFireballCenter,
+      [this.POWER_UP]: PowerUp,
       [this.WATER]: Water,
       [this.TOGGLE_MINE]: ToggleMine,
       [this.ROCKET_LAUNCHER]: RocketLauncher,

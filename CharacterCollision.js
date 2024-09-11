@@ -249,6 +249,8 @@ class CharacterCollision {
         obj.top_left = tileMapHandler.getTileLayerValueByIndex(obj.top, obj.left);
         obj.bottom_right = tileMapHandler.getTileLayerValueByIndex(obj.bottom, obj.right);
         obj.bottom_left = tileMapHandler.getTileLayerValueByIndex(obj.bottom, obj.left);
-        obj?.wallJumpChecked && obj.checkWallJumpReady();
+        if(obj?.wallJumpChecked || obj?.powerUpWallJumpChecked) {
+            obj.checkWallJumpReady();
+        }
     }
 }

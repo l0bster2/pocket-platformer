@@ -346,6 +346,10 @@ class BuildMode {
                     const checkboxWrapper = ObjectsTooltipElementsRenderer.createCheckbox(attribute, attribute.checkboxDescription, currentObject);
                     content.appendChild(checkboxWrapper);
                 }
+                else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.select) {
+                    const selectWrapper = ObjectsTooltipElementsRenderer.createSelect(attribute, currentObject);
+                    content.appendChild(selectWrapper);
+                }
                 else {
                     const sliderWrapper = ObjectsTooltipElementsRenderer.createSliderForChangeableAttribute(attribute, currentObject);
                     content.appendChild(sliderWrapper);

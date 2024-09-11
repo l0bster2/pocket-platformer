@@ -3,12 +3,14 @@ class JumpHandler extends PlayMode {
     static jumpHandler() {
         const { player } = this;
 
-        if (Controller.jump && !player.collidingWithNpcId && !PauseHandler.justClosedPauseScreen && player.jumpChecked) {
+        if (Controller.jump && !player.collidingWithNpcId && !PauseHandler.justClosedPauseScreen ) {
             if (player.swimming) {
                 this.swimHandler();
             }
             else {
-                this.normalJumpHandler();
+                if((player.jumpChecked || player.powerUpJumpChecked)) {
+                    this.normalJumpHandler();
+                }
                 !player.fixedSpeed && this.wallJumpHandler();
                 this.checkDoubleJumpInitialization();
             }
@@ -51,7 +53,8 @@ class JumpHandler extends PlayMode {
     static wallJumpAllowedHandler() {
         const { player } = this;
         //if player touched a wall, allow him to walljump
-        if (player.wallJumpChecked && !player.swimming && !player.jumping && !player.wallJumping && player.falling) {
+        if ((player.wallJumpChecked || player.powerUpWallJumpChecked) && 
+            !player.swimming && !player.jumping && !player.wallJumping && player.falling) {
             if (player.wallJumpLeft) {
                 this.resetWallJump(1);
             }
@@ -93,8 +96,8 @@ class JumpHandler extends PlayMode {
 
     static wallJumpHandler() {
         const { player } = this;
-
-        if (player.wallJumpChecked && !player.dashing && !player.flapped &&
+        if ((player.wallJumpChecked || player.powerUpWallJumpChecked) 
+            && !player.dashing && !player.flapped &&
             player.wallJumpFrames < player.maxJumpFrames &&
             player.currentWallJumpCoyoteFrame < player.coyoteJumpFrames) {
 
@@ -129,7 +132,8 @@ class JumpHandler extends PlayMode {
 
     static checkDoubleJumpInitialization() {
         const { player } = this;
-        if ((player.doubleJumpChecked || player.temporaryDoubleJump) && player.doubleJumpActive && !player.doubleJumpUsed && !player.wallJumping) {
+        if ((player.doubleJumpChecked || player.temporaryDoubleJump || player.powerUpDoubleJumpChecked) 
+            && player.doubleJumpActive && !player.doubleJumpUsed && !player.wallJumping) {
             player.jumpPressedToTheMax = false;
             player.resetJump();
             player.fixedSpeed = false;

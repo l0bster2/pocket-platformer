@@ -14,7 +14,8 @@ class SpritePixelArrays {
 
     this.changeableAttributeFormElements = {
       toggle: "toggle",
-      checkbox: "checkbox"
+      checkbox: "checkbox",
+      select: "select",
     }
 
     this.tilesWithAnimation = [
@@ -41,6 +42,7 @@ class SpritePixelArrays {
       pauseDuration: "pauseDuration",
       collidesWithWalls: "collidesWithWalls",
       fireBallsAmount: "fireBallsAmount",
+      powerUpType: "PowerUp",
     };
 
     this.backgroundSprites = [
@@ -1514,6 +1516,44 @@ class SpritePixelArrays {
             ["FF1C1C", "transp", "transp", "transp", "transp", "FF1C1C", "FF1C1C", "FF1C1C"],
             ["transp", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "FF1C1C", "transp"],
             ["transp", "transp", "transp", "FF1C1C", "FF1C1C", "FF1C1C", "transp", "transp"]
+          ]
+      }
+      ]
+    };
+
+    this.POWER_UP = {
+      name: ObjectTypes.POWER_UP,
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.powerUpType, defaultValue: "double-jump", formElement: this.changeableAttributeFormElements.select,
+          values: ["jump", "wall-jump", "double-jump", "dash"] },
+      ],
+      descriptiveName: "Power up",
+      description: "Gives you an additional ability. Click on a set power up again to select a power up. Click on the player with the right mouse to select/de-select gained power ups.",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "transp"],
+            ["transp", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "transp"],
+            ["transp", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       }
       ]

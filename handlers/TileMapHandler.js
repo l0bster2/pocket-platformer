@@ -37,6 +37,9 @@ class TileMapHandler {
         this.effects = EffectsHandler.getCurrentLevelEffects(this.currentLevel);
         this.currentGeneralFrameCounter = 0;
         this.player.resetAll();
+        if(WorldDataHandler.insideTool) {
+            this.player.setInitialPowerUps();
+        }
         WorldColorChanger.changeLevelColor(levelIndex);
         this.changeTileCanvasSize();
         this.createStaticTiles();

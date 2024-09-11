@@ -14,6 +14,7 @@ class SoundHandler {
     this.bubbleDefault = Base64Sounds.bubbleBase64;
     this.barrelDefault = Base64Sounds.barrelBase64;
     this.jumpResetDefault = Base64Sounds.jumpResetBase64;
+    this.powerUpDefault = Base64Sounds.powerUpBase64;
     this.songDefault = "";
 
     this.sounds = [
@@ -29,6 +30,7 @@ class SoundHandler {
       { key: "dialogueSound", descriptiveName: "dialogue", value: this.dialogueSoundDefault, type: "sound" },
       { key: "bubble", descriptiveName: "water", value: this.bubbleDefault, type: "sound" },
       { key: "barrel", descriptiveName: "barrel", value: this.barrelDefault, type: "sound" },
+      { key: "powerUp", descriptiveName: "powerUp", value: this.powerUpDefault, type: "sound" },
       { key: "jumpReset", descriptiveName: "jump reset", value: this.jumpResetDefault, type: "sound" },
       { key: "song", descriptiveName: "", value: "", type: "music" },
       //{ key: "build", value: "https://drive.google.com/uc?export=download&id=1hgwOVAX30LJ9A71xoAU8IGnXwcm6L2Fc"},

@@ -4,7 +4,8 @@ class AlternativeActionHandler extends PlayMode {
         const { player } = this;
 
         //If dashing possible and player is not flying outside cannon, or is flying upwards
-        if (player.dashChecked && (!player.fixedSpeed || player.fixedSpeed && player.yspeed !== 0)) {
+        if ((player.dashChecked || player.powerUpDashChecked) 
+            && (!player.fixedSpeed || player.fixedSpeed && player.yspeed !== 0)) {
             player.currentCoyoteDashFrame++;
             //initialize dash
             if (Controller.alternativeActionButtonReleased && Controller.alternativeActionButton) {
