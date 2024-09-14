@@ -1528,33 +1528,33 @@ class SpritePixelArrays {
           values: ["jump", "wall-jump", "double-jump", "dash"] },
       ],
       descriptiveName: "Power up",
-      description: "Gives you an additional ability. Click on a set power up again to select a power up. Click on the player with the right mouse to select/de-select gained power ups.",
+      description: "Gives you an additional ability. Click on a set power up again to select a power up. In the tool, the power-up is set on a per-level basis. In the game, the power-up is permament. <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 12'} }, true)\">Trail sfx.</span>",
       type: this.SPRITE_TYPES.object,
       animation: [{
         sprite:
-          [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
-            ["transp", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "transp"],
-            ["transp", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "transp"],
-            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ]
+        [ 
+          [ "transp", "transp", "transp", "FFC6FF", "FF55FF", "transp", "transp", "transp" ], 
+          [ "transp", "transp", "FFC6FF", "FFC6FF", "FF55FF", "FF55FF", "transp", "transp" ],
+          [ "transp", "FFC6FF", "FFC6FF", "FFC6FF", "FF55FF", "FF55FF", "FF55FF", "transp" ], 
+          [ "FFC6FF", "FFC6FF", "FFC6FF", "FFC6FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF" ], 
+          [ "FF55FF", "FF55FF", "FF55FF", "FF55FF", "AA00AA", "AA00AA", "AA00AA", "AA00AA" ], 
+          [ "transp", "FF55FF", "FF55FF", "FF55FF", "AA00AA", "AA00AA", "AA00AA", "transp" ],
+          [ "transp", "transp", "FF55FF", "FF55FF", "AA00AA", "AA00AA", "transp", "transp" ], 
+          [ "transp", "transp", "transp", "FF55FF", "AA00AA", "transp", "transp", "transp" ] 
+        ]
       },
       {
         sprite:
-          [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
-            ["transp", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "transp"],
-            ["transp", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "FF55FF", "transp"],
-            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "FF55FF", "FF55FF", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ]
+        [ 
+          [ "transp", "transp", "transp", "FF55FF", "FFC6FF", "transp", "transp", "transp" ], 
+          [ "transp", "transp", "FF55FF", "FF55FF", "FFC6FF", "FFC6FF", "transp", "transp" ], 
+          [ "transp", "FF55FF", "FF55FF", "FF55FF", "FFC6FF", "FFC6FF", "FFC6FF", "transp" ], 
+          [ "transp", "FF55FF", "FF55FF", "FF55FF", "FFC6FF", "FFC6FF", "FFC6FF", "transp" ], 
+          [ "transp", "AA00AA", "AA00AA", "AA00AA", "FF55FF", "FF55FF", "FF55FF", "transp" ], 
+          [ "transp", "AA00AA", "AA00AA", "AA00AA", "FF55FF", "FF55FF", "FF55FF", "transp" ], 
+          [ "transp", "transp", "AA00AA", "AA00AA", "FF55FF", "FF55FF", "transp", "transp" ], 
+          [ "transp", "transp", "transp", "AA00AA", "FF55FF", "transp", "transp", "transp" ] 
+        ]
       }
       ]
     };
@@ -2370,6 +2370,27 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       }
+      ]
+    };
+
+    this.SFX13 = {
+      name: ObjectTypes.SFX,
+      descriptiveName: "SFX 12",
+      directions: [AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.bottom],
+      description: "Plays upon touching the <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Power up'} }, true)\">Power up</span>.",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "FF55FF", "FF55FF", "FF55FF", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF55FF", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
       ]
     };
 

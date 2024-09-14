@@ -51,7 +51,7 @@ class PowerUp extends InteractiveLevelObject {
     draw(spriteCanvas) {
         if (this.currentMessageFrame > 0) {
             if(this.currentMessageFrame % 10 === 0) {
-                SFXHandler.createSFX(this.x + this.tileSize / 2, this.y + this.tileSize / 2, 9, 
+                SFXHandler.createSFX(this.x, this.y, 12, 
                     this.facingDirection, 
                     MathHelpers.getSometimesNegativeRandomNumber(1, 3, false), 
                     MathHelpers.getSometimesNegativeRandomNumber(1, 3, false), 
