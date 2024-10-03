@@ -1528,7 +1528,7 @@ class SpritePixelArrays {
           values: ["jump", "wall-jump", "double-jump", "dash"] },
       ],
       descriptiveName: "Power up",
-      description: "Gives you an additional ability. Click on a set power up again to select a power up. In the tool, the power-up is set on a per-level basis. In the game, the power-up is permament. <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 12'} }, true)\">Trail sfx.</span>",
+      description: "Gives you an additional ability. Click on a set power up again to select a power up. In the tool, the power-up is set on a <b>level basis</b>. In the game, the power-up is <b>permament</b>. <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 12'} }, true)\">Trail sfx.</span>",
       type: this.SPRITE_TYPES.object,
       animation: [{
         sprite:
