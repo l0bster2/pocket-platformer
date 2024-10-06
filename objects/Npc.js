@@ -17,6 +17,7 @@ class Npc extends InteractiveLevelObject {
         if(this.playAutomatically) {
             if(!this.collidedWithPlayer) {
                 this.collidedWithPlayer = true;
+                player.collidingWithNpcId = this.key;
                 this.startDialogue();
             }
         }
