@@ -77,6 +77,7 @@ function resetUIValuesInTool() {
   tileMapHandler.currentLevel = 1;
   tileMapHandler.resetLevel(tileMapHandler.currentLevel);
   LevelNavigationHandler.updateLevel();
+  LevelNavigationHandler.adaptLevelList();
   PlayerAttributesHandler.sliderValues.forEach(sliderValue => {
       sliderValue !== "maxJumpFrames" && PlayerAttributesHandler.setInitialSliderValue(sliderValue);
   })

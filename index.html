@@ -148,11 +148,13 @@
                 <div class="sectionContent">
                     <div class="menuSection">
                         <div class="levelNavigation">
-                            <button class="levelNavigationButton" onClick="LevelNavigationHandler.switchToLevel(-1)">
+                            <button class="levelNavigationButton" onClick="LevelNavigationHandler.incrementLevel(-1)">
                                 <img src="images/icons/left.svg" alt="left" width="14" height="14">
                             </button>
-                            <span class="currentLevel" id="currentLevel">level 1</span>
-                            <button class="levelNavigationButton" onClick="LevelNavigationHandler.switchToLevel(1)">
+                            <select id="levelListDropdown" onchange="LevelNavigationHandler.selectLevel(parseInt(event.target.value))">
+                                <option value="0">(Loading...)</option>
+                            </select>
+                            <button class="levelNavigationButton" onClick="LevelNavigationHandler.incrementLevel(1)">
                                 <img src="images/icons/right.svg" alt="right" width="14" height="14">
                             </button>
                             <button id="createNewLevelButton" class="levelNavigationButton"
