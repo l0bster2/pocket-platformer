@@ -234,6 +234,7 @@ class TileMapHandler {
             this.resetLevel(this.currentLevel);
             if (typeof LevelNavigationHandler === 'function') {
                 LevelNavigationHandler.updateLevel();
+                LevelNavigationHandler.adaptLevelList();
             }
         }
         else {
