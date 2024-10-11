@@ -77,11 +77,26 @@ class Camera {
         newFollowX = this.outOfBoundsXCorrection(x);
         newFollowY = this.outOfBoundsYCorrection(y);
 
-        if (newFollowX && newFollowX !== this.follow.x) {
+        /*
+            Those fixes are needed for zoom factor.
+            If Zoom factor doesn't fit the game screen perfectly (F.e 18x10 size), the difference can be really small, like 5px
+            In that case, it's annoying if the camera jumps up and down just a little bit
+        */
+        let changingXNecessary = false;
+        let changingYNecessary = false;
+
+        if(tileMapHandler.levelHeightInPx - this.viewport.height > tileMapHandler.tileSize - 1) {
+            changingYNecessary = true
+        }
+        if(tileMapHandler.levelWidthInPx - this.viewport.width > tileMapHandler.tileSize - 1) {
+            changingXNecessary = true
+        }
+
+        if (changingXNecessary && newFollowX && newFollowX !== this.follow.x) {
             this.follow.x = newFollowX;
             positionChanged = true;
         }
-        if (newFollowY && newFollowY !== this.follow.y) {
+        if (changingYNecessary && newFollowY && newFollowY !== this.follow.y) {
             this.follow.y = newFollowY;
             positionChanged = true;
         }
@@ -126,6 +141,7 @@ class Camera {
     }
 
     static moveTo(x, y) {
+        
         this.follow.x = this.outOfBoundsXCorrection(x);
         this.follow.y = this.outOfBoundsYCorrection(y);
         this.updateViewport();
