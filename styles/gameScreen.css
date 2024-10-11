@@ -201,14 +201,6 @@ details summary:hover {
     padding: 11px 10px;
 }
 
-.currentLevel {
-    display: inline-block;
-    min-width: 115px;
-    padding: 11px;
-    vertical-align: top;
-    text-align: center;
-}
-
 .playerAttrSlider {
     width: 80%;
 }
