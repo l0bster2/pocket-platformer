@@ -562,7 +562,7 @@ class SpritePixelArrays {
       name: ObjectTypes.SPIKE,
       descriptiveName: "Spike",
       directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
-      description: "A spike. If you touch it, you die",
+      description: "A spike. If you touch it, you die. Click on a set spike again, if you want to rotate it.",
       type: this.SPRITE_TYPES.object,
       animation: [{
         sprite:
