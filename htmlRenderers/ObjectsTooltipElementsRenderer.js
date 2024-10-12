@@ -95,81 +95,12 @@ class ObjectsTooltipElementsRenderer {
         const finishFlagWrapper = document.createElement("div");
         finishFlagWrapper.className = "marginTop8";
 
-        const firstButtonWrapper = document.createElement("div");
-        const firstRadioButton = document.createElement("input");
-        Helpers.addAttributesToHTMLElement(firstRadioButton, {
-            type: "radio", id: "nextLevel", value: "nextLevel", name: "levelSelector"
+        const connectionPicker = LevelEntrancePicker.create({
+            "startFlag": true,
+            "door" : true
+        }, currentObject, (customExit) => {
+            currentObject.changeExit(customExit, PlayMode.tilemapHandler.currentLevel);
         });
-        firstRadioButton.onchange = () => {
-            currentObject.changeExit(null);
-            selectWithStartFlags.disabled = true;
-        };
-        const labelForFirstButton = document.createElement("label");
-        Helpers.addAttributesToHTMLElement(labelForFirstButton, {
-            for: "nextLevel"
-        });
-        labelForFirstButton.className = "radioButtonLabel";
-        labelForFirstButton.innerHTML = "Next Level";
-        firstButtonWrapper.append(firstRadioButton, labelForFirstButton);
-
-        const secondButtonWrapper = document.createElement("div");
-        secondButtonWrapper.className = "marginTop8";
-
-        const secondRadioButton = document.createElement("input");
-        Helpers.addAttributesToHTMLElement(secondRadioButton, {
-            type: "radio", id: "customLevel", value: "customLevel", name: "levelSelector"
-        });
-        const labelForSecondButton = document.createElement("label");
-        Helpers.addAttributesToHTMLElement(labelForSecondButton, {
-            for: "customLevel"
-        });
-        labelForSecondButton.className = "radioButtonLabel";
-        labelForSecondButton.innerHTML = "Custom";
-        const selectWithStartFlags = document.createElement("select");
-        if (!currentObject.customExit) {
-            selectWithStartFlags.disabled = true;
-        }
-        labelForSecondButton.appendChild(selectWithStartFlags);
-        secondButtonWrapper.append(secondRadioButton, labelForSecondButton);
-        WorldDataHandler.levels.forEach((level, levelIndex) => {
-            if (levelIndex !== 0 && levelIndex !== WorldDataHandler.levels.length - 1) {
-                level.levelObjects.forEach(levelObject => {
-                    if (levelObject.type === ObjectTypes.START_FLAG) {
-                        const option = document.createElement("option");
-                        option.value = levelIndex + "," + levelObject?.extraAttributes?.flagIndex;
-                        option.innerHTML = `Level: ${levelIndex}. Flag-Id: ${levelObject?.extraAttributes?.flagIndex}`
-                        selectWithStartFlags.appendChild(option);
-                    }
-                });
-            }
-        });
-        const option = document.createElement("option");
-        option.value = "finishLevel";
-        option.innerHTML = `Ending screen`
-        selectWithStartFlags.appendChild(option);
-
-        if (currentObject.customExit) {
-            secondRadioButton.checked = true;
-            const customExitTextValue = `${currentObject.customExit.levelIndex},${currentObject.customExit.flagIndex}`
-            var options = selectWithStartFlags.options;
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].value === customExitTextValue) {
-                    options[i].selected = true;
-                    break;
-                }
-            }
-        }
-        else {
-            firstRadioButton.checked = true;
-        }
-        secondRadioButton.onchange = () => {
-            selectWithStartFlags.disabled = false;
-            const selectedIndex = selectWithStartFlags.selectedIndex;
-            currentObject.changeExit(selectWithStartFlags.options[selectedIndex].value);
-        };
-        selectWithStartFlags.onchange = (event) => {
-            currentObject.changeExit(event.target.value);
-        }
 
         const changeableAttribute = currentObject.spriteObject[0].changeableAttributes[0];
 
@@ -177,7 +108,33 @@ class ObjectsTooltipElementsRenderer {
             "Collectibles needed for opening",
             currentObject);
 
-        finishFlagWrapper.append(firstButtonWrapper, secondButtonWrapper, checkboxWrapper);
+        finishFlagWrapper.append(connectionPicker, checkboxWrapper);
+
+        return finishFlagWrapper;
+    }
+
+    static doorToolTip(currentObject) {
+        const finishFlagWrapper = document.createElement("div");
+        finishFlagWrapper.className = "marginTop8";
+
+        const idWrapper = document.createElement("div");
+        idWrapper.innerHTML = "Door-Id: <b>" + currentObject.flagIndex + "</b>";
+
+        const connectionPicker = LevelEntrancePicker.create({
+            "startFlag": true,
+            "door" : true
+        }, currentObject, (customExit) => {
+            currentObject.changeExit(customExit, PlayMode.tilemapHandler.currentLevel);
+        });
+        connectionPicker.classList.add("subSection");
+
+        const changeableAttribute = currentObject.spriteObject[0].changeableAttributes[0];
+
+        const checkboxWrapper = this.createCheckbox(changeableAttribute,
+            "Collectibles needed for opening",
+            currentObject);
+
+        finishFlagWrapper.append(idWrapper, connectionPicker, checkboxWrapper);
 
         return finishFlagWrapper;
     }

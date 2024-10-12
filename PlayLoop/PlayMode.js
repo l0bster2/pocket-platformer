@@ -70,7 +70,7 @@ class PlayMode {
             PauseHandler.handlePause();
         }
         else if (this.currentPauseFrames > 0) {
-            this.currentPauseFrames--
+            this.currentPauseFrames--;
             if (player.death) {
                 if (this.currentPauseFrames === this.deathPauseFrames / 2) {
                     this.player.resetPosition(true);

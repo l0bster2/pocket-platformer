@@ -20,10 +20,14 @@ class LevelNavigationHandler {
         this.adaptVisibilityOfButtons();
     }
 
+    static objectIsExit(levelObject) {
+        return (levelObject.type === ObjectTypes.FINISH_FLAG || levelObject.type === ObjectTypes.DOOR);
+    }
+
     static adjustObjectsToAddedLevel(nextLevel) {
         WorldDataHandler.levels.forEach(level => {
             level.levelObjects.forEach(object => {
-                if (object.type === ObjectTypes.FINISH_FLAG && object?.extraAttributes?.customExit?.levelIndex >= nextLevel) {
+                if (this.objectIsExit(object) && object.extraAttributes?.customExit?.levelIndex >= nextLevel) {
                     object.extraAttributes.customExit.levelIndex += 1;
                 }
             });

@@ -328,12 +328,19 @@ class BuildMode {
             const finishFlagToolTip = ObjectsTooltipElementsRenderer.finishFlagToolTip(currentObject, this.tileMapHandler);
             content.appendChild(finishFlagToolTip);
         }
+        else if (currentObject?.type === ObjectTypes.DOOR) {
+            const doorToolTip = ObjectsTooltipElementsRenderer.doorToolTip(currentObject);
+            content.appendChild(doorToolTip);
+        }
         if (spriteObject.directions && currentObject?.type !== ObjectTypes.PATH_POINT) {
             const rotationWrapper = ObjectsTooltipElementsRenderer.createRotationHandlerForObjects(currentObject, spriteObject.directions);
             content.appendChild(rotationWrapper);
         }
-        if (spriteObject.changeableAttributes && currentObject?.type !== ObjectTypes.FINISH_FLAG) {
+        if (spriteObject.changeableAttributes) {
             spriteObject.changeableAttributes.forEach(attribute => {
+                if (attribute.hidden === true) {
+                    return;
+                }
                 if (attribute.name === SpritePixelArrays.changeableAttributeTypes.dialogue) {
                     const dialogueWindow = ObjectsTooltipElementsRenderer.createDialogueWindow(attribute, currentObject);
                     content.appendChild(dialogueWindow);

@@ -2,12 +2,12 @@ class FinishFlag extends InteractiveLevelObject {
 
     constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
         super(x, y, tileSize, type, 0, extraAttributes);
-        this.collidedWithPlayer = false;
+        this.used = false;
         this.tilemapHandler = tilemapHandler;
         this.changeableInBuildMode = true;
-        this.closedFinishedFlagSpriteIndex = SpritePixelArrays.getIndexOfSprite(ObjectTypes.FINISH_FLAG_CLOSED);
-        this.closedFinishedFlagYSpritePos = this.closedFinishedFlagSpriteIndex * this.tileSize;
-        this.closed = false;
+        this.lockedSpriteIndex = SpritePixelArrays.getIndexOfSprite(ObjectTypes.FINISH_FLAG_CLOSED);
+        this.lockedSpriteYPos = this.lockedSpriteIndex * this.tileSize;
+        this.locked = false;
         if (!WorldDataHandler.insideTool) {
             this.persistentCollectibles = WorldDataHandler.levels[this.tilemapHandler.currentLevel].levelObjects.filter(
                 levelObject => levelObject.type === ObjectTypes.COLLECTIBLE
@@ -16,33 +16,28 @@ class FinishFlag extends InteractiveLevelObject {
     }
 
     collisionEvent() {
-        if (!this.collidedWithPlayer && !this.closed) {
-            this.collidedWithPlayer = true;
-            SoundHandler.win.stopAndPlay();
-            PlayMode.animateToNextLevel = true;
-            PlayMode.currentPauseFrames = TransitionAnimationHandler.animationFrames;
-            PlayMode.customExit = this.customExit;
+        if (this.used || this.locked) {
+            return;
+        }
+        
+        this.sendPlayerThroughExit();
+    }
 
-            if (this.tilemapHandler.currentLevel === WorldDataHandler.levels.length - 2 && !this.customExit
-                && !WorldDataHandler.insideTool && SoundHandler.currentSong) {
-                SoundHandler.fadeAudio(SoundHandler.currentSong);
-            }
+    sendPlayerThroughExit() {
+        this.used = true;
+        SoundHandler.win.stopAndPlay();
+        PlayMode.animateToNextLevel = true;
+        PlayMode.currentPauseFrames = TransitionAnimationHandler.animationFrames;
+        PlayMode.customExit = this.customExit;
+
+        if (this.tilemapHandler.currentLevel === WorldDataHandler.levels.length - 2 && !this.customExit
+            && !WorldDataHandler.insideTool && SoundHandler.currentSong) {
+            SoundHandler.fadeAudio(SoundHandler.currentSong);
         }
     }
 
-    changeExit(text) {
-        if (text) {
-            if (text === 'finishLevel') {
-                this.addChangeableAttribute("customExit", { levelIndex: WorldDataHandler.levels.length - 1 });
-            }
-            else {
-                const valueArray = text.split(",");
-                valueArray.length === 2 && this.addChangeableAttribute("customExit", { levelIndex: parseInt(valueArray[0]), flagIndex: valueArray[1] });
-            }
-        }
-        else {
-            this.addChangeableAttribute("customExit", null);
-        }
+    changeExit(customExit, reciprocatingLevelIndex) {
+        this.addChangeableAttribute("customExit", customExit);
     }
 
     checkIfAllCollectiblesCollected(collectibles) {
@@ -57,17 +52,17 @@ class FinishFlag extends InteractiveLevelObject {
     draw(spriteCanvas) {
         if (!this.collectiblesNeeded) {
             super.draw(spriteCanvas);
-            this.closed = false;
+            this.locked = false;
         }
         else {
             const collectibles = this.tilemapHandler.filterObjectsByTypes(ObjectTypes.COLLECTIBLE);
             if (!collectibles || this.checkIfAllCollectiblesCollected(collectibles)) {
                 super.draw(spriteCanvas);
-                this.closed = false;
+                this.locked = false;
             }
             else {
-                super.draw(spriteCanvas, this.closedFinishedFlagYSpritePos)
-                this.closed = true;
+                super.draw(spriteCanvas, this.lockedSpriteYPos)
+                this.locked = true;
             }
         }
     }

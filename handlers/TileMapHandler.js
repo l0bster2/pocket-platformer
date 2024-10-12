@@ -8,6 +8,7 @@ class TileMapHandler {
         this.player = player;
         this.effects = [];
         this.currentLevel = startingLevel;
+        this.levelObjects = [];
         this.spriteCanvas = spriteCanvas;
         this.currentGeneralFrameCounter = 0;
         this.generalFrameCounterMax = 480;
@@ -36,6 +37,7 @@ class TileMapHandler {
         this.paths = this.createInitialPaths(WorldDataHandler.levels[levelIndex].paths);
         this.effects = EffectsHandler.getCurrentLevelEffects(this.currentLevel);
         this.currentGeneralFrameCounter = 0;
+        this.resetPlayerStartPoint();
         this.player.resetAll();
         if(WorldDataHandler.insideTool) {
             this.player.setInitialPowerUps();
@@ -224,11 +226,11 @@ class TileMapHandler {
 
     switchToNextLevel() {
         const nextLevel = PlayMode.customExit?.levelIndex || this.currentLevel + 1;
-        const levelAmounth = WorldDataHandler.levels.length;
-        if (this.currentLevel < levelAmounth - 1) {
+        const levelCount = WorldDataHandler.levels.length;
+        if (this.currentLevel < levelCount - 1) {
             this.currentLevel = nextLevel;
 
-            if (this.currentLevel === levelAmounth - 1) {
+            if (this.currentLevel === levelCount - 1) {
                 GameStatistics.stopTimer();
             }
             this.resetLevel(this.currentLevel);
@@ -238,6 +240,44 @@ class TileMapHandler {
         }
         else {
             console.log("error")
+        }
+    }
+
+    resetPlayerStartPoint() {
+        const levelObjects = this.levelObjects;
+        const startFlagsInLevel = levelObjects.filter(levelObject => levelObject.type === ObjectTypes.START_FLAG);
+        const doorsInLevel = levelObjects.filter(levelObject => levelObject.type === ObjectTypes.DOOR);
+        const defaultStartFlag = startFlagsInLevel.find(startFlag => startFlag.extraAttributes?.defaultStartFlag);
+        const fallbackStartFlag = startFlagsInLevel[startFlagsInLevel.length - 1];
+        let destinationData = PlayMode.customExit; // NOTE: customExit might be null/undefined
+        let destinationObject = null;
+
+        if (destinationData?.flagIndex) {
+            if (destinationData.type === ObjectTypes.DOOR) {
+                destinationObject = doorsInLevel.find((door) => {
+                    return door.extraAttributes?.flagIndex === PlayMode.customExit.flagIndex;
+                });
+            } else if (!destinationData.type || destinationData.type === ObjectTypes.START_FLAG) {
+                destinationObject = startFlagsInLevel.find((startFlag) => {
+                    return startFlag.extraAttributes?.flagIndex === PlayMode.customExit.flagIndex
+                });
+            }
+
+            if (!destinationObject) {
+                console.warn('warning: could not find the intended flag/door to start at. will try to use a fallback...');
+                destinationObject = defaultStartFlag || fallbackStartFlag;
+            }
+        }
+        else {
+            destinationObject = defaultStartFlag || fallbackStartFlag;
+        }
+
+        if (destinationObject) {
+            this.player.initialX = destinationObject.x;
+            this.player.initialY = destinationObject.y;
+        }
+        else if (this.currentLevel > 0 && this.currentLevel < WorldDataHandler.levels.length-1) {
+            console.warn('warning: could not find any starting location for the character.');
         }
     }
 
