@@ -81,6 +81,8 @@ class TileMapHandler {
     updateLevelDimensions() {
         this.levelWidth = this.getLevelWidth();
         this.levelHeight = this.getLevelHeight();
+        this.levelHeightInPx = this.levelHeight * this.tileSize;
+        this.levelWidthInPx = this.levelWidth * this.tileSize;
         if (Camera.viewport) {
             Camera.viewport.worldWidth = this.levelWidth * this.tileSize;
             Camera.viewport.worldHeight = this.levelHeight * this.tileSize;
@@ -236,6 +238,7 @@ class TileMapHandler {
             this.resetLevel(this.currentLevel);
             if (typeof LevelNavigationHandler === 'function') {
                 LevelNavigationHandler.updateLevel();
+                LevelNavigationHandler.adaptLevelList();
             }
         }
         else {

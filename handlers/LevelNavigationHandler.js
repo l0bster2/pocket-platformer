@@ -2,11 +2,12 @@ class LevelNavigationHandler {
 
     static staticConstructor() {
         this.createNewLevelButton = document.getElementById("createNewLevelButton");
-        this.currentLevelTitle = document.getElementById("currentLevel");
+        this.levelListDropdown = document.getElementById("levelListDropdown");
         this.levelSizeButton = document.getElementById("levelSizeButton");
         this.levelHelpersButton = document.getElementById("levelHelpersButton")
         this.copyNotification = document.getElementById("copyNotification");
         this.adaptVisibilityOfButtons();
+        this.adaptLevelList();
         this.copiedLevel = {};
     }
 
@@ -17,6 +18,11 @@ class LevelNavigationHandler {
         this.adjustObjectsToAddedLevel(nextLevel);
         this.adjustEffectsAfterLevelAmountChange(nextLevel);
         this.updateLevel();
+        this.handleChangeLevelList();
+    }
+
+    static handleChangeLevelList() {
+        this.adaptLevelList();
         this.adaptVisibilityOfButtons();
     }
 
@@ -56,22 +62,28 @@ class LevelNavigationHandler {
         })
     }
 
-    static switchToLevel(changeBy) {
-        //If level was switched via GUI, not by player winning a level
+    static incrementLevel(changeBy) {
+        let nextLevel = tileMapHandler.currentLevel + changeBy;
+        if (nextLevel < 0) {
+            nextLevel = 0;
+        }
+        if (nextLevel > WorldDataHandler.levels.length - 1) {
+            nextLevel = WorldDataHandler.levels.length - 1;
+        }
+
+        this.selectLevel(nextLevel);
+    }
+
+    static selectLevel(levelIndex) {
+        if (levelIndex == tileMapHandler.currentLevel) {
+            return;
+        }
         PlayMode.currentPauseFrames = 0;
 
-        let currentLevel = tileMapHandler.currentLevel + changeBy;
-        if (currentLevel < 0) {
-            currentLevel = 0;
-        }
-        if (currentLevel > WorldDataHandler.levels.length - 1) {
-            currentLevel = WorldDataHandler.levels.length - 1;
-        }
-        if (currentLevel != tileMapHandler.currentLevel) {
-            tileMapHandler.currentLevel = currentLevel;
-            this.updateLevel();
-        }
-
+        this.levelListDropdown.value = levelIndex;
+        tileMapHandler.currentLevel = levelIndex;
+        this.updateLevel();
+        
         this.adaptVisibilityOfButtons();
     }
 
@@ -99,16 +111,29 @@ class LevelNavigationHandler {
         }
     }
 
+    static adaptLevelList() {
+        while (this.levelListDropdown.firstChild) {
+            this.levelListDropdown.removeChild(this.levelListDropdown.lastChild);
+        }
+        WorldDataHandler.levels.forEach((level, levelIndex) => {
+            let optElem = document.createElement("option");
+            let title = "Level " + levelIndex;
+            if (levelIndex == 0) {
+                title = "Start Screen";
+            }
+            else if (levelIndex == WorldDataHandler.levels.length - 1) {
+                title = "Ending Screen";
+            }
+            optElem.textContent = title;
+            optElem.value = levelIndex;
+            this.levelListDropdown.appendChild(optElem);
+        });
+
+        this.levelListDropdown.value = tileMapHandler.currentLevel;
+    }
+
     static updateLevel() {
-        let levelTitle = "Level " + (tileMapHandler.currentLevel);
-        if (tileMapHandler.currentLevel === 0) {
-            levelTitle = "Start screen";
-        }
-        else if (tileMapHandler.currentLevel === WorldDataHandler.levels.length - 1) {
-            levelTitle = "Ending screen";
-        }
         this.adaptVisibilityOfButtons();
-        this.currentLevelTitle.innerHTML = levelTitle;
         tileMapHandler.resetLevel(tileMapHandler.currentLevel);
     }
 
@@ -149,7 +174,7 @@ class LevelNavigationHandler {
             WorldDataHandler.levels.splice(currentLevel, 1);
             this.adjustEffectsAfterLevelAmountChange(currentLevel, "deleted")
             this.updateLevel();
-            this.adaptVisibilityOfButtons();
+            this.handleChangeLevelList();
             ModalHandler.closeModal('deleteLevelModal');
         }
         else {
