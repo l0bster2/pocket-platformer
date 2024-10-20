@@ -2082,7 +2082,7 @@ class SpritePixelArrays {
       name: ObjectTypes.SFX,
       directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       descriptiveName: "SFX 3",
-      description: "SFX when player dashes",
+      description: "SFX when player dies",
       animation: [{
         sprite:
           [
@@ -2401,6 +2401,40 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       },
+      ]
+    };
+
+    this.SFX14 = {
+      name: ObjectTypes.SFX,
+      descriptiveName: "SFX 13",
+      directions: [AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.bottom],
+      description: "Plays when the player dashes",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "393939", "393939", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "393939", "393939", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "393939", "transp", "transp", "393939", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "393939", "transp", "transp", "393939", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
       ]
     };
 

@@ -192,4 +192,24 @@ class Display {
         this.ctx.textAlign = alignPos;
         this.ctx.fillText(text, xPos, yPos);
     }
+    
+    static explodeSprite(img, sx, sy, tileSize, x, y, offSet, radians) {
+        const halfTileSize = tileSize / 2;
+        Display.drawImageWithRotation(img, sx * tileSize,
+            sy * tileSize, halfTileSize,
+            halfTileSize, x + offSet * -1, y + offSet * -1,
+            halfTileSize, halfTileSize, radians);
+        Display.drawImageWithRotation(img, sx * tileSize + halfTileSize,
+            sy * tileSize, halfTileSize,
+            halfTileSize, x + offSet, y + offSet * -1,
+            halfTileSize, halfTileSize, radians);
+        Display.drawImageWithRotation(img, sx * tileSize,
+            sy * tileSize + halfTileSize, halfTileSize,
+            halfTileSize, x + offSet, y + offSet,
+            halfTileSize, halfTileSize, radians);
+        Display.drawImageWithRotation(img, sx * tileSize + halfTileSize,
+            sy * tileSize + halfTileSize, halfTileSize,
+            halfTileSize, x + offSet * -1, y + offSet,
+            halfTileSize, halfTileSize, radians);
+    }
 }

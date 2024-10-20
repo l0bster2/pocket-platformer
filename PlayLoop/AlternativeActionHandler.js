@@ -72,7 +72,7 @@ class AlternativeActionHandler extends PlayMode {
                     player.xspeed = player.maxSpeed * dashMultiplicator;
                 }
                 if (player.currentDashFrame % 3 === 0) {
-                    SFXHandler.createSFX(player.x, player.y, 2);
+                    SFXHandler.createSFX(player.x, player.y, 13);
                 }
             }
         }

@@ -55,7 +55,6 @@ const dashChecked = "dashChecked";
 const runChecked = "runChecked";
 
 class PlayerAttributesHandler {
-
     static staticConstructor(player) {
         this.player = player;
         this.sliderValues = ["groundAcceleration", "air_acceleration", "maxSpeed", "groundFriction", "air_friction", "jumpSpeed", "maxFallSpeed"];
@@ -83,6 +82,14 @@ class PlayerAttributesHandler {
         this.checkBoxValues.forEach(checkBoxValue => {
             this.setInitialCheckboxValue(checkBoxValue);
         });
+    }
+
+    static chnageDeathType(event) {
+        this.player.deathType = event.target.value;
+    }
+
+    static setDeathType() {
+        document.getElementById("deathType").value = player.deathType;
     }
 
     static setInitialSliderValue(sliderValue){

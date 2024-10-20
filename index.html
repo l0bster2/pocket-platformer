@@ -151,7 +151,8 @@
                             <button class="levelNavigationButton" onClick="LevelNavigationHandler.incrementLevel(-1)">
                                 <img src="images/icons/left.svg" alt="left" width="14" height="14">
                             </button>
-                            <select id="levelListDropdown" onchange="LevelNavigationHandler.selectLevel(parseInt(event.target.value))">
+                            <select id="levelListDropdown"
+                                onchange="LevelNavigationHandler.selectLevel(parseInt(event.target.value))">
                                 <option value="0">(Loading...)</option>
                             </select>
                             <button class="levelNavigationButton" onClick="LevelNavigationHandler.incrementLevel(1)">
@@ -338,6 +339,9 @@
                                     Run trail</div>
                                 <div class='textAsLink'
                                     onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 3'} }, true)">
+                                    Death trail</div>
+                                <div class='textAsLink'
+                                    onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 13'} }, true)">
                                     Dash trail</div>
                                 <div class='textAsLink'
                                     onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 11'} }, true)">
@@ -345,6 +349,15 @@
                                 <div class='textAsLink'
                                     onclick="DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 8'} }, true)">
                                     Fixed speed trail</div>
+                                <div class="subSection">
+                                    <div style="text-transform: none;">Death animation:</div>
+                                    <select name="deathType" id="deathType" class="marginTop8"
+                                        onchange="PlayerAttributesHandler.chnageDeathType(event)">
+                                        <option value="none">None</option>
+                                        <option value="upwardsAndRotate" selected="selected">Upwards and rotate</option>
+                                        <option value="explode">Explode</option>
+                                    </select>
+                                </div>
                             </details>
                         </div>
                     </div>

@@ -39,7 +39,7 @@ function importGame() {
 
         resetUIValuesInTool();
 
-        if(Game.playMode === Game.PLAY_MODE) {
+        if (Game.playMode === Game.PLAY_MODE) {
           Game.changeGameMode();
         }
       }
@@ -79,11 +79,12 @@ function resetUIValuesInTool() {
   LevelNavigationHandler.updateLevel();
   LevelNavigationHandler.adaptLevelList();
   PlayerAttributesHandler.sliderValues.forEach(sliderValue => {
-      sliderValue !== "maxJumpFrames" && PlayerAttributesHandler.setInitialSliderValue(sliderValue);
+    sliderValue !== "maxJumpFrames" && PlayerAttributesHandler.setInitialSliderValue(sliderValue);
   })
   PlayerAttributesHandler.checkBoxValues.forEach(checkBoxValue => {
     PlayerAttributesHandler.setInitialCheckboxValue(checkBoxValue);
   });
+  PlayerAttributesHandler.setDeathType();
 }
 
 function createPlayerAttributesSectionForAllData() {
@@ -95,14 +96,15 @@ function createPlayerAttributesSectionForAllData() {
   })
   PlayerAttributesHandler.checkBoxValues.forEach(checkBoxValue => {
     playerObject[checkBoxValue] = player[checkBoxValue];
-  })
+  });
+  playerObject.deathType = player.deathType;
   return playerObject;
 }
 
 function getCustomSounds() {
   const customSounds = [];
   SoundHandler.sounds.forEach(sound => {
-    if(sound?.customValue) {
+    if (sound?.customValue) {
       customSounds.push(sound);
     }
   });
