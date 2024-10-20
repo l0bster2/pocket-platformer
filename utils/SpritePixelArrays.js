@@ -865,16 +865,15 @@ class SpritePixelArrays {
       descriptiveName: "Violet block",
       description: "There are violet blocks and pink blocks. They will alternate between passable and solid on each jump.",
       type: this.SPRITE_TYPES.tile,
-      squishAble: false,
       animation: [{
         sprite:
           [
             ["AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF"],
             ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
-            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
-            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
-            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
-            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "390071", "390071", "390071", "390071", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "390071", "AA55FF", "632A9B", "390071", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "390071", "632A9B", "632A9B", "390071", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "390071", "390071", "390071", "390071", "632A9B", "390071"],
             ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
             ["AA55FF", "390071", "390071", "390071", "390071", "390071", "390071", "390071"],
           ]
@@ -900,16 +899,15 @@ class SpritePixelArrays {
       descriptiveName: "Pink block",
       description: "There are violet blocks and pink blocks. They will alternate between passable and solid on each jump.",
       type: this.SPRITE_TYPES.tile,
-      squishAble: false,
       animation: [{
         sprite:
           [
             ["FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF"],
             ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
-            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
-            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
-            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
-            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "AA00AA", "FF8EFF", "E300E3", "AA00AA", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "AA00AA", "E300E3", "E300E3", "AA00AA", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "E300E3", "AA00AA"],
             ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
             ["FF8EFF", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA"],
           ]
