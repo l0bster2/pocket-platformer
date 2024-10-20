@@ -18,6 +18,13 @@ class SpritePixelArrays {
       select: "select",
     }
 
+    this.sometimesPassableBlocks = [
+      ObjectTypes.RED_BLOCK,
+      ObjectTypes.BLUE_BLOCK,
+      ObjectTypes.PINK_BLOCK,
+      ObjectTypes.VIOLET_BLOCK,
+    ];
+
     this.tilesWithAnimation = [
       ObjectTypes.RED_BLUE_BLOCK_SWITCH,
       ObjectTypes.RED_BLOCK,
