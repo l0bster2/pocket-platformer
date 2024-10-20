@@ -1462,7 +1462,7 @@ class SpritePixelArrays {
       ],
       directions: [AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       descriptiveName: "Path",
-      description: "<div>Draw paths, put objects on top and the objects will follow them. Click on an already set path-point, while paths are selected in build-tools to adjust the path's attributes."
+      description: "<div>Draw paths, put objects on top and the objects will follow them. Click on an already set path-point while having paths selected, or on an object set on the path to adjust the path's attributes."
         + "<div class='subSection'>"
         + "<details><summary>Compatible objects</summary><div class='marginTop8'><ul style='padding-left: 16px'><li>Finish flag</li><li>Spikes</li><li>Trampolines</li><li>Toggle mine</li><li>Rocket launchers</li><li>Portals</li><li>Collectibles</li><li>Barrel cannons</li><li>Jump reset</li></ul></div></details>"
         + "<details class='marginTop8'><summary>Rules</summary><div class='marginTop8'><ul style='padding-left: 16px'><li>Draw paths in a line or in an enclosed 'circle'</li><li>Place as many different objects on them as you want</li><li>You can't draw 2 paths above or beside each other. You need to leave 1 free space inbetween</li></ul></div></details>"

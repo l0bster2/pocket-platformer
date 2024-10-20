@@ -153,8 +153,8 @@ class BuildMode {
                         && objectAtCurrentTile?.type !== ObjectTypes.CANON_BALL && objectAtCurrentTile?.type !== ObjectTypes.ROCKET && objectAtCurrentTile?.type !== ObjectTypes.LASER &&
                         objectAtCurrentTile?.changeableInBuildMode);
                     if (changeableObjectsHoveringOver.length) {
-                        //show tooltip for last hovering object, because objects could be on top of paths
-                        this.showTooltipWithExtraAttributes(tilePosX, tilePosY, changeableObjectsHoveringOver[changeableObjectsHoveringOver.length - 1]);
+                        //pass all objects hovering over (should be only paths and objects on top). reverse, so that path attributes are at the bottom
+                        this.showTooltipWithExtraAttributes(tilePosX, tilePosY, changeableObjectsHoveringOver.reverse());
                     }
                 }
             }
@@ -314,48 +314,64 @@ class BuildMode {
         });
     }
 
-    static showTooltipWithExtraAttributes(tilePosX, tilePosY, currentObject) {
+    static showTooltipWithExtraAttributes(tilePosX, tilePosY, currentObjects) {
         const heading = "Object properties";
         const content = document.createElement("div");
-        const spriteObject = SpritePixelArrays.getSpritesByName(currentObject.type)[0];
         this.showingToolTip = true;
 
-        if (currentObject?.type === ObjectTypes.START_FLAG) {
-            const startFlagToolTip = ObjectsTooltipElementsRenderer.startFlagToolTip(currentObject);
-            content.appendChild(startFlagToolTip);
-        }
-        else if (currentObject?.type === ObjectTypes.FINISH_FLAG) {
-            const finishFlagToolTip = ObjectsTooltipElementsRenderer.finishFlagToolTip(currentObject, this.tileMapHandler);
-            content.appendChild(finishFlagToolTip);
-        }
-        if (spriteObject.directions && currentObject?.type !== ObjectTypes.PATH_POINT) {
-            const rotationWrapper = ObjectsTooltipElementsRenderer.createRotationHandlerForObjects(currentObject, spriteObject.directions);
-            content.appendChild(rotationWrapper);
-        }
-        if (spriteObject.changeableAttributes && currentObject?.type !== ObjectTypes.FINISH_FLAG) {
-            spriteObject.changeableAttributes.forEach(attribute => {
-                if (attribute.name === SpritePixelArrays.changeableAttributeTypes.dialogue) {
-                    const dialogueWindow = ObjectsTooltipElementsRenderer.createDialogueWindow(attribute, currentObject);
-                    content.appendChild(dialogueWindow);
-                }
-                else if (attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.toggle) {
-                    const toggleSwitch = ObjectsTooltipElementsRenderer.createToggleSwitch(attribute, currentObject);
-                    content.appendChild(toggleSwitch);
-                }
-                else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.checkbox) {
-                    const checkboxWrapper = ObjectsTooltipElementsRenderer.createCheckbox(attribute, attribute.checkboxDescription, currentObject);
-                    content.appendChild(checkboxWrapper);
-                }
-                else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.select) {
-                    const selectWrapper = ObjectsTooltipElementsRenderer.createSelect(attribute, currentObject);
-                    content.appendChild(selectWrapper);
-                }
-                else {
-                    const sliderWrapper = ObjectsTooltipElementsRenderer.createSliderForChangeableAttribute(attribute, currentObject);
-                    content.appendChild(sliderWrapper);
-                }
-            })
-        }
+        const objectsInlcudePath = currentObjects.some(o => o.type === ObjectTypes.PATH_POINT);
+
+        currentObjects.forEach((currentObject, index) => {
+            const spriteObject = SpritePixelArrays.getSpritesByName(currentObject.type)[0];
+            
+            // If mutliple objects or only path, clarify which properties belong wo which object
+            if(objectsInlcudePath) {
+                const heading = ObjectsTooltipElementsRenderer.createSmallHeading(`${spriteObject.descriptiveName} properties:`);
+                content.appendChild(heading);
+            }
+
+            if (currentObject?.type === ObjectTypes.START_FLAG) {
+                const startFlagToolTip = ObjectsTooltipElementsRenderer.startFlagToolTip(currentObject);
+                content.appendChild(startFlagToolTip);
+            }
+            else if (currentObject?.type === ObjectTypes.FINISH_FLAG) {
+                const finishFlagToolTip = ObjectsTooltipElementsRenderer.finishFlagToolTip(currentObject, this.tileMapHandler);
+                content.appendChild(finishFlagToolTip);
+            }
+            if (spriteObject.directions && currentObject?.type !== ObjectTypes.PATH_POINT) {
+                const rotationWrapper = ObjectsTooltipElementsRenderer.createRotationHandlerForObjects(currentObject, spriteObject.directions);
+                content.appendChild(rotationWrapper);
+            }
+            if (spriteObject.changeableAttributes && currentObject?.type !== ObjectTypes.FINISH_FLAG) {
+                spriteObject.changeableAttributes.forEach(attribute => {
+                    if (attribute.name === SpritePixelArrays.changeableAttributeTypes.dialogue) {
+                        const dialogueWindow = ObjectsTooltipElementsRenderer.createDialogueWindow(attribute, currentObject);
+                        content.appendChild(dialogueWindow);
+                    }
+                    else if (attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.toggle) {
+                        const toggleSwitch = ObjectsTooltipElementsRenderer.createToggleSwitch(attribute, currentObject);
+                        content.appendChild(toggleSwitch);
+                    }
+                    else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.checkbox) {
+                        const checkboxWrapper = ObjectsTooltipElementsRenderer.createCheckbox(attribute, attribute.checkboxDescription, currentObject);
+                        content.appendChild(checkboxWrapper);
+                    }
+                    else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.select) {
+                        const selectWrapper = ObjectsTooltipElementsRenderer.createSelect(attribute, currentObject);
+                        content.appendChild(selectWrapper);
+                    }
+                    else {
+                        const sliderWrapper = ObjectsTooltipElementsRenderer.createSliderForChangeableAttribute(attribute, currentObject);
+                        content.appendChild(sliderWrapper);
+                    }
+                })
+            }
+            if(index != currentObjects.length - 1) {
+                const lineBreakDiv = document.createElement("div");
+                lineBreakDiv.className = 'subSection';
+                content.appendChild(lineBreakDiv);
+            }
+        })
 
         const submitButtonWrapper = document.createElement("div");
         submitButtonWrapper.className = "subSection";
