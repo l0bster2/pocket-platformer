@@ -3,8 +3,11 @@ class JumpHandler extends PlayMode {
     static jumpHandler() {
         const { player } = this;
 
-        if (Controller.jump && !player.collidingWithNpcId && !PauseHandler.justClosedPauseScreen ) {
-            if (player.swimming) {
+        if (Controller.jump) {
+            if (!PlayerInteractionHandler.willAllowJump() || PauseHandler.justClosedPauseScreen) {
+                // no jumping, sorry
+            }
+            else if (player.swimming) {
                 this.swimHandler();
             }
             else {

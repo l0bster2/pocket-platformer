@@ -24,6 +24,7 @@ class DialogueHandler {
         this.currentAnimationHeight = 0;
         this.arrowUpFrameIndex = 0;
         this.calculateDialogueWindowPosition();
+        PlayerInteractionHandler.unblockInteractionsFor("dialogue");
     }
 
     static calculateDialogueWindowPosition() {

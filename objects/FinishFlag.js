@@ -26,14 +26,7 @@ class FinishFlag extends InteractiveLevelObject {
     sendPlayerThroughExit() {
         this.used = true;
         SoundHandler.win.stopAndPlay();
-        PlayMode.animateToNextLevel = true;
-        PlayMode.currentPauseFrames = TransitionAnimationHandler.animationFrames;
-        PlayMode.customExit = this.customExit;
-
-        if (this.tilemapHandler.currentLevel === WorldDataHandler.levels.length - 2 && !this.customExit
-            && !WorldDataHandler.insideTool && SoundHandler.currentSong) {
-            SoundHandler.fadeAudio(SoundHandler.currentSong);
-        }
+        PlayMode.playerExitLevel(this.customExit);
     }
 
     changeExit(customExit, reciprocatingLevelIndex) {

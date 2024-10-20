@@ -20,44 +20,10 @@ class Door extends FinishFlag {
     }
 
     collisionEvent() { // overrides super.collisionEvent
-        if (this.used || this.locked) {
+        if (this.locked) {
             return;
         }
-        this.handleInputPrompt();
-        this.handleEntranceTriggers();
-    }
-
-    handleInputPrompt() {
-        if (this.enterTrigger === DOOR_TRIGGERS.UP && !this.used) {
-            if (this.arrowUpFrameIndex === undefined) {
-                this.arrowUpFrameIndex = 0;
-            }
-            else {
-                this.arrowUpFrameIndex++;
-            }
-            const frameModulo = this.arrowUpFrameIndex % 60;
-            if (frameModulo < 30) {
-                DialogueHandler.showDialogueUpArrow(this.x, this.y - this.tileSize);
-            }
-        }
-    }
-
-    handleEntranceTriggers() {
-        let cueEntrance = false;
-
-        if (this.enterTrigger === DOOR_TRIGGERS.AUTOMATIC) {
-            cueEntrance = true;
-        }
-        else if (this.enterTrigger === DOOR_TRIGGERS.UP) {
-            cueEntrance = Controller.up;
-        }
-        else if (this.enterTrigger === DOOR_TRIGGERS.DOWN) {
-            cueEntrance = Controller.down;
-        }
-        
-        if (cueEntrance) {
-            this.sendPlayerThroughExit();
-        }
+        PlayerInteractionHandler.registerInteractionTarget(this);
     }
 
     changeExit(customExit, reciprocatingLevelIndex) {
