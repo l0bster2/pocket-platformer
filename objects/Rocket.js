@@ -1,6 +1,6 @@
 class Rocket extends InteractiveLevelObject {
 
-    constructor(x, y, tileSize, type, tileMapHandler, speed = 3, angle = 0, rotationSpeed) {
+    constructor(x, y, tileSize, type, tileMapHandler, speed = 3, angle = 0, rotationSpeed, collidesWithWalls) {
         const hitBoxOffset = -tileSize / 6;
         super(x, y, tileSize, type, hitBoxOffset);
         this.tileMapHandler = tileMapHandler;
@@ -11,6 +11,7 @@ class Rocket extends InteractiveLevelObject {
         this.rotationCounter = 0;
         this.maxRotationCounter = 3;
         this.currentTrailFrame = 0;
+        this.collidesWithWalls = collidesWithWalls;
         this.setInitialPosition();
     }
 
@@ -42,11 +43,14 @@ class Rocket extends InteractiveLevelObject {
             const yPos = this.tileMapHandler.getTileValueForPosition(corner.y);
 
             const cornerTile = this.tileMapHandler.getTileLayerValueByIndex(yPos, xPos)
+            if(typeof cornerTile === 'undefined') {
+                return true;
+            }
             if(cornerTile === ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch) {
                 const switchBlock = this.tileMapHandler.levelObjects.find(levelObject => levelObject.initialX === xPos && levelObject.initialY === yPos);
                 switchBlock && switchBlock.switchWasHit();
             }
-            return !tiles.includes(cornerTile);
+            return !tiles.includes(cornerTile) && this.collidesWithWalls;
         });
         if (foundSolidTileInCollission) {
             this.deleteObjectFromLevel(this.tileMapHandler);

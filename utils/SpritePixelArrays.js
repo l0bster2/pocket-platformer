@@ -56,6 +56,7 @@ class SpritePixelArrays {
 
     this.projectileSprites = [
       ObjectTypes.CANON_BALL,
+      ObjectTypes.ROCKET,
       ObjectTypes.ROTATING_FIREBALL_CENTER,
     ]
 
@@ -1078,6 +1079,10 @@ class SpritePixelArrays {
           name: this.changeableAttributeTypes.rotationSpeed, defaultValue: 8, minValue: 0, maxValue: 24, descriptiveName: "rotation speed <span data-microtip-size='large'aria-label='Determines how fast the rockets will rotate to the players direction. 0 = rockets will decide direction once and not turn at all. 24 = basically following the player everywhere.'"
             + "data-microtip-position='top-left' role='tooltip' class='songInputInfo'>"
             + "<img src='images/icons/info.svg' alt='info' width='16' height='16'>"
+        },
+        {
+          name: this.changeableAttributeTypes.collidesWithWalls, defaultValue: true,
+          formElement: this.changeableAttributeFormElements.checkbox, checkboxDescription: "Rocket collides with walls"
         }
       ],
       squishAble: false,

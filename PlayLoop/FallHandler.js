@@ -39,6 +39,7 @@ class FallHandler extends PlayMode {
             else {
                 !player.wallJumping && player.currentWallJumpCoyoteFrame++;
 
+                //If jump is not enforced by trampoline
                 if (player.forcedJumpSpeed === 0) {
                     player.yspeed += player.iceOnSide ?
                         player.currentGravity / 2 :
