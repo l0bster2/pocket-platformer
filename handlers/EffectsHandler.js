@@ -78,6 +78,7 @@ class EffectsHandler {
             ...this.getBasicAttributes(this.effectTypes.Flashlight),
             radius: 140,
             flickerRadius: 4,
+            overLayAlpha: 1,
             position: "background",
             color: "#000000",
         }
@@ -166,6 +167,7 @@ class EffectsHandler {
     static parseFlashlightValues(attributesObject) {
         attributesObject.radius = parseInt(document.getElementById("radius").value) || 140;
         attributesObject.flickerRadius = parseInt(document.getElementById("flickerRadius").value) || 0;
+        attributesObject.overLayAlpha = parseFloat(document.getElementById("overLayAlpha").value) || 1;
         attributesObject.position = document.querySelector('input[name="flashlightPosition"]:checked').value;
         return attributesObject;
     }

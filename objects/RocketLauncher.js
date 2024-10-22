@@ -22,7 +22,8 @@ class RocketLauncher extends ShootingObject {
             const angle = this.tileMapHandler.player ? MathHelpers.getAngle(this.tileMapHandler.player.x, this.tileMapHandler.player.y, this.x, this.y) : 0;
             //Check if rocket launcher sees player only every x frames because it's cost-intensive
             if(this.tileMapHandler?.currentGeneralFrameCounter % 6 === 0) {
-                this.seeingPlayer = TilemapHelpers.doTwoObjectsSeeEachOther(this, player, this.tileMapHandler, angle);
+                this.seeingPlayer = !this[SpritePixelArrays.changeableAttributeTypes.collidesWithWalls] ? true :
+                    TilemapHelpers.doTwoObjectsSeeEachOther(this, player, this.tileMapHandler, angle);
             }
 
             if (this.active) {
@@ -60,7 +61,9 @@ class RocketLauncher extends ShootingObject {
     shoot(angle) {
         this.currentShootCounter = 0;
         const rocket = new Rocket(this.x / this.tileSize, this.y / this.tileSize, this.tileSize, ObjectTypes.ROCKET,
-            this.tileMapHandler, this[SpritePixelArrays.changeableAttributeTypes.speed], angle, this[SpritePixelArrays.changeableAttributeTypes.rotationSpeed]);
+            this.tileMapHandler, this[SpritePixelArrays.changeableAttributeTypes.speed], angle, 
+            this[SpritePixelArrays.changeableAttributeTypes.rotationSpeed], 
+            this[SpritePixelArrays.changeableAttributeTypes.collidesWithWalls]);
         this.tileMapHandler.levelObjects.push(rocket);
         AnimationHelper.setSquishValues(this, this.tileSize * 1.2,
             this.tileSize * 0.8, 5, AnimationHelper.facingDirections.left);

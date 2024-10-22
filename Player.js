@@ -35,6 +35,12 @@ class Player {
         this.spriteCanvas = spriteCanvas;
         this.type = "player";
         this.radians = 0;
+        this.deathTypes = {
+            none: "none",
+            upwardsAndRotate: "upwardsAndRotate",
+            explode: "explode",
+        }
+        this.deathType = this.deathTypes.upwardsAndRotate;
         this.setBorderPositions();
         this.setAnimationProperties();
         this.setAbilities();
@@ -231,6 +237,30 @@ class Player {
         }
     }
 
+    displayDeathAnimation(animationIndex) {
+        let offSet = (PlayMode.deathPauseFrames - PlayMode.currentPauseFrames);
+        this.invisible = true;
+
+        switch (this.deathType) {
+            case this.deathTypes.explode:
+                this.radians += 0.15;
+                Display.explodeSprite(this.spriteCanvas, animationIndex, this.currentSpriteIndex, this.tileSize, 
+                    this.x, this.y, offSet, this.radians);
+                break;
+            case this.deathTypes.upwardsAndRotate:
+                this.y -= 2;
+                this.radians += 0.25;
+                Display.drawImageWithRotation(this.spriteCanvas, animationIndex * this.tileSize,
+                    this.currentSpriteIndex * this.tileSize, this.tileSize,
+                    this.tileSize - 1, this.x, this.y - 2,
+                    this.drawWidth, this.drawHeight, this.radians);
+                break;
+            default:
+                this.invisible = false;
+                break;
+        }
+    }
+
     draw() {
         if (this.xspeed > 0) {
             this.facingDirection = AnimationHelper.facingDirections.right;
@@ -279,6 +309,10 @@ class Player {
         const animationIndex = (Math.floor(this.currentAnimationIndex / frameDuration) + loop) || 0;
 
         AnimationHelper.checkSquishUpdate(this);
+
+        if (this.death) {
+            this.displayDeathAnimation(animationIndex);
+        }
 
         if (this.fixedSpeed) {
             this.radians += 0.25;

@@ -189,9 +189,14 @@ class EffectHtmlRenderer {
             name: "Flicker", id: "flickerRadius", flex: "1",
             value: effectsObject.flickerRadius, min: 0, max: 30, step: 1
         });
+        const overLayAlpha = this.createAttributeSlider({
+            name: "Overlay-Alpha", id: "overLayAlpha", flex: "1",
+            value: effectsObject.overLayAlpha || 1, min: 0.2, max: 1, step: 0.1
+        });
         return `<div class="sfxAttributeSection">
             ${radius}
             ${flickerRadius}
+            ${overLayAlpha}
             <div style="line-height: 22px" class="subSection">
                 <input type="radio" id="background" name="flashlightPosition" value="background" ${effectsObject.position === "background" && "checked"}>
                 <label for="background" style="vertical-align: text-bottom">Background</label><br>

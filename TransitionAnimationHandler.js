@@ -5,6 +5,7 @@ class TransitionAnimationHandler {
         this.animationTypes = {
             none: "none",
             tiles: "tiles",
+            cutOutCircle: "cutOutCircle",
             wholeScreen: "wholeScreen"
         }
     }
@@ -39,6 +40,9 @@ class TransitionAnimationHandler {
                 case this.animationTypes.wholeScreen:
                     this.animateFadeWholeScreen(currentFrame, fadeInFrames);
                     break;
+                case this.animationTypes.cutOutCircle:
+                    this.animateFadeCircle(PlayMode.currentPauseFrames - fadeInFrames, fadeInFrames);
+                    break;
             }
             //Camera.zoomToObject(0.01, player);
         }
@@ -50,6 +54,9 @@ class TransitionAnimationHandler {
                     break;
                 case this.animationTypes.wholeScreen:
                     this.animateFadeWholeScreen(PlayMode.currentPauseFrames, fadeInFrames);
+                    break;
+                case this.animationTypes.cutOutCircle:
+                    this.animateFadeCircle(fadeInFrames - PlayMode.currentPauseFrames, fadeInFrames);
                     break;
             }
         }
@@ -65,6 +72,19 @@ class TransitionAnimationHandler {
         if (PlayMode.currentPauseFrames === halfAnimationFrames) {
             tileMapHandler.switchToNextLevel();
         }
+    }
+
+    static animateFadeCircle(currenFrame, totalFrames) {
+        const biggestRadius = Camera.viewport.width;
+        const radiusStep = biggestRadius / totalFrames;
+        const radius = radiusStep * currenFrame;
+        Display.ctx.fillStyle = `rgb(0,0,0)`;
+        Display.ctx.beginPath();
+        Display.ctx.rect(Camera.viewport.left, Camera.viewport.top, Camera.viewport.width, Camera.viewport.height);
+        Display.ctx.arc(player.x + tileMapHandler.tileSize / 2, player.y + tileMapHandler.tileSize / 2, 
+            radius, 0, 2 * Math.PI, true);
+        Display.ctx.fill();
+        Display.ctx.closePath();
     }
 
     static animateFadeWholeScreen(currentFrame, totalFrames) {

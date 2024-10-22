@@ -30,6 +30,13 @@ class ObjectsTooltipElementsRenderer {
         return sliderWrapper;
     }
 
+    static createSmallHeading(text) {
+        const heading = document.createElement("div");
+        heading.style.fontWeight = 'bold';
+        heading.innerHTML = text;
+        return heading;
+    }
+
     static startFlagToolTip(currentObject) {
         const startFlagWrapper = document.createElement("div");
         startFlagWrapper.className = "marginTop8";

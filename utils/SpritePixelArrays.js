@@ -18,6 +18,13 @@ class SpritePixelArrays {
       select: "select",
     }
 
+    this.sometimesPassableBlocks = [
+      ObjectTypes.RED_BLOCK,
+      ObjectTypes.BLUE_BLOCK,
+      ObjectTypes.PINK_BLOCK,
+      ObjectTypes.VIOLET_BLOCK,
+    ];
+
     this.tilesWithAnimation = [
       ObjectTypes.RED_BLUE_BLOCK_SWITCH,
       ObjectTypes.RED_BLOCK,
@@ -57,6 +64,7 @@ class SpritePixelArrays {
 
     this.projectileSprites = [
       ObjectTypes.CANON_BALL,
+      ObjectTypes.ROCKET,
       ObjectTypes.ROTATING_FIREBALL_CENTER,
     ]
 
@@ -910,16 +918,15 @@ class SpritePixelArrays {
       descriptiveName: "Violet block",
       description: "There are violet blocks and pink blocks. They will alternate between passable and solid on each jump.",
       type: this.SPRITE_TYPES.tile,
-      squishAble: false,
       animation: [{
         sprite:
           [
             ["AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF", "AA55FF"],
             ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
-            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
-            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
-            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
-            ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "390071", "390071", "390071", "390071", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "390071", "AA55FF", "632A9B", "390071", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "390071", "632A9B", "632A9B", "390071", "632A9B", "390071"],
+            ["AA55FF", "632A9B", "390071", "390071", "390071", "390071", "632A9B", "390071"],
             ["AA55FF", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "632A9B", "390071"],
             ["AA55FF", "390071", "390071", "390071", "390071", "390071", "390071", "390071"],
           ]
@@ -945,16 +952,15 @@ class SpritePixelArrays {
       descriptiveName: "Pink block",
       description: "There are violet blocks and pink blocks. They will alternate between passable and solid on each jump.",
       type: this.SPRITE_TYPES.tile,
-      squishAble: false,
       animation: [{
         sprite:
           [
             ["FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF"],
             ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
-            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
-            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
-            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
-            ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "AA00AA", "FF8EFF", "E300E3", "AA00AA", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "AA00AA", "E300E3", "E300E3", "AA00AA", "E300E3", "AA00AA"],
+            ["FF8EFF", "E300E3", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "E300E3", "AA00AA"],
             ["FF8EFF", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "E300E3", "AA00AA"],
             ["FF8EFF", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA"],
           ]
@@ -1131,6 +1137,10 @@ class SpritePixelArrays {
           name: this.changeableAttributeTypes.rotationSpeed, defaultValue: 8, minValue: 0, maxValue: 24, descriptiveName: "rotation speed <span data-microtip-size='large'aria-label='Determines how fast the rockets will rotate to the players direction. 0 = rockets will decide direction once and not turn at all. 24 = basically following the player everywhere.'"
             + "data-microtip-position='top-left' role='tooltip' class='songInputInfo'>"
             + "<img src='images/icons/info.svg' alt='info' width='16' height='16'>"
+        },
+        {
+          name: this.changeableAttributeTypes.collidesWithWalls, defaultValue: true,
+          formElement: this.changeableAttributeFormElements.checkbox, checkboxDescription: "Rocket collides with walls"
         }
       ],
       squishAble: false,
@@ -1510,7 +1520,7 @@ class SpritePixelArrays {
       ],
       directions: [AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       descriptiveName: "Path",
-      description: "<div>Draw paths, put objects on top and the objects will follow them. Click on an already set path-point, while paths are selected in build-tools to adjust the path's attributes."
+      description: "<div>Draw paths, put objects on top and the objects will follow them. Click on an already set path-point while having paths selected, or on an object set on the path to adjust the path's attributes."
         + "<div class='subSection'>"
         + "<details><summary>Compatible objects</summary><div class='marginTop8'><ul style='padding-left: 16px'><li>Finish flag</li><li>Spikes</li><li>Trampolines</li><li>Toggle mine</li><li>Rocket launchers</li><li>Portals</li><li>Collectibles</li><li>Barrel cannons</li><li>Jump reset</li></ul></div></details>"
         + "<details class='marginTop8'><summary>Rules</summary><div class='marginTop8'><ul style='padding-left: 16px'><li>Draw paths in a line or in an enclosed 'circle'</li><li>Place as many different objects on them as you want</li><li>You can't draw 2 paths above or beside each other. You need to leave 1 free space inbetween</li></ul></div></details>"
@@ -2125,7 +2135,7 @@ class SpritePixelArrays {
       name: ObjectTypes.SFX,
       directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       descriptiveName: "SFX 3",
-      description: "SFX when player dashes",
+      description: "SFX when player dies",
       animation: [{
         sprite:
           [
@@ -2444,6 +2454,40 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       },
+      ]
+    };
+
+    this.SFX14 = {
+      name: ObjectTypes.SFX,
+      descriptiveName: "SFX 13",
+      directions: [AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.bottom],
+      description: "Plays when the player dashes",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "393939", "393939", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "393939", "393939", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "393939", "transp", "transp", "393939", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "393939", "transp", "transp", "393939", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
       ]
     };
 
