@@ -12,7 +12,9 @@ class Door extends FinishFlag {
         this.lockedSpriteYPos = this.lockedSpriteIndex * this.tileSize;
 
         // new
-        this.enterTrigger = DOOR_TRIGGERS.UP;
+        if(!extraAttributes?.activationTrigger) {
+            this.addChangeableAttribute("activationTrigger", DOOR_TRIGGERS.UP);
+        }
         if(!extraAttributes?.flagIndex) {
             this.flagIndex = this.makeid(3);
             this.addChangeableAttribute("flagIndex", this.flagIndex, this.tilemapHandler.currentLevel);

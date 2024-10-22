@@ -130,11 +130,11 @@ class ObjectsTooltipElementsRenderer {
 
         const changeableAttribute = currentObject.spriteObject[0].changeableAttributes[0];
 
-        const checkboxWrapper = this.createCheckbox(changeableAttribute,
+        const collectiblesLockCheckbox = this.createCheckbox(changeableAttribute,
             "Collectibles needed for opening",
             currentObject);
 
-        finishFlagWrapper.append(idWrapper, connectionPicker, checkboxWrapper);
+        finishFlagWrapper.append(idWrapper, connectionPicker, collectiblesLockCheckbox);
 
         return finishFlagWrapper;
     }

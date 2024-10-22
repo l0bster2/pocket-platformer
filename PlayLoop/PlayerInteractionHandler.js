@@ -62,7 +62,7 @@ class PlayerInteractionHandler {
             return false;
         } 
         if (target.type === ObjectTypes.DOOR) {
-            return (target.enterTrigger !== DOOR_TRIGGERS.UP);
+            return (target.activationTrigger !== DOOR_TRIGGERS.UP);
         }
     }
 
@@ -75,6 +75,7 @@ class PlayerInteractionHandler {
 
     static handleInput() {
         // should probably merge updateControl stuff into Controller and read from there instead?
+        // controls need to be updated every frame
         this.updateControl('jump');
         this.updateControl('up');
         this.updateControl('down');
@@ -99,7 +100,7 @@ class PlayerInteractionHandler {
             }
         }
         if (this.currentTarget.type === ObjectTypes.DOOR) {
-            let triggerType = this.currentTarget.enterTrigger;
+            let triggerType = this.currentTarget.activationTrigger;
             let cueEntrance = false;
 
             if (triggerType === DOOR_TRIGGERS.AUTOMATIC) {
@@ -153,10 +154,11 @@ class PlayerInteractionHandler {
         }
 
         if (this.blockers.length > 0) {
-            // if currently prevented from interaction, don't show the arrow
+            // if currently blocked from interaction, don't show the arrow
             return;
         }
 
+        // frame-based blink timing copied from orignal NPC code. might want timestamps instead?
         if (target != this.lastTarget) {
             this.framesOnTarget = 0;
         } else {
@@ -164,7 +166,12 @@ class PlayerInteractionHandler {
         }
 
         if ((this.framesOnTarget % 60) < 30) {
-            this.drawUpArrow(target.x, target.y - target.tileSize);
+            if (target.activationTrigger && target.activationTrigger === DOOR_TRIGGERS.UP) {
+                this.drawUpArrow(target.x, target.y - target.tileSize);
+            } 
+            else {
+                this.drawDownArrow(target.x, target.y - target.tileSize);
+            }
         }
     }
 
@@ -177,6 +184,18 @@ class PlayerInteractionHandler {
         Display.drawRectangle(xPos + pixelArrayUnitSize * 2, yAnchor - pixelArrayUnitSize * 2,
             pixelArrayUnitSize * 4, pixelArrayUnitSize, "FFFFFF")
         Display.drawRectangle(xPos + pixelArrayUnitSize * 3, yAnchor - pixelArrayUnitSize * 3,
+            pixelArrayUnitSize * 2, pixelArrayUnitSize, "FFFFFF")
+    }
+
+    static drawDownArrow(xPos, yPos) {
+        const { pixelArrayUnitSize, tileSize } = tileMapHandler;
+        const yAnchor = yPos + tileSize - pixelArrayUnitSize;
+
+        Display.drawRectangle(xPos + pixelArrayUnitSize, yAnchor - pixelArrayUnitSize * 3,
+            pixelArrayUnitSize * 6, pixelArrayUnitSize, "FFFFFF")
+        Display.drawRectangle(xPos + pixelArrayUnitSize * 2, yAnchor - pixelArrayUnitSize * 2,
+            pixelArrayUnitSize * 4, pixelArrayUnitSize, "FFFFFF")
+        Display.drawRectangle(xPos + pixelArrayUnitSize * 3, yAnchor - pixelArrayUnitSize,
             pixelArrayUnitSize * 2, pixelArrayUnitSize, "FFFFFF")
     }
 }

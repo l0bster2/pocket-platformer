@@ -43,6 +43,7 @@ class SpritePixelArrays {
       collidesWithWalls: "collidesWithWalls",
       fireBallsAmount: "fireBallsAmount",
       powerUpType: "PowerUp",
+      activationTriggerType: "activationTrigger"
     };
 
     this.backgroundSprites = [
@@ -565,8 +566,10 @@ class SpritePixelArrays {
       descriptiveName: "Door",
       changeableAttributes: [
         { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, hidden: true },
+        { name: this.changeableAttributeTypes.activationTriggerType, defaultValue: DOOR_TRIGGERS.UP, 
+          formElement: this.changeableAttributeFormElements.select, values: [DOOR_TRIGGERS.UP, DOOR_TRIGGERS.DOWN] },
       ],
-      description: "A door. By default, the player must press up to enter it. Can lead to another door or a Start Flag on any level. After placing a door, click on it again to specify where it should go. <br/>" +
+      description: "A door to enter and exit from. By default, the player must press up to enter. After placing it, click on it again to set where it should lead. <br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Locked Door'} }, true)\">Locked door sprite</span>",
       type: this.SPRITE_TYPES.object,
       animation: [{
@@ -589,7 +592,7 @@ class SpritePixelArrays {
       name: ObjectTypes.LOCKED_DOOR,
       descriptiveName: "Locked Door",
       hiddenSprite: true,
-      description: "This sprite is displayed if a door is locked. After placing a door, click on it again to specify where it should go. <br/>" +
+      description: "This sprite is displayed for a door when it's locked. After placing a door, click on it again to set its lock condition. <br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Door'} }, true)\">Door sprite</span>",
       type: this.SPRITE_TYPES.object,
       animation: [{
