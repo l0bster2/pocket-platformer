@@ -10,6 +10,7 @@ class Door extends FinishFlag {
         // overrides
         this.lockedSpriteIndex = SpritePixelArrays.getIndexOfSprite(ObjectTypes.LOCKED_DOOR);
         this.lockedSpriteYPos = this.lockedSpriteIndex * this.tileSize;
+        this.sound = SoundHandler.door;
 
         // new
         if(!extraAttributes?.activationTrigger) {

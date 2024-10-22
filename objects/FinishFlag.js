@@ -8,6 +8,8 @@ class FinishFlag extends InteractiveLevelObject {
         this.lockedSpriteIndex = SpritePixelArrays.getIndexOfSprite(ObjectTypes.FINISH_FLAG_CLOSED);
         this.lockedSpriteYPos = this.lockedSpriteIndex * this.tileSize;
         this.locked = false;
+        this.sound = SoundHandler.win;
+        
         if (!WorldDataHandler.insideTool) {
             this.persistentCollectibles = WorldDataHandler.levels[this.tilemapHandler.currentLevel].levelObjects.filter(
                 levelObject => levelObject.type === ObjectTypes.COLLECTIBLE
@@ -25,7 +27,7 @@ class FinishFlag extends InteractiveLevelObject {
 
     sendPlayerThroughExit() {
         this.used = true;
-        SoundHandler.win.stopAndPlay();
+        this.sound?.stopAndPlay();
         PlayMode.playerExitLevel(this.customExit);
     }
 
