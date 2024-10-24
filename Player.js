@@ -121,7 +121,6 @@ class Player {
         this.walljumpReady = false;
         this.swimming = false;
         this.friction = this.air_friction;
-        this.collidingWithNpcId = false;
         this.previousFrameSwimming = false;
         this.invisible = false;
         this.fixedSpeed = false;

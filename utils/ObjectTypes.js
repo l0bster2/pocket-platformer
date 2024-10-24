@@ -15,6 +15,14 @@ class ObjectTypes {
     return 'finishFlagClosed';
   }
 
+  static get DOOR() {
+    return 'door';
+  }
+
+  static get LOCKED_DOOR() {
+    return 'lockedDoor';
+  }
+
   static get START_FLAG() {
     return 'startFlag';
   }
@@ -189,6 +197,7 @@ class ObjectTypes {
       [this.FINISH_FLAG]: FinishFlag,
       [this.CHECKPOINT]: Checkpoint,
       [this.START_FLAG]: StartFlag,
+      [this.DOOR]: Door,
       [this.TRAMPOLINE]: Trampoline,
       [this.NPC]: Npc,
       [this.DISAPPEARING_BLOCK]: DisappearingBlock,

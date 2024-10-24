@@ -9,6 +9,7 @@ class SoundHandler {
     this.guiSelectDefault = Base64Sounds.startBase64;
     this.dashDefault = Base64Sounds.dashBase64;
     this.checkpointDefault = Base64Sounds.checkPointBase64;
+    this.doorDefault = Base64Sounds.doorBase64;
     this.allCoinsCollectedDefault = Base64Sounds.allCoinsCollectedBase64;
     this.dialogueSoundDefault = Base64Sounds.dialogueBase64;
     this.bubbleDefault = Base64Sounds.bubbleBase64;
@@ -26,6 +27,7 @@ class SoundHandler {
       { key: "guiSelect", descriptiveName: "game start", value: this.guiSelectDefault, type: "sound" },
       { key: "dash", descriptiveName: "dash", value: this.dashDefault, type: "sound" },
       { key: "checkpoint", descriptiveName: "checkpoint", value: this.checkpointDefault, type: "sound" },
+      { key: "door", descriptiveName: "door enter", value: this.doorDefault, type: "sound" },
       { key: "allCoinsCollected", descriptiveName: "all coins in level collected", value: this.allCoinsCollectedDefault, type: "sound" },
       { key: "dialogueSound", descriptiveName: "dialogue", value: this.dialogueSoundDefault, type: "sound" },
       { key: "bubble", descriptiveName: "water", value: this.bubbleDefault, type: "sound" },

@@ -50,6 +50,7 @@ class SpritePixelArrays {
       collidesWithWalls: "collidesWithWalls",
       fireBallsAmount: "fireBallsAmount",
       powerUpType: "PowerUp",
+      activationTriggerType: "activationTrigger"
     };
 
     this.backgroundSprites = [
@@ -523,7 +524,7 @@ class SpritePixelArrays {
       name: ObjectTypes.FINISH_FLAG,
       descriptiveName: "Finish flag",
       changeableAttributes: [
-        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false },
+        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, hidden: true },
       ],
       description: "The goal of a level. If you touch it, by default you continue to the next level. If you want to specify a custom exit to a different level, click on a set finish flag again. <br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Finish flag closed'} }, true)\">Closed finish flag sprite</span>",
@@ -561,6 +562,58 @@ class SpritePixelArrays {
             ["fdfdfd", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["fdfdfd", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["fdfdfd", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+
+
+    this.DOOR_SPRITE = {
+      name: ObjectTypes.DOOR,
+      descriptiveName: "Door",
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, hidden: true },
+        { name: this.changeableAttributeTypes.activationTriggerType, defaultValue: DOOR_TRIGGERS.UP, 
+          formElement: this.changeableAttributeFormElements.select, values: [DOOR_TRIGGERS.UP, DOOR_TRIGGERS.DOWN] },
+      ],
+      description: "A door to enter and exit from. By default, the player must press up to enter. After placing it, click on it again to set where it should lead. <br/>" +
+        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Locked Door'} }, true)\">Locked door sprite</span>",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "E3E3E3", "E37100", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "AA5500", "E37100", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "8E8E8E"],
+          ]
+      }
+      ]
+    };
+
+    this.LOCKED_DOOR_SPRITE = {
+      name: ObjectTypes.LOCKED_DOOR,
+      descriptiveName: "Locked Door",
+      hiddenSprite: true,
+      description: "This sprite is displayed for a door when it's locked. After placing a door, click on it again to set its lock condition. <br/>" +
+        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Door'} }, true)\">Door sprite</span>",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "E37100", "AAAAAA", "E37100", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "AAAAAA", "AA5500", "AAAAAA", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "AAAAAA", "AAAAAA", "AAAAAA", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "AAAAAA", "000000", "AAAAAA", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "AAAAAA", "AAAAAA", "AAAAAA", "8E8E8E"],
+            ["8E8E8E", "E37100", "E37100", "E37100", "AA5500", "AA5500", "AA5500", "8E8E8E"]
           ]
       }
       ]

@@ -40,6 +40,7 @@ class PlayMode {
 
         if (!player.death && this.currentPauseFrames === 0 && !DialogueHandler.active && !PauseHandler.paused) {
             this.updateGeneralFrameCounter();
+            PlayerInteractionHandler.clearInteractionTargets();
             var walking = WalkHandler.walkHandler();
             FallHandler.coyoteFrameHandler();
             JumpHandler.wallJumpAllowedHandler();
@@ -55,7 +56,10 @@ class PlayMode {
             FallHandler.correctMaxYSpeed();
             player.resetTemporaryAttributes();
             CharacterCollision.checkCollisionsWithWorld(player, true);
+            PlayerInteractionHandler.updatePlayerTarget(player);
+            PlayerInteractionHandler.updateOverlay();
         }
+        PlayerInteractionHandler.handleInput(); // still need to handle pause and transitions and death and reset
     }
 
     static updateGeneralFrameCounter() {
@@ -70,13 +74,14 @@ class PlayMode {
             PauseHandler.handlePause();
         }
         else if (this.currentPauseFrames > 0) {
-            this.currentPauseFrames--
+            this.currentPauseFrames--;
             if (player.death) {
                 if (this.currentPauseFrames === this.deathPauseFrames / 2) {
                     this.player.resetPosition(true);
                     this.player.invisible = false;
                     this.player.death = false;
                     tileMapHandler.resetDynamicObjects();
+                    PlayerInteractionHandler.reset(false);
                 }
             }
             if (this.animateToNextLevel) {
@@ -86,8 +91,21 @@ class PlayMode {
         else {
             if (this.animateToNextLevel) {
                 this.animateToNextLevel = false;
+                PlayerInteractionHandler.reset(false);
             }
             this.currentPauseFrames = 0;
+        }
+    }
+
+    static playerExitLevel(customExit) {
+        this.animateToNextLevel = true;
+        this.currentPauseFrames = TransitionAnimationHandler.animationFrames;
+        this.customExit = customExit;
+        PlayerInteractionHandler.blockInteractionsFor('level-exit');
+
+        if (this.tilemapHandler.currentLevel === WorldDataHandler.levels.length - 2 && !customExit
+            && !WorldDataHandler.insideTool && SoundHandler.currentSong) {
+            SoundHandler.fadeAudio(SoundHandler.currentSong);
         }
     }
 
@@ -95,6 +113,7 @@ class PlayMode {
         if (this.animateToNextLevel) {
             return null;
         }
+        PlayerInteractionHandler.blockInteractionsFor('player-death');
         SoundHandler.hit.stopAndPlay();
         //Camera.setScreenShake(10, 2);
         this.currentPauseFrames = this.deathPauseFrames;
