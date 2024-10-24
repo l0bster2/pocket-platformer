@@ -311,7 +311,7 @@ class Player {
 
         AnimationHelper.checkSquishUpdate(this);
 
-        if (this.death) {
+        if (this.death && Game.playMode === Game.PLAY_MODE) {
             this.displayDeathAnimation(animationIndex);
         }
 
