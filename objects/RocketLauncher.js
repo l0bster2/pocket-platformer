@@ -6,6 +6,9 @@ class RocketLauncher extends ShootingObject {
         this.resetObject();
         const angle = this.tileMapHandlerplayer ? MathHelpers.getAngle(this.tileMapHandlerplayer.x, this.tileMapHandler.player.y, this.x, this.y) : 0;
         this.seeingPlayer = TilemapHelpers.doTwoObjectsSeeEachOther(this, player, this.tileMapHandler, angle);
+        if(typeof this[SpritePixelArrays.changeableAttributeTypes.collidesWithWalls] === 'undefined') {
+            this.collidesWithWalls = true;
+        }
     }
 
     resetObject() {
