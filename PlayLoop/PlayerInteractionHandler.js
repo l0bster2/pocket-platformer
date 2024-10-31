@@ -8,6 +8,13 @@ class PlayerInteractionHandler {
     static justPressed = {};
     static recentlyBlocked = false;
 
+    // putting TRIGGERS here instead of declaring a const because the export process only supports classes?
+    static TRIGGERS = {
+        UP_BUTTON : 'btn-up',
+        DOWN_BUTTON : 'btn-down',
+        AUTO : 'auto'
+    };
+
     static reset(includeControls) {
         this.currentTarget = null;
         this.framesOnTarget = 0;
@@ -62,7 +69,7 @@ class PlayerInteractionHandler {
             return false;
         } 
         if (target.type === ObjectTypes.DOOR) {
-            return (target.activationTrigger !== DOOR_TRIGGERS.UP);
+            return (target.activationTrigger !== this.TRIGGERS.UP);
         }
     }
 
@@ -103,13 +110,13 @@ class PlayerInteractionHandler {
             let triggerType = this.currentTarget.activationTrigger;
             let cueEntrance = false;
 
-            if (triggerType === DOOR_TRIGGERS.AUTOMATIC) {
+            if (triggerType === this.TRIGGERS.AUTOMATIC) {
                 cueEntrance = true;
             }
-            else if (triggerType === DOOR_TRIGGERS.UP) {
+            else if (triggerType === this.TRIGGERS.UP) {
                 cueEntrance = this.justPressed.up;
             }
-            else if (triggerType === DOOR_TRIGGERS.DOWN) {
+            else if (triggerType === this.TRIGGERS.DOWN) {
                 cueEntrance = this.justPressed.down;
             }
             
@@ -166,11 +173,11 @@ class PlayerInteractionHandler {
         }
 
         if ((this.framesOnTarget % 60) < 30) {
-            if (target.activationTrigger && target.activationTrigger === DOOR_TRIGGERS.UP) {
+            if (target.activationTrigger && target.activationTrigger === this.TRIGGERS.UP) {
                 this.drawUpArrow(target.x, target.y - target.tileSize);
             } 
             else {
-                this.drawDownArrow(target.x, target.y - target.tileSize);
+                this.drawDownArrow(target.x, target.y - target.tileSize); // fix this showing up for NPCs (who should have triggers too actually)
             }
         }
     }

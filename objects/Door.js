@@ -1,8 +1,3 @@
-const DOOR_TRIGGERS = {
-    AUTOMATIC: 'auto',
-    UP: 'up',
-    DOWN: 'down'
-}
 class Door extends FinishFlag {
     constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
         super(x, y, tileSize, type, tilemapHandler, extraAttributes);
@@ -14,7 +9,7 @@ class Door extends FinishFlag {
 
         // new
         if(!extraAttributes?.activationTrigger) {
-            this.addChangeableAttribute("activationTrigger", DOOR_TRIGGERS.UP);
+            this.addChangeableAttribute("activationTrigger", PlayerInteractionHandler.TRIGGERS.UP);
         }
         if(!extraAttributes?.flagIndex) {
             this.flagIndex = this.makeid(3);
