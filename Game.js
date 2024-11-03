@@ -88,10 +88,6 @@ class Game {
             return null;
         }
         if (this.playMode === this.BUILD_MODE) {
-            /*Camera.viewport.width = Camera.viewport.width / 2;
-            Camera.viewport.height = Camera.viewport.height / 2;
-            Camera.viewport.halfWidth = Camera.viewport.halfWidth / 2;
-            Camera.viewport.halfHeight = Camera.viewport.halfHeight / 2;*/
             this.playMode = this.PLAY_MODE;
             this.executeGameMode();
             canvas.removeEventListener("mousemove", (e) => { Controller.mouseMove(e) });

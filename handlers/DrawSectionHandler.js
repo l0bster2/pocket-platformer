@@ -352,7 +352,6 @@ class DrawSectionHandler {
         Helpers.debounce(() => {
             this.redrawOutsideCanvases();
         }, 300);
-        console.log(sprite.animation[animationFrame].sprite);
     }
 
     static clickedWithEyeDropper(posInArray) {
