@@ -9,7 +9,7 @@ class Door extends FinishFlag {
 
         // new
         if(!extraAttributes?.activationTrigger) {
-            this.addChangeableAttribute("activationTrigger", PlayerInteractionHandler.TRIGGERS.UP);
+            this.addChangeableAttribute("activationTrigger", PlayerInteractionHandler.TRIGGERS.UP_BUTTON);
         }
         if(!extraAttributes?.flagIndex) {
             this.flagIndex = this.makeid(3);

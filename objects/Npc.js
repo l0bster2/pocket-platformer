@@ -41,8 +41,4 @@ class Npc extends InteractiveLevelObject {
             player.yspeed = 0;
         }
     }
-
-    draw(spriteCanvas) {
-        super.draw(spriteCanvas);
-    }
 }

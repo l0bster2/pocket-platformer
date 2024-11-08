@@ -12,7 +12,7 @@ class PlayerInteractionHandler {
     static TRIGGERS = {
         UP_BUTTON : 'btn-up',
         DOWN_BUTTON : 'btn-down',
-        AUTO : 'auto'
+        AUTOMATIC : 'auto' // automaticaly triggered by overlap
     };
 
     static reset(includeControls) {
@@ -66,10 +66,11 @@ class PlayerInteractionHandler {
         }
 
         if (target.type === ObjectTypes.NPC) {
+            // original NPC behavior uses jump button to trigger dialog
             return false;
         } 
         if (target.type === ObjectTypes.DOOR) {
-            return (target.activationTrigger !== this.TRIGGERS.UP);
+            return (target.activationTrigger !== this.TRIGGERS.UP_BUTTON);
         }
     }
 
@@ -102,6 +103,8 @@ class PlayerInteractionHandler {
         }
 
         if (this.currentTarget.type === ObjectTypes.NPC) {
+            // original NPC behavior is to trigger dialog with jump button
+            // (would be nice to make it configurable in the future, so it doesn't block jumping)
             if (this.justPressed.jump) {
                 this.currentTarget.startDialogue();
             }
@@ -113,10 +116,10 @@ class PlayerInteractionHandler {
             if (triggerType === this.TRIGGERS.AUTOMATIC) {
                 cueEntrance = true;
             }
-            else if (triggerType === this.TRIGGERS.UP) {
+            else if (triggerType === this.TRIGGERS.UP_BUTTON) {
                 cueEntrance = this.justPressed.up;
             }
-            else if (triggerType === this.TRIGGERS.DOWN) {
+            else if (triggerType === this.TRIGGERS.DOWN_BUTTON) {
                 cueEntrance = this.justPressed.down;
             }
             
@@ -173,11 +176,11 @@ class PlayerInteractionHandler {
         }
 
         if ((this.framesOnTarget % 60) < 30) {
-            if (target.activationTrigger && target.activationTrigger === this.TRIGGERS.UP) {
-                this.drawUpArrow(target.x, target.y - target.tileSize);
+            if (target.activationTrigger && target.activationTrigger === this.TRIGGERS.DOWN_BUTTON) {
+                this.drawDownArrow(target.x, target.y - target.tileSize);
             } 
-            else {
-                this.drawDownArrow(target.x, target.y - target.tileSize); // fix this showing up for NPCs (who should have triggers too actually)
+            else if (!target.playAutomatically) { // this is an NPC quality -- it would be better to make it use standard triggers with doors
+                this.drawUpArrow(target.x, target.y - target.tileSize);
             }
         }
     }
