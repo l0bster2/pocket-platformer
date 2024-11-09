@@ -247,12 +247,15 @@ class TileMapHandler {
     }
 
     resetPlayerStartPoint() {
-        const levelObjects = this.levelObjects;
-        const levelEntrances = levelObjects.filter((levelObject) => {
-            return levelObject.type === ObjectTypes.START_FLAG || levelObject.type === ObjectTypes.DOOR;
+        const levelEntrances = this.levelObjects.filter((levelObject) => {
+            return (levelObject.type === ObjectTypes.START_FLAG || levelObject.type === ObjectTypes.DOOR);
         });
-        const standardEntrance = levelEntrances.find(startFlag => startFlag.extraAttributes?.defaultStartFlag);
-        const fallbackEntrance = levelEntrances[levelEntrances.length - 1];
+        const fallbackEntrance =  levelEntrances.find((levelObject) => {
+            return (levelObject.type === ObjectTypes.START_FLAG)
+        }) || levelEntrances[levelEntrances.length - 1];
+        const standardEntrance = levelEntrances.find((entrance) => {
+            return entrance.extraAttributes?.levelStartFlag;
+        });
         let destinationData = PlayMode.customExit; // NOTE: customExit might be null/undefined
         let destinationObject = null;
 
