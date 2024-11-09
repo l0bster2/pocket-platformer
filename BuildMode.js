@@ -379,7 +379,7 @@ class BuildMode {
                             const selectWrapper = ObjectsTooltipElementsRenderer.createSelectForChangeableAttribute(attribute, currentObject);
                             content.appendChild(selectWrapper);
                         }
-                        else {
+                        else if (attribute.formElement !== SpritePixelArrays.changeableAttributeFormElements.custom) {
                             const sliderWrapper = ObjectsTooltipElementsRenderer.createSliderForChangeableAttribute(attribute, currentObject);
                             content.appendChild(sliderWrapper);
                         }

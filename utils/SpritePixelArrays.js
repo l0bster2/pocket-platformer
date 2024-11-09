@@ -16,6 +16,7 @@ class SpritePixelArrays {
       toggle: "toggle",
       checkbox: "checkbox",
       select: "select",
+      custom: "custom"
     }
 
     this.sometimesPassableBlocks = [
@@ -524,7 +525,7 @@ class SpritePixelArrays {
       name: ObjectTypes.FINISH_FLAG,
       descriptiveName: "Finish flag",
       changeableAttributes: [
-        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, hidden: true },
+        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, formElement: this.changeableAttributeFormElements.custom },
       ],
       description: "The goal of a level. If you touch it, by default you continue to the next level. If you want to specify a custom exit to a different level, click on a set finish flag again. <br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Finish flag closed'} }, true)\">Closed finish flag sprite</span>",
@@ -573,9 +574,9 @@ class SpritePixelArrays {
       name: ObjectTypes.DOOR,
       descriptiveName: "Door",
       changeableAttributes: [
-        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, hidden: true },
+        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, formElement: this.changeableAttributeFormElements.custom },
         { name: this.changeableAttributeTypes.activationTriggerType, defaultValue: PlayerInteractionHandler.TRIGGERS.UP_BUTTON, 
-          hidden: true,formElement: this.changeableAttributeFormElements.select, values: [PlayerInteractionHandler.TRIGGERS.UP_BUTTON, PlayerInteractionHandler.TRIGGERS.DOWN_BUTTON] },
+          formElement: this.changeableAttributeFormElements.custom },
       ],
       description: "A door to enter and exit from. By default, the player must press up to enter. After placing it, click on it again to set where it should lead. <br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Locked Door'} }, true)\">Locked door sprite</span>",
