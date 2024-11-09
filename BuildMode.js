@@ -376,7 +376,7 @@ class BuildMode {
                             content.appendChild(checkboxWrapper);
                         }
                         else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.select) {
-                            const selectWrapper = ObjectsTooltipElementsRenderer.createSelect(attribute, currentObject);
+                            const selectWrapper = ObjectsTooltipElementsRenderer.createSelectForChangeableAttribute(attribute, currentObject);
                             content.appendChild(selectWrapper);
                         }
                         else {

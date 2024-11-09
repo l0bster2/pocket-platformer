@@ -140,8 +140,23 @@ class ObjectsTooltipElementsRenderer {
         const collectiblesLockCheckbox = this.createCheckbox(changeableAttribute,
             "Collectibles needed for opening",
             currentObject);
+        
+        const activationTriggerDropdown = this.createSelect(
+            'Trigger',
+            [
+                {title: 'Up Button', value: PlayerInteractionHandler.TRIGGERS.UP_BUTTON},
+                {title: 'Down Button', value: PlayerInteractionHandler.TRIGGERS.DOWN_BUTTON}
+            ],
+            PlayerInteractionHandler.TRIGGERS.UP_BUTTON,
+            (event) => {
+                const value = event.currentTarget.value;
+                currentObject.addChangeableAttribute('activationTrigger', value);
+            }
+        );
 
-        finishFlagWrapper.append(idWrapper, connectionPicker, collectiblesLockCheckbox);
+        activationTriggerDropdown.classList.add('subSection');
+
+        finishFlagWrapper.append(idWrapper, connectionPicker, collectiblesLockCheckbox, activationTriggerDropdown);
 
         return finishFlagWrapper;
     }
@@ -445,31 +460,40 @@ class ObjectsTooltipElementsRenderer {
         dialogueWrapper.appendChild(checkBoxWrapper);
     }
 
-    static createSelect(attribute, currentObject) {
+    static createSelectForChangeableAttribute(attribute, currentObject) {
+        return this.createSelect(
+            attribute.name, 
+            attribute.values.map((value) => {return {title: value, value: value}}),
+            currentObject[attribute.name],
+            (event) => {
+                const value = event.currentTarget.value;
+                currentObject.addChangeableAttribute(attribute.name, value);
+            }
+        );
+    }
+
+    static createSelect(label, options, selectedValue, changeHandler) {
         const template = document.createElement("div");
-        const label = document.createElement("label");
-        label.for = "elementSelect";
-        label.className = "leftLabel";
-        label.innerHTML = attribute.name;
-        template.appendChild(label);
+        const labelEl = document.createElement("label");
+        labelEl.for = "elementSelect";
+        labelEl.className = "leftLabel";
+        labelEl.innerHTML = label;
+        template.appendChild(labelEl);
         const selectEl = document.createElement("select");
         selectEl.name = "elementSelect";
         selectEl.id = "elementSelect";
-        selectEl.onchange = (event) => {
-            const value = event.currentTarget.value;
-            currentObject.addChangeableAttribute(attribute.name, value);
-        }
+        selectEl.onchange = changeHandler;
 
         template.appendChild(selectEl);
-        attribute.values.map(value => {
+        options.forEach((option) => {
             const optionEl = document.createElement("option");
-            optionEl.value = value;
-            optionEl.innerHTML = value;
+            optionEl.value = option.value;
+            optionEl.innerHTML = option.title;
             selectEl.appendChild(optionEl);
-            if(value == currentObject[attribute.name]) {
+            if (option.value == selectedValue) {
                 optionEl.selected = true;
             }
-        })
+        });
         return template;
     }
 }

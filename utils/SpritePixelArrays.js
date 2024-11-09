@@ -575,7 +575,7 @@ class SpritePixelArrays {
       changeableAttributes: [
         { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, hidden: true },
         { name: this.changeableAttributeTypes.activationTriggerType, defaultValue: PlayerInteractionHandler.TRIGGERS.UP_BUTTON, 
-          formElement: this.changeableAttributeFormElements.select, values: [PlayerInteractionHandler.TRIGGERS.UP_BUTTON, PlayerInteractionHandler.TRIGGERS.DOWN_BUTTON] },
+          hidden: true,formElement: this.changeableAttributeFormElements.select, values: [PlayerInteractionHandler.TRIGGERS.UP_BUTTON, PlayerInteractionHandler.TRIGGERS.DOWN_BUTTON] },
       ],
       description: "A door to enter and exit from. By default, the player must press up to enter. After placing it, click on it again to set where it should lead. <br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Locked Door'} }, true)\">Locked door sprite</span>",
