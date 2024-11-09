@@ -9,6 +9,7 @@ class LevelNavigationHandler {
         this.adaptVisibilityOfButtons();
         this.adaptLevelList();
         this.copiedLevel = {};
+        this.copiedLevelIndex = -1;
     }
 
     static createNewEmptyLevel() {
@@ -26,10 +27,14 @@ class LevelNavigationHandler {
         this.adaptVisibilityOfButtons();
     }
 
+    static objectIsExit(levelObject) {
+        return (levelObject.type === ObjectTypes.FINISH_FLAG || levelObject.type === ObjectTypes.DOOR);
+    }
+
     static adjustObjectsToAddedLevel(nextLevel) {
         WorldDataHandler.levels.forEach(level => {
             level.levelObjects.forEach(object => {
-                if (object.type === ObjectTypes.FINISH_FLAG && object?.extraAttributes?.customExit?.levelIndex >= nextLevel) {
+                if (this.objectIsExit(object) && object.extraAttributes?.customExit?.levelIndex >= nextLevel) {
                     object.extraAttributes.customExit.levelIndex += 1;
                 }
             });
@@ -139,6 +144,7 @@ class LevelNavigationHandler {
         TooltipHandler.closeTooltip(e, "levelHelpersTooltip");
         this.copyNotification.classList.remove("back");
         this.copyNotification.classList.add("move");
+        this.copiedLevelIndex = tileMapHandler.currentLevel;
         this.copiedLevel = JSON.parse(JSON.stringify(WorldDataHandler.levels[tileMapHandler.currentLevel]));
         window.setTimeout(() => {
             this.copyNotification.style.display = "none";
@@ -157,7 +163,14 @@ class LevelNavigationHandler {
     static pasteLevel(e) {
         TooltipHandler.closeTooltip(e, "levelHelpersTooltip");
         ModalHandler.closeModal('pasteLevelModal');
-        WorldDataHandler.levels[tileMapHandler.currentLevel] = JSON.parse(JSON.stringify(this.copiedLevel));
+        const newLevel = JSON.parse(JSON.stringify(this.copiedLevel));
+        // fix same-level custom exits (doors/flags that lead to other doors/flags within the same level)
+        newLevel.levelObjects.forEach((levelObj) => {
+            if (levelObj.extraAttributes?.customExit?.levelIndex === this.copiedLevelIndex) {
+                levelObj.extraAttributes.customExit.levelIndex = tileMapHandler.currentLevel;
+            }
+        });
+        WorldDataHandler.levels[tileMapHandler.currentLevel] = newLevel
         tileMapHandler.resetLevel(tileMapHandler.currentLevel);
     }
 

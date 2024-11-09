@@ -54,7 +54,7 @@ class WorldDataHandler {
         }
 
         const levelObjects = [
-            { ...this.initialPlayerPosition, type: ObjectTypes.START_FLAG },
+            { ...this.initialPlayerPosition, type: ObjectTypes.START_FLAG, extraAttributes:{levelStartFlag:true} },
             { x: exampleLevelTileData[0].length-3, y: 5, type: ObjectTypes.FINISH_FLAG }
         ];
 

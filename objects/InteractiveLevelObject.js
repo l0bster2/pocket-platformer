@@ -42,6 +42,7 @@ class InteractiveLevelObject extends LevelObject {
     }
 
     addChangeableAttribute(attribute, value, levelToChange = null) {
+        // Attaches the attribute + value to the LevelObject that represents this instance
         const levelIndex = levelToChange || tileMapHandler.currentLevel;
         this[attribute] = value;
         if (WorldDataHandler.levels[levelIndex].levelObjects) {

@@ -333,47 +333,64 @@ class BuildMode {
                 content.appendChild(heading);
             }
 
-            if (currentObject?.type === ObjectTypes.START_FLAG) {
-                const startFlagToolTip = ObjectsTooltipElementsRenderer.startFlagToolTip(currentObject);
-                content.appendChild(startFlagToolTip);
-            }
-            else if (currentObject?.type === ObjectTypes.FINISH_FLAG) {
-                const finishFlagToolTip = ObjectsTooltipElementsRenderer.finishFlagToolTip(currentObject, this.tileMapHandler);
-                content.appendChild(finishFlagToolTip);
-            }
-            if (spriteObject.directions && currentObject?.type !== ObjectTypes.PATH_POINT) {
-                const rotationWrapper = ObjectsTooltipElementsRenderer.createRotationHandlerForObjects(currentObject, spriteObject.directions);
-                content.appendChild(rotationWrapper);
-            }
-            if (spriteObject.changeableAttributes && currentObject?.type !== ObjectTypes.FINISH_FLAG) {
-                spriteObject.changeableAttributes.forEach(attribute => {
-                    if (attribute.name === SpritePixelArrays.changeableAttributeTypes.dialogue) {
-                        const dialogueWindow = ObjectsTooltipElementsRenderer.createDialogueWindow(attribute, currentObject);
-                        content.appendChild(dialogueWindow);
-                    }
-                    else if (attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.toggle) {
-                        const toggleSwitch = ObjectsTooltipElementsRenderer.createToggleSwitch(attribute, currentObject);
-                        content.appendChild(toggleSwitch);
-                    }
-                    else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.checkbox) {
-                        const checkboxWrapper = ObjectsTooltipElementsRenderer.createCheckbox(attribute, attribute.checkboxDescription, currentObject);
-                        content.appendChild(checkboxWrapper);
-                    }
-                    else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.select) {
-                        const selectWrapper = ObjectsTooltipElementsRenderer.createSelect(attribute, currentObject);
-                        content.appendChild(selectWrapper);
-                    }
-                    else {
-                        const sliderWrapper = ObjectsTooltipElementsRenderer.createSliderForChangeableAttribute(attribute, currentObject);
-                        content.appendChild(sliderWrapper);
-                    }
-                })
-            }
-            if(index != currentObjects.length - 1) {
-                const lineBreakDiv = document.createElement("div");
-                lineBreakDiv.className = 'subSection';
-                content.appendChild(lineBreakDiv);
-            }
+            currentObjects.forEach((currentObject, index) => {
+                const spriteObject = SpritePixelArrays.getSpritesByName(currentObject.type)[0];
+                
+                // If mutliple objects or only path, clarify which properties belong wo which object
+                if(objectsInlcudePath) {
+                    const heading = ObjectsTooltipElementsRenderer.createSmallHeading(`${spriteObject.descriptiveName} properties:`);
+                    content.appendChild(heading);
+                }
+
+                if (currentObject?.type === ObjectTypes.START_FLAG) {
+                    const startFlagToolTip = ObjectsTooltipElementsRenderer.startFlagToolTip(currentObject);
+                    content.appendChild(startFlagToolTip);
+                }
+                else if (currentObject?.type === ObjectTypes.FINISH_FLAG) {
+                    const finishFlagToolTip = ObjectsTooltipElementsRenderer.finishFlagToolTip(currentObject, this.tileMapHandler);
+                    content.appendChild(finishFlagToolTip);
+                }
+                else if (currentObject?.type === ObjectTypes.DOOR) {
+                    const doorToolTip = ObjectsTooltipElementsRenderer.doorToolTip(currentObject);
+                    content.appendChild(doorToolTip);
+                }
+                if (spriteObject.directions && currentObject?.type !== ObjectTypes.PATH_POINT) {
+                    const rotationWrapper = ObjectsTooltipElementsRenderer.createRotationHandlerForObjects(currentObject, spriteObject.directions);
+                    content.appendChild(rotationWrapper);
+                }
+                if (spriteObject.changeableAttributes) {
+                    spriteObject.changeableAttributes.forEach(attribute => {
+                        if (attribute.hidden === true) {
+                            return;
+                        }
+                        if (attribute.name === SpritePixelArrays.changeableAttributeTypes.dialogue) {
+                            const dialogueWindow = ObjectsTooltipElementsRenderer.createDialogueWindow(attribute, currentObject);
+                            content.appendChild(dialogueWindow);
+                        }
+                        else if (attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.toggle) {
+                            const toggleSwitch = ObjectsTooltipElementsRenderer.createToggleSwitch(attribute, currentObject);
+                            content.appendChild(toggleSwitch);
+                        }
+                        else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.checkbox) {
+                            const checkboxWrapper = ObjectsTooltipElementsRenderer.createCheckbox(attribute, attribute.checkboxDescription, currentObject);
+                            content.appendChild(checkboxWrapper);
+                        }
+                        else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.select) {
+                            const selectWrapper = ObjectsTooltipElementsRenderer.createSelectForChangeableAttribute(attribute, currentObject);
+                            content.appendChild(selectWrapper);
+                        }
+                        else if (attribute.formElement !== SpritePixelArrays.changeableAttributeFormElements.custom) {
+                            const sliderWrapper = ObjectsTooltipElementsRenderer.createSliderForChangeableAttribute(attribute, currentObject);
+                            content.appendChild(sliderWrapper);
+                        }
+                    })
+                }
+                if(index != currentObjects.length - 1) {
+                    const lineBreakDiv = document.createElement("div");
+                    lineBreakDiv.className = 'subSection';
+                    content.appendChild(lineBreakDiv);
+                }
+            })
         })
 
         const submitButtonWrapper = document.createElement("div");
@@ -387,7 +404,7 @@ class BuildMode {
 
         const xPos = canvasOffsetLeft + (tilePosX * this.tileMapHandler.tileSize) - 120 - Camera.viewport.left;
         const yPos = canvasOffsetTop + (tilePosY * this.tileMapHandler.tileSize) + this.tileMapHandler.tileSize + 6 - Camera.viewport.top;
-        TooltipHandler.repositionAndShowTooltip("canvasObjectToolTip", yPos, xPos, heading, content)
+        TooltipHandler.repositionAndShowTooltip("canvasObjectToolTip", yPos, xPos, heading, content);
     }
 
     static getObjectsCurrentlyHoveringOver(tilePosX, tilePosY) {

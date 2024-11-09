@@ -2,41 +2,23 @@ class Npc extends InteractiveLevelObject {
 
     constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
         super(x, y, tileSize, type, 0, extraAttributes);
-        this.upReleased = true;
         this.key = this.makeid(5);
-        this.arrowUpFrameIndex = 0;
-        this.upButtonReleased = false;
-        this.collidedWithPlayer = false;
+        this.playedOnce = false;
     }
 
     resetObject() {
-        this.collidedWithPlayer = false;
+        this.playedOnce = false;
     }
 
     collisionEvent() {
         if(this.playAutomatically) {
-            if(!this.collidedWithPlayer) {
-                this.collidedWithPlayer = true;
-                player.collidingWithNpcId = this.key;
+            if(!this.playedOnce) {
+                this.playedOnce = true;
                 this.startDialogue();
             }
         }
         else {
-            player.collidingWithNpcId = this.key;
-            this.arrowUpFrameIndex++;
-            const frameModulo = this.arrowUpFrameIndex % 60;
-            if (frameModulo < 30) {
-                DialogueHandler.showDialogueUpArrow(this.x, this.y - this.tileSize);
-            }
-            if (!Controller.jump) {
-                this.upButtonReleased = true;
-            }
-            else {
-                if (this.upButtonReleased && !DialogueHandler.active) {
-                    this.startDialogue();
-                }
-                this.upButtonReleased = false;
-            }
+            PlayerInteractionHandler.registerInteractionTarget(this);
         }
     }
 
@@ -49,6 +31,7 @@ class Npc extends InteractiveLevelObject {
             }
         });
         if (parsedDialogue.length > 0) {
+            PlayerInteractionHandler.blockInteractionsFor("dialogue");
             DialogueHandler.dialogue = parsedDialogue;
             DialogueHandler.active = true;
             DialogueHandler.calculateDialogueWindowPosition();
@@ -57,14 +40,5 @@ class Npc extends InteractiveLevelObject {
             player.xspeed = 0;
             player.yspeed = 0;
         }
-    }
-
-    draw(spriteCanvas) {
-        if (player.collidingWithNpcId === this.key && !Collision.objectsColliding(player, this)) {
-            player.collidingWithNpcId = null;
-            this.arrowUpFrameIndex = 0;
-            this.upButtonReleased = false;
-        }
-        super.draw(spriteCanvas);
     }
 }

@@ -16,6 +16,7 @@ class SpritePixelArrays {
       toggle: "toggle",
       checkbox: "checkbox",
       select: "select",
+      custom: "custom"
     }
 
     this.sometimesPassableBlocks = [
@@ -50,6 +51,7 @@ class SpritePixelArrays {
       collidesWithWalls: "collidesWithWalls",
       fireBallsAmount: "fireBallsAmount",
       powerUpType: "PowerUp",
+      activationTriggerType: "activationTrigger"
     };
 
     this.backgroundSprites = [
@@ -523,7 +525,7 @@ class SpritePixelArrays {
       name: ObjectTypes.FINISH_FLAG,
       descriptiveName: "Finish flag",
       changeableAttributes: [
-        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false },
+        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, formElement: this.changeableAttributeFormElements.custom },
       ],
       description: "The goal of a level. If you touch it, by default you continue to the next level. If you want to specify a custom exit to a different level, click on a set finish flag again. <br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Finish flag closed'} }, true)\">Closed finish flag sprite</span>",
@@ -561,6 +563,58 @@ class SpritePixelArrays {
             ["fdfdfd", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["fdfdfd", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["fdfdfd", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+
+
+    this.DOOR_SPRITE = {
+      name: ObjectTypes.DOOR,
+      descriptiveName: "Door",
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false, formElement: this.changeableAttributeFormElements.custom },
+        { name: this.changeableAttributeTypes.activationTriggerType, defaultValue: PlayerInteractionHandler.TRIGGERS.UP_BUTTON, 
+          formElement: this.changeableAttributeFormElements.custom },
+      ],
+      description: "A door to enter and exit from. By default, the player must press up to enter. After placing it, click on it again to set where it should lead. <br/>" +
+        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Locked Door'} }, true)\">Locked door sprite</span>",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["717171", "717171", "717171", "717171", "717171", "717171", "717171", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "55391C", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "55391C", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "55391C", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "AAAAAA", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "2B1C0E", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "55391C", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "55391C", "55391C", "717171"]
+          ]
+      }
+      ]
+    };
+
+    this.LOCKED_DOOR_SPRITE = {
+      name: ObjectTypes.LOCKED_DOOR,
+      descriptiveName: "Locked Door",
+      hiddenSprite: true,
+      description: "This sprite is displayed for a door when it's locked. After placing a door, click on it again to set its lock condition. <br/>" +
+        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Door'} }, true)\">Door sprite</span>",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["717171", "717171", "717171", "717171", "717171", "717171", "717171", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "55391C", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "55391C", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "55391C", "8E8E8E", "55391C", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "8E8E8E", "8E8E8E", "8E8E8E", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "8E8E8E", "000000", "8E8E8E", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "8E8E8E", "8E8E8E", "8E8E8E", "717171"],
+            ["717171", "55391C", "55391C", "55391C", "2B1C0E", "2B1C0E", "2B1C0E", "717171"]
           ]
       }
       ]
