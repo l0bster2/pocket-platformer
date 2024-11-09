@@ -248,31 +248,28 @@ class TileMapHandler {
 
     resetPlayerStartPoint() {
         const levelObjects = this.levelObjects;
-        const startFlagsInLevel = levelObjects.filter(levelObject => levelObject.type === ObjectTypes.START_FLAG);
-        const doorsInLevel = levelObjects.filter(levelObject => levelObject.type === ObjectTypes.DOOR);
-        const defaultStartFlag = startFlagsInLevel.find(startFlag => startFlag.extraAttributes?.defaultStartFlag);
-        const fallbackStartFlag = startFlagsInLevel[startFlagsInLevel.length - 1];
+        const levelEntrances = levelObjects.filter((levelObject) => {
+            return levelObject.type === ObjectTypes.START_FLAG || levelObject.type === ObjectTypes.DOOR;
+        });
+        const standardEntrance = levelEntrances.find(startFlag => startFlag.extraAttributes?.defaultStartFlag);
+        const fallbackEntrance = levelEntrances[levelEntrances.length - 1];
         let destinationData = PlayMode.customExit; // NOTE: customExit might be null/undefined
         let destinationObject = null;
 
         if (destinationData?.flagIndex) {
-            if (destinationData.type === ObjectTypes.DOOR) {
-                destinationObject = doorsInLevel.find((door) => {
-                    return door.extraAttributes?.flagIndex === PlayMode.customExit.flagIndex;
-                });
-            } else if (!destinationData.type || destinationData.type === ObjectTypes.START_FLAG) {
-                destinationObject = startFlagsInLevel.find((startFlag) => {
-                    return startFlag.extraAttributes?.flagIndex === PlayMode.customExit.flagIndex
-                });
-            }
+            // note: old data (from before doors existed) does not include destinationData.type
+            let destinationType = destinationData.type || ObjectTypes.startFlag;
+            destinationObject = doorsInLevel.find((entrance) => {
+                return entrance.type === destinationType && entrance.extraAttributes?.flagIndex === PlayMode.customExit.flagIndex;
+            });
 
             if (!destinationObject) {
                 console.warn('warning: could not find the intended flag/door to start at. will try to use a fallback...');
-                destinationObject = defaultStartFlag || fallbackStartFlag;
+                destinationObject = standardEntrance || fallbackEntrance;
             }
         }
         else {
-            destinationObject = defaultStartFlag || fallbackStartFlag;
+            destinationObject = standardEntrance || fallbackEntrance;
         }
 
         if (destinationObject) {
