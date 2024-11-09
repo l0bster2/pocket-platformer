@@ -33,11 +33,8 @@ class Door extends FinishFlag {
         let targetObjectType = customExit.type;
         let targetFlagIndex = customExit.flagIndex;
 
-        if (targetObjectType !== ObjectTypes.DOOR) {
-            return;
-        }
-        if (!reciprocatingLevelIndex) {
-            // (in this case, this door is probably the one who is reciprocating)
+        if (targetObjectType !== ObjectTypes.DOOR || reciprocatingLevelIndex === null || reciprocatingLevelIndex === undefined) {
+            // note: if there is no reciprocatingLevelIndex, this object is probably the one who is reciprocating
             return;
         }
 

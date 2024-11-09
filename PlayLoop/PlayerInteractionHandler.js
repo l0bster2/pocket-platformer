@@ -82,7 +82,7 @@ class PlayerInteractionHandler {
     }
 
     static handleInput() {
-        // should probably merge updateControl stuff into Controller and read from there instead?
+        // in future: should probably merge updateControl stuff into Controller and read from there instead?
         // controls need to be updated every frame
         this.updateControl('jump');
         this.updateControl('up');
@@ -135,15 +135,12 @@ class PlayerInteractionHandler {
             this.currentTarget = null;
             return;
         }
-
-        let playerX = player.x;
-        let playerY = player.y;
         let minDist = Infinity;
         let nearestTarget = null;
 
         this.registeredTargets.forEach((target) => {
-            let xDist = target.x - playerX;
-            let yDist = target.y - playerY;
+            let xDist = target.x - player.x;
+            let yDist = target.y - player.y;
             let dist = Math.sqrt((xDist * xDist) + (yDist * yDist));
             if (dist < minDist) {
                 minDist = dist;
@@ -168,7 +165,7 @@ class PlayerInteractionHandler {
             return;
         }
 
-        // frame-based blink timing copied from orignal NPC code. might want timestamps instead?
+        // frame-based blink timing copied from orignal NPC code. might want some constants in lieu of magic numbers?
         if (target != this.lastTarget) {
             this.framesOnTarget = 0;
         } else {

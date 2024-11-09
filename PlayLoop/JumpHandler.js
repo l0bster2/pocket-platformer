@@ -4,18 +4,17 @@ class JumpHandler extends PlayMode {
         const { player } = this;
 
         if (Controller.jump) {
-            if (!PlayerInteractionHandler.willAllowJump() || PauseHandler.justClosedPauseScreen) {
-                // no jumping, sorry
-            }
-            else if (player.swimming) {
-                this.swimHandler();
-            }
-            else {
-                if((player.jumpChecked || player.powerUpJumpChecked)) {
-                    this.normalJumpHandler();
+            if (PlayerInteractionHandler.willAllowJump() && !PauseHandler.justClosedPauseScreen) {
+                if (player.swimming) {
+                    this.swimHandler();
                 }
-                !player.fixedSpeed && this.wallJumpHandler();
-                this.checkDoubleJumpInitialization();
+                else {
+                    if((player.jumpChecked || player.powerUpJumpChecked)) {
+                        this.normalJumpHandler();
+                    }
+                    !player.fixedSpeed && this.wallJumpHandler();
+                    this.checkDoubleJumpInitialization();
+                }
             }
             Controller.jumpReleased = false;
         }

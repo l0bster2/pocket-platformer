@@ -45,15 +45,11 @@ class LevelEntrancePicker {
             console.warn(`unexpected custom exit string: "${customExitString}" -- things may break!`);
             return;
         }
-
-        let levelIndex = parseInt(valueArray[0]);
-        let destType = valueArray[1];
-        let id = valueArray[2];
         
         return { 
-            levelIndex: levelIndex, 
-            type:destType, 
-            flagIndex: id 
+            levelIndex:  parseInt(valueArray[0]),
+            type:valueArray[1], // ObjectType of destination object
+            flagIndex: valueArray[2] // (effectively the id of the destination object, where the player will appear)
         };
     }
 

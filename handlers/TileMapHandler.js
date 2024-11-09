@@ -259,7 +259,7 @@ class TileMapHandler {
         if (destinationData?.flagIndex) {
             // note: old data (from before doors existed) does not include destinationData.type
             let destinationType = destinationData.type || ObjectTypes.startFlag;
-            destinationObject = doorsInLevel.find((entrance) => {
+            destinationObject = levelEntrances.find((entrance) => {
                 return entrance.type === destinationType && entrance.extraAttributes?.flagIndex === PlayMode.customExit.flagIndex;
             });
 
