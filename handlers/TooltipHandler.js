@@ -3,7 +3,7 @@
 class TooltipHandler {
 
     static staticConstructor() {
-        const idsForTooltips = ["otherSpriteTooltip", "canvasObjectToolTip", "transformTooltip", "levelHelpersTooltip"];
+        const idsForTooltips = ["otherSpriteTooltip", "canvasObjectToolTip", "transformTooltip", "levelHelpersTooltip", "dialogueAvatarTooltip"];
         idsForTooltips.forEach(id => {
             this.createEmptyTooltip(id);
         });

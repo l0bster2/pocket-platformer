@@ -30,6 +30,112 @@ class ObjectsTooltipElementsRenderer {
         return sliderWrapper;
     }
 
+    static showDialogueAvatarTooltip(currentObject, index, attribute) {
+        DialogueHandler.currentSelectedAvatar = null;
+        const heading = "Avatar";
+        let spriteContent = document.createElement('div');
+        spriteContent.style.width = "240px";
+        const description = document.createElement('div');
+        description.innerHTML = 'Select a sprite from deco as an avatar.'
+        spriteContent.appendChild(description)
+        const decoSpritesEl = document.createElement('div');
+        decoSpritesEl.className = 'marginTop8';
+
+        if (currentObject.avatars[index]) {
+            const deleteButton = document.createElement('button');
+            deleteButton.className = "color-button levelNavigationButton buttonWithIconAndText";
+            deleteButton.style.verticalAlign = "top";
+            deleteButton.style.margin = "2px 2px 0";
+            deleteButton.style.padding = "9px";
+            deleteButton.style.height = "36px";
+            const deleteImg = document.createElement("img");
+            Helpers.addAttributesToHTMLElement(deleteImg, {
+                "width": 16,
+                "height": 16,
+                "alt": "avatar",
+                "src": "images/icons/delete.svg",
+            });
+            deleteImg.className = "iconInButtonWithText";
+            deleteButton.onclick = (event) => {
+                event.stopPropagation();
+                const allAvatars = [...currentObject.avatars];
+                allAvatars.splice(index, 1);
+                const dialogueWrapper = document.getElementById("dialogueWrapper")
+                this.resetDialogueContent(event, attribute, currentObject, dialogueWrapper, currentObject.dialogue, allAvatars);
+                TooltipHandler.closeTooltip(event, "dialogueAvatarTooltip");
+            };
+            deleteButton.appendChild(deleteImg);
+            decoSpritesEl.appendChild(deleteButton);
+        }
+
+        const decoSprites = SpritePixelArrays.allSprites.filter(sprite => sprite.type === SpritePixelArrays.SPRITE_TYPES.deko);
+        decoSprites.forEach(decoSprite => {
+            const animationFrame = decoSprite.animation[0];
+            var canvas = document.createElement('canvas');
+            canvas.className = "canvasInSpriteSelector";
+            Helpers.addAttributesToHTMLElement(canvas, {
+                "width": tileMapHandler.tileSize,
+                "height": tileMapHandler.tileSize, "id": 1
+            });
+            canvas.onclick = (event) => {
+                Array.from(document.querySelectorAll('.canvasInSpriteSelectorSelected')).forEach(
+                    (el) => el.classList.remove('canvasInSpriteSelectorSelected')
+                  );
+                event.target.className = "canvasInSpriteSelector canvasInSpriteSelectorSelected";
+                DialogueHandler.currentSelectedAvatar = decoSprite.descriptiveName;
+            };
+            canvas.style.background = "#" + WorldDataHandler.backgroundColor;
+            const ctx = canvas.getContext('2d');
+            Display.drawPixelArray(animationFrame.sprite, 0, 0, tileMapHandler.pixelArrayUnitSize, tileMapHandler.pixelArrayUnitAmount, ctx);
+            decoSpritesEl.appendChild(canvas);
+        });
+        spriteContent.appendChild(decoSpritesEl);
+
+        const positionToggleAttributes = {
+            name: "direction", defaultValue: "Position right",
+            options: [{ "true": "Position right" }, { "false": "Position left" }]
+        };
+
+        const positionWrapper = document.createElement("div");
+        positionWrapper.className = "subSection";
+        const position = this.createToggleSwitch(positionToggleAttributes);
+        positionWrapper.appendChild(position);
+        spriteContent.appendChild(positionWrapper);
+
+        const checkboxAttributes = {
+            name: "border", defaultValue: true,
+            checkboxDescription: "Border"
+        };
+
+        const checkboxWrapper = document.createElement("div");
+        checkboxWrapper.className = "marginTop8";
+        const checkbox = this.createCheckbox(checkboxAttributes, "Border");
+        checkbox.className = "";
+        checkboxWrapper.appendChild(checkbox);
+        spriteContent.appendChild(checkboxWrapper);
+
+        const submitButtonWrapper = document.createElement('div');
+        submitButtonWrapper.className = "subSection";
+        const submitButton = document.createElement('button');
+        submitButton.className = "levelNavigationButton fullWidth";
+        submitButton.innerHTML = "Ok";
+
+        submitButton.onclick = (event) => {
+            const allAvatars = currentObject.avatars;
+            allAvatars[index] = { descriptiveName: DialogueHandler.currentSelectedAvatar, position: "right" };
+            currentObject.addChangeableAttribute("avatars", allAvatars);
+            const dialogueWrapper = document.getElementById("dialogueWrapper")
+            this.resetDialogueContent(event, attribute, currentObject, dialogueWrapper, currentObject.dialogue, allAvatars);
+            TooltipHandler.closeTooltip(event, "dialogueAvatarTooltip");
+        }
+
+        submitButtonWrapper.appendChild(submitButton);
+        spriteContent.appendChild(submitButtonWrapper);
+
+        TooltipHandler.showTooltip("dialogueAvatarTooltip", heading, spriteContent);
+    }
+
+
     static createSmallHeading(text) {
         const heading = document.createElement("div");
         heading.style.fontWeight = 'bold';
@@ -86,9 +192,9 @@ class ObjectsTooltipElementsRenderer {
         checkbox.id = name;
         checkbox.onclick = (event) => {
             const checkboxValue = event.target.checked;
-            currentObject.addChangeableAttribute(name, checkboxValue);
+            currentObject && currentObject.addChangeableAttribute(name, checkboxValue);
         };
-        checkbox.checked = currentObject[name] || currentObject?.extraAttributes[name] || false;
+        checkbox.checked = currentObject?.[name] || currentObject?.extraAttributes[name] || false;
         const checkboxLabel = document.createElement("label");
         checkboxLabel.className = "checkBoxText";
         checkboxLabel.style.marginLeft = "8px";
@@ -246,7 +352,10 @@ class ObjectsTooltipElementsRenderer {
         const switchEl = document.createElement("label");
         switchEl.className = "switch";
 
-        const currentValue = currentObject.type === ObjectTypes.PATH_POINT ? currentObject.getPathValue(attribute.name) : currentObject[attribute.name];
+        let currentValue = attribute.defaultValue;
+        if (currentObject) {
+            currentValue = currentObject.type === ObjectTypes.PATH_POINT ? currentObject.getPathValue(attribute.name) : currentObject[attribute.name];
+        }
 
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -261,7 +370,7 @@ class ObjectsTooltipElementsRenderer {
                 option[checkboxValue]
             );
             const currentValue = currentOption[checkboxValue];
-            currentObject.addChangeableAttribute(attribute.name, currentValue);
+            currentObject && currentObject.addChangeableAttribute(attribute.name, currentValue);
             document.getElementById("switchValue").innerHTML = currentValue;
         };
 
@@ -287,9 +396,10 @@ class ObjectsTooltipElementsRenderer {
         return dialogueWrapper;
     }
 
-    static resetDialogueContent(event, attribute, currentObject, dialogueWrapper, allDialogues) {
+    static resetDialogueContent(event, attribute, currentObject, dialogueWrapper, allDialogues, allAvatars) {
         event.stopPropagation();
         currentObject.addChangeableAttribute(attribute.name, allDialogues);
+        currentObject.addChangeableAttribute("avatars", allAvatars);
         dialogueWrapper.innerHTML = ""
         this.createDialogueContent(attribute, currentObject, dialogueWrapper);
     }
@@ -422,6 +532,7 @@ class ObjectsTooltipElementsRenderer {
         currentObject.dialogue.forEach((dialogueBit, index) => {
             const dialogueBitWrapper = document.createElement("div");
             dialogueBitWrapper.className = "marginTop8"
+            dialogueBitWrapper.style.display = "flex"
             const textValue = document.createElement("textarea");
             Helpers.addAttributesToHTMLElement(textValue, {
                 "maxlength": 239,
@@ -439,17 +550,76 @@ class ObjectsTooltipElementsRenderer {
             }
             textValue.className = "dialogueText";
             dialogueBitWrapper.appendChild(textValue);
+
+            const buttonsWrapper = document.createElement("div");
+
+
+            //Create empty avatar button
+            if (!currentObject.avatars[index]) {
+                const avatarButton = document.createElement('button');
+                avatarButton.className = "color-button levelNavigationButton buttonWithIconAndText";
+                const avatarImg = document.createElement("img");
+                Helpers.addAttributesToHTMLElement(avatarImg, {
+                    "width": 16,
+                    "height": 16,
+                    "alt": "avatar",
+                    "src": "images/icons/smile.svg",
+                });
+                avatarImg.className = "iconInButtonWithText";
+                avatarButton.style.padding = "8px";
+                avatarButton.onclick = (event) => {
+                    event.stopPropagation();
+                    const clickPos = event.target.getBoundingClientRect();
+                    document.getElementById("dialogueAvatarTooltip").style.top = clickPos.top - 130 + "px";
+                    document.getElementById("dialogueAvatarTooltip").style.left = clickPos.left + "px";
+                    this.showDialogueAvatarTooltip(currentObject, index, attribute)
+                };
+                avatarButton.appendChild(avatarImg);
+                buttonsWrapper.appendChild(avatarButton);
+            }
+            else {
+                //Create avatar button with value
+                const sSprite = SpritePixelArrays.getSpritesByDescrpitiveName(currentObject.avatars[index].descriptiveName);
+                var sSCanvas = document.createElement('canvas');
+                Helpers.addAttributesToHTMLElement(sSCanvas, {
+                    "width": tileMapHandler.tileSize,
+                    "height": tileMapHandler.tileSize, "id": "selectedSprite" + index
+                });
+                sSCanvas.className = "cursorPointer";
+                sSCanvas.style.padding = "5px";
+                sSCanvas.style.display = "block";
+                sSCanvas.onclick = (event) => {
+                    event.stopPropagation();
+                    const clickPos = event.target.getBoundingClientRect();
+                    document.getElementById("dialogueAvatarTooltip").style.top = clickPos.top - 130 + "px";
+                    document.getElementById("dialogueAvatarTooltip").style.left = clickPos.left + "px";
+                    this.showDialogueAvatarTooltip(currentObject, index, attribute)
+                };
+                sSCanvas.style.background = "#" + WorldDataHandler.backgroundColor;
+                const ctx = sSCanvas.getContext('2d');
+                //null check  if custom sprite was deleted
+                if (sSprite[0]) {
+                    const animationFrame = sSprite[0].animation[0];
+                    Display.drawPixelArray(animationFrame.sprite, 0, 0, tileMapHandler.pixelArrayUnitSize, tileMapHandler.pixelArrayUnitAmount, ctx);
+                }
+                buttonsWrapper.appendChild(sSCanvas);
+            }
+
             if (currentObject.dialogue.length > 1) {
                 const button = document.createElement("img");
                 this.populateSvg(button, "delete", "16", "16", `images/icons/delete.svg`);
-                button.className = "marginTop8 hovereableRedSvg";
+                button.className = "marginTop8 hovereableRedSvg deleteDialogue";
                 button.onclick = (event) => {
                     const allDialogues = [...currentObject.dialogue];
                     allDialogues.splice(index, 1);
-                    this.resetDialogueContent(event, attribute, currentObject, dialogueWrapper, allDialogues);
+                    const allAvatars = [...currentObject.avatars];
+                    allAvatars.splice(index, 1);
+                    this.resetDialogueContent(event, attribute, currentObject, dialogueWrapper, allDialogues, allAvatars);
                 };
-                dialogueBitWrapper.appendChild(button);
+                buttonsWrapper.appendChild(button);
             }
+
+            dialogueBitWrapper.appendChild(buttonsWrapper);
             dialogueWrapper.appendChild(dialogueBitWrapper);
         });
         if (currentObject.dialogue.length < maxDialogues) {
@@ -462,7 +632,9 @@ class ObjectsTooltipElementsRenderer {
             addMoreButton.onclick = (event) => {
                 const allDialogues = [...currentObject.dialogue];
                 allDialogues.push("");
-                this.resetDialogueContent(event, attribute, currentObject, dialogueWrapper, allDialogues);
+                const allAvatars = [...currentObject.avatars];
+                allAvatars.push(null);
+                this.resetDialogueContent(event, attribute, currentObject, dialogueWrapper, allDialogues, allAvatars);
             };
             addMoreButton.appendChild(plusIcon);
             addMoreButtonWrapper.appendChild(addMoreButton);
@@ -509,7 +681,7 @@ class ObjectsTooltipElementsRenderer {
             optionEl.value = value;
             optionEl.innerHTML = value;
             selectEl.appendChild(optionEl);
-            if(value == currentObject[attribute.name]) {
+            if (value == currentObject[attribute.name]) {
                 optionEl.selected = true;
             }
         })

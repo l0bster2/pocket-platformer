@@ -183,6 +183,8 @@
                     <canvas id="tileCanvas" style="display: none;"></canvas>
                     <div id="canvasObjectToolTip" class="tooltipWithSpeechBubble">
                     </div>
+                    <div id="dialogueAvatarTooltip">
+                    </div>
                     <div class="cameraYSliderWrapper" style="display: none" id="cameraYSliderWrapper">
                         <img src="images/icons/camera.svg" alt="camera" width="18" height="18">
                         <input sliderOrientation="verticalInverted" class="cameraYSlider"
@@ -719,7 +721,7 @@
                 WorldDataHandler.levels[startLevel].tileData.length * WorldDataHandler.tileSize);
             EffectsHandler.staticConstructor();
             let tileMapHandler = new TileMapHandler(WorldDataHandler.tileSize, startLevel, spriteCanvas, player);
-            DialogueHandler.staticConstructor(tileMapHandler);
+            DialogueHandler.staticConstructor(tileMapHandler, spriteCanvas);
             Display.staticConstructor(ctx, canvasWidth, canvasHeight, tileCtx);
             Controller.staticConstructor();
             Collision.staticConstructor(tileMapHandler);

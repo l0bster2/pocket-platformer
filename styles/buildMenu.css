@@ -52,6 +52,10 @@
     display: none;
 }
 
+.cursorPointer:hover {
+    cursor: pointer;
+}
+
 .customEffectDimensions {
     line-height: initial;
     display: flex;
@@ -65,6 +69,12 @@
     resize: none;
     box-sizing: border-box;
     padding: 2px;
+}
+
+.deleteDialogue {
+    display: block;
+    margin: 0 auto;
+    padding: 8px;
 }
 
 .flexRows {

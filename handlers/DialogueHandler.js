@@ -1,6 +1,6 @@
 class DialogueHandler {
 
-    static staticConstructor() {
+    static staticConstructor(tileMapHandler, spriteCanvas) {
         this.setDialogueWindowToInactive();
         const dialogueWidthRelativetoCamera = 90;
         const dialogueHeightRelativetoCamera = 70;
@@ -14,6 +14,10 @@ class DialogueHandler {
         this.maxDialogueLength = 240;
         this.currentAnimationHeight = 0;
         this.frameDurationToShowDialogueBox = 8;
+        this.spriteCanvas = spriteCanvas;
+        this.tileMapHandler = tileMapHandler;
+        this.avatarAnimationFrame = 0;
+        this.currentSelectedAvatar = null;
     }
 
     static setDialogueWindowToInactive() {
@@ -23,6 +27,7 @@ class DialogueHandler {
         this.currentAnimationFrame = 0;
         this.currentAnimationHeight = 0;
         this.arrowUpFrameIndex = 0;
+        this.avatarAnimationFrame = 0;
         this.calculateDialogueWindowPosition();
     }
 
@@ -48,6 +53,7 @@ class DialogueHandler {
                         SoundHandler.dialogueSound.stopAndPlay();
                         this.currentIndex++;
                         this.currentAnimationFrame = 0;
+                        this.avatarAnimationFrame = 0;
                     }
                     else {
                         this.setDialogueWindowToInactive();
@@ -66,7 +72,8 @@ class DialogueHandler {
 
     static displayDialogue() {
         const { leftPos, topPos } = this;
-        const currentLine = Math.floor(this.currentAnimationFrame / this.animationDurationFrames / this.maxLineLength);
+        const currentLineLength = this.dialogue[this.currentIndex].lineLength;
+        const currentLine = Math.floor(this.currentAnimationFrame / this.animationDurationFrames / currentLineLength);
         const calculatedDialogueWidth = Math.floor(this.dialogueWidth / Camera.viewport.scale);
         const calculatedDialogueHeight = Math.floor(this.dialogueHeight / Camera.viewport.scale);
         const currentBoxTopPosition = topPos + ((calculatedDialogueHeight - this.currentAnimationHeight) / 2);
@@ -76,7 +83,7 @@ class DialogueHandler {
         Display.drawRectangleBorder(leftPos, currentBoxTopPosition,
             calculatedDialogueWidth, this.currentAnimationHeight, "FFFFFF");
         Display.drawLine(leftPos + calculatedDialogueWidth - 80, currentBoxTopPosition, leftPos + calculatedDialogueWidth - 20, topPos,
-            "000000", 2)
+            "000000", 2);
 
         if (this.currentAnimationHeight >= calculatedDialogueHeight) {
             for (var i = 0; i <= currentLine; i++) {
@@ -85,11 +92,43 @@ class DialogueHandler {
                 }
             }
             this.displayArrowUpIcon();
+
+            if(this.dialogue[this.currentIndex].avatar) {
+                const avatarSize = this.tileMapHandler.tileSize * 3 / Camera.viewport.scale;
+                this.displayAvatar( 
+                    avatarSize,
+                    currentBoxTopPosition + calculatedDialogueHeight / 2 - avatarSize / 2
+                );
+            }
         }
         else {
             const step = calculatedDialogueHeight / this.frameDurationToShowDialogueBox;
             this.currentAnimationHeight += step;
         }
+    }
+
+    static displayAvatar(avatarSize, top) {
+        const { avatar } = this.dialogue[this.currentIndex];
+        const frameModulo = this.avatarAnimationFrame % 40;
+        const animationIndex = avatar.animationLength > 1 && frameModulo > 20 ? 1 : 0;
+        this.avatarAnimationFrame++;
+
+        const border = this.paddingFromBorder / Camera.viewport.scale;
+        const leftPos = Camera.viewport.left + Camera.viewport.width - border  - 40 / Camera.viewport.scale;
+        const avatarBorderPadding = 15 / Camera.viewport.scale;
+
+        if(avatar.border) {
+            const borderSize = (this.tileMapHandler.tileSize * 3  + 30) / Camera.viewport.scale;
+            Display.drawRectangleBorder(leftPos - avatarSize - avatarBorderPadding, 
+                top - avatarBorderPadding,
+                borderSize, 
+                borderSize, 
+                WorldDataHandler.textColor);
+        }
+        Display.drawPixelArray(avatar.spriteObject.animation[animationIndex].sprite, 
+            leftPos - avatarSize, top, 
+            this.tileMapHandler.pixelArrayUnitSize * 3 / Camera.viewport.scale, 
+            this.tileMapHandler.pixelArrayUnitAmount);
     }
 
     static displayArrowUpIcon() {
@@ -117,14 +156,14 @@ class DialogueHandler {
             17 / Camera.viewport.scale, "#FFFFFF", "left");
     }
 
-    static calculateTextLines(dialogue) {
+    static calculateTextLines(dialogue, lineLength) {
         let text = dialogue;
         const lines = [];
 
         for (var i = 0; i < this.linesAmount; i++) {
             if (text.length > 0) {
-                if (text.length > this.maxLineLength) {
-                    for (let j = this.maxLineLength; j >= 0; j--) {
+                if (text.length > lineLength) {
+                    for (let j = lineLength; j >= 0; j--) {
                         if (text.charAt(j) === " ") {
                             lines.push(text.substr(0, j));
                             text = text.slice(j + 1);
@@ -153,10 +192,23 @@ class DialogueHandler {
             pixelArrayUnitSize * 2, pixelArrayUnitSize, "FFFFFF")
     }
 
-    static createDialogObject(dialogue) {
+    static createDialogObject(dialogue, avatar) {
+        let avatarObject = null;
+        let lineLength = this.maxLineLength;
+
+        if(avatar) {
+            const canvasYPos = SpritePixelArrays.getIndexOfSprite(avatar.descriptiveName, 0, "descriptiveName") * this.tileMapHandler.tileSize;
+            const spriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(avatar.descriptiveName)[0];
+            avatarObject = spriteObject ? 
+            { canvasYPos, animationLength: spriteObject.animation.length, spriteObject: spriteObject, border: true } : null;
+            lineLength = Camera.viewport.scale > 1 ? lineLength - 10 : lineLength - 6;
+        }
+
         return {
             textLength: dialogue.length,
-            lines: this.calculateTextLines(dialogue)
+            lines: this.calculateTextLines(dialogue, lineLength),
+            lineLength,
+            avatar: avatarObject,
         }
     }
 }

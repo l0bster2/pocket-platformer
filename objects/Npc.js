@@ -7,6 +7,12 @@ class Npc extends InteractiveLevelObject {
         this.arrowUpFrameIndex = 0;
         this.upButtonReleased = false;
         this.collidedWithPlayer = false;
+        if(!this.avatars && this.dialogue.length > 0) {
+            this.avatars = [];
+            this.dialogue.forEach(_ => {
+                this.avatars.push(null);
+            });
+        }
     }
 
     resetObject() {
@@ -42,8 +48,8 @@ class Npc extends InteractiveLevelObject {
 
     startDialogue() {
         const parsedDialogue = [];
-        this.dialogue.forEach(singleDialogue => {
-            const singleDialogueObject = DialogueHandler.createDialogObject(singleDialogue);
+        this.dialogue.forEach((singleDialogue, index) => {
+            const singleDialogueObject = DialogueHandler.createDialogObject(singleDialogue, this?.avatars?.[index]);
             if (singleDialogueObject.textLength > 0) {
                 parsedDialogue.push(singleDialogueObject);
             }

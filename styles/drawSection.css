@@ -26,6 +26,10 @@
     cursor: pointer;
 }
 
+.canvasInSpriteSelectorSelected {
+    outline: 2px solid green;
+}
+
 #checkboxDesc {
     margin-left: 6px;
 }
