@@ -68,11 +68,21 @@ class ObjectsTooltipElementsRenderer {
             decoSpritesEl.appendChild(deleteButton);
         }
 
+        const currentAvatar = currentObject.avatars[index];
+
         const decoSprites = SpritePixelArrays.allSprites.filter(sprite => sprite.type === SpritePixelArrays.SPRITE_TYPES.deko);
         decoSprites.forEach(decoSprite => {
             const animationFrame = decoSprite.animation[0];
             var canvas = document.createElement('canvas');
-            canvas.className = "canvasInSpriteSelector";
+
+            if(decoSprite.descriptiveName === currentAvatar?.descriptiveName) {
+                DialogueHandler.currentSelectedAvatar = decoSprite.descriptiveName;
+                canvas.className = "canvasInSpriteSelector canvasInSpriteSelectorSelected";
+            }
+            else {
+                canvas.className = "canvasInSpriteSelector";
+            }
+
             Helpers.addAttributesToHTMLElement(canvas, {
                 "width": tileMapHandler.tileSize,
                 "height": tileMapHandler.tileSize, "id": 1
@@ -80,7 +90,7 @@ class ObjectsTooltipElementsRenderer {
             canvas.onclick = (event) => {
                 Array.from(document.querySelectorAll('.canvasInSpriteSelectorSelected')).forEach(
                     (el) => el.classList.remove('canvasInSpriteSelectorSelected')
-                  );
+                );
                 event.target.className = "canvasInSpriteSelector canvasInSpriteSelectorSelected";
                 DialogueHandler.currentSelectedAvatar = decoSprite.descriptiveName;
             };
@@ -92,7 +102,7 @@ class ObjectsTooltipElementsRenderer {
         spriteContent.appendChild(decoSpritesEl);
 
         const positionToggleAttributes = {
-            name: "direction", defaultValue: "Position right",
+            name: "avatarPosition", defaultValue: currentAvatar?.position === "left" ? "Position left" : "Position right",
             options: [{ "true": "Position right" }, { "false": "Position left" }]
         };
 
@@ -103,13 +113,18 @@ class ObjectsTooltipElementsRenderer {
         spriteContent.appendChild(positionWrapper);
 
         const checkboxAttributes = {
-            name: "border", defaultValue: true,
+            name: "avatarBorder", defaultValue: true,
             checkboxDescription: "Border"
         };
 
         const checkboxWrapper = document.createElement("div");
         checkboxWrapper.className = "marginTop8";
-        const checkbox = this.createCheckbox(checkboxAttributes, "Border");
+        const fakeCurrentObject = {
+            "avatarBorder": currentAvatar?.border === false ? false : true,
+            extraAttributes: {},
+            addChangeableAttribute: () => {}
+        };
+        const checkbox = this.createCheckbox(checkboxAttributes, "Border", fakeCurrentObject);
         checkbox.className = "";
         checkboxWrapper.appendChild(checkbox);
         spriteContent.appendChild(checkboxWrapper);
@@ -121,12 +136,21 @@ class ObjectsTooltipElementsRenderer {
         submitButton.innerHTML = "Ok";
 
         submitButton.onclick = (event) => {
-            const allAvatars = currentObject.avatars;
-            allAvatars[index] = { descriptiveName: DialogueHandler.currentSelectedAvatar, position: "right" };
-            currentObject.addChangeableAttribute("avatars", allAvatars);
-            const dialogueWrapper = document.getElementById("dialogueWrapper")
-            this.resetDialogueContent(event, attribute, currentObject, dialogueWrapper, currentObject.dialogue, allAvatars);
-            TooltipHandler.closeTooltip(event, "dialogueAvatarTooltip");
+            if (DialogueHandler.currentSelectedAvatar) {
+                const allAvatars = currentObject.avatars;
+                const borderValue = document.getElementById("avatarBorder").checked;
+                const positionValue = document.getElementById("avatarPosition").checked ? AnimationHelper.facingDirections.right
+                    : AnimationHelper.facingDirections.left;
+                allAvatars[index] = {
+                    descriptiveName: DialogueHandler.currentSelectedAvatar,
+                    position: positionValue,
+                    border: borderValue
+                };
+                currentObject.addChangeableAttribute("avatars", allAvatars);
+                const dialogueWrapper = document.getElementById("dialogueWrapper")
+                this.resetDialogueContent(event, attribute, currentObject, dialogueWrapper, currentObject.dialogue, allAvatars);
+                TooltipHandler.closeTooltip(event, "dialogueAvatarTooltip");
+            }
         }
 
         submitButtonWrapper.appendChild(submitButton);
@@ -358,6 +382,7 @@ class ObjectsTooltipElementsRenderer {
         }
 
         const checkbox = document.createElement("input");
+        checkbox.id = attribute.name;
         checkbox.type = "checkbox";
         attribute.options.forEach(option => {
             if (option.true === currentValue) {

@@ -77,6 +77,7 @@ class DialogueHandler {
         const calculatedDialogueWidth = Math.floor(this.dialogueWidth / Camera.viewport.scale);
         const calculatedDialogueHeight = Math.floor(this.dialogueHeight / Camera.viewport.scale);
         const currentBoxTopPosition = topPos + ((calculatedDialogueHeight - this.currentAnimationHeight) / 2);
+        const avatarSize = this.tileMapHandler.tileSize * 3 / Camera.viewport.scale;
 
         Display.drawRectangle(leftPos, currentBoxTopPosition,
             calculatedDialogueWidth, this.currentAnimationHeight, "000000");
@@ -85,17 +86,20 @@ class DialogueHandler {
         Display.drawLine(leftPos + calculatedDialogueWidth - 80, currentBoxTopPosition, leftPos + calculatedDialogueWidth - 20, topPos,
             "000000", 2);
 
+        const avatarPosLeft = this.dialogue[this.currentIndex].avatar?.position === AnimationHelper.facingDirections.left;
+
         if (this.currentAnimationHeight >= calculatedDialogueHeight) {
             for (var i = 0; i <= currentLine; i++) {
                 if (i < this.dialogue[this.currentIndex].lines.length) {
-                    this.animateText(leftPos, topPos, i);
+                    this.animateText(
+                        avatarPosLeft ? leftPos + avatarSize + 55 : leftPos, 
+                        topPos, i);
                 }
             }
             this.displayArrowUpIcon();
 
-            if(this.dialogue[this.currentIndex].avatar) {
-                const avatarSize = this.tileMapHandler.tileSize * 3 / Camera.viewport.scale;
-                this.displayAvatar( 
+            if (this.dialogue[this.currentIndex].avatar) {
+                this.displayAvatar(
                     avatarSize,
                     currentBoxTopPosition + calculatedDialogueHeight / 2 - avatarSize / 2
                 );
@@ -114,20 +118,22 @@ class DialogueHandler {
         this.avatarAnimationFrame++;
 
         const border = this.paddingFromBorder / Camera.viewport.scale;
-        const leftPos = Camera.viewport.left + Camera.viewport.width - border  - 40 / Camera.viewport.scale;
+        const avatarLeft = avatar.position === AnimationHelper.facingDirections.right
+            ? Camera.viewport.left + Camera.viewport.width - border - 40 / Camera.viewport.scale
+            : this.leftPos + avatarSize + 40 / Camera.viewport.scale;
         const avatarBorderPadding = 15 / Camera.viewport.scale;
 
-        if(avatar.border) {
-            const borderSize = (this.tileMapHandler.tileSize * 3  + 30) / Camera.viewport.scale;
-            Display.drawRectangleBorder(leftPos - avatarSize - avatarBorderPadding, 
+        if (avatar.border) {
+            const borderSize = (this.tileMapHandler.tileSize * 3 + 30) / Camera.viewport.scale;
+            Display.drawRectangleBorder(avatarLeft - avatarSize - avatarBorderPadding,
                 top - avatarBorderPadding,
-                borderSize, 
-                borderSize, 
+                borderSize,
+                borderSize,
                 WorldDataHandler.textColor);
         }
-        Display.drawPixelArray(avatar.spriteObject.animation[animationIndex].sprite, 
-            leftPos - avatarSize, top, 
-            this.tileMapHandler.pixelArrayUnitSize * 3 / Camera.viewport.scale, 
+        Display.drawPixelArray(avatar.spriteObject.animation[animationIndex].sprite,
+            avatarLeft - avatarSize, top,
+            this.tileMapHandler.pixelArrayUnitSize * 3 / Camera.viewport.scale,
             this.tileMapHandler.pixelArrayUnitAmount);
     }
 
@@ -196,11 +202,18 @@ class DialogueHandler {
         let avatarObject = null;
         let lineLength = this.maxLineLength;
 
-        if(avatar) {
+        if (avatar) {
+            console.log(avatar)
             const canvasYPos = SpritePixelArrays.getIndexOfSprite(avatar.descriptiveName, 0, "descriptiveName") * this.tileMapHandler.tileSize;
             const spriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(avatar.descriptiveName)[0];
-            avatarObject = spriteObject ? 
-            { canvasYPos, animationLength: spriteObject.animation.length, spriteObject: spriteObject, border: true } : null;
+            avatarObject = spriteObject ?
+                {
+                    canvasYPos,
+                    animationLength: spriteObject.animation.length,
+                    spriteObject: spriteObject,
+                    border: avatar.border,
+                    position: avatar.position
+                } : null;
             lineLength = Camera.viewport.scale > 1 ? lineLength - 10 : lineLength - 6;
         }
 
