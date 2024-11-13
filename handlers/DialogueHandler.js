@@ -92,7 +92,7 @@ class DialogueHandler {
             for (var i = 0; i <= currentLine; i++) {
                 if (i < this.dialogue[this.currentIndex].lines.length) {
                     this.animateText(
-                        avatarPosLeft ? leftPos + avatarSize + 55 : leftPos, 
+                        avatarPosLeft ? leftPos + avatarSize + 55 / Camera.viewport.scale : leftPos, 
                         topPos, i);
                 }
             }
@@ -133,7 +133,7 @@ class DialogueHandler {
         }
         Display.drawPixelArray(avatar.spriteObject.animation[animationIndex].sprite,
             avatarLeft - avatarSize, top,
-            this.tileMapHandler.pixelArrayUnitSize * 3 / Camera.viewport.scale,
+            Math.round(this.tileMapHandler.pixelArrayUnitSize * 3 / Camera.viewport.scale),
             this.tileMapHandler.pixelArrayUnitAmount);
     }
 
