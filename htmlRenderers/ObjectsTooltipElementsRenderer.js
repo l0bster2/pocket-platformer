@@ -36,7 +36,7 @@ class ObjectsTooltipElementsRenderer {
         let spriteContent = document.createElement('div');
         spriteContent.style.width = "240px";
         const description = document.createElement('div');
-        description.innerHTML = 'Select a sprite from deco as an avatar.'
+        description.innerHTML = 'Select a sprite from deco or a custom new deco as an avatar.'
         spriteContent.appendChild(description)
         const decoSpritesEl = document.createElement('div');
         decoSpritesEl.className = 'marginTop8';
@@ -75,7 +75,7 @@ class ObjectsTooltipElementsRenderer {
             const animationFrame = decoSprite.animation[0];
             var canvas = document.createElement('canvas');
 
-            if(decoSprite.descriptiveName === currentAvatar?.descriptiveName) {
+            if (decoSprite.descriptiveName === currentAvatar?.descriptiveName) {
                 DialogueHandler.currentSelectedAvatar = decoSprite.descriptiveName;
                 canvas.className = "canvasInSpriteSelector canvasInSpriteSelectorSelected";
             }
@@ -122,7 +122,7 @@ class ObjectsTooltipElementsRenderer {
         const fakeCurrentObject = {
             "avatarBorder": currentAvatar?.border === false ? false : true,
             extraAttributes: {},
-            addChangeableAttribute: () => {}
+            addChangeableAttribute: () => { }
         };
         const checkbox = this.createCheckbox(checkboxAttributes, "Border", fakeCurrentObject);
         checkbox.className = "";
@@ -711,5 +711,34 @@ class ObjectsTooltipElementsRenderer {
             }
         })
         return template;
+    }
+
+    static createPlayerPowerUpTooltip(player) {
+        const wrapper = document.createElement("div");
+
+        player.powerUpTypes.forEach(powerUpType => {
+            const checkBoxWrapper = document.createElement("div");
+            checkBoxWrapper.style.width = "fit-content";
+            checkBoxWrapper.className = "marginTop8";
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = player[powerUpType];
+            checkbox.id = powerUpType
+            checkbox.onclick = (event) => {
+                const checkboxValue = event.target.checked;
+                player[powerUpType] = checkboxValue;
+            };
+            const labelForCheckBox = document.createElement("label");
+            Helpers.addAttributesToHTMLElement(labelForCheckBox, {
+                for: powerUpType
+            });
+            labelForCheckBox.style.marginRight = "8px";
+            labelForCheckBox.className = "radioButtonLabel marginTop8";
+            labelForCheckBox.innerHTML = SpritePixelArrays.playerPowerUpMapper[powerUpType];
+            checkBoxWrapper.appendChild(checkbox);
+            checkBoxWrapper.appendChild(labelForCheckBox);
+            wrapper.appendChild(checkBoxWrapper);
+        })
+        return wrapper;
     }
 }

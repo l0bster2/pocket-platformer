@@ -83,7 +83,10 @@ class BuildMode {
                 this.drawingAreaReleased("deleteObjects");
                 this.rectangleStyleDeletion = false;
             }
-            this.rightMouseHolding = false;
+            if (this.rightMouseHolding) {
+                this.checkIfPlayerToolboxNeedsToBeShown();
+                this.rightMouseHolding = false;
+            }
         }
         if (Controller.shiftReleased && Controller.shiftPressed) {
             this.turnCurrentObject();
@@ -261,8 +264,8 @@ class BuildMode {
 
     static checkIfPlacementAllowedHere(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY) {
         // Objects can be objects, or tiles that don't have value 0 (like blue blocks in the beginning)
-        const objectsHoveringOver = allObjectsAtCurrentTile.filter(o => 
-            (o.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.object || 
+        const objectsHoveringOver = allObjectsAtCurrentTile.filter(o =>
+            (o.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.object ||
                 SpritePixelArrays.sometimesPassableBlocks.includes(o.type)) &&
             o.type !== ObjectTypes.PATH_POINT && !SpritePixelArrays.backgroundSprites.includes(o.type) && !SpritePixelArrays.foregroundSprites.includes(o.type));
         const pathsHoveringOver = allObjectsAtCurrentTile.filter(o => o.type === ObjectTypes.PATH_POINT);
@@ -326,9 +329,9 @@ class BuildMode {
 
         currentObjects.forEach((currentObject, index) => {
             const spriteObject = SpritePixelArrays.getSpritesByName(currentObject.type)[0];
-            
+
             // If mutliple objects or only path, clarify which properties belong wo which object
-            if(objectsInlcudePath) {
+            if (objectsInlcudePath) {
                 const heading = ObjectsTooltipElementsRenderer.createSmallHeading(`${spriteObject.descriptiveName} properties:`);
                 content.appendChild(heading);
             }
@@ -355,11 +358,11 @@ class BuildMode {
                         const toggleSwitch = ObjectsTooltipElementsRenderer.createToggleSwitch(attribute, currentObject);
                         content.appendChild(toggleSwitch);
                     }
-                    else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.checkbox) {
+                    else if (attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.checkbox) {
                         const checkboxWrapper = ObjectsTooltipElementsRenderer.createCheckbox(attribute, attribute.checkboxDescription, currentObject);
                         content.appendChild(checkboxWrapper);
                     }
-                    else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.select) {
+                    else if (attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.select) {
                         const selectWrapper = ObjectsTooltipElementsRenderer.createSelect(attribute, currentObject);
                         content.appendChild(selectWrapper);
                     }
@@ -369,7 +372,7 @@ class BuildMode {
                     }
                 })
             }
-            if(index != currentObjects.length - 1) {
+            if (index != currentObjects.length - 1) {
                 const lineBreakDiv = document.createElement("div");
                 lineBreakDiv.className = 'subSection';
                 content.appendChild(lineBreakDiv);
@@ -426,7 +429,7 @@ class BuildMode {
                 allObjectsAtCurrentTile.every(objectAtCurrentTile =>
                     objectAtCurrentTile.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.deko ||
                     SpritePixelArrays.backgroundSprites.includes(objectAtCurrentTile.spriteObject[0]?.name) ||
-                    SpritePixelArrays.foregroundSprites.includes(objectAtCurrentTile.spriteObject[0]?.name) 
+                    SpritePixelArrays.foregroundSprites.includes(objectAtCurrentTile.spriteObject[0]?.name)
                 ))) {
             this.player.x = tilePosX * this.tileMapHandler.tileSize;
             this.player.y = tilePosY * this.tileMapHandler.tileSize;
@@ -562,5 +565,25 @@ class BuildMode {
         Display.drawLine(actualXPos, actualYEndPos, actualXEndPos, actualYEndPos, color, 3);
         Display.drawLine(actualXPos, actualYPos, actualXPos, actualYEndPos, color, 3);
         Display.drawLine(actualXEndPos, actualYPos, actualXEndPos, actualYEndPos, color, 3);
+    }
+
+    static checkIfPlayerToolboxNeedsToBeShown() {
+        const mousePos = {
+            x: Controller.mouseX,
+            y: Controller.mouseY,
+        }
+        if (Collision.pointAndObjectColliding(mousePos, this.player) 
+            //&& this.player.powerUpTypes.some(powerUpType => this.player[powerUpType] === true)
+        ) {
+            this.showingToolTip = false;
+            const content = document.createElement("div");
+            const playerAttributesToolTip = ObjectsTooltipElementsRenderer.createPlayerPowerUpTooltip(this.player);
+            content.appendChild(playerAttributesToolTip);
+            const tilePosY = this.tileMapHandler.getTileValueForPosition(Controller.mouseY);
+            const tilePosX = this.tileMapHandler.getTileValueForPosition(Controller.mouseX);
+            const xPos = canvasOffsetLeft + (tilePosX * this.tileMapHandler.tileSize) - 120 - Camera.viewport.left;
+            const yPos = canvasOffsetTop + (tilePosY * this.tileMapHandler.tileSize) + this.tileMapHandler.tileSize + 6 - Camera.viewport.top;
+            TooltipHandler.repositionAndShowTooltip("canvasObjectToolTip", yPos, xPos, "Players power-ups", content)
+        }
     }
 }

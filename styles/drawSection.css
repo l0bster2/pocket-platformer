@@ -22,12 +22,12 @@
 }
 
 .canvasInSpriteSelector:hover {
-    outline: 2px solid green;
+    outline: 3px solid green;
     cursor: pointer;
 }
 
 .canvasInSpriteSelectorSelected {
-    outline: 2px solid green;
+    outline: 3px solid green;
 }
 
 #checkboxDesc {

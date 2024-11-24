@@ -6,12 +6,6 @@ class PowerUp extends InteractiveLevelObject {
         this.touched = false;
         this.showGainedPowerUpMessageFrames = 140;
         this.currentMessageFrame = 0;
-        this.playerPowerUpMapper = {
-            powerUpDoubleJumpChecked: "double-jump",
-            powerUpWallJumpChecked: "wall-jump",
-            powerUpJumpChecked: "jump",
-            powerUpDashChecked: "dash"
-        }
         if (extraAttributes?.collectedInGame) {
             this.touched = true;
         }
@@ -23,9 +17,6 @@ class PowerUp extends InteractiveLevelObject {
     resetObject() {
         if (WorldDataHandler.insideTool) {
             this.touched = false;
-            Object.keys(this.playerPowerUpMapper).forEach(powerUp => {
-                this.tilemapHandler.player[powerUp] = false;
-            })
         }
     }
 
@@ -33,8 +24,8 @@ class PowerUp extends InteractiveLevelObject {
         if (!this.touched) {
             this.touched = true;
             this.currentMessageFrame = this.showGainedPowerUpMessageFrames;
-            const playerAttribute = Object.keys(this.playerPowerUpMapper).find(key =>
-                this.playerPowerUpMapper[key] === this.PowerUp);
+            const playerAttribute = Object.keys(SpritePixelArrays.playerPowerUpMapper).find(key =>
+                SpritePixelArrays.playerPowerUpMapper[key] === this.PowerUp);
             this.tilemapHandler.player[playerAttribute] = true;
             PlayMode.currentPauseFrames = this.showGainedPowerUpMessageFrames;
             SoundHandler.powerUp.play();

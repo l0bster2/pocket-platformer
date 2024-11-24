@@ -39,7 +39,13 @@ class Player {
             none: "none",
             upwardsAndRotate: "upwardsAndRotate",
             explode: "explode",
-        }
+        };
+        this.powerUpTypes = [
+            "powerUpJumpChecked",
+            "powerUpWallJumpChecked",
+            "powerUpDoubleJumpChecked",
+            "powerUpDashChecked",
+        ];
         this.deathType = this.deathTypes.upwardsAndRotate;
         this.setBorderPositions();
         this.setAnimationProperties();
@@ -178,15 +184,13 @@ class Player {
         this.doubleJumpChecked = false;
         this.dashChecked = false;
         this.runChecked = false;
-
         this.setInitialPowerUps();
     }
 
     setInitialPowerUps() {
-        this.powerUpJumpChecked = false;
-        this.powerUpWallJumpChecked = false;
-        this.powerUpDoubleJumpChecked = false;
-        this.powerUpDashChecked = false;
+        this.powerUpTypes.forEach(powerUpType => {
+            this[powerUpType] = false;
+        })
     }
 
     setAnimationProperties() {
