@@ -170,6 +170,12 @@ class Path {
                 || currentPathIndex === 0 && this.currentDirection === backwards) {
                 this.currentDirection = this.currentDirection === forwards ? backwards : forwards;
                 this.currentStopFrame = 0;
+
+                this.objectsOnPath.forEach(objectOnPath => {
+                    objectOnPath.xspeed = 0;
+                    objectOnPath.yspeed = 0;
+                });
+
                 break loop1;
             }
         }

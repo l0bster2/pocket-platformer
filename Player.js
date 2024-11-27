@@ -114,7 +114,7 @@ class Player {
         this.speed = 0;
         this.xspeed = 0;
         this.yspeed = 0;
-        this.bonusSpeed = 0;
+        this.bonusSpeedX = 0;
         this.wallJumpFrames = this.maxJumpFrames;
         this.falling = false;
         this.jumping = false;
@@ -146,6 +146,7 @@ class Player {
         this.currentGravity = this.gravity;
         this.currentMaxFallSpeed = this.maxFallSpeed;
         this.previouslyTouchedTrampolines = false;
+        this.previouslyTouchedByMovingPlatform = false;
 
         if (this.swimming) {
             //if only the side of player is in water, we set this attribute. so next frame, we can reset coyote jump
@@ -335,9 +336,9 @@ class Player {
     }
 
     slowDownBonusSpeed() {
-        this.bonusSpeed *= 0.95;
-        if (Math.abs(this.bonusSpeed) < 0.3) {
-            this.bonusSpeed = 0;
+        this.bonusSpeedX *= 0.95;
+        if (Math.abs(this.bonusSpeedX) < 0.3) {
+            this.bonusSpeedX = 0;
         }
     }
 
@@ -390,7 +391,7 @@ class Player {
         this.fixedSpeed = false;
         this.xspeed = 0;
         if (this.yspeed !== 0) {
-            this.bonusSpeed = 0;
+            this.bonusSpeedX = 0;
         }
         this.onIce = false;
     }

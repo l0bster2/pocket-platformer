@@ -16,9 +16,9 @@ class CharacterCollision {
     static checkCollisionsWithWorld(obj, cornerCorrection = false) {
         this.checkHazardsCollision(obj);
         this.groundUnderFeet(obj);
-        obj.xspeed += obj.bonusSpeed;
+        obj.xspeed += obj.bonusSpeedX;
         this.checkTileCollisions(obj, cornerCorrection);
-        obj.xspeed -= obj.bonusSpeed;
+        obj.xspeed -= obj.bonusSpeedX;
     }
 
     static checkPointCollissionsWithAllObjects(positions, obj) {
@@ -93,9 +93,24 @@ class CharacterCollision {
             //if player has not touched trampoline previously (is falling down from top of the trampoline), correct his position
             if (!obj.previouslyTouchedTrampolines) {
                 tileMapHandler.layers[2].forEach(objectWithCollision => {
-                    if (Collision.objectsColliding(obj, objectWithCollision) && obj.type !== ObjectTypes.STOMPER
+                    if (Collision.objectsColliding(obj, objectWithCollision) && obj.type === ObjectTypes.TRAMPOLINE
                         && obj.bottom_right_pos.y > objectWithCollision.y + (this.tileMapHandler.tileSize / 2.1)) {
                         obj.y = objectWithCollision.y - obj.height / 2;
+                    }
+                })
+            }
+
+            if (!obj.previouslyTouchedByMovingPlatform) {
+                tileMapHandler.layers[2].forEach(objectWithCollision => {
+                    if (objectWithCollision.type === ObjectTypes.MOVING_PLATFORM &&
+                        obj.movingPlatformKey !== objectWithCollision.key &&
+                        (Collision.pointAndObjectColliding(obj.bottom_right_pos, objectWithCollision) ||
+                        Collision.pointAndObjectColliding(obj.bottom_left_pos, objectWithCollision))
+                    ) {
+                        obj.hitWall(AnimationHelper.facingDirections.bottom);
+                        obj.y = objectWithCollision.y - obj.height + 1;
+                        obj.movingPlatformKey = objectWithCollision.key;
+                        obj.onMovingPlatform = true;
                     }
                 })
             }
@@ -174,7 +189,7 @@ class CharacterCollision {
             current_tile = left_foot !== 0 ? left_foot : right_foot;
         }
 
-        obj.bonusSpeed && obj.slowDownBonusSpeed();
+        obj.bonusSpeedX && !obj.onMovingPlatform && obj.slowDownBonusSpeed();
 
         switch (current_tile) {
             case 0:
@@ -191,25 +206,28 @@ class CharacterCollision {
                 if (!Controller.jump || obj.jumpframes >= obj.maxJumpFrames || obj.jumpPressedToTheMax || PauseHandler.justClosedPauseScreen) {
                     obj.falling = true;
                 }
+                if (obj.onMovingPlatform) {
+                    obj.falling = false;
+                }
                 break;
             case 5:
                 if (obj.yspeed < 0 &&
-                    (!Controller.jump || obj.jumpframes >= obj.maxJumpFrames || obj.jumpPressedToTheMax)) {
+                    (!Controller.jump || !obj.onMovingPlatform || obj.jumpframes >= obj.maxJumpFrames || obj.jumpPressedToTheMax)) {
                     obj.falling = true;
                 }
                 //if speed is 0, but player is somewhere in the middle of the 5 tile, not exactly on top
-                if (obj.yspeed === 0 && (obj.y + obj.height + 1) % this.tileMapHandler.tileSize !== 0) {
+                if (obj.yspeed === 0 && !obj.onMovingPlatform && (obj.y + obj.height + 1) % this.tileMapHandler.tileSize !== 0) {
                     obj.falling = true;
                 }
                 this.setSolidGroundPhysics(obj);
                 break;
             case ObjectTypes.SPECIAL_BLOCK_VALUES.treadmillRight:
                 this.setSolidGroundPhysics(obj);
-                obj.bonusSpeed = obj.maxSpeed / 1.90;
+                obj.bonusSpeedX = obj.maxSpeed / 1.90;
                 break;
             case ObjectTypes.SPECIAL_BLOCK_VALUES.treadmillLeft:
                 this.setSolidGroundPhysics(obj);
-                obj.bonusSpeed = obj.maxSpeed / 1.90 * -1;
+                obj.bonusSpeedX = obj.maxSpeed / 1.90 * -1;
                 break;
             case ObjectTypes.SPECIAL_BLOCK_VALUES.iceBlock:
                 this.setSolidGroundPhysics(obj);
@@ -249,7 +267,7 @@ class CharacterCollision {
         obj.top_left = tileMapHandler.getTileLayerValueByIndex(obj.top, obj.left);
         obj.bottom_right = tileMapHandler.getTileLayerValueByIndex(obj.bottom, obj.right);
         obj.bottom_left = tileMapHandler.getTileLayerValueByIndex(obj.bottom, obj.left);
-        if(obj?.wallJumpChecked || obj?.powerUpWallJumpChecked) {
+        if (obj?.wallJumpChecked || obj?.powerUpWallJumpChecked) {
             obj.checkWallJumpReady();
         }
     }

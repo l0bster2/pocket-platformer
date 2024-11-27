@@ -1578,6 +1578,30 @@ class SpritePixelArrays {
       ]
     };
 
+    this.MOVING_PLATFORM = {
+      name: ObjectTypes.MOVING_PLATFORM,
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 10 },
+      ],
+      descriptiveName: "Moving platform",
+      description: "Moving platform",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA"],
+            ["AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      ]
+    };
+
     this.DEKO_SPRITE = {
       name: ObjectTypes.DEKO,
       type: this.SPRITE_TYPES.deko,

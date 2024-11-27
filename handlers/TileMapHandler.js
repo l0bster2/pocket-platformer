@@ -211,7 +211,7 @@ class TileMapHandler {
             else if(SpritePixelArrays.foregroundSprites.includes(levelObject.type)) {
                 layers[4].push(levelObject);
             }
-            else if(levelObject.type === ObjectTypes.TRAMPOLINE) {
+            else if(levelObject.type === ObjectTypes.TRAMPOLINE || levelObject.type === ObjectTypes.MOVING_PLATFORM) {
                 layers[2].push(levelObject);
             }
             else {
