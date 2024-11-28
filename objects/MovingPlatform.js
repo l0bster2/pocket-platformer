@@ -13,6 +13,7 @@ class MovingPlatform extends InteractiveLevelObject {
     draw() {
         if(this.player.movingPlatformKey === this.key) {
             this.player.bonusSpeedX = this.xspeed;
+            this.player.bonusSpeedY = this.yspeed;
 
             if(!Collision.objectsColliding(this.player, this)) {
                 this.player.movingPlatformKey = null;

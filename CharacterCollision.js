@@ -17,8 +17,10 @@ class CharacterCollision {
         this.checkHazardsCollision(obj);
         this.groundUnderFeet(obj);
         obj.xspeed += obj.bonusSpeedX;
+        obj.yspeed += obj.bonusSpeedY;
         this.checkTileCollisions(obj, cornerCorrection);
         obj.xspeed -= obj.bonusSpeedX;
+        obj.yspeed -= obj.bonusSpeedY;
     }
 
     static checkPointCollissionsWithAllObjects(positions, obj) {
@@ -104,8 +106,7 @@ class CharacterCollision {
                 tileMapHandler.layers[2].forEach(objectWithCollision => {
                     if (objectWithCollision.type === ObjectTypes.MOVING_PLATFORM &&
                         obj.movingPlatformKey !== objectWithCollision.key &&
-                        (Collision.pointAndObjectColliding(obj.bottom_right_pos, objectWithCollision) ||
-                        Collision.pointAndObjectColliding(obj.bottom_left_pos, objectWithCollision))
+                        (Collision.objectsColliding(obj, objectWithCollision))
                     ) {
                         obj.hitWall(AnimationHelper.facingDirections.bottom);
                         obj.y = objectWithCollision.y - obj.height + 1;
@@ -189,7 +190,8 @@ class CharacterCollision {
             current_tile = left_foot !== 0 ? left_foot : right_foot;
         }
 
-        obj.bonusSpeedX && !obj.onMovingPlatform && obj.slowDownBonusSpeed();
+        obj.bonusSpeedX && !obj.onMovingPlatform && obj.slowDownBonusSpeedX();
+        obj.bonusSpeedY && !obj.onMovingPlatform && obj.slowDownBonusSpeedY();
 
         switch (current_tile) {
             case 0:
