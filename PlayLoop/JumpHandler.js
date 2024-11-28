@@ -85,6 +85,7 @@ class JumpHandler extends PlayMode {
             if (!player.jumping && player.jumpframes === 0 && player.jumpReleased) {
                 player.jumpReleased = false;
                 this.jumpInitialized();
+                this.checkMomentumBasedBonusSpeed(player);
                 tileMapHandler.changeJumpSwitchBlockType();
             }
             this.performJump(player.jumpSpeed, player.maxJumpFrames);
@@ -189,7 +190,20 @@ class JumpHandler extends PlayMode {
 
     static checkMomentumCoyoteFrames(player) {
         if(player.currentMomentumCoyoteFrame < player.coyoteJumpFrames) {
+            if(player.currentMomentumCoyoteFrame === player.coyoteJumpFrames -1) {
+                player.momentumBonusSpeedX = 0;
+                player.momentumBonusSpeedY = 0;
+            }
             player.currentMomentumCoyoteFrame++;
+        }
+    }
+
+    static checkMomentumBasedBonusSpeed(player) {
+        if(player.momentumBonusSpeedX) {
+            player.bonusSpeedX = player.momentumBonusSpeedX;
+        }
+        if(player.momentumBonusSpeedY) {
+            player.bonusSpeedY = player.momentumBonusSpeedY;
         }
     }
 

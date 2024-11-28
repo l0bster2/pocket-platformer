@@ -126,6 +126,8 @@ class Player {
         this.currentDashFrame = 0;
         this.currentWallJumpCoyoteFrame = 0;
         this.currentMomentumCoyoteFrame = this.coyoteJumpFrames;
+        this.momentumBonusSpeedX = 0;
+        this.momentumBonusSpeedY = 0;
         this.walljumpReady = false;
         this.swimming = false;
         this.friction = this.air_friction;
@@ -414,6 +416,7 @@ class Player {
         this.falling = false;
         this.wallJumpFrames = this.maxJumpFrames;
         this.fixedSpeed = false;
+        this.bonusSpeedY = 0;
         this.resetJump();
     }
 
