@@ -21,7 +21,7 @@ class MovingPlatform extends InteractiveLevelObject {
 
     draw() {
         if (this.player.movingPlatformKey === this.key) {
-            if(!this.player.jumping) {
+            if(this.player.jumpframes !== 1) {
                 this.player.bonusSpeedX = this.xspeed;
                 this.player.bonusSpeedY = this.yspeed;
             }
