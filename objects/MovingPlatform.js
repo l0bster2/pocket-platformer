@@ -10,12 +10,19 @@ class MovingPlatform extends InteractiveLevelObject {
         this.player.previouslyTouchedByMovingPlatform = true;
     }
 
+    setPlayerMomentumCoyoteFrames() {
+        if (this.player.movingPlatformKey === this.key &&
+            (this.xspeed !== 0 || this.yspeed < 0)) {
+            this.player.currentMomentumCoyoteFrame = 0;
+        }
+    }
+
     draw() {
-        if(this.player.movingPlatformKey === this.key) {
+        if (this.player.movingPlatformKey === this.key) {
             this.player.bonusSpeedX = this.xspeed;
             this.player.bonusSpeedY = this.yspeed;
 
-            if(!Collision.objectsColliding(this.player, this)) {
+            if (!Collision.objectsColliding(this.player, this)) {
                 this.player.movingPlatformKey = null;
                 this.player.onMovingPlatform = false;
             }

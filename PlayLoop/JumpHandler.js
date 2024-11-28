@@ -2,6 +2,7 @@ class JumpHandler extends PlayMode {
 
     static jumpHandler() {
         const { player } = this;
+        this.checkMomentumCoyoteFrames(player);
 
         if (Controller.jump && !player.collidingWithNpcId && !PauseHandler.justClosedPauseScreen ) {
             if (player.swimming) {
@@ -183,6 +184,12 @@ class JumpHandler extends PlayMode {
                 this.player.yspeed = this.player.maxSwimHeight;
             }
             this.player.flapped = true;
+        }
+    }
+
+    static checkMomentumCoyoteFrames(player) {
+        if(player.currentMomentumCoyoteFrame < player.coyoteJumpFrames) {
+            player.currentMomentumCoyoteFrame++;
         }
     }
 

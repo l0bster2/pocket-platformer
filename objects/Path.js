@@ -172,6 +172,10 @@ class Path {
                 this.currentStopFrame = 0;
 
                 this.objectsOnPath.forEach(objectOnPath => {
+                    if(objectOnPath.type === ObjectTypes.MOVING_PLATFORM) {
+                        objectOnPath.setPlayerMomentumCoyoteFrames();
+                    }
+
                     objectOnPath.xspeed = 0;
                     objectOnPath.yspeed = 0;
                 });
