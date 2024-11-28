@@ -2,12 +2,26 @@ class MovingPlatform extends InteractiveLevelObject {
 
     constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
         super(x, y, tileSize, type, 0, extraAttributes);
+        this.tilemapHandler = tilemapHandler;
         this.player = tilemapHandler.player;
+        this.tileSize = tilemapHandler.tileSize;
         this.key = this.makeid(5);
+        this.adaptWidthToSize();
     }
 
     collisionEvent() {
         this.player.previouslyTouchedByMovingPlatform = true;
+    }
+
+    adaptWidthToSize() {
+        this.width = this.size * this.tilemapHandler.tileSize;
+    }
+
+    addChangeableAttribute(attribute, value, levelToChange = null) {
+        super.addChangeableAttribute(attribute, value, levelToChange);
+        if (attribute === SpritePixelArrays.changeableAttributeTypes.size) {
+            this.adaptWidthToSize();
+        }
     }
 
     setPlayerMomentumCoyoteFrames() {
@@ -19,9 +33,29 @@ class MovingPlatform extends InteractiveLevelObject {
         }
     }
 
+    drawAdditionalPlatform(index) {
+        if (this?.spriteObject?.[0].animation.length > 1) {
+            if (this.checkFrame()) {
+                Display.drawImage(spriteCanvas, 0, this.canvasYSpritePos, this.tileSize, this.tileSize,
+                    this.x + index * this.tileSize, this.y,
+                    this.tileSize, this.tileSize);
+            }
+            else {
+                Display.drawImage(spriteCanvas, this.tileSize, this.canvasYSpritePos, this.tileSize,
+                    this.tileSize, this.x + index * this.tileSize, this.y,
+                    this.tileSize, this.tileSize);
+            }
+        }
+        else {
+            Display.drawImage(spriteCanvas, 0, this.canvasYSpritePos, this.tileSize, this.tileSize,
+                this.x + index * this.tileSize, this.y,
+                this.tileSize, this.tileSize);
+        }
+    }
+
     draw() {
         if (this.player.movingPlatformKey === this.key) {
-            if(this.player.jumpframes !== 1) {
+            if (this.player.jumpframes !== 1) {
                 this.player.bonusSpeedX = this.xspeed;
                 this.player.bonusSpeedY = this.yspeed;
             }
@@ -32,5 +66,11 @@ class MovingPlatform extends InteractiveLevelObject {
             }
         }
         super.draw(spriteCanvas);
+
+        if (this.size > 1) {
+            for (var i = 1; i < this.size; i++) {
+                this.drawAdditionalPlatform(i);
+            }
+        }
     }
 }
