@@ -432,6 +432,10 @@ class Player {
         this.forcedJumpSpeed = 0;
         this.jumpframes = this.maxJumpFrames;
         this.jumpPressedToTheMax = true;
+
+        if(this.onMovingPlatform) {
+            PlayMode.playerDeath();
+        }
     }
 
     setSquishAnimation() {
