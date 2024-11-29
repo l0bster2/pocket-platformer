@@ -69,6 +69,10 @@ class SpritePixelArrays {
       ObjectTypes.FOREGROUND_TILE,
     ];
 
+    this.movingPlatformSprites = [
+      ObjectTypes.MOVING_PLATFORM,
+    ]
+
     this.projectileSprites = [
       ObjectTypes.CANON_BALL,
       ObjectTypes.ROCKET,

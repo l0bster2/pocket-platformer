@@ -192,9 +192,11 @@ class TileMapHandler {
         //normal objects
         this.displayObjects(this.layers[1]);
         this.displayObjects(this.layers[2]);
+        //moving platforms
+        this.displayObjects(this.layers[3]);
         this.displayStaticTiles();
         //projectiles
-        this.displayObjects(this.layers[3]);
+        this.displayObjects(this.layers[4]);
     }
 
     splitLevelObjectsInLayers() {
@@ -206,10 +208,13 @@ class TileMapHandler {
                 layers[0].push(levelObject);
             }
             else if(SpritePixelArrays.projectileSprites.includes(levelObject.type)) {
+                layers[4].push(levelObject);
+            }
+            else if(SpritePixelArrays.movingPlatformSprites.includes(levelObject.type)) {
                 layers[3].push(levelObject);
             }
             else if(SpritePixelArrays.foregroundSprites.includes(levelObject.type)) {
-                layers[4].push(levelObject);
+                layers[5].push(levelObject);
             }
             else if(levelObject.type === ObjectTypes.TRAMPOLINE || levelObject.type === ObjectTypes.MOVING_PLATFORM) {
                 layers[2].push(levelObject);

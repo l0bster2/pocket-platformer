@@ -103,7 +103,7 @@ class CharacterCollision {
             }
 
             if (!obj.previouslyTouchedByMovingPlatform) {
-                tileMapHandler.layers[2].forEach(objectWithCollision => {
+                tileMapHandler.layers[3].forEach(objectWithCollision => {
                     if (objectWithCollision.type === ObjectTypes.MOVING_PLATFORM &&
                         obj.movingPlatformKey !== objectWithCollision.key &&
                         (Collision.objectsColliding(obj, objectWithCollision))
