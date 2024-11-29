@@ -5,6 +5,7 @@ class Path {
         this.tileSize = tileMapHandler.tileSize;
         this.pathPoints = [];
         this.objectsOnPath = [];
+        this.movingPlatformsOnPath = [];
         this.speed = speed;
         this.recalculateSteps();
         this.startPointKey;
@@ -62,12 +63,18 @@ class Path {
 
     checkObjectsOnPath() {
         this.objectsOnPath = [];
+        this.movingPlatformsOnPath = [];
         this.pathPoints.forEach(pathPoint => {
             const objectOnPath = this.tileMapHandler?.levelObjects && this.tileMapHandler.levelObjects.find(levelObject =>
                 levelObject.initialX === pathPoint.initialX && levelObject.initialY === pathPoint.initialY &&
                 !SpritePixelArrays.backgroundSprites.includes(levelObject.type)
             );
-            objectOnPath && this.objectsOnPath.push(objectOnPath)
+            if(objectOnPath) {
+                this.objectsOnPath.push(objectOnPath);
+                if(SpritePixelArrays.movingPlatformSprites.includes(objectOnPath.type)) {
+                    this.movingPlatformsOnPath.push(objectOnPath);
+                }
+            }
         })
     }
 
@@ -150,6 +157,12 @@ class Path {
             }
             objectOnPath.x += objectOnPath.xspeed;
             objectOnPath.y += objectOnPath.yspeed;
+        });
+        // We need this extra check, because if platform is going up, and player goes down, the colission could missed
+        this.movingPlatformsOnPath.forEach(movingPlatform => {
+            if(movingPlatform.yspeed < 0) {
+                CharacterCollision.checkMovingPlatformColission(this.tileMapHandler.player, movingPlatform);
+            }
         });
     }
 

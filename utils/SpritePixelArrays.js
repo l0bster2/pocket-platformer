@@ -1594,10 +1594,10 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA"],
-            ["AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "AA00AA"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["FFAA55", "FF8E1C", "FF8E1C", "FFAA55", "FFAA55", "FF8E1C", "FF8E1C", "FFAA55"],
+            ["E37100", "FFAA55", "FFAA55", "E37100", "E37100", "FFAA55", "FFAA55", "E37100"],
+            ["E37100", "FFAA55", "FFAA55", "E37100", "E37100", "FFAA55", "FFAA55", "E37100"],
+            ["FFAA55", "AA5500", "AA5500", "FFAA55", "FFAA55", "AA5500", "AA5500", "FFAA55"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],

@@ -103,16 +103,8 @@ class CharacterCollision {
             }
 
             if (!obj.previouslyTouchedByMovingPlatform) {
-                tileMapHandler.layers[3].forEach(objectWithCollision => {
-                    if (objectWithCollision.type === ObjectTypes.MOVING_PLATFORM &&
-                        obj.movingPlatformKey !== objectWithCollision.key &&
-                        (Collision.objectsColliding(obj, objectWithCollision))
-                    ) {
-                        obj.hitWall(AnimationHelper.facingDirections.bottom);
-                        obj.y = objectWithCollision.y - obj.height + 1;
-                        obj.movingPlatformKey = objectWithCollision.key;
-                        obj.onMovingPlatform = true;
-                    }
+                tileMapHandler.layers[3].forEach(movingPlatform => {
+                    this.checkMovingPlatformColission(obj, movingPlatform);
                 })
             }
         }
@@ -153,6 +145,17 @@ class CharacterCollision {
     static correctTopPosition(obj) {
         obj.y = (obj.top + 1) * tileMapHandler.tileSize + 1;
         obj.hitWall(AnimationHelper.facingDirections.top)
+    }
+
+    static checkMovingPlatformColission(obj, movingPlatform) {
+        if (obj.movingPlatformKey !== movingPlatform.key &&
+            (Collision.objectsColliding(obj, movingPlatform))
+        ) {
+            obj.hitWall(AnimationHelper.facingDirections.bottom);
+            obj.y = movingPlatform.y - obj.height + 1;
+            obj.movingPlatformKey = movingPlatform.key;
+            obj.onMovingPlatform = true;
+        }
     }
 
     static checkTopCornerCorrection(obj) {
