@@ -276,6 +276,17 @@ class BuildMode {
 
         //Objects
         if (this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.object) {
+            //Moving platform
+            if (this.currentSelectedObject?.name === ObjectTypes.MOVING_PLATFORM) {
+                const touchingOtherMovingPlatForm = this.tileMapHandler.layers[3].some(movingPlatform =>
+                    Collision.pointAndObjectColliding(
+                        this.tileMapHandler.getValuePositionsForTile(tilePosX, tilePosY),
+                        movingPlatform.fakeHitBox
+                    ))
+                if (touchingOtherMovingPlatForm) {
+                    return false;
+                }
+            }
             //Path
             if (this.currentSelectedObject?.name === ObjectTypes.PATH_POINT) {
                 return currentTile === 0 && PathBuildHandler.checkIfPathPlacementFree(tilePosX, tilePosY) && pathsHoveringOver.length === 0 &&
@@ -389,8 +400,9 @@ class BuildMode {
         submitButtonWrapper.append(submitButton);
         content.appendChild(submitButtonWrapper);
 
-        const xPos = canvasOffsetLeft + (tilePosX * this.tileMapHandler.tileSize) - 120 - Camera.viewport.left;
-        const yPos = canvasOffsetTop + (tilePosY * this.tileMapHandler.tileSize) + this.tileMapHandler.tileSize + 6 - Camera.viewport.top;
+        const posInTool = this.tileMapHandler.getValuePositionsForTile(tilePosX, tilePosY + 1);
+        const xPos = canvasOffsetLeft + posInTool.x - 120 - this.tileMapHandler.tileSize / 2 - Camera.viewport.left;
+        const yPos = canvasOffsetTop + posInTool.y - Camera.viewport.top;
         TooltipHandler.repositionAndShowTooltip("canvasObjectToolTip", yPos, xPos, heading, content)
     }
 
@@ -573,7 +585,7 @@ class BuildMode {
             x: Controller.mouseX,
             y: Controller.mouseY,
         }
-        if (Collision.pointAndObjectColliding(mousePos, this.player) 
+        if (Collision.pointAndObjectColliding(mousePos, this.player)
             //&& this.player.powerUpTypes.some(powerUpType => this.player[powerUpType] === true)
         ) {
             this.showingToolTip = false;

@@ -1589,7 +1589,7 @@ class SpritePixelArrays {
         { name: this.changeableAttributeTypes.size, defaultValue: 3, minValue: 1, maxValue: 15, step: 2 },
       ],
       descriptiveName: "Moving platform",
-      description: "Moving platform",
+      description: "Put the moving platform on a path, and you can ride on it. Click on it again to change it's size.",
       type: this.SPRITE_TYPES.object,
       animation: [{
         sprite:

@@ -278,6 +278,13 @@ class TileMapHandler {
         return Math.floor(pos / this.tileSize);
     }
 
+    getValuePositionsForTile(tileX, tileY) {
+        return {
+            x: tileX * this.tileSize + this.tileSize / 2,
+            y: tileY * this.tileSize + this.tileSize / 2,
+        }
+    }
+
     getTileLayerValueByIndex(y, x) {
         return this.tileMap[y]?.[x];
     }

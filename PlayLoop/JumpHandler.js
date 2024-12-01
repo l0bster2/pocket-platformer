@@ -201,10 +201,10 @@ class JumpHandler extends PlayMode {
     static checkMomentumBasedBonusSpeed(player) {
         player.onMovingPlatform = false;
         if(player.momentumBonusSpeedX) {
-            player.bonusSpeedX = player.momentumBonusSpeedX;
+            //player.bonusSpeedX = player.momentumBonusSpeedX;
         }
         else if(player.momentumBonusSpeedY) {
-            player.bonusSpeedY = player.momentumBonusSpeedY;
+            //player.bonusSpeedY = player.momentumBonusSpeedY;
         }
         if(!player.momentumBonusSpeedX && !player.momentumBonusSpeedY && player.onMovingPlatform) {
             player.bonusSpeedX = 0;
