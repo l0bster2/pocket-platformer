@@ -13,6 +13,7 @@ class LevelObject {
         this.yspeed = 0;
         this.setSpriteAttributes(this.type);
         AnimationHelper.setInitialSquishValues(this, this.tileSize);
+        this.colissionFunction = Collision.objectsColliding;
     }
 
     setSpriteAttributes(type) {

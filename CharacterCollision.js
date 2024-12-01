@@ -7,7 +7,7 @@ class CharacterCollision {
 
     static checkHazardsCollision(obj) {
         this.tileMapHandler.levelObjects.forEach(levelObject => {
-            if (Collision.objectsColliding(obj, levelObject)) {
+            if (levelObject.colissionFunction(obj, levelObject)) {
                 levelObject.collisionEvent();
             }
         });
@@ -139,6 +139,7 @@ class CharacterCollision {
             }
         }
 
+        obj.prev_bottom_y = obj.bottom_right_pos.y;
         obj.prev_bottom = obj.bottom;
     }
 
@@ -149,7 +150,8 @@ class CharacterCollision {
 
     static checkMovingPlatformColission(obj, movingPlatform) {
         if (obj.movingPlatformKey !== movingPlatform.key &&
-            (Collision.objectsColliding(obj, movingPlatform))
+            (Collision.pointAndObjectColliding(obj.bottom_right_pos, movingPlatform.fakeHitBox) ||
+                (Collision.pointAndObjectColliding(obj.bottom_left_pos, movingPlatform.fakeHitBox)))
         ) {
             obj.hitWall(AnimationHelper.facingDirections.bottom);
             obj.y = movingPlatform.y - obj.height + 1;

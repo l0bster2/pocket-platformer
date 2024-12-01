@@ -1586,7 +1586,7 @@ class SpritePixelArrays {
     this.MOVING_PLATFORM = {
       name: ObjectTypes.MOVING_PLATFORM,
       changeableAttributes: [
-        { name: this.changeableAttributeTypes.size, defaultValue: 1, minValue: 1, maxValue: 15 },
+        { name: this.changeableAttributeTypes.size, defaultValue: 3, minValue: 1, maxValue: 15, step: 2 },
       ],
       descriptiveName: "Moving platform",
       description: "Moving platform",
