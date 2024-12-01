@@ -217,6 +217,7 @@ class CharacterCollision {
                 }
                 if (obj.onMovingPlatform) {
                     obj.falling = false;
+                    this.setSolidGroundPhysics(obj);
                 }
                 break;
             case 5:

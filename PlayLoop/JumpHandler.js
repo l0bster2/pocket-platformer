@@ -4,12 +4,12 @@ class JumpHandler extends PlayMode {
         const { player } = this;
         this.checkMomentumCoyoteFrames(player);
 
-        if (Controller.jump && !player.collidingWithNpcId && !PauseHandler.justClosedPauseScreen ) {
+        if (Controller.jump && !player.collidingWithNpcId && !PauseHandler.justClosedPauseScreen) {
             if (player.swimming) {
                 this.swimHandler();
             }
             else {
-                if((player.jumpChecked || player.powerUpJumpChecked)) {
+                if ((player.jumpChecked || player.powerUpJumpChecked)) {
                     this.normalJumpHandler();
                 }
                 !player.fixedSpeed && this.wallJumpHandler();
@@ -54,7 +54,7 @@ class JumpHandler extends PlayMode {
     static wallJumpAllowedHandler() {
         const { player } = this;
         //if player touched a wall, allow him to walljump
-        if ((player.wallJumpChecked || player.powerUpWallJumpChecked) && 
+        if ((player.wallJumpChecked || player.powerUpWallJumpChecked) &&
             !player.swimming && !player.jumping && !player.wallJumping && player.falling) {
             if (player.wallJumpLeft) {
                 this.resetWallJump(1);
@@ -98,7 +98,7 @@ class JumpHandler extends PlayMode {
 
     static wallJumpHandler() {
         const { player } = this;
-        if ((player.wallJumpChecked || player.powerUpWallJumpChecked) 
+        if ((player.wallJumpChecked || player.powerUpWallJumpChecked)
             && !player.dashing && !player.flapped &&
             player.wallJumpFrames < player.maxJumpFrames &&
             player.currentWallJumpCoyoteFrame < player.coyoteJumpFrames) {
@@ -134,7 +134,7 @@ class JumpHandler extends PlayMode {
 
     static checkDoubleJumpInitialization() {
         const { player } = this;
-        if ((player.doubleJumpChecked || player.temporaryDoubleJump || player.powerUpDoubleJumpChecked) 
+        if ((player.doubleJumpChecked || player.temporaryDoubleJump || player.powerUpDoubleJumpChecked)
             && player.doubleJumpActive && !player.doubleJumpUsed && !player.wallJumping) {
             player.jumpPressedToTheMax = false;
             player.resetJump();
@@ -189,8 +189,8 @@ class JumpHandler extends PlayMode {
     }
 
     static checkMomentumCoyoteFrames(player) {
-        if(player.currentMomentumCoyoteFrame < player.coyoteJumpFrames) {
-            if(player.currentMomentumCoyoteFrame === player.coyoteJumpFrames -1) {
+        if (player.currentMomentumCoyoteFrame < player.coyoteJumpFrames) {
+            if (player.currentMomentumCoyoteFrame === player.coyoteJumpFrames - 1) {
                 player.momentumBonusSpeedX = 0;
                 player.momentumBonusSpeedY = 0;
             }
@@ -199,7 +199,15 @@ class JumpHandler extends PlayMode {
     }
 
     static checkMomentumBasedBonusSpeed(player) {
+        if (player.onMovingPlatform) {
+            player.onMovingPlatform = false;
+            player.bonusSpeedX = 0;
+            player.bonusSpeedY = 0;
+        }
+
+        /*
         player.onMovingPlatform = false;
+        
         if(player.momentumBonusSpeedX) {
             //player.bonusSpeedX = player.momentumBonusSpeedX;
         }
@@ -209,7 +217,7 @@ class JumpHandler extends PlayMode {
         if(!player.momentumBonusSpeedX && !player.momentumBonusSpeedY && player.onMovingPlatform) {
             player.bonusSpeedX = 0;
             player.bonusSpeedY = 0;
-        }
+        }*/
     }
 
     static jumpInitialized(direction = AnimationHelper.facingDirections.bottom) {
