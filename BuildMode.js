@@ -119,7 +119,11 @@ class BuildMode {
                     tilePosX, tilePosY, '90ee90')
             }
             else if (!this.rectangleStyleDeletion) {
-                this.drawPermissionSquare(tilePosX, tilePosY, tilePosX + 1, tilePosY + 1, '90ee90');
+                const extraWidth = this.currentSelectedObject.size > 1 ? (this.currentSelectedObject.size - 1) / 2 : 0;
+                const offsetToCenter = extraWidth * this.tileMapHandler.tileSize;
+
+                this.drawPermissionSquare(tilePosX - extraWidth, tilePosY, tilePosX + 1 + extraWidth, tilePosY + 1, 
+                    '90ee90', offsetToCenter);
             }
             //Setting object
             if (Controller.mousePressed) {
@@ -563,13 +567,13 @@ class BuildMode {
             tileSize, tileSize, actualXPos, actualYPos, tileSize, tileSize, 0.6);
     }
 
-    static drawPermissionSquare(x, y, endPosX, endPosY, color) {
+    static drawPermissionSquare(x, y, endPosX, endPosY, color, centerOffset = 0) {
         const { tileSize } = tileMapHandler;
         const actualXPos = x * tileSize;
         const actualYPos = y * tileSize;
 
         if (color === '90ee90') {
-            this.drawObjectPreviewOnScreen(actualXPos, actualYPos);
+            this.drawObjectPreviewOnScreen(actualXPos + centerOffset, actualYPos);
         }
 
         const actualXEndPos = endPosX * tileSize - 1;
