@@ -281,7 +281,7 @@ class BuildMode {
         //Objects
         if (this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.object) {
             //Moving platform
-            if (this.currentSelectedObject?.name === ObjectTypes.MOVING_PLATFORM) {
+            if (SpritePixelArrays.movingPlatformSprites.includes(this.currentSelectedObject?.name)) {
                 const touchingOtherMovingPlatForm = this.tileMapHandler.layers[3].some(movingPlatform =>
                     Collision.pointAndObjectColliding(
                         this.tileMapHandler.getValuePositionsForTile(tilePosX, tilePosY),
