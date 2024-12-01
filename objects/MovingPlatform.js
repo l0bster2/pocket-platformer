@@ -22,7 +22,7 @@ class MovingPlatform extends InteractiveLevelObject {
         this.width = this.size * this.tilemapHandler.tileSize;
         this.fakeHitBox = {
             y: this.y,
-            x: this.x - ((this.size - 1) / 2 * this.tileSize),
+            x: this.getHitBoxXOffset(),
             width: this.width,
             height: this.height,
             hitBoxOffset: 0,
@@ -32,6 +32,10 @@ class MovingPlatform extends InteractiveLevelObject {
         if(this.size > 1) {
             this.centerIndex = (this.size - 1) / 2;
         }
+    }
+
+    getHitBoxXOffset() {
+        return this.x - ((this.size - 1) / 2 * this.tileSize);
     }
 
     addChangeableAttribute(attribute, value, levelToChange = null) {
@@ -83,7 +87,7 @@ class MovingPlatform extends InteractiveLevelObject {
 
     draw() {
         this.fakeHitBox.y = this.y;
-        this.fakeHitBox.x = this.x - ((this.size - 1) / 2 * this.tileSize);
+        this.fakeHitBox.x = this.getHitBoxXOffset();
 
         if (this.player.movingPlatformKey === this.key) {
             if (this.player.jumpframes !== 1) {
@@ -96,7 +100,6 @@ class MovingPlatform extends InteractiveLevelObject {
                 this.player.onMovingPlatform = false;
             }
         }
-        //super.draw(spriteCanvas);
 
         for (var i = 0; i < this.size; i++) {
             this.drawAdditionalPlatform(i);
