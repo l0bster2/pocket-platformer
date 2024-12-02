@@ -153,7 +153,7 @@ class CharacterCollision {
     static checkMovingPlatformColission(obj, movingPlatform) {
         if (obj.movingPlatformKey !== movingPlatform.key &&
             (Collision.pointAndObjectColliding(obj.bottom_right_pos, movingPlatform.fakeHitBox) ||
-                (Collision.pointAndObjectColliding(obj.bottom_left_pos, movingPlatform.fakeHitBox)))
+                Collision.pointAndObjectColliding(obj.bottom_left_pos, movingPlatform.fakeHitBox))
         ) {
             obj.hitWall(AnimationHelper.facingDirections.bottom);
             obj.y = movingPlatform.y - obj.height + 1;
