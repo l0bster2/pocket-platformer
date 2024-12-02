@@ -7,7 +7,8 @@ class Player {
             height minus some pixels, because chracter is 1 pixel above ground,
             and so that he can squeeze between tile exactly above head
         */
-        this.height = this.tileSize - 3;
+        this.heightOffset = 3;
+        this.height = this.tileSize - this.heightOffset;
         this.initialX = initialX * this.tileSize;
         this.initialY = initialY * this.tileSize;
         this.wallJumpDirection = 1;

@@ -152,12 +152,13 @@ class CharacterCollision {
 
     static checkMovingPlatformColission(obj, movingPlatform) {
 
-        let extraY = movingPlatform.yspeed <= 0 ? Math.abs(movingPlatform.yspeed) : 0;
+        const extraY = movingPlatform.yspeed <= 0 ? Math.abs(movingPlatform.yspeed) : 0;
+        const extraHeight = extraY + obj.heightOffset;
 
         const hitBox = {
             ...movingPlatform.fakeHitBox,
             y: movingPlatform.fakeHitBox.y - extraY,
-            height: movingPlatform.fakeHitBox.height + extraY,
+            height: movingPlatform.fakeHitBox.height + extraHeight,
         }
 
         if (obj.movingPlatformKey !== movingPlatform.key &&
