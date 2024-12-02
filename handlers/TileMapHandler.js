@@ -201,7 +201,7 @@ class TileMapHandler {
 
     splitLevelObjectsInLayers() {
         const layers = [
-            [], [], [], [], []
+            [], [], [], [], [], []
         ];
         this.levelObjects.forEach(levelObject => {
             if(SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
