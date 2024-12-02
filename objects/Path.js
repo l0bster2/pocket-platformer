@@ -161,7 +161,7 @@ class Path {
             objectOnPath.x += objectOnPath.xspeed;
             objectOnPath.y += objectOnPath.yspeed;
 
-            if(objectOnPath.previouslyLowerThanPlayer) {
+            /*if(objectOnPath.previouslyLowerThanPlayer) {
                 const secondHitBox = {
                     ...objectOnPath,
                     fakeHitBox: {
@@ -169,16 +169,16 @@ class Path {
                         y: objectOnPath.y,
                     }
                 }
-                CharacterCollision.checkMovingPlatformColission(this.tileMapHandler.player, secondHitBox);
-            }
+                //CharacterCollision.checkMovingPlatformColission(this.tileMapHandler.player, secondHitBox);
+            }*/
         });
         // We need this extra check, because if platform is going up, and player goes down, the colission could missed
-        this.movingPlatformsOnPath.forEach(movingPlatform => {
+        /*this.movingPlatformsOnPath.forEach(movingPlatform => {
             if(movingPlatform.yspeed < 0 && 
                 movingPlatform.yspeed < this.tileMapHandler.player.yspeed) {
                 //CharacterCollision.checkMovingPlatformColission(this.tileMapHandler.player, movingPlatform);
             }
-        });
+        });*/
     }
 
     getCurrentPathPointIndexForObject(objectOnPath) {

@@ -101,14 +101,6 @@ class CharacterCollision {
                     }
                 })
             }
-
-            if (!obj.previouslyTouchedByMovingPlatform) {
-                tileMapHandler.layers[3].forEach(movingPlatform => {
-                    if (obj.prev_bottom_y < movingPlatform.y) {
-                        this.checkMovingPlatformColission(obj, movingPlatform);
-                    }
-                })
-            }
         }
         // collision to the top
         else if (obj.yspeed < 0) {
@@ -141,6 +133,14 @@ class CharacterCollision {
             }
         }
 
+        if (!obj.previouslyTouchedByMovingPlatform) {
+            tileMapHandler.layers[3].forEach(movingPlatform => {
+                if (obj.prev_bottom_y < movingPlatform.y) {
+                    this.checkMovingPlatformColission(obj, movingPlatform);
+                }
+            })
+        }
+
         obj.prev_bottom_y = obj.bottom_right_pos.y;
         obj.prev_bottom = obj.bottom;
     }
@@ -151,9 +151,18 @@ class CharacterCollision {
     }
 
     static checkMovingPlatformColission(obj, movingPlatform) {
+
+        let extraY = movingPlatform.yspeed <= 0 ? Math.abs(movingPlatform.yspeed) : 0;
+
+        const hitBox = {
+            ...movingPlatform.fakeHitBox,
+            y: movingPlatform.fakeHitBox.y - extraY,
+            height: movingPlatform.fakeHitBox.height + extraY,
+        }
+
         if (obj.movingPlatformKey !== movingPlatform.key &&
-            (Collision.pointAndObjectColliding(obj.bottom_right_pos, movingPlatform.fakeHitBox) ||
-                Collision.pointAndObjectColliding(obj.bottom_left_pos, movingPlatform.fakeHitBox))
+            (Collision.pointAndObjectColliding(obj.bottom_right_pos, hitBox) ||
+                Collision.pointAndObjectColliding(obj.bottom_left_pos, hitBox))
         ) {
             obj.hitWall(AnimationHelper.facingDirections.bottom);
             obj.y = movingPlatform.y - obj.height + 1;
