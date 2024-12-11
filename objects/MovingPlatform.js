@@ -21,7 +21,7 @@ class MovingPlatform extends InteractiveLevelObject {
     adaptWidthToSize() {
         this.width = this.size * this.tilemapHandler.tileSize;
         this.fakeHitBox = {
-            y: this.y - 2,
+            y: this.y - 1,
             x: this.getHitBoxXOffset(),
             width: this.width,
             height: this.height,
@@ -86,7 +86,7 @@ class MovingPlatform extends InteractiveLevelObject {
     }
 
     draw() {
-        this.fakeHitBox.y = this.y - 2;
+        this.fakeHitBox.y = this.y - 1;
         this.fakeHitBox.x = this.getHitBoxXOffset();
 
         if (this.player.movingPlatformKey === this.key) {

@@ -165,7 +165,7 @@ class CharacterCollision {
                 Collision.pointAndObjectColliding(obj.bottom_left_pos, hitBox))
         ) {
             obj.hitWall(AnimationHelper.facingDirections.bottom);
-            obj.y = movingPlatform.y - obj.height - 1;
+            obj.y = movingPlatform.y - obj.height;
             obj.movingPlatformKey = movingPlatform.key;
             obj.onMovingPlatform = true;
         }
