@@ -151,7 +151,6 @@ class CharacterCollision {
     }
 
     static checkMovingPlatformColission(obj, movingPlatform) {
-
         const extraY = movingPlatform.yspeed <= 0 ? Math.abs(movingPlatform.yspeed) : 0;
         const extraHeight = extraY + obj.heightOffset;
 
@@ -166,7 +165,7 @@ class CharacterCollision {
                 Collision.pointAndObjectColliding(obj.bottom_left_pos, hitBox))
         ) {
             obj.hitWall(AnimationHelper.facingDirections.bottom);
-            obj.y = movingPlatform.y - obj.height + 1;
+            obj.y = movingPlatform.y - obj.height - 1;
             obj.movingPlatformKey = movingPlatform.key;
             obj.onMovingPlatform = true;
         }
