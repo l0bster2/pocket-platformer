@@ -28,6 +28,7 @@ class FallHandler extends PlayMode {
         const { player } = this;
 
         if (player.falling && !player.fixedSpeed) {
+            player.bonusSpeedY = 0;
             //If player is falling and pressing against the wall, he will stick to the wall
             if (!player.swimming && !player.iceOnSide && 
                 (player.wallJumpChecked || player.powerUpWallJumpChecked) && 

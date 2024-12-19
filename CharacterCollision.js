@@ -133,13 +133,11 @@ class CharacterCollision {
             }
         }
 
-        if (!obj.previouslyTouchedByMovingPlatform) {
-            tileMapHandler.layers[3].forEach(movingPlatform => {
-                if (obj.prev_bottom_y < movingPlatform.y) {
-                    this.checkMovingPlatformColission(obj, movingPlatform);
-                }
-            })
-        }
+        tileMapHandler.layers[3].forEach(movingPlatform => {
+            if (obj.prev_bottom_y < movingPlatform.y) {
+                this.checkMovingPlatformColission(obj, movingPlatform);
+            }
+        })
 
         obj.prev_bottom_y = obj.bottom_right_pos.y;
         obj.prev_bottom = obj.bottom;
