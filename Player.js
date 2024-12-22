@@ -89,6 +89,8 @@ class Player {
             this.x = this.initialX;
             this.y = this.initialY;
         }
+        //Correction in case player is higher than 1 tile-size
+        this.y = this.y + this.tileSize - this.height - 2;
     }
 
     checkIfPlayerInitialPositionExists() {
@@ -237,7 +239,8 @@ class Player {
         }
 
         if (this.currentTrailFrame === finalFrame) {
-            SFXHandler.createSFX(this.x, this.y - 2, sfxIndex, this.facingDirection, 0, 0, true)
+            SFXHandler.createSFX(this.bottom_left_pos.x, this.bottom_left_pos.y - this.tileSize, 
+                sfxIndex, this.facingDirection, 0, 0, true)
             this.currentTrailFrame = 0;
         }
     }
