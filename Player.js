@@ -239,7 +239,7 @@ class Player {
         }
 
         if (this.currentTrailFrame === finalFrame) {
-            SFXHandler.createSFX(this.bottom_left_pos.x, this.bottom_left_pos.y - this.tileSize, 
+            SFXHandler.createSFX(this.bottom_left_pos.x, this.bottom_left_pos.y - this.tileSize + 1, 
                 sfxIndex, this.facingDirection, 0, 0, true)
             this.currentTrailFrame = 0;
         }
