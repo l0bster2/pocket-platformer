@@ -71,14 +71,13 @@ class CharacterCollision {
     static checkTileCollisions(obj, cornerCorrection = false) {
         obj.y += obj.yspeed;
         this.getEdges(obj);
+        const { bottomPoints, topPoints, leftPoints, rightPoints } = this.getColissionPoints(obj);
+
         // collision to the bottom
         if (obj.yspeed > 0) {
-            if ((obj.bottom_right !== 0)
-                || (obj.bottom_left !== 0)) {
+            if (!MathHelpers.arraysHaveSameValues([obj.bottom_right, obj.bottom_left], [0])) {
                 // not a cloud...
-                if (obj.bottom_right !== 5 &&
-                    obj.bottom_left !== 5
-                ) {
+                if (!MathHelpers.arraysHaveSameValues([obj.bottom_right, obj.bottom_left], [5])) {
                     obj.y = obj.bottom * tileMapHandler.tileSize - (obj.height + 1);
                     obj.hitWall(AnimationHelper.facingDirections.bottom);
 
@@ -102,8 +101,7 @@ class CharacterCollision {
         }
         // collision to the top
         else if (obj.yspeed < 0) {
-            if (!this.passableTiles.includes(obj.top_right)
-                || !this.passableTiles.includes(obj.top_left)) {
+            if (!MathHelpers.arraysHaveSameValues([obj.top_right, obj.top_left], this.passableTiles)) {
                 cornerCorrection ? this.checkTopCornerCorrection(obj) : this.correctTopPosition(obj);
             }
         }
@@ -113,8 +111,7 @@ class CharacterCollision {
 
         // collision to the left
         if (obj.xspeed < 0) {
-            if (!this.passableTiles.includes(obj.top_left)
-                || !this.passableTiles.includes(obj.bottom_left)) {
+            if (!MathHelpers.arraysHaveSameValues([obj.top_left, obj.bottom_left], this.passableTiles)) {
                 obj.x = (obj.left + 1) * tileMapHandler.tileSize;
                 obj.hitWall(AnimationHelper.facingDirections.left);
             }
@@ -122,8 +119,7 @@ class CharacterCollision {
 
         // collision to the right
         else if (obj.xspeed > 0) {
-            if (!this.passableTiles.includes(obj.top_right)
-                || !this.passableTiles.includes(obj.bottom_right)) {
+            if (!MathHelpers.arraysHaveSameValues([obj.top_right, obj.bottom_right], this.passableTiles)) {
                 //this fix is needed to prevednt "stuttering". 
                 const extra = obj.groundAcceleration < 1 ? obj.speed - 0.01 : 1;
                 obj.x = obj.right * tileMapHandler.tileSize - (obj.width + extra);
@@ -132,6 +128,17 @@ class CharacterCollision {
         }
 
         obj.prev_bottom = obj.bottom;
+    }
+
+    static getColissionPoints(obj) {
+        const bottomPoints = [obj.bottom_right, obj.bottom_left];
+        const topPoints = [obj.top_right, obj.top_left];
+        const leftPoints = [obj.top_left, obj.bottom_left];
+        const rightPoints = [obj.top_right, obj.bottom_right];
+
+        return {
+            bottomPoints, topPoints, leftPoints, rightPoints
+        }
     }
 
     static correctTopPosition(obj) {
@@ -249,7 +256,7 @@ class CharacterCollision {
         obj.top_left = tileMapHandler.getTileLayerValueByIndex(obj.top, obj.left);
         obj.bottom_right = tileMapHandler.getTileLayerValueByIndex(obj.bottom, obj.right);
         obj.bottom_left = tileMapHandler.getTileLayerValueByIndex(obj.bottom, obj.left);
-        if(obj?.wallJumpChecked || obj?.powerUpWallJumpChecked) {
+        if (obj?.wallJumpChecked || obj?.powerUpWallJumpChecked) {
             obj.checkWallJumpReady();
         }
     }

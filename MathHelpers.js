@@ -38,6 +38,10 @@ class MathHelpers {
     return Math.sqrt(a * a + b * b);
   }
 
+  static arraysHaveSameValues(arr1, arr2) {
+    return arr1.every(r=> arr2.includes(r));
+  }
+
   static raycastFindEdge(angle, origin, lineSightInTiles) {
     const { x, y } = origin;
     let x2 = x + Math.cos(angle);
@@ -56,12 +60,12 @@ class MathHelpers {
       dof = Number.MAX_VALUE;
     } else {
       if (x2 > x) { // looking right
-        rx = Math.ceil(x /  tileWidth) * tileWidth;
+        rx = Math.ceil(x / tileWidth) * tileWidth;
         ry = y + (rx - x) * tan;
         yo = tileWidth * tan;
         xo = tileWidth;
       } else {
-        rx = Math.floor(x /  tileWidth) * tileWidth - 1;
+        rx = Math.floor(x / tileWidth) * tileWidth - 1;
         ry = y + (rx - x) * tan;
         yo = -tileWidth * tan;
         xo = -tileWidth;
@@ -88,12 +92,12 @@ class MathHelpers {
       dof = Number.MAX_VALUE;
     } else {
       if (y2 > y) { // if looking downwards
-        ry = Math.ceil(y /  tileWidth) * tileWidth;
+        ry = Math.ceil(y / tileWidth) * tileWidth;
         rx = x + (ry - y) / tan;
         xo = tileWidth / tan;
         yo = tileWidth;
       } else {
-        ry = Math.floor(y /  tileWidth) * tileWidth - 1;
+        ry = Math.floor(y / tileWidth) * tileWidth - 1;
         rx = x + (ry - y) / tan;
         xo = -tileWidth / tan;
         yo = -tileWidth;
