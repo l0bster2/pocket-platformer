@@ -3,13 +3,13 @@ class Player {
     constructor(initialX, initialY, tileSize) {
         this.tileSize = tileSize;
         this.widthOffset = 2;
-        this.width = this.tileSize - this.widthOffset;
+        this.width = this.tileSize * 3 - this.widthOffset;
         /*
             height minus some pixels, because chracter is 1 pixel above ground,
             and so that he can squeeze between tile exactly above head
         */
         this.heightOffset = 3;
-        this.height = this.tileSize - this.heightOffset;
+        this.height = this.tileSize * 3 - this.heightOffset;
         this.initialX = initialX * this.tileSize;
         this.initialY = initialY * this.tileSize;
         this.wallJumpDirection = 1;
@@ -448,10 +448,10 @@ class Player {
     }
 
     setSquishAnimation() {
-        AnimationHelper.setSquishValues(this, this.tileSize * 1.2, this.tileSize * 0.8);
+        AnimationHelper.setSquishValues(this, (this.width + this.widthOffset) * 1.2, (this.width + this.widthOffset) * 0.8);
     }
 
     setStretchAnimation() {
-        AnimationHelper.setSquishValues(this, this.tileSize * 0.8, this.tileSize * 1.2);
+        AnimationHelper.setSquishValues(this, (this.height + this.heightOffset) * 0.8, (this.height + this.heightOffset) * 1.2);
     }
 }
