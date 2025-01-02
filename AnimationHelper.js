@@ -101,15 +101,15 @@ class AnimationHelper {
         }
     }
 
-    static setInitialSquishValues(obj) {
-        obj.drawWidth = obj.tileSize;
-        obj.drawHeight = obj.tileSize;
-        obj.squishWidth = obj.tileSize;
-        obj.squishHeight = obj.tileSize;
+    static setInitialSquishValues(obj, width, height) {
+        obj.drawWidth = width;
+        obj.drawHeight = height;
+        obj.squishWidth = width;
+        obj.squishHeight = height;
+        obj.originalDrawWidth = width;
+        obj.originalDrawHeight = height;
         obj.squishWidthStep = 0;
         obj.squishHeightStep = 0;
-        obj.originalDrawWidth = obj.tileSize;
-        obj.originalDrawHeight = obj.tileSize;
         obj.squishXOffset = 0;
         obj.squishYOffset = 0;
     }
