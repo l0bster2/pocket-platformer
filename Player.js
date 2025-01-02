@@ -3,13 +3,13 @@ class Player {
     constructor(initialX, initialY, tileSize) {
         this.tileSize = tileSize;
         this.widthOffset = 2;
-        this.width = this.tileSize * 3 - this.widthOffset;
+        this.width = this.tileSize - this.widthOffset;
         /*
             height minus some pixels, because chracter is 1 pixel above ground,
             and so that he can squeeze between tile exactly above head
         */
         this.heightOffset = 3;
-        this.height = this.tileSize * 3 - this.heightOffset;
+        this.height = this.tileSize - this.heightOffset;
         this.initialX = initialX * this.tileSize;
         this.initialY = initialY * this.tileSize;
         this.wallJumpDirection = 1;
@@ -88,10 +88,10 @@ class Player {
     }
 
     updateExtraColissionPoints() {
-        this.extraHeightPoints = Math.floor(this.height + 3 / this.tileSize);
+        this.extraHeightPoints = Math.floor((this.height + 3) / this.tileSize);
         this.heightForExtraColissionPoints = this.extraHeightPoints ? Math.round(this.height / (this.extraHeightPoints + 1)) : 0;
 
-        this.extraWidthPoints = Math.floor(this.width + 2 / this.tileSize);
+        this.extraWidthPoints = Math.floor((this.width + 2) / this.tileSize);
         this.widthForExtraColissionPoints = this.extraWidthPoints ? Math.round(this.width / (this.extraWidthPoints + 1)) : 0;
     }
 
