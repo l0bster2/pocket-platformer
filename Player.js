@@ -52,6 +52,7 @@ class Player {
         this.setAbilities();
         this.resetAll();
         this.resetTemporaryAttributes();
+        this.updateExtraColissionPoints();
     }
 
     adjustSwimAttributes(maxJumpFrames, jumpSpeed) {
@@ -76,6 +77,20 @@ class Player {
         this.prev_bottom;
         this.wallJumpLeft;
         this.wallJumpRight;
+        this.extraLeftPoints = [];
+        this.extraSidePointsY = [];
+        this.extraRightPoints = [];
+        this.extraBottomPoints = [];
+        this.extraBottomPointsX = [];
+        this.extraTopPoints = [];
+    }
+
+    updateExtraColissionPoints() {
+        this.extraHeightPoints = Math.floor(this.height + 3 / this.tileSize);
+        this.heightForExtraColissionPoints = this.extraHeightPoints ? Math.round(this.height / (this.extraHeightPoints + 1)) : 0;
+
+        this.extraWidthPoints = Math.floor(this.width + 2 / this.tileSize);
+        this.widthForExtraColissionPoints = this.extraWidthPoints ? Math.round(this.width / (this.extraWidthPoints + 1)) : 0;
     }
 
     resetPosition(checkCheckpoints = false) {
@@ -239,7 +254,7 @@ class Player {
         }
 
         if (this.currentTrailFrame === finalFrame) {
-            SFXHandler.createSFX(this.bottom_left_pos.x, this.bottom_left_pos.y - this.tileSize + 1, 
+            SFXHandler.createSFX(this.bottom_left_pos.x, this.bottom_left_pos.y - this.tileSize + 1,
                 sfxIndex, this.facingDirection, 0, 0, true)
             this.currentTrailFrame = 0;
         }
@@ -252,7 +267,7 @@ class Player {
         switch (this.deathType) {
             case this.deathTypes.explode:
                 this.radians += 0.15;
-                Display.explodeSprite(this.spriteCanvas, animationIndex, this.currentSpriteIndex, this.tileSize, 
+                Display.explodeSprite(this.spriteCanvas, animationIndex, this.currentSpriteIndex, this.tileSize,
                     this.x, this.y, offSet, this.radians);
                 break;
             case this.deathTypes.upwardsAndRotate:
@@ -349,12 +364,21 @@ class Player {
         const wallJumpLeftPos = tileMapHandler.getTileValueForPosition(this.x - 1);
         const wallJumpTopRightTile = tileMapHandler.getTileLayerValueByIndex(this.top, wallJumpRightPos);
         const wallJumpBottomRightTile = tileMapHandler.getTileLayerValueByIndex(this.bottom, wallJumpRightPos);
+        const extraRightTiles = this.extraSidePointsY.map(extraPointRight => {
+            const tileValueTop = tileMapHandler.getTileValueForPosition(extraPointRight);
+            return tileMapHandler.getTileLayerValueByIndex(tileValueTop, wallJumpRightPos)
+        });
         const wallJumpTopLeftTile = tileMapHandler.getTileLayerValueByIndex(this.top, wallJumpLeftPos);
         const wallJumpBottomLeftTile = tileMapHandler.getTileLayerValueByIndex(this.bottom, wallJumpLeftPos);
+        const extraLeftTiles = this.extraSidePointsY.map(extraPointLeft => {
+            const tileValueTop = tileMapHandler.getTileValueForPosition(extraPointLeft);
+            return tileMapHandler.getTileLayerValueByIndex(tileValueTop, wallJumpLeftPos)
+        });
         const tilesWithNoWallJump = [0, 5];
-        this.wallJumpRight = (!tilesWithNoWallJump.includes(wallJumpTopRightTile) || !tilesWithNoWallJump.includes(wallJumpBottomRightTile)) 
+
+        this.wallJumpRight = (!MathHelpers.arraysHaveSameValues([wallJumpTopRightTile, wallJumpBottomRightTile, ...extraRightTiles], tilesWithNoWallJump))
             && this.x < (tileMapHandler.levelWidth - 1) * tileMapHandler.tileSize - 5;
-        this.wallJumpLeft = (!tilesWithNoWallJump.includes(wallJumpTopLeftTile) || !tilesWithNoWallJump.includes(wallJumpBottomLeftTile)) 
+        this.wallJumpLeft = !MathHelpers.arraysHaveSameValues([wallJumpTopLeftTile, wallJumpBottomLeftTile, ...extraLeftTiles], tilesWithNoWallJump)
             && this.x > tileMapHandler.tileSize - 5;
         this.iceOnSide = false;
         if (this.wallJumpLeft || this.wallJumpRight) {

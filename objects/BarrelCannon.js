@@ -16,13 +16,16 @@ class BarrelCannon extends InteractiveLevelObject {
     }
 
     setPlayerFlying() {
+        const widthDIfference = this.player.width > this.tilemapHandler.tileSize ? this.player.width - this.width : 0;
+        const heightDIfference = this.player.height > this.tilemapHandler.tileSize ? this.player.height - this.height : 0;
+
         if (this.currentFacingDirection === AnimationHelper.facingDirections.left) {
-            this.player.x = this.x - this.tilemapHandler.tileSize;
+            this.player.x = this.x - this.tilemapHandler.tileSize - widthDIfference;
             this.player.xspeed = this.speed * -1;
             this.setPlayerFlyingAttributes();
         }
         else if (this.currentFacingDirection === AnimationHelper.facingDirections.top) {
-            this.player.y = this.y - this.tilemapHandler.tileSize;
+            this.player.y = this.y - this.tilemapHandler.tileSize - heightDIfference;
             this.player.yspeed = this.speed * -1;
             this.setPlayerFlyingAttributes();
         }
@@ -39,8 +42,11 @@ class BarrelCannon extends InteractiveLevelObject {
     }
 
     collisionEvent() {
-        this.player.x = this.x;
-        this.player.y = this.y;
+        const widthDIfference = this.player.width > this.tilemapHandler.tileSize ? (this.player.width - this.width) / 2 : 0;
+        const heightDIfference = this.player.height > this.tilemapHandler.tileSize ? (this.player.height - this.height) / 2 : 0;
+
+        this.player.x = this.x - widthDIfference;
+        this.player.y = this.y - heightDIfference;
         this.player.resetAttributes(false);
         this.player.jumpPressedToTheMax = true;
         this.player.invisible = Game.playMode === Game.PLAY_MODE;

@@ -71,13 +71,12 @@ class CharacterCollision {
     static checkTileCollisions(obj, cornerCorrection = false) {
         obj.y += obj.yspeed;
         this.getEdges(obj);
-        const { bottomPoints, topPoints, leftPoints, rightPoints } = this.getColissionPoints(obj);
 
         // collision to the bottom
         if (obj.yspeed > 0) {
-            if (!MathHelpers.arraysHaveSameValues([obj.bottom_right, obj.bottom_left], [0])) {
+            if (!MathHelpers.arraysHaveSameValues([obj.bottom_right, obj.bottom_left, ...obj.extraBottomPoints], [0])) {
                 // not a cloud...
-                if (!MathHelpers.arraysHaveSameValues([obj.bottom_right, obj.bottom_left], [5])) {
+                if (!MathHelpers.arraysHaveSameValues([obj.bottom_right, obj.bottom_left, ...obj.extraBottomPoints], [5])) {
                     obj.y = obj.bottom * tileMapHandler.tileSize - (obj.height + 1);
                     obj.hitWall(AnimationHelper.facingDirections.bottom);
 
@@ -101,8 +100,8 @@ class CharacterCollision {
         }
         // collision to the top
         else if (obj.yspeed < 0) {
-            if (!MathHelpers.arraysHaveSameValues([obj.top_right, obj.top_left], this.passableTiles)) {
-                cornerCorrection ? this.checkTopCornerCorrection(obj) : this.correctTopPosition(obj);
+            if (!MathHelpers.arraysHaveSameValues([obj.top_right, obj.top_left, ...obj.extraTopPoints], this.passableTiles)) {
+                cornerCorrection  && obj.width < tileMapHandler.tileSize ? this.checkTopCornerCorrection(obj) : this.correctTopPosition(obj);
             }
         }
 
@@ -111,7 +110,7 @@ class CharacterCollision {
 
         // collision to the left
         if (obj.xspeed < 0) {
-            if (!MathHelpers.arraysHaveSameValues([obj.top_left, obj.bottom_left], this.passableTiles)) {
+            if (!MathHelpers.arraysHaveSameValues([obj.top_left, obj.bottom_left, ...obj.extraLeftPoints], this.passableTiles)) {
                 obj.x = (obj.left + 1) * tileMapHandler.tileSize;
                 obj.hitWall(AnimationHelper.facingDirections.left);
             }
@@ -119,7 +118,7 @@ class CharacterCollision {
 
         // collision to the right
         else if (obj.xspeed > 0) {
-            if (!MathHelpers.arraysHaveSameValues([obj.top_right, obj.bottom_right], this.passableTiles)) {
+            if (!MathHelpers.arraysHaveSameValues([obj.top_right, obj.bottom_right, ...obj.extraRightPoints], this.passableTiles)) {
                 //this fix is needed to prevednt "stuttering". 
                 const extra = obj.groundAcceleration < 1 ? obj.speed - 0.01 : 1;
                 obj.x = obj.right * tileMapHandler.tileSize - (obj.width + extra);
@@ -128,17 +127,6 @@ class CharacterCollision {
         }
 
         obj.prev_bottom = obj.bottom;
-    }
-
-    static getColissionPoints(obj) {
-        const bottomPoints = [obj.bottom_right, obj.bottom_left];
-        const topPoints = [obj.top_right, obj.top_left];
-        const leftPoints = [obj.top_left, obj.bottom_left];
-        const rightPoints = [obj.top_right, obj.bottom_right];
-
-        return {
-            bottomPoints, topPoints, leftPoints, rightPoints
-        }
     }
 
     static correctTopPosition(obj) {
@@ -170,6 +158,9 @@ class CharacterCollision {
 
     static groundUnderFeet(obj) {
         const left_foot_x = this.tileMapHandler.getTileValueForPosition(obj.x);
+        const extra_bottom_foot_pos_x = obj.extraBottomPointsX.map(extraPos => 
+            this.tileMapHandler.getTileValueForPosition(extraPos)
+        );
         const right_foot_x = this.tileMapHandler.getTileValueForPosition(obj.x + obj.width);
         const foot_y = this.tileMapHandler.getTileValueForPosition(obj.y + (obj.height + 1));
 
@@ -177,8 +168,10 @@ class CharacterCollision {
 
         if (foot_y < this.tileMapHandler.levelHeight) {
             const left_foot = this.tileMapHandler.tileMap[foot_y][left_foot_x];
+            const extra_foot = extra_bottom_foot_pos_x.map(extraTile => this.tileMapHandler.tileMap[foot_y][extraTile])
             const right_foot = this.tileMapHandler.tileMap[foot_y][right_foot_x];
-            current_tile = left_foot !== 0 ? left_foot : right_foot;
+            const allBottomFootPos = [left_foot, ...extra_foot, right_foot];
+            current_tile = allBottomFootPos.find((element) => element !== 0) || right_foot;
         }
 
         obj.bonusSpeed && obj.slowDownBonusSpeed();
@@ -258,6 +251,41 @@ class CharacterCollision {
         obj.bottom_left = tileMapHandler.getTileLayerValueByIndex(obj.bottom, obj.left);
         if (obj?.wallJumpChecked || obj?.powerUpWallJumpChecked) {
             obj.checkWallJumpReady();
+        }
+        this.checkForExtraEdges(obj);
+    }
+
+    static checkForExtraEdges(obj) {
+        obj.extraLeftPoints = [];
+        obj.extraSidePointsY = []; 
+        obj.extraRightPoints = [];
+
+        if(obj.extraHeightPoints) {
+            for(var i = 0; i < obj.extraHeightPoints; i++) {
+                const extraTop = obj.top_left_pos.y + obj.heightForExtraColissionPoints * i;
+                obj.extraSidePointsY.push(extraTop);
+                const extraLeftTilePosY = tileMapHandler.getTileValueForPosition(extraTop);
+                const extraTileValueLeft = tileMapHandler.getTileLayerValueByIndex(extraLeftTilePosY, obj.left);
+                const extraTileValueRight = tileMapHandler.getTileLayerValueByIndex(extraLeftTilePosY, obj.right);
+                obj.extraLeftPoints.push(extraTileValueLeft);
+                obj.extraRightPoints.push(extraTileValueRight);
+            }
+        }
+
+        obj.extraBottomPoints = [];
+        obj.extraBottomPointsX = [];
+        obj.extraTopPoints = [];
+
+        if(obj.extraWidthPoints) {
+            for(var i = 0; i < obj.extraWidthPoints; i++) {
+                const extraLeft = obj.top_left_pos.x + obj.widthForExtraColissionPoints * i;
+                obj.extraBottomPointsX.push(extraLeft);
+                const extraTopTilePosX = tileMapHandler.getTileValueForPosition(extraLeft);
+                const extraTileValueTop = tileMapHandler.getTileLayerValueByIndex(obj.top, extraTopTilePosX);
+                const extraTileValueBottom = tileMapHandler.getTileLayerValueByIndex(obj.bottom, extraTopTilePosX);
+                obj.extraBottomPoints.push(extraTileValueBottom);
+                obj.extraTopPoints.push(extraTileValueTop);
+            }
         }
     }
 }
