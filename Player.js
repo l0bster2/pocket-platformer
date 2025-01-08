@@ -448,10 +448,10 @@ class Player {
     }
 
     setSquishAnimation() {
-        AnimationHelper.setSquishValues(this, (this.width + this.widthOffset) * 1.2, (this.width + this.widthOffset) * 0.8);
+        AnimationHelper.setSquishValues(this, (this.width + this.widthOffset) * 1.2, (this.height + this.heightOffset) * 0.8);
     }
 
     setStretchAnimation() {
-        AnimationHelper.setSquishValues(this, (this.height + this.heightOffset) * 0.8, (this.height + this.heightOffset) * 1.2);
+        AnimationHelper.setSquishValues(this, (this.width + this.widthOffset) * 0.8, (this.height + this.heightOffset) * 1.2);
     }
 }
