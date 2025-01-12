@@ -53,11 +53,12 @@ class Portal extends InteractiveLevelObject {
             const otherExit = this.findOtherExit();
             if (otherExit) {
                 otherExit.setToInactive();
+                const { player, tileSize } = this.tilemapHandler;
                 this.tilemapHandler.player.x = otherExit.x + 1;
-                this.tilemapHandler.player.y = otherExit.y + 1;
+                this.tilemapHandler.player.y = otherExit.y + tileSize - player.height - 1;
                 otherExit.touchingPlayer = true;
-                AnimationHelper.setSquishValues(otherExit, this.tileSize * 1.2,
-                    this.tileSize * 0.8, 5, this.currentFacingDirection);
+                AnimationHelper.setSquishValues(otherExit, tileSize * 1.2,
+                    tileSize * 0.8, 5, this.currentFacingDirection);
             }
         }
     }
