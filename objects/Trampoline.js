@@ -10,7 +10,7 @@ class Trampoline extends InteractiveLevelObject {
 
     collisionEvent() {
         this.player.previouslyTouchedTrampolines = true;
-        if (this.player.yspeed > 0 && this.player.bottom_left_pos.y < this.y + (this.tileSize / 2)) {
+        if ((this.player.yspeed > 0 || this.player.bonusSpeedY > 0) && this.player.bottom_left_pos.y < this.y + (this.tileSize / 2)) {
             this.tilemapHandler.levelObjects.forEach(levelObject => {
                 if (levelObject.type === ObjectTypes.TRAMPOLINE) {
                     levelObject.currentAnimationFrame = this.unfoldedAnimationDuration;
