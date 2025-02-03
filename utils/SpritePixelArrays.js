@@ -1612,7 +1612,15 @@ class SpritePixelArrays {
       name: ObjectTypes.TRIGGERED_PLATFORM,
       changeableAttributes: [
         { name: this.changeableAttributeTypes.size, defaultValue: 3, minValue: 1, maxValue: 15, step: 2 },
+        { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 6 },
+        {
+          name: "activationOnce", 
+          formElement: this.changeableAttributeFormElements.toggle, 
+          defaultValue: "moving endlessly when touched",
+          options: [{ "true": "moving endlessly when touched" }, { "false": "moving when player on it" }]
+        },
       ],
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
       descriptiveName: "Triggered platform",
       description: "Can't be put on paths, but will start moving, once the player lands on it. Click on it again to change it's behaviour.",
       type: this.SPRITE_TYPES.object,
