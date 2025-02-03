@@ -71,6 +71,7 @@ class SpritePixelArrays {
 
     this.movingPlatformSprites = [
       ObjectTypes.MOVING_PLATFORM,
+      ObjectTypes.TRIGGERED_PLATFORM,
     ]
 
     this.projectileSprites = [
@@ -1602,6 +1603,30 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      ]
+    };
+
+    this.TRIGGERED_PLATFORM = {
+      name: ObjectTypes.TRIGGERED_PLATFORM,
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.size, defaultValue: 3, minValue: 1, maxValue: 15, step: 2 },
+      ],
+      descriptiveName: "Triggered platform",
+      description: "Can't be put on paths, but will start moving, once the player lands on it. Click on it again to change it's behaviour.",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["8EC6FF", "55AAFF", "55AAFF", "8EC6FF", "8EC6FF", "55AAFF", "55AAFF", "8EC6FF"],
+            ["1C8EFF", "8EC6FF", "8EC6FF", "1C8EFF", "1C8EFF", "8EC6FF", "8EC6FF", "1C8EFF"],
+            ["1C8EFF", "8EC6FF", "8EC6FF", "1C8EFF", "1C8EFF", "8EC6FF", "8EC6FF", "1C8EFF"],
+            ["8EC6FF", "0055AA", "0055AA", "8EC6FF", "8EC6FF", "0055AA", "0055AA", "8EC6FF"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       },
       ]
