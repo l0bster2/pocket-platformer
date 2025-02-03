@@ -423,6 +423,7 @@ class Player {
 
     hitBottom() {
         this.verticalHit();
+        this.bonusSpeedX = 0;
         this.jumpframes = 0;
         this.resetDoubleJump();
         this.setSquishAnimation();
