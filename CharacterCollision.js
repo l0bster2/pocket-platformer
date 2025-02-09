@@ -151,7 +151,7 @@ class CharacterCollision {
 
     static checkMovingPlatformColission(obj, movingPlatform) {
         const extraY = movingPlatform.yspeed <= 0 ? Math.abs(movingPlatform.yspeed) : 0;
-        const extraHeight = extraY + obj.yspeed;
+        const extraHeight = extraY + Math.abs(obj.yspeed);
 
         const hitBox = {
             ...movingPlatform.fakeHitBox,
