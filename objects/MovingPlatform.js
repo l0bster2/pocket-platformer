@@ -11,18 +11,20 @@ class MovingPlatform extends DefaultMovingPlatform {
         }
 
         if (this.player.movingPlatformKey === this.key) {
-            if (this.player.jumpframes !== 1) {
-                const playerAndPlatformMovingUp = this.yspeed <= 0 && this.player.yspeed < 0;
-                const playerJumpingFasterThanMovingPlatform = playerAndPlatformMovingUp && this.player.yspeed < this.yspeed;
-                this.player.bonusSpeedX = this.xspeed;
+            const playerAndPlatformMovingUp = this.yspeed <= 0 && this.player.yspeed < 0;
+            const playerJumpingSlowerThanMovingPlatform = playerAndPlatformMovingUp && this.player.yspeed > this.yspeed;
 
-                if(!playerAndPlatformMovingUp) {
-                    this.player.bonusSpeedY = this.yspeed;
-                }
-                else if(!playerJumpingFasterThanMovingPlatform){
-                    this.player.bonusSpeedY = this.yspeed - this.player.yspeed - 1;
-                }
+            this.player.bonusSpeedX = this.xspeed;
+            this.player.bonusSpeedY = this.yspeed;
+
+            if(playerJumpingSlowerThanMovingPlatform) {
+                this.player.hitWall(AnimationHelper.facingDirections.bottom);
+                this.player.jumping = false;
+                this.player.y = this.y - this.player.height;
+                this.player.movingPlatformKey = this.key;
+                this.player.onMovingPlatform = true;
             }
+
 
             if (!Collision.objectsColliding(this.player, this.fakeHitBox)) {
                 this.player.movingPlatformKey = null;
