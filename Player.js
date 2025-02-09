@@ -425,6 +425,7 @@ class Player {
         this.verticalHit();
         this.bonusSpeedX = 0;
         this.jumpframes = 0;
+        this.jumpPressedToTheMax = true;
         this.resetDoubleJump();
         this.setSquishAnimation();
     }
