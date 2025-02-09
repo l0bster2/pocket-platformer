@@ -42,38 +42,42 @@ class TriggeredPlatform extends DefaultMovingPlatform {
         ) {
             this.outOfBounds = true;
         }
-    }
-
-    draw() {
-        this.checkOutOfBounds();
         if(this.outOfBounds && this.outOfBoundsTimer < this.maxOutOfBoundsTime) {
             this.outOfBoundsTimer++;
             if(this.outOfBoundsTimer == this.maxOutOfBoundsTime) {
                 this.resetObject();
             }
         }
+    }
+
+    draw() {
+        this.checkOutOfBounds();
+
         if (this.yspeed < 0 || this.xspeed !== 0) {
             this.fakeHitBox.y = this.y - 1;
             this.fakeHitBox.x = this.getHitBoxXOffset();
         }
+
         if (this.player.movingPlatformKey === this.key) {
             this.setMovementSpeed();
             if(this.activationOnce === "moving when player on it") {
                 this.x += this.xspeed;
                 this.y += this.yspeed;
             }
-            if (this.player.jumpframes !== 1) {
-                const playerAndPlatformMovingUp = this.yspeed <= 0 && this.player.yspeed < 0;
-                const playerJumpingFasterThanMovingPlatform = playerAndPlatformMovingUp && this.player.yspeed < this.yspeed;
-                this.player.bonusSpeedX = this.xspeed;
+            const playerAndPlatformMovingUp = this.yspeed <= 0 && this.player.yspeed < 0;
+            const playerJumpingSlowerThanMovingPlatform = playerAndPlatformMovingUp && this.player.yspeed > this.yspeed;
 
-                if(!playerAndPlatformMovingUp) {
-                    this.player.bonusSpeedY = this.yspeed;
-                }
-                else if(!playerJumpingFasterThanMovingPlatform){
-                    this.player.bonusSpeedY = this.yspeed - this.player.yspeed - 1;
-                }
+            this.player.bonusSpeedX = this.xspeed;
+            this.player.bonusSpeedY = this.yspeed;
+
+            if(playerJumpingSlowerThanMovingPlatform) {
+                this.player.hitWall(AnimationHelper.facingDirections.bottom);
+                this.player.jumping = false;
+                this.player.y = this.y - this.player.height;
+                this.player.movingPlatformKey = this.key;
+                this.player.onMovingPlatform = true;
             }
+
 
             if (!Collision.objectsColliding(this.player, this.fakeHitBox)) {
                 this.player.movingPlatformKey = null;
