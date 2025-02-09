@@ -134,8 +134,7 @@ class CharacterCollision {
         }
 
         tileMapHandler.layers[3].forEach(movingPlatform => {
-            let extra = movingPlatform.yspeed < 0 ? movingPlatform.yspeed : 0;
-            if (obj.prev_bottom_y < movingPlatform.y + extra) {
+            if (obj.prev_bottom_y < movingPlatform.y) {
                 this.checkMovingPlatformColission(obj, movingPlatform);
             }
         })
@@ -151,7 +150,7 @@ class CharacterCollision {
 
     static checkMovingPlatformColission(obj, movingPlatform) {
         const extraY = movingPlatform.yspeed <= 0 ? Math.abs(movingPlatform.yspeed) : 0;
-        const extraHeight = extraY + Math.abs(obj.yspeed);
+        const extraHeight = extraY + Math.abs(obj.yspeed) + obj.heightOffset;
 
         const hitBox = {
             ...movingPlatform.fakeHitBox,
