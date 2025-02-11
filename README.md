@@ -24,10 +24,8 @@ mark them with the `//startRemoval` and `//endRemoval` markers.
 
 For example, To remove the popup shown when closing the window you can wrap its script (found in the `<head>` of the `index.html` file) with these tags:
 ```html
-<!--
-//startRemoval 
--->
 <script>
+    //startRemoval 
     window.onbeforeunload = function (e) {
         e = e || window.event;
         // For IE and Firefox prior to version 4
@@ -36,8 +34,6 @@ For example, To remove the popup shown when closing the window you can wrap its 
         }
         return 'Are you sure you want to close? Your progress will be lost.';
     };
+    //endRemoval
 </script>
-<!--
-//endRemoval
--->
 ```
