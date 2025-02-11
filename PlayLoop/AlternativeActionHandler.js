@@ -59,6 +59,9 @@ class AlternativeActionHandler extends PlayMode {
 
         if (player.currentDashFrame < player.maxDashFrames) {
             player.yspeed = 0;
+            if(!player.onMovingPlatform) {
+                player.bonusSpeedY = 0;
+            }
 
             if (player.currentDashFrame < player.dashCooldown) {
                 player.xspeed = 0;

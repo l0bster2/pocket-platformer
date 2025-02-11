@@ -182,7 +182,8 @@ class TabNavigation {
       const canvasYSpritePos = SpritePixelArrays.getIndexOfSprite(selectedSprite.descriptiveName, 0, "descriptiveName") * WorldDataHandler.tileSize;
 
       BuildMode.setCurrentSelectedObject({ name: selectedSprite.name, index: indexInSpriteArray, type: selectedSprite.type, extraAttributes,
-        canvasYSpritePos, sprite: selectedSprite });
+        canvasYSpritePos, sprite: selectedSprite, 
+        size: SpritePixelArrays.movingPlatformSprites.includes(selectedSprite.name) ? 3 : 1 });
       DrawSectionHandler.changeSelectedSprite({ target: { value: selectedSprite.descriptiveName } }, true);
       this.markSelectedSprite(index, yPos)
     }

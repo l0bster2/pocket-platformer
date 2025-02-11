@@ -67,7 +67,9 @@ class Path {
                 levelObject.initialX === pathPoint.initialX && levelObject.initialY === pathPoint.initialY &&
                 !SpritePixelArrays.backgroundSprites.includes(levelObject.type)
             );
-            objectOnPath && this.objectsOnPath.push(objectOnPath)
+            if(objectOnPath) {
+                this.objectsOnPath.push(objectOnPath);
+            }
         })
     }
 
@@ -170,6 +172,15 @@ class Path {
                 || currentPathIndex === 0 && this.currentDirection === backwards) {
                 this.currentDirection = this.currentDirection === forwards ? backwards : forwards;
                 this.currentStopFrame = 0;
+
+                this.objectsOnPath.forEach(objectOnPath => {
+                    /*if(objectOnPath.type === ObjectTypes.MOVING_PLATFORM) {
+                        objectOnPath.setPlayerMomentumCoyoteFrames();
+                    }*/
+                    objectOnPath.xspeed = 0;
+                    objectOnPath.yspeed = 0;
+                });
+
                 break loop1;
             }
         }

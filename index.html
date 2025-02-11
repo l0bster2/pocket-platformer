@@ -634,6 +634,9 @@
         <script src="objects/Water.js"></script>
         <script src="objects/Deko.js"></script>
         <script src="objects/SFX.js"></script>
+        <script src="objects/DefaultMovingPlatform.js"></script>
+        <script src="objects/MovingPlatform.js"></script>
+        <script src="objects/TriggeredPlatform.js"></script>
         <script src="SpriteSheetCreator.js"></script>
         <script src="utils/ObjectTypes.js"></script>
         <script src="ImportExport.js"></script>
@@ -769,7 +772,7 @@
                     player.draw();
                 }
                 //foreground objects
-                tileMapHandler.displayObjects(tileMapHandler.layers[4]);
+                tileMapHandler.displayObjects(tileMapHandler.layers[5]);
                 DrawSectionHandler.draw();
                 BuildMode.runBuildLogic();
                 SFXHandler.updateSfxAnimations();
@@ -803,7 +806,7 @@
                         SFXHandler.updateSfxAnimations();
                         player.draw();
                         //foreground objects
-                        tileMapHandler.displayObjects(tileMapHandler.layers[4]);
+                        tileMapHandler.displayObjects(tileMapHandler.layers[5]);
                         EffectsRenderer.displayEffects(1);
                         DialogueHandler.handleDialogue();
                         PlayMode.pauseFramesHandler();

@@ -171,6 +171,14 @@ class ObjectTypes {
     return 'powerUp';
   }
 
+  static get MOVING_PLATFORM() {
+    return 'movingPlatform';
+  }
+
+  static get TRIGGERED_PLATFORM() {
+    return 'triggeredPlatform';
+  }
+
   static get SPECIAL_BLOCK_VALUES() {
     return {
       canon: 14,
@@ -215,6 +223,8 @@ class ObjectTypes {
       [this.FIXED_SPEED_STOPPER]: FixedSpeedStopper,
       [this.ROTATING_FIREBALL_CENTER]: RotatingFireballCenter,
       [this.POWER_UP]: PowerUp,
+      [this.MOVING_PLATFORM]: MovingPlatform,
+      [this.TRIGGERED_PLATFORM]: TriggeredPlatform,
       [this.WATER]: Water,
       [this.TOGGLE_MINE]: ToggleMine,
       [this.ROCKET_LAUNCHER]: RocketLauncher,

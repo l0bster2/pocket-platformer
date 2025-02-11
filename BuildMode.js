@@ -38,6 +38,7 @@ class BuildMode {
             ObjectTypes.BARREL_CANNON,
             ObjectTypes.JUMP_RESET,
             ObjectTypes.ROTATING_FIREBALL_CENTER,
+            ObjectTypes.MOVING_PLATFORM,
         ];
         this.objectsWithoutSFXAfterPlacing = [ObjectTypes.DISAPPEARING_BLOCK, ObjectTypes.BLUE_BLOCK, ObjectTypes.RED_BLOCK];
     }
@@ -118,7 +119,11 @@ class BuildMode {
                     tilePosX, tilePosY, '90ee90')
             }
             else if (!this.rectangleStyleDeletion) {
-                this.drawPermissionSquare(tilePosX, tilePosY, tilePosX + 1, tilePosY + 1, '90ee90');
+                const extraWidth = this.currentSelectedObject.size > 1 ? (this.currentSelectedObject.size - 1) / 2 : 0;
+                const offsetToCenter = extraWidth * this.tileMapHandler.tileSize;
+
+                this.drawPermissionSquare(tilePosX - extraWidth, tilePosY, tilePosX + 1 + extraWidth, tilePosY + 1, 
+                    '90ee90', offsetToCenter);
             }
             //Setting object
             if (Controller.mousePressed) {
@@ -275,6 +280,17 @@ class BuildMode {
 
         //Objects
         if (this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.object) {
+            //Moving platform
+            if (SpritePixelArrays.movingPlatformSprites.includes(this.currentSelectedObject?.name)) {
+                const touchingOtherMovingPlatForm = this.tileMapHandler.layers[3].some(movingPlatform =>
+                    Collision.pointAndObjectColliding(
+                        this.tileMapHandler.getValuePositionsForTile(tilePosX, tilePosY),
+                        movingPlatform.fakeHitBox
+                    ))
+                if (touchingOtherMovingPlatForm) {
+                    return false;
+                }
+            }
             //Path
             if (this.currentSelectedObject?.name === ObjectTypes.PATH_POINT) {
                 return currentTile === 0 && PathBuildHandler.checkIfPathPlacementFree(tilePosX, tilePosY) && pathsHoveringOver.length === 0 &&
@@ -388,8 +404,9 @@ class BuildMode {
         submitButtonWrapper.append(submitButton);
         content.appendChild(submitButtonWrapper);
 
-        const xPos = canvasOffsetLeft + (tilePosX * this.tileMapHandler.tileSize) - 120 - Camera.viewport.left;
-        const yPos = canvasOffsetTop + (tilePosY * this.tileMapHandler.tileSize) + this.tileMapHandler.tileSize + 6 - Camera.viewport.top;
+        const posInTool = this.tileMapHandler.getValuePositionsForTile(tilePosX, tilePosY + 1);
+        const xPos = canvasOffsetLeft + posInTool.x - 120 - this.tileMapHandler.tileSize / 2 - Camera.viewport.left;
+        const yPos = canvasOffsetTop + posInTool.y - Camera.viewport.top;
         TooltipHandler.repositionAndShowTooltip("canvasObjectToolTip", yPos, xPos, heading, content)
     }
 
@@ -550,13 +567,13 @@ class BuildMode {
             tileSize, tileSize, actualXPos, actualYPos, tileSize, tileSize, 0.6);
     }
 
-    static drawPermissionSquare(x, y, endPosX, endPosY, color) {
+    static drawPermissionSquare(x, y, endPosX, endPosY, color, centerOffset = 0) {
         const { tileSize } = tileMapHandler;
         const actualXPos = x * tileSize;
         const actualYPos = y * tileSize;
 
         if (color === '90ee90') {
-            this.drawObjectPreviewOnScreen(actualXPos, actualYPos);
+            this.drawObjectPreviewOnScreen(actualXPos + centerOffset, actualYPos);
         }
 
         const actualXEndPos = endPosX * tileSize - 1;
@@ -572,7 +589,7 @@ class BuildMode {
             x: Controller.mouseX,
             y: Controller.mouseY,
         }
-        if (Collision.pointAndObjectColliding(mousePos, this.player) 
+        if (Collision.pointAndObjectColliding(mousePos, this.player)
             //&& this.player.powerUpTypes.some(powerUpType => this.player[powerUpType] === true)
         ) {
             this.showingToolTip = false;

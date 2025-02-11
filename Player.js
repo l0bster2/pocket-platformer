@@ -133,7 +133,8 @@ class Player {
         this.speed = 0;
         this.xspeed = 0;
         this.yspeed = 0;
-        this.bonusSpeed = 0;
+        this.bonusSpeedX = 0;
+        this.bonusSpeedY = 0;
         this.wallJumpFrames = this.maxJumpFrames;
         this.falling = false;
         this.jumping = false;
@@ -143,6 +144,9 @@ class Player {
         this.forcedJumpSpeed = 0;
         this.currentDashFrame = 0;
         this.currentWallJumpCoyoteFrame = 0;
+        this.currentMomentumCoyoteFrame = this.coyoteJumpFrames;
+        this.momentumBonusSpeedX = 0;
+        this.momentumBonusSpeedY = 0;
         this.walljumpReady = false;
         this.swimming = false;
         this.friction = this.air_friction;
@@ -153,6 +157,9 @@ class Player {
         this.onIce = false;
         this.temporaryDoubleJump = false;
         this.currentTrailFrame = 0;
+        this.movingPlatformKey = null;
+        this.onMovingPlatform = false;
+
         if (resetAutoRun) {
             this.fixedSpeedLeft = false;
             this.fixedSpeedRight = false;
@@ -165,6 +172,7 @@ class Player {
         this.currentGravity = this.gravity;
         this.currentMaxFallSpeed = this.maxFallSpeed;
         this.previouslyTouchedTrampolines = false;
+        this.previouslyTouchedByMovingPlatform = false;
 
         if (this.swimming) {
             //if only the side of player is in water, we set this attribute. so next frame, we can reset coyote jump
@@ -354,10 +362,17 @@ class Player {
         }
     }
 
-    slowDownBonusSpeed() {
-        this.bonusSpeed *= 0.95;
-        if (Math.abs(this.bonusSpeed) < 0.3) {
-            this.bonusSpeed = 0;
+    slowDownBonusSpeedX() {
+        this.bonusSpeedX *= 0.95;
+        if (Math.abs(this.bonusSpeedX) < 0.3) {
+            this.bonusSpeedX = 0;
+        }
+    }
+
+    slowDownBonusSpeedY() {
+        this.bonusSpeedY *= 0.95;
+        if (Math.abs(this.bonusSpeedY) < 0.3) {
+            this.bonusSpeedY = 0;
         }
     }
 
@@ -420,7 +435,8 @@ class Player {
         this.fixedSpeed = false;
         this.xspeed = 0;
         if (this.yspeed !== 0) {
-            this.bonusSpeed = 0;
+            this.bonusSpeedX = 0;
+            this.bonusSpeedY = 0;
         }
         this.onIce = false;
     }
@@ -430,12 +446,15 @@ class Player {
         this.falling = false;
         this.wallJumpFrames = this.maxJumpFrames;
         this.fixedSpeed = false;
+        this.bonusSpeedY = 0;
         this.resetJump();
     }
 
     hitBottom() {
         this.verticalHit();
+        this.bonusSpeedX = 0;
         this.jumpframes = 0;
+        this.jumpPressedToTheMax = true;
         this.resetDoubleJump();
         this.setSquishAnimation();
     }
@@ -445,6 +464,10 @@ class Player {
         this.forcedJumpSpeed = 0;
         this.jumpframes = this.maxJumpFrames;
         this.jumpPressedToTheMax = true;
+
+        if(this.onMovingPlatform) {
+            PlayMode.playerDeath();
+        }
     }
 
     setSquishAnimation() {

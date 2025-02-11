@@ -2,13 +2,14 @@ class JumpHandler extends PlayMode {
 
     static jumpHandler() {
         const { player } = this;
+        this.checkMomentumCoyoteFrames(player);
 
-        if (Controller.jump && !player.collidingWithNpcId && !PauseHandler.justClosedPauseScreen ) {
+        if (Controller.jump && !player.collidingWithNpcId && !PauseHandler.justClosedPauseScreen) {
             if (player.swimming) {
                 this.swimHandler();
             }
             else {
-                if((player.jumpChecked || player.powerUpJumpChecked)) {
+                if ((player.jumpChecked || player.powerUpJumpChecked)) {
                     this.normalJumpHandler();
                 }
                 !player.fixedSpeed && this.wallJumpHandler();
@@ -40,6 +41,9 @@ class JumpHandler extends PlayMode {
 
     static performJump(jumpSpeed, maxFrames) {
         player.jumpframes++;
+        player.bonusSpeedY = 0;
+        // x only for moving platforms
+        player.bonusSpeedX = 0;
         var currentJumpSpeed = -(maxFrames - player.jumpframes) * jumpSpeed;
         if (currentJumpSpeed !== 0) {
             //easing: currentJumpSpeed * currentJumpSpeed * -1 (and jumpspeed much smaller)
@@ -53,7 +57,7 @@ class JumpHandler extends PlayMode {
     static wallJumpAllowedHandler() {
         const { player } = this;
         //if player touched a wall, allow him to walljump
-        if ((player.wallJumpChecked || player.powerUpWallJumpChecked) && 
+        if ((player.wallJumpChecked || player.powerUpWallJumpChecked) &&
             !player.swimming && !player.jumping && !player.wallJumping && player.falling) {
             if (player.wallJumpLeft) {
                 this.resetWallJump(1);
@@ -84,6 +88,7 @@ class JumpHandler extends PlayMode {
             if (!player.jumping && player.jumpframes === 0 && player.jumpReleased) {
                 player.jumpReleased = false;
                 this.jumpInitialized();
+                this.checkMomentumBasedBonusSpeed(player);
                 tileMapHandler.changeJumpSwitchBlockType();
             }
             this.performJump(player.jumpSpeed, player.maxJumpFrames);
@@ -96,7 +101,7 @@ class JumpHandler extends PlayMode {
 
     static wallJumpHandler() {
         const { player } = this;
-        if ((player.wallJumpChecked || player.powerUpWallJumpChecked) 
+        if ((player.wallJumpChecked || player.powerUpWallJumpChecked)
             && !player.dashing && !player.flapped &&
             player.wallJumpFrames < player.maxJumpFrames &&
             player.currentWallJumpCoyoteFrame < player.coyoteJumpFrames) {
@@ -137,7 +142,7 @@ class JumpHandler extends PlayMode {
 
     static checkDoubleJumpInitialization() {
         const { player } = this;
-        if ((player.doubleJumpChecked || player.temporaryDoubleJump || player.powerUpDoubleJumpChecked) 
+        if ((player.doubleJumpChecked || player.temporaryDoubleJump || player.powerUpDoubleJumpChecked)
             && player.doubleJumpActive && !player.doubleJumpUsed && !player.wallJumping) {
             player.jumpPressedToTheMax = false;
             player.resetJump();
@@ -189,6 +194,70 @@ class JumpHandler extends PlayMode {
             }
             this.player.flapped = true;
         }
+    }
+
+    static checkMomentumCoyoteFrames(player) {
+        if (player.currentMomentumCoyoteFrame < player.coyoteJumpFrames) {
+            if (player.currentMomentumCoyoteFrame === player.coyoteJumpFrames - 1) {
+                player.momentumBonusSpeedX = 0;
+                player.momentumBonusSpeedY = 0;
+            }
+            player.currentMomentumCoyoteFrame++;
+        }
+    }
+
+    static checkMomentumBasedBonusSpeed(player) {
+        if (player.onMovingPlatform) {
+            player.onMovingPlatform = false;
+            player.bonusSpeedX = 0;
+            player.bonusSpeedY = 0;
+        }
+
+        /*
+        player.onMovingPlatform = false;
+        
+        if(player.momentumBonusSpeedX) {
+            //player.bonusSpeedX = player.momentumBonusSpeedX;
+        }
+        else if(player.momentumBonusSpeedY) {
+            //player.bonusSpeedY = player.momentumBonusSpeedY;
+        }
+        if(!player.momentumBonusSpeedX && !player.momentumBonusSpeedY && player.onMovingPlatform) {
+            player.bonusSpeedX = 0;
+            player.bonusSpeedY = 0;
+        }*/
+    }
+
+    static checkMomentumCoyoteFrames(player) {
+        if (player.currentMomentumCoyoteFrame < player.coyoteJumpFrames) {
+            if (player.currentMomentumCoyoteFrame === player.coyoteJumpFrames - 1) {
+                player.momentumBonusSpeedX = 0;
+                player.momentumBonusSpeedY = 0;
+            }
+            player.currentMomentumCoyoteFrame++;
+        }
+    }
+
+    static checkMomentumBasedBonusSpeed(player) {
+        if (player.onMovingPlatform) {
+            player.onMovingPlatform = false;
+            player.bonusSpeedX = 0;
+            player.bonusSpeedY = 0;
+        }
+
+        /*
+        player.onMovingPlatform = false;
+        
+        if(player.momentumBonusSpeedX) {
+            //player.bonusSpeedX = player.momentumBonusSpeedX;
+        }
+        else if(player.momentumBonusSpeedY) {
+            //player.bonusSpeedY = player.momentumBonusSpeedY;
+        }
+        if(!player.momentumBonusSpeedX && !player.momentumBonusSpeedY && player.onMovingPlatform) {
+            player.bonusSpeedX = 0;
+            player.bonusSpeedY = 0;
+        }*/
     }
 
     static jumpInitialized(direction = AnimationHelper.facingDirections.bottom, xPos = player.x, yPos =  player.bottom_left_pos.y - tileMapHandler.tileSize + 1) {

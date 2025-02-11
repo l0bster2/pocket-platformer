@@ -192,24 +192,29 @@ class TileMapHandler {
         //normal objects
         this.displayObjects(this.layers[1]);
         this.displayObjects(this.layers[2]);
+        //moving platforms
+        this.displayObjects(this.layers[3]);
         this.displayStaticTiles();
         //projectiles
-        this.displayObjects(this.layers[3]);
+        this.displayObjects(this.layers[4]);
     }
 
     splitLevelObjectsInLayers() {
         const layers = [
-            [], [], [], [], []
+            [], [], [], [], [], []
         ];
         this.levelObjects.forEach(levelObject => {
             if(SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
                 layers[0].push(levelObject);
             }
             else if(SpritePixelArrays.projectileSprites.includes(levelObject.type)) {
+                layers[4].push(levelObject);
+            }
+            else if(SpritePixelArrays.movingPlatformSprites.includes(levelObject.type)) {
                 layers[3].push(levelObject);
             }
             else if(SpritePixelArrays.foregroundSprites.includes(levelObject.type)) {
-                layers[4].push(levelObject);
+                layers[5].push(levelObject);
             }
             else if(levelObject.type === ObjectTypes.TRAMPOLINE) {
                 layers[2].push(levelObject);
@@ -271,6 +276,13 @@ class TileMapHandler {
 
     getTileValueForPosition(pos) {
         return Math.floor(pos / this.tileSize);
+    }
+
+    getValuePositionsForTile(tileX, tileY) {
+        return {
+            x: tileX * this.tileSize + this.tileSize / 2,
+            y: tileY * this.tileSize + this.tileSize / 2,
+        }
     }
 
     getTileLayerValueByIndex(y, x) {

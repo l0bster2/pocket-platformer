@@ -57,6 +57,7 @@ class SpritePixelArrays {
       collidesWithWalls: "collidesWithWalls",
       fireBallsAmount: "fireBallsAmount",
       powerUpType: "PowerUp",
+      size: "size",
     };
 
     this.backgroundSprites = [
@@ -67,6 +68,11 @@ class SpritePixelArrays {
       ObjectTypes.DISAPPEARING_FOREGROUND_TILE,
       ObjectTypes.FOREGROUND_TILE,
     ];
+
+    this.movingPlatformSprites = [
+      ObjectTypes.MOVING_PLATFORM,
+      ObjectTypes.TRIGGERED_PLATFORM,
+    ]
 
     this.projectileSprites = [
       ObjectTypes.CANON_BALL,
@@ -1575,6 +1581,62 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "AA00AA", "FF55FF", "transp", "transp", "transp"]
           ]
       }
+      ]
+    };
+
+    this.MOVING_PLATFORM = {
+      name: ObjectTypes.MOVING_PLATFORM,
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.size, defaultValue: 3, minValue: 1, maxValue: 15, step: 2 },
+      ],
+      descriptiveName: "Moving platform",
+      description: "Put the center part of the platform on a path and you can ride on it. Click on it again to change it's size.",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["FFAA55", "FF8E1C", "FF8E1C", "FFAA55", "FFAA55", "FF8E1C", "FF8E1C", "FFAA55"],
+            ["E37100", "FFAA55", "FFAA55", "E37100", "E37100", "FFAA55", "FFAA55", "E37100"],
+            ["E37100", "FFAA55", "FFAA55", "E37100", "E37100", "FFAA55", "FFAA55", "E37100"],
+            ["FFAA55", "AA5500", "AA5500", "FFAA55", "FFAA55", "AA5500", "AA5500", "FFAA55"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      ]
+    };
+
+    this.TRIGGERED_PLATFORM = {
+      name: ObjectTypes.TRIGGERED_PLATFORM,
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.size, defaultValue: 3, minValue: 1, maxValue: 15, step: 2 },
+        { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 6 },
+        {
+          name: "activationOnce", 
+          formElement: this.changeableAttributeFormElements.toggle, 
+          defaultValue: "moving endlessly when touched",
+          options: [{ "true": "moving endlessly when touched" }, { "false": "moving when player on it" }]
+        },
+      ],
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
+      descriptiveName: "Triggered platform",
+      description: "Can't be put on paths, but will start moving, once the player lands on it. Click on it again to change it's behaviour.",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["8EC6FF", "55AAFF", "55AAFF", "8EC6FF", "8EC6FF", "55AAFF", "55AAFF", "8EC6FF"],
+            ["1C8EFF", "8EC6FF", "8EC6FF", "1C8EFF", "1C8EFF", "8EC6FF", "8EC6FF", "1C8EFF"],
+            ["1C8EFF", "8EC6FF", "8EC6FF", "1C8EFF", "1C8EFF", "8EC6FF", "8EC6FF", "1C8EFF"],
+            ["8EC6FF", "0055AA", "0055AA", "8EC6FF", "8EC6FF", "0055AA", "0055AA", "8EC6FF"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+          ]
+      },
       ]
     };
 
