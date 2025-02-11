@@ -1612,7 +1612,7 @@ class SpritePixelArrays {
       name: ObjectTypes.TRIGGERED_PLATFORM,
       changeableAttributes: [
         { name: this.changeableAttributeTypes.size, defaultValue: 3, minValue: 1, maxValue: 15, step: 2 },
-        { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 6 },
+        { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 7, mapper: this.pathMovementMapper },
         {
           name: "activationOnce", 
           formElement: this.changeableAttributeFormElements.toggle, 
