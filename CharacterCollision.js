@@ -129,7 +129,7 @@ class CharacterCollision {
         }
 
         tileMapHandler.layers[3].forEach(movingPlatform => {
-            if (obj.prev_bottom_y <= movingPlatform.y) {
+            if (obj.prev_bottom_y < movingPlatform.y) {
                 this.checkMovingPlatformColission(obj, movingPlatform);
             }
         })
