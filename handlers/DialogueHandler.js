@@ -36,7 +36,7 @@ class DialogueHandler {
     static calculateDialogueWindowPosition() {
         const border = this.paddingFromBorder / Camera.viewport.scale;
         this.leftPos = Camera.viewport.left + border;
-        this.rightPos = Camera.viewport.right + Camera.viewport.width - border;
+        this.rightPos = Camera.viewport.left + Camera.viewport.width - border;
         this.topPos = Camera.viewport.top + Camera.viewport.height - (this.dialogueHeight / Camera.viewport.scale) - border;
 
         if(this.tileMapHandler) {
@@ -136,7 +136,7 @@ class DialogueHandler {
                 top - avatarBorderPadding,
                 borderSize,
                 borderSize,
-                WorldDataHandler.textColor);
+                "FFFFFF");
         }
         Display.drawPixelArray(avatar.spriteObject.animation[animationIndex].sprite,
             avatarLeftPos, top,
@@ -210,7 +210,6 @@ class DialogueHandler {
         let lineLength = this.maxLineLength;
 
         if (avatar) {
-            console.log(avatar)
             const canvasYPos = SpritePixelArrays.getIndexOfSprite(avatar.descriptiveName, 0, "descriptiveName") * this.tileMapHandler.tileSize;
             const spriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(avatar.descriptiveName)[0];
             avatarObject = spriteObject ?
