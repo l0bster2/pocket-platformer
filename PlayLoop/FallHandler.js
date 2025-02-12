@@ -29,8 +29,6 @@ class FallHandler extends PlayMode {
 
         if (player.falling && !player.fixedSpeed) {
             // x only for moving platforms
-            player.bonusSpeedX = 0;
-            player.bonusSpeedY = 0;
             //If player is falling and pressing against the wall, he will stick to the wall
             if (!player.swimming && !player.iceOnSide && 
                 (player.wallJumpChecked || player.powerUpWallJumpChecked) && 

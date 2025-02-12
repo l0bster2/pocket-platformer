@@ -109,6 +109,8 @@ class DefaultMovingPlatform extends InteractiveLevelObject {
 
 
             if (!Collision.objectsColliding(this.player, this.fakeHitBox)) {
+                this.player.bonusSpeedX = 0;
+                this.player.bonusSpeedY = 0;
                 this.player.movingPlatformKey = null;
                 this.player.onMovingPlatform = false;
             }
