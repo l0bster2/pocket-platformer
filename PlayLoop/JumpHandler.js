@@ -41,8 +41,7 @@ class JumpHandler extends PlayMode {
 
     static performJump(jumpSpeed, maxFrames) {
         player.jumpframes++;
-
-        if(player.bonusSpeedY > 0) {
+        if(player.bonusSpeedY > 0 || player.jumpframes > 2) {
             player.bonusSpeedY = 0;
         }
 
@@ -211,8 +210,6 @@ class JumpHandler extends PlayMode {
     static checkMomentumBasedBonusSpeed(player) {
         if (player.onMovingPlatform) {
             player.onMovingPlatform = false;
-            player.bonusSpeedX = 0;
-            player.bonusSpeedY = 0;
         }
 
         /*
@@ -238,28 +235,6 @@ class JumpHandler extends PlayMode {
             }
             player.currentMomentumCoyoteFrame++;
         }
-    }
-
-    static checkMomentumBasedBonusSpeed(player) {
-        if (player.onMovingPlatform) {
-            player.onMovingPlatform = false;
-            player.bonusSpeedX = 0;
-            player.bonusSpeedY = 0;
-        }
-
-        /*
-        player.onMovingPlatform = false;
-        
-        if(player.momentumBonusSpeedX) {
-            //player.bonusSpeedX = player.momentumBonusSpeedX;
-        }
-        else if(player.momentumBonusSpeedY) {
-            //player.bonusSpeedY = player.momentumBonusSpeedY;
-        }
-        if(!player.momentumBonusSpeedX && !player.momentumBonusSpeedY && player.onMovingPlatform) {
-            player.bonusSpeedX = 0;
-            player.bonusSpeedY = 0;
-        }*/
     }
 
     static jumpInitialized(direction = AnimationHelper.facingDirections.bottom, xPos = player.x, yPos =  player.bottom_left_pos.y - tileMapHandler.tileSize + 1) {
