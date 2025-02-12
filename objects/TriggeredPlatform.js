@@ -8,16 +8,16 @@ class TriggeredPlatform extends DefaultMovingPlatform {
     }
 
     setMovementSpeed() {
-        if(this.currentFacingDirection === AnimationHelper.facingDirections.bottom) {
+        if (this.currentFacingDirection === AnimationHelper.facingDirections.bottom) {
             this.yspeed = this.speed;
         }
-        else if(this.currentFacingDirection === AnimationHelper.facingDirections.left) {
+        else if (this.currentFacingDirection === AnimationHelper.facingDirections.left) {
             this.xspeed = this.speed * -1;
         }
-        else if(this.currentFacingDirection === AnimationHelper.facingDirections.top) {
+        else if (this.currentFacingDirection === AnimationHelper.facingDirections.top) {
             this.yspeed = this.speed * -1;
         }
-        else if(this.currentFacingDirection === AnimationHelper.facingDirections.right) {
+        else if (this.currentFacingDirection === AnimationHelper.facingDirections.right) {
             this.xspeed = this.speed;
         }
     }
@@ -32,19 +32,19 @@ class TriggeredPlatform extends DefaultMovingPlatform {
     }
 
     checkOutOfBounds() {
-        if(this.xspeed === 0 && this.yspeed === 0) {
+        if (this.xspeed === 0 && this.yspeed === 0) {
             return;
         }
-        if(this.fakeHitBox.x + this.fakeHitBox.width < 0 ||
+        if (this.fakeHitBox.x + this.fakeHitBox.width < 0 ||
             this.fakeHitBox.x > this.tilemapHandler.getLevelWidth() * this.tileSize ||
             this.fakeHitBox.y < 0 ||
             this.fakeHitBox.y > this.tilemapHandler.getLevelHeight() * this.tileSize
         ) {
             this.outOfBounds = true;
         }
-        if(this.outOfBounds && this.outOfBoundsTimer < this.maxOutOfBoundsTime) {
+        if (this.outOfBounds && this.outOfBoundsTimer < this.maxOutOfBoundsTime) {
             this.outOfBoundsTimer++;
-            if(this.outOfBoundsTimer == this.maxOutOfBoundsTime) {
+            if (this.outOfBoundsTimer == this.maxOutOfBoundsTime) {
                 this.resetObject();
             }
         }
@@ -60,17 +60,18 @@ class TriggeredPlatform extends DefaultMovingPlatform {
 
         if (this.player.movingPlatformKey === this.key) {
             this.setMovementSpeed();
-            if(this.activationOnce === "moving when player on it") {
+            if (this.activationOnce === "moving when player on it") {
                 this.x += this.xspeed;
                 this.y += this.yspeed;
             }
+
             const playerAndPlatformMovingUp = this.yspeed <= 0 && this.player.yspeed < 0;
             const playerJumpingSlowerThanMovingPlatform = playerAndPlatformMovingUp && this.player.yspeed > this.yspeed;
 
             this.player.bonusSpeedX = this.xspeed;
             this.player.bonusSpeedY = this.yspeed;
 
-            if(playerJumpingSlowerThanMovingPlatform) {
+            if (playerJumpingSlowerThanMovingPlatform) {
                 this.player.hitWall(AnimationHelper.facingDirections.bottom);
                 this.player.jumping = false;
                 this.player.y = this.y - this.player.height;
@@ -80,12 +81,14 @@ class TriggeredPlatform extends DefaultMovingPlatform {
 
 
             if (!Collision.objectsColliding(this.player, this.fakeHitBox)) {
+                this.player.bonusSpeedX = 0;
+                this.player.bonusSpeedY = 0;
                 this.player.movingPlatformKey = null;
                 this.player.onMovingPlatform = false;
             }
         }
 
-        if(this.activationOnce === "moving endlessly when touched") {
+        if (this.activationOnce === "moving endlessly when touched") {
             this.x += this.xspeed;
             this.y += this.yspeed;
         }

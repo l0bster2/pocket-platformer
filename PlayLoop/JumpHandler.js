@@ -41,7 +41,11 @@ class JumpHandler extends PlayMode {
 
     static performJump(jumpSpeed, maxFrames) {
         player.jumpframes++;
-        // x only for moving platforms
+
+        if(player.bonusSpeedY > 0) {
+            player.bonusSpeedY = 0;
+        }
+
         var currentJumpSpeed = -(maxFrames - player.jumpframes) * jumpSpeed;
         if (currentJumpSpeed !== 0) {
             //easing: currentJumpSpeed * currentJumpSpeed * -1 (and jumpspeed much smaller)
