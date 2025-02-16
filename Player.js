@@ -450,11 +450,13 @@ class Player {
         this.resetJump();
     }
 
-    hitBottom() {
+    hitBottom(onPlatform) {
         this.verticalHit();
         this.bonusSpeedX = 0;
         this.jumpframes = 0;
-        this.jumpPressedToTheMax = true;
+        if(onPlatform) {
+            this.jumpPressedToTheMax = true;
+        }
         this.resetDoubleJump();
         this.setSquishAnimation();
     }
