@@ -205,7 +205,8 @@ function createHtmlDocoumentWithCanvas() {
   const metaAttributes = [
     { 'name': 'viewport', 'content': "width=device-width, initial-scale=1.0; maximum-scale=1.0, user-scalable=0" },
     { 'charset': 'UTF-8' },
-    { 'http-equiv': 'imagetoolbar', 'content': 'no' }
+    { 'http-equiv': 'imagetoolbar', 'content': 'no' },
+    { 'http-equiv': 'ScreenOrientation', 'content': 'autoRotate:disabled' },
   ];
   metaAttributes.forEach(metaAttribute => {
     var meta = document.createElement('meta');
