@@ -88,6 +88,7 @@ class TooltipHandler {
         this["contentEl" + id].innerHTML = "";
         this["toolTipEl" + id].style.visibility = 'hidden';
         document.removeEventListener("click", this.callBackFunc);
+        BuildMode.showingToolTip = false;
     }
 
     static repositionAndShowTooltip(id, top, left, tooltipHeading = "", tooltipContent = "") {

@@ -6,7 +6,7 @@ class ProTipHandler {
             "Delete elements from the game and draw screen with the right mouse.",
             "Use import/export as a save/load function, to continue working on your game later on.",
             "Some elements, like canons, have changeable attributes. Click on them in the game screen again to see the options.",
-            "Player can be dragged around the game screen in build mode.",
+            "Player can be dragged around the game screen in build mode. You can also press 'p' to put the player at mouse position.",
             "On high levels, camera can be moved vertically with the mouse wheel.",
             "Cannonballs and rockets can trigger the red/blue switch.",
             "Stompers can collide with each other",

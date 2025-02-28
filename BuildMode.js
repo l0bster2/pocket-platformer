@@ -13,7 +13,8 @@ class BuildMode {
         this.mouseCursorStyles = {
             default: "default",
             grab: "grab",
-            grabbing: "grabbing"
+            grabbing: "grabbing",
+            help: "help",
         }
         this.drawStyles = {
             pencil: "pencil",
@@ -122,7 +123,7 @@ class BuildMode {
                 const extraWidth = this.currentSelectedObject.size > 1 ? (this.currentSelectedObject.size - 1) / 2 : 0;
                 const offsetToCenter = extraWidth * this.tileMapHandler.tileSize;
 
-                this.drawPermissionSquare(tilePosX - extraWidth, tilePosY, tilePosX + 1 + extraWidth, tilePosY + 1, 
+                this.drawPermissionSquare(tilePosX - extraWidth, tilePosY, tilePosX + 1 + extraWidth, tilePosY + 1,
                     '90ee90', offsetToCenter);
             }
             //Setting object
@@ -148,18 +149,24 @@ class BuildMode {
                 }
             }
             else {
+                const changeableObjectsHoveringOver = allObjectsAtCurrentTile.filter(objectAtCurrentTile =>
+                    (objectAtCurrentTile.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.object
+                        || objectAtCurrentTile?.type === ObjectTypes.TREADMILL)
+                    && objectAtCurrentTile?.type !== ObjectTypes.CANON_BALL && objectAtCurrentTile?.type !== ObjectTypes.ROCKET && objectAtCurrentTile?.type !== ObjectTypes.LASER &&
+                    objectAtCurrentTile?.changeableInBuildMode);
+
                 this.changeMouseCursor(this.mouseCursorStyles.default);
-                !this.rectangleStyleDeletion &&
-                    this.drawPermissionSquare(tilePosX, tilePosY, tilePosX + 1, tilePosY + 1, '8b0000');
+
+                if (!this.rectangleStyleDeletion) {
+                    const readyForToolTip = (changeableObjectsHoveringOver.length && !this.mousePressed) || this.showingToolTip;
+                    readyForToolTip && this.changeMouseCursor(this.mouseCursorStyles.help);
+                    this.drawPermissionSquare(tilePosX, tilePosY, tilePosX + 1, tilePosY + 1, readyForToolTip ? 'FFA500' : '8b0000');
+                }
 
                 //Tooltip if click on occupied tile again
                 if (Controller.mousePressed && !this.mousePressed) {
                     this.mousePressed = true;
-                    const changeableObjectsHoveringOver = allObjectsAtCurrentTile.filter(objectAtCurrentTile =>
-                        (objectAtCurrentTile.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.object
-                            || objectAtCurrentTile?.type === ObjectTypes.TREADMILL)
-                        && objectAtCurrentTile?.type !== ObjectTypes.CANON_BALL && objectAtCurrentTile?.type !== ObjectTypes.ROCKET && objectAtCurrentTile?.type !== ObjectTypes.LASER &&
-                        objectAtCurrentTile?.changeableInBuildMode);
+
                     if (changeableObjectsHoveringOver.length) {
                         //pass all objects hovering over (should be only paths and objects on top). reverse, so that path attributes are at the bottom
                         this.showTooltipWithExtraAttributes(tilePosX, tilePosY, changeableObjectsHoveringOver.reverse());
@@ -440,7 +447,10 @@ class BuildMode {
     }
 
     static dragPlayerHandler(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY) {
-
+        if (currentTile != null && Controller.pause) {
+            this.player.x = tilePosX * this.tileMapHandler.tileSize;
+            this.player.y = tilePosY * this.tileMapHandler.tileSize;
+        }
         if (this.draggingPlayer && currentTile === 0 &&
             (allObjectsAtCurrentTile.length === 0 ||
                 allObjectsAtCurrentTile.every(objectAtCurrentTile =>
