@@ -24,12 +24,12 @@ class TileMapHandler {
         });
     }
 
-    resetLevel(levelIndex) {
+    resetLevel(levelIndex, flagIndex) {
         SFXHandler.resetSfx();
         this.tileMap = WorldDataHandler.levels[levelIndex].tileData;
         Camera.updateViewportRelatedToScale(WorldDataHandler.levels[levelIndex].zoomFactor || 1)
         this.updateLevelDimensions();
-        this.setInitialPlayerAndCameraPos(levelIndex);
+        this.#setInitialPlayerAndCameraPos(levelIndex, flagIndex);
         this.levelObjects = [];
         this.levelObjects = this.createInitialObjects(WorldDataHandler.levels[levelIndex].levelObjects);
         this.deko = this.createInitialDeko(WorldDataHandler.levels[levelIndex].deko);
@@ -53,24 +53,54 @@ class TileMapHandler {
         }
     }
 
-    setInitialPlayerAndCameraPos(levelIndex) {
-        //This is a fallback, in case no flag was set in a level (start, ending, or if user forgot to set it)
-        let initialPlayerValue = { x: 0, y: 0 };
-        WorldDataHandler.levels[levelIndex].levelObjects.forEach(levelObject => {
-            if (levelObject.type === ObjectTypes.START_FLAG) {
-                initialPlayerValue.x = levelObject.x * this.tileSize;
-                initialPlayerValue.y = levelObject.y * this.tileSize;
-            }
-        })
-        this.player.initialY = initialPlayerValue.x;
-        this.player.initialX = initialPlayerValue.y;
-        Camera.moveTo(initialPlayerValue.x, initialPlayerValue.y);
+    /**
+     * Sets the initial player and camera position based on this.currentLevel and the specified flagIndex.
+     * @param {string | undefined} flagIndex specifying the 
+     */
+    #setInitialPlayerAndCameraPos(levelIndex, flagIndex) {
+        const initialPlayerTile = this.#getInitialPlayerTile(levelIndex, flagIndex);
+        this.#setPlayerInitialTile(initialPlayerTile);
+
+        const initialPlayerPosition = {
+            x: initialPlayerTile.x * this.tileSize,
+            y: initialPlayerTile.y * this.tileSize
+        };
+
+        Camera.moveTo(initialPlayerPosition.x, initialPlayerPosition.y);
 
         //startRemoval 
         if (typeof LevelSizeHandler === 'function') {
-            LevelSizeHandler.updateCameraSliders(this.levelWidth * this.tileSize, this.levelHeight * this.tileSize, initialPlayerValue);
+            LevelSizeHandler.updateCameraSliders(this.levelWidth * this.tileSize, this.levelHeight * this.tileSize, initialPlayerPosition);
         }
         //endRemoval
+    }
+
+    /** Returns an object containing the x,y of the tile the player should start on. */
+    #getInitialPlayerTile(levelIndex, flagIndex) {
+        const startFlagsInLevel = WorldDataHandler.levels[levelIndex].levelObjects.filter(levelObject => levelObject.type === ObjectTypes.START_FLAG);
+
+        const customEntryFlag = flagIndex && startFlagsInLevel.find(startFlag => startFlag?.extraAttributes?.flagIndex === flagIndex);
+
+        // default start flag used when flagIndex was not matched
+        const levelStartFlag = (!customEntryFlag) && startFlagsInLevel.find(startFlag => startFlag?.extraAttributes?.levelStartFlag);
+
+        // any start flag used when no other flag was found
+        const lastFlag = (!levelStartFlag && !customEntryFlag) && startFlagsInLevel[startFlagsInLevel.length - 1];
+
+        return customEntryFlag ||
+            levelStartFlag ||
+            lastFlag ||
+            { x: 0, y: 0 };
+    }
+
+    /**
+     * @param {{x:number, y:number}} position - object specifying the initial tile of the player.
+     */
+    #setPlayerInitialTile(position) {
+        if (this?.player) {
+            this.player.initialX = position.x * this.tileSize;
+            this.player.initialY = position.y * this.tileSize;
+        }
     }
 
     updateLevelDimensions() {
