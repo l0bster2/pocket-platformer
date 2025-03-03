@@ -266,7 +266,7 @@ class TileMapHandler {
             if (this.currentLevel === levelAmounth - 1) {
                 GameStatistics.stopTimer();
             }
-            this.resetLevel(this.currentLevel);
+            this.resetLevel(this.currentLevel, PlayMode.customExit?.flagIndex);
             if (typeof LevelNavigationHandler === 'function') {
                 LevelNavigationHandler.updateLevel();
                 LevelNavigationHandler.adaptLevelList();
