@@ -55,7 +55,8 @@ class TileMapHandler {
 
     /**
      * Sets the initial player and camera position based on this.currentLevel and the specified flagIndex.
-     * @param {string | undefined} flagIndex specifying the 
+     * @param {number} levelIndex specifies the level to load.
+     * @param {string | undefined} flagIndex specifies the custom starting flag.
      */
     #setInitialPlayerAndCameraPos(levelIndex, flagIndex) {
         const initialPlayerTile = this.#getInitialPlayerTile(levelIndex, flagIndex);
@@ -94,12 +95,12 @@ class TileMapHandler {
     }
 
     /**
-     * @param {{x:number, y:number}} position - object specifying the initial tile of the player.
+     * @param {{x:number, y:number}} tile - object specifying the initial tile of the player.
      */
-    #setPlayerInitialTile(position) {
+    #setPlayerInitialTile(tile) {
         if (this?.player) {
-            this.player.initialX = position.x * this.tileSize;
-            this.player.initialY = position.y * this.tileSize;
+            this.player.initialX = tile.x * this.tileSize;
+            this.player.initialY = tile.y * this.tileSize;
         }
     }
 
