@@ -18,14 +18,9 @@ class StartFlag extends InteractiveLevelObject {
     }
 
     //startRemoval
-    /**
-     * Updates the levelStartFlag property for this flag and adjusts the other flags to keep just one such flag in the level
-     * @param {*} levelStartValue 
-     */
     updateLevelStartValue(levelStartValue) {
         const startFlagsInTileMapHandler = this.tilemapHandler.filterObjectsByTypes(ObjectTypes.START_FLAG);
 
-        // TODO move this logic to tilemapHandler
         if (levelStartValue) {
             //reset all other start flags, because there can only be 1 level starting flag
             startFlagsInTileMapHandler.forEach(startFlagInTileMapHandler => {

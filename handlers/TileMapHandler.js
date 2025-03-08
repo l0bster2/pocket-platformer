@@ -53,11 +53,6 @@ class TileMapHandler {
         }
     }
 
-    /**
-     * Sets the initial player and camera position based on this.currentLevel and the specified flagIndex.
-     * @param {number} levelIndex specifies the level to load.
-     * @param {string | undefined} flagIndex specifies the custom starting flag.
-     */
     #setInitialPlayerAndCameraPos(levelIndex, flagIndex) {
         const initialPlayerTile = this.#getInitialPlayerTile(levelIndex, flagIndex);
         this.#setPlayerInitialTile(initialPlayerTile);
@@ -76,16 +71,13 @@ class TileMapHandler {
         //endRemoval
     }
 
-    /** Returns an object containing the x,y of the tile the player should start on. */
     #getInitialPlayerTile(levelIndex, flagIndex) {
         const startFlagsInLevel = WorldDataHandler.levels[levelIndex].levelObjects.filter(levelObject => levelObject.type === ObjectTypes.START_FLAG);
 
         const customEntryFlag = flagIndex && startFlagsInLevel.find(startFlag => startFlag?.extraAttributes?.flagIndex === flagIndex);
 
-        // default start flag used when flagIndex was not matched
         const levelStartFlag = (!customEntryFlag) && startFlagsInLevel.find(startFlag => startFlag?.extraAttributes?.levelStartFlag);
 
-        // any start flag used when no other flag was found
         const lastFlag = (!levelStartFlag && !customEntryFlag) && startFlagsInLevel[startFlagsInLevel.length - 1];
 
         return customEntryFlag ||
@@ -94,9 +86,6 @@ class TileMapHandler {
             { x: 0, y: 0 };
     }
 
-    /**
-     * @param {{x:number, y:number}} tile - object specifying the initial tile of the player.
-     */
     #setPlayerInitialTile(tile) {
         if (this?.player) {
             this.player.initialX = tile.x * this.tileSize;
