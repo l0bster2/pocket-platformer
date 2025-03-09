@@ -15,32 +15,9 @@ class StartFlag extends InteractiveLevelObject {
             this.flagIndex = this.makeid(3);
             this.addChangeableAttribute("flagIndex", this.flagIndex, this.tilemapHandler.currentLevel);
         }
-
-        const customEntryFlag = startFlagsInLevel.find(startFlag =>
-            PlayMode?.customExit?.flagIndex && startFlag?.extraAttributes?.flagIndex === PlayMode.customExit.flagIndex
-        );
-        const levelStartFlag = startFlagsInLevel.find(startFlag =>
-            startFlag?.extraAttributes?.levelStartFlag
-        );
-
-        if (customEntryFlag?.extraAttributes?.flagIndex === this.flagIndex || levelStartFlag?.extraAttributes?.flagIndex === this.flagIndex) {
-            this.setPlayerInitialPosition();
-        }
-        else if (!levelStartFlag && !customEntryFlag) {
-            const lastFlag = startFlagsInLevel[startFlagsInLevel.length - 1];
-            if (lastFlag.x === this.initialX && lastFlag.y === this.initialY) {
-                this.setPlayerInitialPosition();
-            }
-        }
     }
 
-    setPlayerInitialPosition() {
-        if (this.tilemapHandler?.player) {
-            this.tilemapHandler.player.initialX = this.x;
-            this.tilemapHandler.player.initialY = this.y;
-        }
-    }
-
+    //startRemoval
     updateLevelStartValue(levelStartValue) {
         const startFlagsInTileMapHandler = this.tilemapHandler.filterObjectsByTypes(ObjectTypes.START_FLAG);
 
@@ -55,6 +32,7 @@ class StartFlag extends InteractiveLevelObject {
             this.addChangeableAttribute("levelStartFlag", false);
         }
     }
+    //endRemoval
 
     collisionEvent() {
     }
