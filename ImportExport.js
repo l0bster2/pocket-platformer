@@ -184,13 +184,18 @@ function createHtmlDocoumentWithCanvas() {
             background-image: none;
           }
           #myCanvas {
-            border: 1px solid white;
             width:auto;
             height:auto;
-            background-color: blue;
+            background-color: black;
           }
           #mobileControls {
             display: none;
+          }
+          #loadingText {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            color: white;
           }
           body {
             display: flex;
@@ -229,6 +234,12 @@ function createHtmlDocoumentWithCanvas() {
   var gameCanvas = emptyHtmlDocument.createElement("canvas");
   Helpers.addAttributesToHTMLElement(gameCanvas, { "id": "myCanvas" });
   gameScreen.appendChild(gameCanvas);
+  gameScreen.style.position = "relative";
+
+  var loadingText = document.createElement("div");
+  loadingText.innerHTML = "Loading...";
+  loadingText.id = "loadingText";
+  gameScreen.appendChild(loadingText);
 
   var tileCanvas = emptyHtmlDocument.createElement("canvas");
   Helpers.addAttributesToHTMLElement(tileCanvas, { "id": "tileCanvas" });
