@@ -248,7 +248,6 @@ class ObjectsTooltipElementsRenderer {
         labelForFirstButton.className = "radioButtonLabel";
         labelForFirstButton.innerHTML = "Next Level";
         firstButtonWrapper.append(firstRadioButton, labelForFirstButton);
-
         const secondButtonWrapper = document.createElement("div");
         secondButtonWrapper.className = "marginTop8";
 
@@ -294,6 +293,9 @@ class ObjectsTooltipElementsRenderer {
                     options[i].selected = true;
                     break;
                 }
+            }
+            if(WorldDataHandler.levels.length - 1 === currentObject.customExit.levelIndex) {
+                options[options.length - 1].selected = true;
             }
         }
         else {
