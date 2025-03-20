@@ -491,15 +491,20 @@ class ObjectsTooltipElementsRenderer {
     }
 
     static createDrawHelpersToolsTop() {
+        const { currentSpriteHeight, currentSpriteWidth } = DrawSectionHandler;
+        const sameHeightAndWidth = currentSpriteHeight === currentSpriteWidth;
+        const disabledOption = sameHeightAndWidth ? "" : "disabled";
+        const rotateButtonClasses = sameHeightAndWidth ?  "iconInButtonWithText" : "iconInButtonWithText greyFilter";
+
         const template = Object.assign(
             document.createElement(`div`),
             {
                 innerHTML: `
                     <div>
                         <div class="flexRows">
-                            <button id="rotateLeftHelper" title="rotate left" class="levelNavigationButton buttonWithIconAndText"
+                            <button id="rotateLeftHelper" ${disabledOption} title="rotate left" class="levelNavigationButton buttonWithIconAndText"
                                 onClick="DrawHelpers.rotateRight()">
-                                <img src="images/icons/rotateLeft.svg" class="iconInButtonWithText" alt="rotateLeftHelper"
+                                <img src="images/icons/rotateLeft.svg" class="${rotateButtonClasses}" alt="rotateLeftHelper"
                                 width="16" height="16">
                             </button>
                             <button id="longArrowUpHelper" title="move up" class="levelNavigationButton buttonWithIconAndText"
@@ -507,9 +512,9 @@ class ObjectsTooltipElementsRenderer {
                                 <img src="images/icons/longArrowUp.svg" class="iconInButtonWithText" alt="longArrowUpHelper"
                                 width="16" height="16">
                             </button>
-                            <button id="rotateRightHelper" title="rotate right" class="levelNavigationButton buttonWithIconAndText"
+                            <button id="rotateRightHelper" ${disabledOption} title="rotate right" class="levelNavigationButton buttonWithIconAndText"
                                 onClick="DrawHelpers.rotateLeft()">
-                                <img src="images/icons/rotateRight.svg" class="iconInButtonWithText" alt="rotateRightHelper"
+                                <img src="images/icons/rotateRight.svg" class="${rotateButtonClasses}" alt="rotateRightHelper"
                                 width="16" height="16">
                             </button>
                         </div>

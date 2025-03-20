@@ -449,7 +449,7 @@ class BuildMode {
     static dragPlayerHandler(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY) {
         if (currentTile != null && Controller.pause) {
             this.player.x = tilePosX * this.tileMapHandler.tileSize;
-            this.player.y = tilePosY * this.tileMapHandler.tileSize;
+            this.player.y = tilePosY * this.tileMapHandler.tileSize + this.tileMapHandler.tileSize - this.player.drawHeight;
         }
         if (this.draggingPlayer && currentTile === 0 &&
             (allObjectsAtCurrentTile.length === 0 ||
@@ -459,7 +459,7 @@ class BuildMode {
                     SpritePixelArrays.foregroundSprites.includes(objectAtCurrentTile.spriteObject[0]?.name)
                 ))) {
             this.player.x = tilePosX * this.tileMapHandler.tileSize;
-            this.player.y = tilePosY * this.tileMapHandler.tileSize;
+            this.player.y = tilePosY * this.tileMapHandler.tileSize + this.tileMapHandler.tileSize - this.player.drawHeight;
         }
     }
 

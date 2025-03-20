@@ -15,6 +15,7 @@ class DrawSectionHandler {
             this[elementToQuery] = document.getElementById(elementToQuery);
         });
         this.initializeColorPicker();
+        this.redrawSpriteCanvas = redrawSpriteCanvas;
         this.redrawSpriteCanvasCtx = redrawSpriteCanvas.getContext('2d');
         this.redrawSpriteCanvasCtx.translate(0, 0);
         redrawSpriteCanvas.addEventListener("mouseenter", (e) => { Controller.mouseEnterDrawCanvas(e) });
@@ -49,8 +50,8 @@ class DrawSectionHandler {
         });
         this.hueb.on('change', (color) => {
             this.pencilButton.style.color === "white" ?
-            document.getElementById("pencilIcon").classList.add("whiteFilter") :
-            document.getElementById("pencilIcon").classList.remove("whiteFilter");
+                document.getElementById("pencilIcon").classList.add("whiteFilter") :
+                document.getElementById("pencilIcon").classList.remove("whiteFilter");
             this.hueb.close();
             this.currentColor = color.replace("#", "");
         })
@@ -133,12 +134,74 @@ class DrawSectionHandler {
         this.currentSelectedTool = tools.eyeDropper;
     }
 
+    static getObjectByCommonType(type)  {
+
+    }
+
+    static changeDrawCanvasSize() {
+        this.redrawSpriteCanvas.height = this.currentSprite.sprite.animation[0].sprite.length * tileMapHandler.tileSize;
+        this.canvasHeight = this.redrawSpriteCanvas.height;
+        this.drawCurrentSprite();
+    }
+
+    static changeSpriteHeight(event) {
+        const currentSpriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(this.currentSprite.sprite.descriptiveName)?.[0];
+        const objectSprites = SpritePixelArrays.allSprites.filter(sprite => sprite.commonType === currentSpriteObject.commonType);
+        let objectToChange = currentSpriteObject.commonType === "player" ? player : this.getObjectByCommonType(currentSpriteObject.type);
+        const oldHeight = objectToChange.height;
+        const oldValue = this.currentSprite.sprite.animation[0].sprite.length;
+        const newValue = event.target.value;
+        objectToChange.height = tileMapHandler.pixelArrayUnitSize * newValue - objectToChange.heightOffset;
+        objectToChange.y += oldHeight - objectToChange.height;
+        document.getElementById("heightsliderValue").innerHTML = newValue;
+        objectToChange.resetAnimationAttributes();
+
+        const newSpriteBigger = newValue > oldValue;
+        const difference = Math.abs(newValue - oldValue);
+        objectSprites.forEach(sprite => {
+            sprite.animation.forEach(animationSprite => {
+                if(newSpriteBigger) {
+                    for(var i = 0; i < difference; i++) {
+                        animationSprite.sprite.unshift( ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"])
+                    }
+                }
+                else {
+                    for(var i = 0; i < difference; i++) {
+                        animationSprite.sprite.shift()
+                    }
+                }
+            })
+        });
+        this.changeDrawCanvasSize();
+        this.changeCurrentSelectedSpriteDimensions();
+    }
+
+    static checkHeightWidthSlidersVisibility(sprite) {
+        const heightChanger = document.getElementById("heightAnimationChanger");
+        const widthChanger = document.getElementById("widthAnimationChanger");
+        if (sprite.name.toString().toLowerCase().includes("player")) {
+            heightChanger.style.display = "flex";
+            widthChanger.style.display = "flex";
+        }
+        else {
+            heightChanger.style.display = "none";
+            widthChanger.style.display = "none";
+        }
+    }
+
+    static changeCurrentSelectedSpriteDimensions() {
+        this.currentSpriteHeight = this.currentSprite.sprite.animation[0].sprite.length;
+        this.currentSpriteWidth = this.currentSprite.sprite.animation[0].sprite[0].length;
+    }
+
     static changeSelectedSprite(event, changeSelectOption = false) {
         const spriteName = event.target.value;
         const sprite = SpritePixelArrays.getSpritesByDescrpitiveName(spriteName)[0];
+        this.checkHeightWidthSlidersVisibility(sprite);
         this.currentSprite.spriteIndexInArray = SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName")
         this.currentSprite.sprite = sprite;
         this.currentSprite.animationFrame = 0;
+        this.changeCurrentSelectedSpriteDimensions();
         this.changeAnimationFrame(0);
         this.animationCanvases = [];
 
@@ -153,6 +216,8 @@ class DrawSectionHandler {
                 this.spriteSelectEl.selectedIndex = indexInSelect
             }
         }
+        this.changeDrawCanvasSize();
+
     }
 
     static displaySpriteDescription(sprite) {
@@ -168,7 +233,7 @@ class DrawSectionHandler {
     }
 
     static createAnimationWrapper(sprite, htmlElement = this.spriteAnimationEl) {
-        if ((sprite.type === SpritePixelArrays.SPRITE_TYPES.tile || sprite.name === "edge") && 
+        if ((sprite.type === SpritePixelArrays.SPRITE_TYPES.tile || sprite.name === "edge") &&
             !SpritePixelArrays.tilesWithAnimation.includes(sprite.name) &&
             !SpritePixelArrays.backgroundSprites.includes(sprite.name)) {
             this.spriteAnimationWrapper.style.display = "none";
@@ -294,8 +359,10 @@ class DrawSectionHandler {
         this.redrawSpriteCanvasCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
         Display.drawPixelArray(this.currentSprite.sprite.animation[this.currentSprite.animationFrame].sprite, 0, 0, this.pixelSize, this.tileMapHandler.pixelArrayUnitAmount,
             this.redrawSpriteCanvasCtx)
-        const { pixelArrayUnitAmount, tileSize } = this.tileMapHandler;
-        Display.drawGrid(pixelArrayUnitAmount, pixelArrayUnitAmount, tileSize, '383838', 1, this.redrawSpriteCanvasCtx);
+        const { tileSize } = this.tileMapHandler;
+        const gridWidth = this.currentSprite.sprite.animation[0].sprite[0].length;
+        const gridHeight = this.currentSprite.sprite.animation[0].sprite.length;
+        Display.drawGrid(gridWidth, gridHeight, tileSize, '383838', 1, this.redrawSpriteCanvasCtx);
     }
 
     static findIndexOfOption(text) {
@@ -324,8 +391,7 @@ class DrawSectionHandler {
 
             if (Controller.mousePressed || Controller.rightMousePressed) {
                 const { animationFrame, sprite } = this.currentSprite;
-                const { pixelArrayUnitAmount } = this.tileMapHandler;
-                if (posInArray.x >= 0 && posInArray.y >= 0 && posInArray.x < pixelArrayUnitAmount && posInArray.y < pixelArrayUnitAmount &&
+                if (posInArray.x >= 0 && posInArray.y >= 0 && posInArray.x < this.currentSpriteHeight && posInArray.y < this.currentSpriteWidth &&
                     sprite?.animation[animationFrame]?.sprite?.[posInArray.y]?.[posInArray.x]) {
                     if (this.currentSelectedTool === tools.pencil && this.currentColor || Controller.rightMousePressed) {
                         this.clickedWithPencil(posInArray);

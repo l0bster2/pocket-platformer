@@ -378,6 +378,8 @@ class SpritePixelArrays {
 
     this.PLAYER_IDLE_SPRITE = {
       name: ObjectTypes.PLAYER_IDLE,
+      maxHeight: 16,
+      commonType: "player",
       descriptiveName: "Player idle",
       description: "The player sprite that is shown when you are not moving.",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
@@ -399,6 +401,8 @@ class SpritePixelArrays {
 
     this.PLAYER_JUMP_SPRITE = {
       name: ObjectTypes.PLAYER_JUMP,
+      maxHeight: 16,
+      commonType: "player",
       descriptiveName: "Player jump",
       description: "The player sprite that is shown when you are jumping.<br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 1'} }, true)\">Jump SFX</span> will be displayed underneath.",
@@ -422,6 +426,8 @@ class SpritePixelArrays {
 
     this.PLAYER_WALL_JUMP_SPRITE = {
       name: ObjectTypes.PLAYER_WALL_JUMP,
+      maxHeight: 16,
+      commonType: "player",
       descriptiveName: "Player wall jump",
       description: "The player sprite that is shown when you are jumping.",
       squishAble: false,
@@ -445,6 +451,8 @@ class SpritePixelArrays {
 
     this.PLAYER_WALK_SPRITE = {
       name: ObjectTypes.PLAYER_WALK,
+      maxHeight: 16,
+      commonType: "player",
       descriptiveName: "Player walk",
       description: "The player sprite that is shown when you are running.",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],

@@ -17,20 +17,21 @@ class BarrelCannon extends InteractiveLevelObject {
 
     setPlayerFlying() {
         const widthDIfference = this.player.width > this.tilemapHandler.tileSize ? this.player.width - this.width : 0;
-        const heightDIfference = this.player.height > this.tilemapHandler.tileSize ? this.player.height - this.height : 0;
-
+        const heightDifference = this.player.height > this.tilemapHandler.tileSize ? this.player.height - this.height : 0;
         if (this.currentFacingDirection === AnimationHelper.facingDirections.left) {
             this.player.x = this.x - this.tilemapHandler.tileSize - widthDIfference;
+            this.player.y = this.y - (heightDifference / 2);
             this.player.xspeed = this.speed * -1;
             this.setPlayerFlyingAttributes();
         }
         else if (this.currentFacingDirection === AnimationHelper.facingDirections.top) {
-            this.player.y = this.y - this.tilemapHandler.tileSize - heightDIfference;
+            this.player.y = this.y - this.tilemapHandler.tileSize - heightDifference;
             this.player.yspeed = this.speed * -1;
             this.setPlayerFlyingAttributes();
         }
         else if (this.currentFacingDirection === AnimationHelper.facingDirections.right) {
             this.player.x = this.x + this.tilemapHandler.tileSize;
+            this.player.y = this.y - (heightDifference / 2);
             this.player.xspeed = this.speed;
             this.setPlayerFlyingAttributes();
         }
