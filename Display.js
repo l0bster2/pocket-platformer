@@ -195,20 +195,20 @@ class Display {
     
     static explodeSprite(img, sx, sy, tileSize, x, y, offSet, radians) {
         const halfTileSize = tileSize / 2;
-        Display.drawImageWithRotation(img, sx * tileSize,
-            sy * tileSize, halfTileSize,
+        Display.drawImageWithRotation(img, sx,
+            sy, halfTileSize,
             halfTileSize, x + offSet * -1, y + offSet * -1,
             halfTileSize, halfTileSize, radians);
-        Display.drawImageWithRotation(img, sx * tileSize + halfTileSize,
-            sy * tileSize, halfTileSize,
+        Display.drawImageWithRotation(img, sx + halfTileSize,
+            sy, halfTileSize,
             halfTileSize, x + offSet, y + offSet * -1,
             halfTileSize, halfTileSize, radians);
-        Display.drawImageWithRotation(img, sx * tileSize,
-            sy * tileSize + halfTileSize, halfTileSize,
+        Display.drawImageWithRotation(img, sx,
+            sy + halfTileSize, halfTileSize,
             halfTileSize, x + offSet, y + offSet,
             halfTileSize, halfTileSize, radians);
-        Display.drawImageWithRotation(img, sx * tileSize + halfTileSize,
-            sy * tileSize + halfTileSize, halfTileSize,
+        Display.drawImageWithRotation(img, sx + halfTileSize,
+            sy + halfTileSize, halfTileSize,
             halfTileSize, x + offSet * -1, y + offSet,
             halfTileSize, halfTileSize, radians);
     }

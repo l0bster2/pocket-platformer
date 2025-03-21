@@ -177,6 +177,7 @@ class DrawSectionHandler {
         });
         this.changeDrawCanvasSize();
         this.changeCurrentSelectedSpriteDimensions();
+        player.setAnimationProperties();
     }
 
     static checkHeightWidthSlidersVisibility(sprite) {
@@ -418,10 +419,13 @@ class DrawSectionHandler {
     static clickedWithPencil(posInArray) {
         const { animationFrame, sprite } = this.currentSprite;
         const color = Controller.mousePressed ? this.currentColor : "transp";
+        const colorChanged = sprite.animation[animationFrame].sprite[posInArray.y][posInArray.x] != color;
         sprite.animation[animationFrame].sprite[posInArray.y][posInArray.x] = color;
-        Helpers.debounce(() => {
-            this.redrawOutsideCanvases();
-        }, 300);
+        if(colorChanged) {
+            Helpers.debounce(() => {
+                this.redrawOutsideCanvases();
+            }, 300);
+        }
     }
 
     static clickedWithEyeDropper(posInArray) {

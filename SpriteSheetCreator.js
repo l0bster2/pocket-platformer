@@ -34,27 +34,8 @@ class SpriteSheetCreator {
         this.createSpriteSheet(SpriteObject, spriteObjectIndex)
     }
 
-    getCanvasSpriteYPosition(SpriteObject, spriteObjectIndex) {
-        const { pixelArrayUnitSize, tileSize } = this.tileMapHandler;
-        if(SpriteObject.commonType) {
-            let currentYPos = 0;
-            for(var i = 0; i < spriteObjectIndex; i++) {
-                if(!SpritePixelArrays.allSprites[i].commonType){
-                    currentYPos += tileSize;
-                }
-                else {
-                    currentYPos += SpritePixelArrays.allSprites[i].animation[0].sprite.length * pixelArrayUnitSize;
-                }
-            }
-            return currentYPos;
-        }
-        else {
-            return spriteObjectIndex * tileSize;
-        }
-    }
-
     createSprite(SpriteObject, spriteObjectIndex) {
-        const canvasYPosition = this.getCanvasSpriteYPosition(SpriteObject, spriteObjectIndex);
+        const canvasYPosition = SpritePixelArrays.getCanvasSpriteYPosition(SpriteObject, spriteObjectIndex);
         if (SpriteObject?.directions) {
             const { right, left, top, bottom } = AnimationHelper.facingDirections;
             if (SpriteObject.directions[0] === bottom || SpriteObject.directions[0] === top) {

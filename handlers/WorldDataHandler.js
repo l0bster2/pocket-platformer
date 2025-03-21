@@ -9,6 +9,8 @@ class WorldDataHandler {
         this.backgroundColor = '000000';
         this.textColor = 'ffffff';
         this.effects = [];
+        this.pixelArrayUnitAmount = 8;
+        this.pixelArrayUnitSize = this.tileSize / this.pixelArrayUnitAmount;
     }
 
     static createEmptyLevel() {

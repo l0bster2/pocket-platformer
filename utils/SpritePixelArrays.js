@@ -2577,6 +2577,25 @@ class SpritePixelArrays {
     return this.allSprites.filter(sprite => sprite.descriptiveName === descriptiveName);
   }
 
+  static getCanvasSpriteYPosition(SpriteObject, spriteObjectIndex) {
+    const { pixelArrayUnitSize, tileSize } = WorldDataHandler;
+    if(SpriteObject.commonType) {
+        let currentYPos = 0;
+        for(var i = 0; i < spriteObjectIndex; i++) {
+            if(!this.allSprites[i].commonType){
+                currentYPos += tileSize;
+            }
+            else {
+                currentYPos += SpritePixelArrays.allSprites[i].animation[0].sprite.length * pixelArrayUnitSize;
+            }
+        }
+        return currentYPos;
+    }
+    else {
+        return spriteObjectIndex * tileSize;
+    }
+}
+
   static getIndexOfSprite(searchValue, index = 0, searchKey = "name") {
     let indexInSpriteArray = 0;
     let currentIndexForSameSprites = 0;
