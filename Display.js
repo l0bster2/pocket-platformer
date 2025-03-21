@@ -82,10 +82,10 @@ class Display {
         this.ctx.globalAlpha = 1;
     }
 
-    static drawPixelArray(pixelArray, x, y, pixelArrayUnitSize, pixelArrayUnitAmount, ctx = this.ctx) {
+    static drawPixelArray(pixelArray, x, y, pixelArrayUnitSize, pixelArrayUnitAmountHeight, pixelArrayUnitAmountWidth, ctx = this.ctx) {
         if (pixelArray) {
-            for (var pixelArrayPosY = 0; pixelArrayPosY < pixelArrayUnitAmount; pixelArrayPosY++) {
-                for (var pixelArrayPosX = 0; pixelArrayPosX < pixelArrayUnitAmount; pixelArrayPosX++) {
+            for (var pixelArrayPosY = 0; pixelArrayPosY < pixelArrayUnitAmountWidth; pixelArrayPosY++) {
+                for (var pixelArrayPosX = 0; pixelArrayPosX < pixelArrayUnitAmountHeight; pixelArrayPosX++) {
                     const color = pixelArray[pixelArrayPosY][pixelArrayPosX];
                     color !== 0 && color !== "transp" &&
                         this.drawRectangle(x + pixelArrayPosX * pixelArrayUnitSize, y + pixelArrayPosY * pixelArrayUnitSize,

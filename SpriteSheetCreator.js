@@ -23,7 +23,7 @@ class SpriteSheetCreator {
         this.spriteCtx.clearRect(0, 0, this.spriteCanvasWidth, this.spriteCanvasHeight);
         SpritePixelArrays.allSprites.forEach((SpriteObject, spriteObjectIndex) => {
             if (SpriteObject.animation) {
-                this.createSprite(SpriteObject, spriteObjectIndex)
+                this.createSprite(SpriteObject, spriteObjectIndex);
             }
         });
     }
@@ -34,26 +34,46 @@ class SpriteSheetCreator {
         this.createSpriteSheet(SpriteObject, spriteObjectIndex)
     }
 
+    getCanvasSpriteYPosition(SpriteObject, spriteObjectIndex) {
+        const { pixelArrayUnitSize, tileSize } = this.tileMapHandler;
+        if(SpriteObject.commonType) {
+            let currentYPos = 0;
+            for(var i = 0; i < spriteObjectIndex; i++) {
+                if(!SpritePixelArrays.allSprites[i].commonType){
+                    currentYPos += tileSize;
+                }
+                else {
+                    currentYPos += SpritePixelArrays.allSprites[i].animation[0].sprite.length * pixelArrayUnitSize;
+                }
+            }
+            return currentYPos;
+        }
+        else {
+            return spriteObjectIndex * tileSize;
+        }
+    }
+
     createSprite(SpriteObject, spriteObjectIndex) {
+        const canvasYPosition = this.getCanvasSpriteYPosition(SpriteObject, spriteObjectIndex);
         if (SpriteObject?.directions) {
             const { right, left, top, bottom } = AnimationHelper.facingDirections;
             if (SpriteObject.directions[0] === bottom || SpriteObject.directions[0] === top) {
                 for (var i = 0; i < SpriteObject.directions.length; i++) {
                     if (SpriteObject.directions[i] === left) {
                         let flipppedSprite = i === 0 ? SpriteObject : this.turnSprite(SpriteObject);
-                        this.drawAnimation(flipppedSprite.animation, spriteObjectIndex, i);
+                        this.drawAnimation(flipppedSprite.animation, canvasYPosition, i);
                     }
                     if (SpriteObject.directions[i] === top) {
                         const turnedSprite = i === 0 ? SpriteObject : this.flipSprite(SpriteObject, this.flipDirection.vertically);
-                        this.drawAnimation(turnedSprite.animation, spriteObjectIndex, i);
+                        this.drawAnimation(turnedSprite.animation, canvasYPosition, i);
                     }
                     if (SpriteObject.directions[i] === bottom) {
                         const turnedBottomSprite = i === 0 ? SpriteObject : this.flipSprite(SpriteObject, this.flipDirection.vertically);
-                        this.drawAnimation(turnedBottomSprite.animation, spriteObjectIndex, i);
+                        this.drawAnimation(turnedBottomSprite.animation, canvasYPosition, i);
                     }
                     if (SpriteObject.directions[i] === right) {
                         const flipppedSprite = i === 0 ? SpriteObject : this.turnSprite(SpriteObject, true);
-                        this.drawAnimation(flipppedSprite.animation, spriteObjectIndex, i);
+                        this.drawAnimation(flipppedSprite.animation, canvasYPosition, i);
                     }
                 }
             }
@@ -61,35 +81,35 @@ class SpriteSheetCreator {
                 for (var i = 0; i < SpriteObject.directions.length; i++) {
                     if (SpriteObject.directions[i] === left) {
                         let flipppedSprite = i === 0 ? SpriteObject : this.flipSprite(SpriteObject, this.flipDirection.horizontally);
-                        this.drawAnimation(flipppedSprite.animation, spriteObjectIndex, i);
+                        this.drawAnimation(flipppedSprite.animation, canvasYPosition, i);
                     }
                     if (SpriteObject.directions[i] === top) {
                         const turnedSprite = i === 0 ? SpriteObject : this.turnSprite(SpriteObject);
-                        this.drawAnimation(turnedSprite.animation, spriteObjectIndex, i);
+                        this.drawAnimation(turnedSprite.animation, canvasYPosition, i);
                     }
                     if (SpriteObject.directions[i] === bottom) {
                         const turnedBottomSprite = i === 0 ? SpriteObject : this.turnSprite(SpriteObject, true);
-                        this.drawAnimation(turnedBottomSprite.animation, spriteObjectIndex, i);
+                        this.drawAnimation(turnedBottomSprite.animation, canvasYPosition, i);
                     }
                     if (SpriteObject.directions[i] === right) {
                         const flipppedSprite = i === 0 ? SpriteObject : this.flipSprite(SpriteObject, this.flipDirection.horizontally);
-                        this.drawAnimation(flipppedSprite.animation, spriteObjectIndex, i);
+                        this.drawAnimation(flipppedSprite.animation, canvasYPosition, i);
                     }
                 }
             }
         }
         else {
-            this.drawAnimation(SpriteObject.animation, spriteObjectIndex);
+            this.drawAnimation(SpriteObject.animation, canvasYPosition);
         }
     }
 
     //loop variable is there, so you can add more sprite on the same y-axis (f.e. for flipped sprites)
-    drawAnimation(animation, yIndex, loop = 0) {
-        const { tileSize, pixelArrayUnitSize, pixelArrayUnitAmount } = this.tileMapHandler;
+    drawAnimation(animation, canvasYPosition, loop = 0) {
+        const { tileSize, pixelArrayUnitSize } = this.tileMapHandler;
         animation.forEach((SpritePixelArray, spriteIndex) => {
             Display.drawPixelArray(SpritePixelArray.sprite, (spriteIndex + (animation.length * loop)) * tileSize,
-                yIndex * tileSize, pixelArrayUnitSize,
-                pixelArrayUnitAmount, this.spriteCtx);
+                canvasYPosition, pixelArrayUnitSize,
+                SpritePixelArray.sprite[0].length, SpritePixelArray.sprite.length, this.spriteCtx);
         });
     }
 

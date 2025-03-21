@@ -376,115 +376,6 @@ class SpritePixelArrays {
       ]
     };
 
-    this.PLAYER_IDLE_SPRITE = {
-      name: ObjectTypes.PLAYER_IDLE,
-      maxHeight: 16,
-      commonType: "player",
-      descriptiveName: "Player idle",
-      description: "The player sprite that is shown when you are not moving.",
-      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
-      animation: [{
-        sprite:
-          [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "transp"],
-            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF"],
-            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
-            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
-            ["transp", "transp", "d55c5a", "d55c5a", "d55c5a", "d55c5a", "transp", "transp"],
-            ["transp", "f2cbc9", "transp", "d55c5a", "d55c5a", "transp", "f2cbc9", "transp"],
-            ["transp", "transp", "BF8040", "transp", "transp", "BF8040", "transp", "transp"],
-          ]
-      }
-      ]
-    };
-
-    this.PLAYER_JUMP_SPRITE = {
-      name: ObjectTypes.PLAYER_JUMP,
-      maxHeight: 16,
-      commonType: "player",
-      descriptiveName: "Player jump",
-      description: "The player sprite that is shown when you are jumping.<br/>" +
-        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 1'} }, true)\">Jump SFX</span> will be displayed underneath.",
-      squishAble: true,
-      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
-      animation: [{
-        sprite:
-          [
-            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "4080BF"],
-            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "transp"],
-            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
-            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
-            ["transp", "EABFBF", "BF4040", "BF4040", "BF4040", "BF4040", "EABFBF", "transp"],
-            ["transp", "transp", "transp", "BF4040", "BF4040", "FFAA55", "transp", "transp"],
-            ["transp", "transp", "FFAA55", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ]
-      }
-      ]
-    };
-
-    this.PLAYER_WALL_JUMP_SPRITE = {
-      name: ObjectTypes.PLAYER_WALL_JUMP,
-      maxHeight: 16,
-      commonType: "player",
-      descriptiveName: "Player wall jump",
-      description: "The player sprite that is shown when you are jumping.",
-      squishAble: false,
-      hiddenEverywhere: true,
-      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
-      animation: [{
-        sprite:
-          [
-            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "4080BF"],
-            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "transp"],
-            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
-            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
-            ["transp", "EABFBF", "BF4040", "BF4040", "BF4040", "BF4040", "EABFBF", "transp"],
-            ["transp", "transp", "transp", "BF4040", "BF4040", "FFAA55", "transp", "transp"],
-            ["transp", "transp", "FFAA55", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ]
-      }
-      ]
-    };
-
-    this.PLAYER_WALK_SPRITE = {
-      name: ObjectTypes.PLAYER_WALK,
-      maxHeight: 16,
-      commonType: "player",
-      descriptiveName: "Player walk",
-      description: "The player sprite that is shown when you are running.",
-      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
-      animation: [{
-        sprite:
-          [
-            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "transp"],
-            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF"],
-            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
-            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
-            ["transp", "transp", "BF4040", "BF4040", "BF4040", "BF4040", "EABFBF", "transp"],
-            ["transp", "EABFBF", "BF4040", "BF4040", "BF4040", "BF8040", "transp", "transp"],
-            ["transp", "transp", "BF8040", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ]
-      },
-      {
-        sprite:
-          [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "transp"],
-            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF"],
-            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
-            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
-            ["transp", "transp", "BF4040", "BF4040", "BF4040", "BF4040", "transp", "transp"],
-            ["transp", "EABFBF", "BF8040", "BF4040", "BF4040", "transp", "EABFBF", "transp"],
-            ["transp", "transp", "transp", "transp", "BF8040", "transp", "transp", "transp"],
-          ]
-      }
-      ]
-    };
-
     this.START_FLAG_SPRITE = {
       name: ObjectTypes.START_FLAG,
       descriptiveName: "Start flag",
@@ -2263,7 +2154,6 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       },
 
@@ -2284,7 +2174,6 @@ class SpritePixelArrays {
             ["transp", "transp", "FF8EFF", "transp", "transp", "FF8EFF", "transp", "transp"],
             ["transp", "transp", "FF8EFF", "transp", "transp", "FF8EFF", "transp", "transp"],
             ["transp", "transp", "FF8EFF", "FF8EFF", "FF8EFF", "FF8EFF", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
@@ -2512,6 +2401,115 @@ class SpritePixelArrays {
             ["transp", "transp", "393939", "transp", "transp", "393939", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.PLAYER_IDLE_SPRITE = {
+      name: ObjectTypes.PLAYER_IDLE,
+      maxHeight: 16,
+      commonType: "player",
+      descriptiveName: "Player idle",
+      description: "The player sprite that is shown when you are not moving.",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "transp"],
+            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF"],
+            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
+            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
+            ["transp", "transp", "d55c5a", "d55c5a", "d55c5a", "d55c5a", "transp", "transp"],
+            ["transp", "f2cbc9", "transp", "d55c5a", "d55c5a", "transp", "f2cbc9", "transp"],
+            ["transp", "transp", "BF8040", "transp", "transp", "BF8040", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.PLAYER_JUMP_SPRITE = {
+      name: ObjectTypes.PLAYER_JUMP,
+      maxHeight: 16,
+      commonType: "player",
+      descriptiveName: "Player jump",
+      description: "The player sprite that is shown when you are jumping.<br/>" +
+        "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 1'} }, true)\">Jump SFX</span> will be displayed underneath.",
+      squishAble: true,
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "4080BF"],
+            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "transp"],
+            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
+            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
+            ["transp", "EABFBF", "BF4040", "BF4040", "BF4040", "BF4040", "EABFBF", "transp"],
+            ["transp", "transp", "transp", "BF4040", "BF4040", "FFAA55", "transp", "transp"],
+            ["transp", "transp", "FFAA55", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.PLAYER_WALL_JUMP_SPRITE = {
+      name: ObjectTypes.PLAYER_WALL_JUMP,
+      maxHeight: 16,
+      commonType: "player",
+      descriptiveName: "Player wall jump",
+      description: "The player sprite that is shown when you are jumping.",
+      squishAble: false,
+      hiddenEverywhere: true,
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "4080BF"],
+            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "transp"],
+            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
+            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
+            ["transp", "EABFBF", "BF4040", "BF4040", "BF4040", "BF4040", "EABFBF", "transp"],
+            ["transp", "transp", "transp", "BF4040", "BF4040", "FFAA55", "transp", "transp"],
+            ["transp", "transp", "FFAA55", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.PLAYER_WALK_SPRITE = {
+      name: ObjectTypes.PLAYER_WALK,
+      maxHeight: 16,
+      commonType: "player",
+      descriptiveName: "Player walk",
+      description: "The player sprite that is shown when you are running.",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "transp"],
+            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF"],
+            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
+            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
+            ["transp", "transp", "BF4040", "BF4040", "BF4040", "BF4040", "EABFBF", "transp"],
+            ["transp", "EABFBF", "BF4040", "BF4040", "BF4040", "BF8040", "transp", "transp"],
+            ["transp", "transp", "BF8040", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "4080BF", "4080BF", "4080BF", "4080BF", "transp", "transp"],
+            ["transp", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF", "4080BF"],
+            ["transp", "transp", "EABFBF", "FFFFFF", "80552B", "EABFBF", "80552B", "transp"],
+            ["transp", "transp", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "EABFBF", "transp"],
+            ["transp", "transp", "BF4040", "BF4040", "BF4040", "BF4040", "transp", "transp"],
+            ["transp", "EABFBF", "BF8040", "BF4040", "BF4040", "transp", "EABFBF", "transp"],
+            ["transp", "transp", "transp", "transp", "BF8040", "transp", "transp", "transp"],
           ]
       }
       ]

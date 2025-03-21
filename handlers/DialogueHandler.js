@@ -141,7 +141,9 @@ class DialogueHandler {
         Display.drawPixelArray(avatar.spriteObject.animation[animationIndex].sprite,
             avatarLeftPos, top,
             Math.round(this.tileMapHandler.pixelArrayUnitSize * 3 / Camera.viewport.scale),
-            this.tileMapHandler.pixelArrayUnitAmount);
+            avatar.spriteObject.animation[animationIndex].sprite[0].length, 
+            avatar.spriteObject.animation[animationIndex].sprite.length
+        );
     }
 
     static displayArrowUpIcon() {

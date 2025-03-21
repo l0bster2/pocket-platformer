@@ -96,7 +96,7 @@ class ObjectsTooltipElementsRenderer {
             };
             canvas.style.background = "#" + WorldDataHandler.backgroundColor;
             const ctx = canvas.getContext('2d');
-            Display.drawPixelArray(animationFrame.sprite, 0, 0, tileMapHandler.pixelArrayUnitSize, tileMapHandler.pixelArrayUnitAmount, ctx);
+            Display.drawPixelArray(animationFrame.sprite, 0, 0, tileMapHandler.pixelArrayUnitSize, animationFrame.sprite[0].length, animationFrame.sprite.length, ctx);
             decoSpritesEl.appendChild(canvas);
         });
         spriteContent.appendChild(decoSpritesEl);
@@ -632,7 +632,7 @@ class ObjectsTooltipElementsRenderer {
                 //null check  if custom sprite was deleted
                 if (sSprite[0]) {
                     const animationFrame = sSprite[0].animation[0];
-                    Display.drawPixelArray(animationFrame.sprite, 0, 0, tileMapHandler.pixelArrayUnitSize, tileMapHandler.pixelArrayUnitAmount, ctx);
+                    Display.drawPixelArray(animationFrame.sprite, 0, 0, tileMapHandler.pixelArrayUnitSize, animationFrame.sprite[0].length, animationFrame.sprite.length, ctx);
                 }
                 buttonsWrapper.appendChild(sSCanvas);
             }

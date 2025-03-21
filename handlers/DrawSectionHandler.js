@@ -89,28 +89,30 @@ class DrawSectionHandler {
         sprites.className = "marginTop8";
         spriteContent.appendChild(description);
         SpritePixelArrays.allSprites.forEach(sprite => {
-            sprite.animation.forEach(animationFrame => {
-                var canvas = document.createElement('canvas');
-                Helpers.addAttributesToHTMLElement(canvas, {
-                    "width": this.tileMapHandler.tileSize,
-                    "height": this.tileMapHandler.tileSize, "id": 1, "class": "canvasInSpriteSelector"
-                });
-                canvas.onclick = (e) => {
-                    const clonedSprite = JSON.parse(JSON.stringify(animationFrame.sprite));
-                    this.currentSprite.sprite.animation[this.currentSprite.animationFrame].sprite = clonedSprite;
-                    this.drawCurrentSprite();
-                    this.redrawOutsideCanvases();
-                    if (this.currentSprite?.sprite?.type) {
-                        TabNavigation.changeTab(null, TabNavigation.currentSelectedTab === SpritePixelArrays.customType ?
-                            SpritePixelArrays.customType : this.currentSprite.sprite.type);
-                    }
-                    TooltipHandler.closeTooltip(e, "otherSpriteTooltip");
-                };
-                canvas.style.background = "#" + WorldDataHandler.backgroundColor;
-                sprites.appendChild(canvas);
-                const ctx = canvas.getContext('2d');
-                Display.drawPixelArray(animationFrame.sprite, 0, 0, this.tileMapHandler.pixelArrayUnitSize, this.tileMapHandler.pixelArrayUnitAmount, ctx);
-            })
+            if (this.currentSprite.sprite.commonType === sprite.commonType) {
+                sprite.animation.forEach(animationFrame => {
+                    var canvas = document.createElement('canvas');
+                    Helpers.addAttributesToHTMLElement(canvas, {
+                        "width": this.tileMapHandler.tileSize,
+                        "height": this.tileMapHandler.tileSize, "id": 1, "class": "canvasInSpriteSelector"
+                    });
+                    canvas.onclick = (e) => {
+                        const clonedSprite = JSON.parse(JSON.stringify(animationFrame.sprite));
+                        this.currentSprite.sprite.animation[this.currentSprite.animationFrame].sprite = clonedSprite;
+                        this.drawCurrentSprite();
+                        this.redrawOutsideCanvases();
+                        if (this.currentSprite?.sprite?.type) {
+                            TabNavigation.changeTab(null, TabNavigation.currentSelectedTab === SpritePixelArrays.customType ?
+                                SpritePixelArrays.customType : this.currentSprite.sprite.type);
+                        }
+                        TooltipHandler.closeTooltip(e, "otherSpriteTooltip");
+                    };
+                    canvas.style.background = "#" + WorldDataHandler.backgroundColor;
+                    sprites.appendChild(canvas);
+                    const ctx = canvas.getContext('2d');
+                    Display.drawPixelArray(animationFrame.sprite, 0, 0, this.tileMapHandler.pixelArrayUnitSize, animationFrame.sprite[0].length, animationFrame.sprite.length, ctx);
+                })
+            }
         });
         spriteContent.appendChild(sprites);
         TooltipHandler.showTooltip("otherSpriteTooltip", heading, spriteContent);
@@ -134,7 +136,7 @@ class DrawSectionHandler {
         this.currentSelectedTool = tools.eyeDropper;
     }
 
-    static getObjectByCommonType(type)  {
+    static getObjectByCommonType(type) {
 
     }
 
@@ -142,6 +144,7 @@ class DrawSectionHandler {
         this.redrawSpriteCanvas.height = this.currentSprite.sprite.animation[0].sprite.length * tileMapHandler.tileSize;
         this.canvasHeight = this.redrawSpriteCanvas.height;
         this.drawCurrentSprite();
+        this.redrawOutsideCanvases();
     }
 
     static changeSpriteHeight(event) {
@@ -160,13 +163,13 @@ class DrawSectionHandler {
         const difference = Math.abs(newValue - oldValue);
         objectSprites.forEach(sprite => {
             sprite.animation.forEach(animationSprite => {
-                if(newSpriteBigger) {
-                    for(var i = 0; i < difference; i++) {
-                        animationSprite.sprite.unshift( ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"])
+                if (newSpriteBigger) {
+                    for (var i = 0; i < difference; i++) {
+                        animationSprite.sprite.unshift(["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"])
                     }
                 }
                 else {
-                    for(var i = 0; i < difference; i++) {
+                    for (var i = 0; i < difference; i++) {
                         animationSprite.sprite.shift()
                     }
                 }
@@ -326,7 +329,7 @@ class DrawSectionHandler {
         this.spriteAnimationEl.appendChild(canvasFrameWrapper);
         const ctx = canvas.getContext('2d');
         this.animationCanvases.push(ctx);
-        Display.drawPixelArray(animationFrame, 0, 0, this.tileMapHandler.pixelArrayUnitSize, this.tileMapHandler.pixelArrayUnitAmount,
+        Display.drawPixelArray(animationFrame, 0, 0, this.tileMapHandler.pixelArrayUnitSize, animationFrame[0].length, animationFrame.length,
             ctx);
     }
 
@@ -357,7 +360,8 @@ class DrawSectionHandler {
 
     static drawCurrentSprite() {
         this.redrawSpriteCanvasCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-        Display.drawPixelArray(this.currentSprite.sprite.animation[this.currentSprite.animationFrame].sprite, 0, 0, this.pixelSize, this.tileMapHandler.pixelArrayUnitAmount,
+        const currentSprite = this.currentSprite.sprite.animation[this.currentSprite.animationFrame];
+        Display.drawPixelArray(currentSprite.sprite, 0, 0, this.pixelSize, currentSprite.sprite[0].length, currentSprite.sprite.length,
             this.redrawSpriteCanvasCtx)
         const { tileSize } = this.tileMapHandler;
         const gridWidth = this.currentSprite.sprite.animation[0].sprite[0].length;
@@ -391,7 +395,7 @@ class DrawSectionHandler {
 
             if (Controller.mousePressed || Controller.rightMousePressed) {
                 const { animationFrame, sprite } = this.currentSprite;
-                if (posInArray.x >= 0 && posInArray.y >= 0 && posInArray.x < this.currentSpriteHeight && posInArray.y < this.currentSpriteWidth &&
+                if (posInArray.x >= 0 && posInArray.y >= 0 && posInArray.x < this.currentSpriteWidth && posInArray.y < this.currentSpriteHeight &&
                     sprite?.animation[animationFrame]?.sprite?.[posInArray.y]?.[posInArray.x]) {
                     if (this.currentSelectedTool === tools.pencil && this.currentColor || Controller.rightMousePressed) {
                         this.clickedWithPencil(posInArray);
@@ -436,7 +440,8 @@ class DrawSectionHandler {
         if (this.animationCanvases.length > 0) {
             const { pixelArrayUnitSize, pixelArrayUnitAmount, tileSize } = this.tileMapHandler;
             this.animationCanvases[animationFrame].clearRect(0, 0, tileSize, tileSize);
-            Display.drawPixelArray(this.currentSprite.sprite.animation[animationFrame].sprite, 0, 0, pixelArrayUnitSize, pixelArrayUnitAmount,
+            const currentSprite = this.currentSprite.sprite.animation[animationFrame];
+            Display.drawPixelArray(currentSprite.sprite, 0, 0, pixelArrayUnitSize, currentSprite.sprite[0].length, currentSprite.sprite.length,
                 this.animationCanvases[animationFrame]);
         }
         //if current tab contains current redrawable sprite, update it, otherwise it will update on next tab click
