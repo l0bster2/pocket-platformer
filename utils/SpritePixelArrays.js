@@ -2557,6 +2557,20 @@ class SpritePixelArrays {
     }
   }
 
+  static createDynamicEmptySprite(width, height) {
+    let widthArray = [];
+    for(var i = 0; i < width; i++) {
+      widthArray.push("transp");
+    }
+    let heightArray = [];
+    for(var i = 0; i < height; i++) {
+      heightArray.push(widthArray);
+    }
+    return {
+      sprite: heightArray
+    }
+  }
+
   static getSpritesByIndex(index) {
     return this.allSprites[index];
   }

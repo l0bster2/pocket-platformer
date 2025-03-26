@@ -236,13 +236,13 @@
                     <div class="subSection marginTop8">
                         <div id="heightAnimationChanger" class="changeableAttributesWrapper" style="display: none">
                             <label for="height">Height</label>
-                            <input type="range" min="8" max="16" value="8" name="height" step="1" id="attributeSlider"
-                                onChange='DrawSectionHandler.changeSpriteHeight(event)''>
+                            <input type="range" style="width: 50px" min="8" max="16" value="8" name="height" step="1" id="spriteHeightSlider"
+                                onChange='DrawSectionHandler.changeSpriteHeight(event)' class="attributeSlider">
                             <span class="sliderValue" id="heightsliderValue">8</span>
                         </div>
                         <div id="widthAnimationChanger" class="changeableAttributesWrapper marginTop8" style="display: none">
                             <label for="width">Width</label>
-                            <input type="range" min="8" max="16" value="8" name="width" step="1" id="attributeSlider">
+                            <input type="range" style="width: 50px" min="8" max="16" value="8" name="width" step="1" id="spriteWidthSlider" class="attributeSlider">
                             <span class="sliderValue" id="widthsliderValue">8</span>
                         </div>
                     </div>

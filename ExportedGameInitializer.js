@@ -28,7 +28,7 @@ class ExportedGameInitializer {
                 SpritePixelArrays[key] = value;
             }
         }
-        player.setAnimationProperties();
         SpritePixelArrays.fillAllSprites();
+        player.setAnimationProperties();
     }
 }

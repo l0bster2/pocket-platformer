@@ -89,12 +89,13 @@ class DrawSectionHandler {
         sprites.className = "marginTop8";
         spriteContent.appendChild(description);
         SpritePixelArrays.allSprites.forEach(sprite => {
-            if (this.currentSprite.sprite.commonType === sprite.commonType) {
+            if (this.currentSprite.sprite.commonType === sprite.commonType && sprite.descriptiveName != "Player wall jump") {
                 sprite.animation.forEach(animationFrame => {
                     var canvas = document.createElement('canvas');
                     Helpers.addAttributesToHTMLElement(canvas, {
-                        "width": this.tileMapHandler.tileSize,
-                        "height": this.tileMapHandler.tileSize, "id": 1, "class": "canvasInSpriteSelector"
+                        "width": this.currentSpriteWidth * this.tileMapHandler.pixelArrayUnitSize,
+                        "height": this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize, 
+                        "id": 1, "class": "canvasInSpriteSelector"
                     });
                     canvas.onclick = (e) => {
                         const clonedSprite = JSON.parse(JSON.stringify(animationFrame.sprite));
@@ -136,13 +137,18 @@ class DrawSectionHandler {
         this.currentSelectedTool = tools.eyeDropper;
     }
 
-    static getObjectByCommonType(type) {
-
+    static changeAnimationFramesSize() {
+        const animationCanvases = document.getElementsByClassName("animationFrameCanvas");
+        for (var i = 0; i < animationCanvases.length; i++) {
+            animationCanvases[i].height = this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize;
+            animationCanvases[i].width = this.currentSpriteWidth * this.tileMapHandler.pixelArrayUnitSize;
+        }
     }
 
     static changeDrawCanvasSize() {
         this.redrawSpriteCanvas.height = this.currentSprite.sprite.animation[0].sprite.length * tileMapHandler.tileSize;
         this.canvasHeight = this.redrawSpriteCanvas.height;
+        this.changeAnimationFramesSize();
         this.drawCurrentSprite();
         this.redrawOutsideCanvases();
     }
@@ -175,9 +181,9 @@ class DrawSectionHandler {
                 }
             })
         });
-        this.changeDrawCanvasSize();
         this.changeCurrentSelectedSpriteDimensions();
         player.setAnimationProperties();
+        this.changeDrawCanvasSize();
     }
 
     static checkHeightWidthSlidersVisibility(sprite) {
@@ -185,7 +191,11 @@ class DrawSectionHandler {
         const widthChanger = document.getElementById("widthAnimationChanger");
         if (sprite.name.toString().toLowerCase().includes("player")) {
             heightChanger.style.display = "flex";
+            document.getElementById("spriteHeightSlider").value = this.currentSpriteHeight;
+            document.getElementById("heightsliderValue").innerHTML = this.currentSpriteHeight;
             widthChanger.style.display = "flex";
+            document.getElementById("spriteWidthSlider").value = this.currentSpriteWidth;
+            document.getElementById("widthsliderValue").innerHTML = this.currentSpriteWidth;
         }
         else {
             heightChanger.style.display = "none";
@@ -201,14 +211,13 @@ class DrawSectionHandler {
     static changeSelectedSprite(event, changeSelectOption = false) {
         const spriteName = event.target.value;
         const sprite = SpritePixelArrays.getSpritesByDescrpitiveName(spriteName)[0];
-        this.checkHeightWidthSlidersVisibility(sprite);
         this.currentSprite.spriteIndexInArray = SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName")
         this.currentSprite.sprite = sprite;
         this.currentSprite.animationFrame = 0;
         this.changeCurrentSelectedSpriteDimensions();
         this.changeAnimationFrame(0);
         this.animationCanvases = [];
-
+        this.checkHeightWidthSlidersVisibility(sprite);
         this.displaySpriteDescription(sprite);
         this.createAnimationWrapper(sprite);
 
@@ -221,7 +230,6 @@ class DrawSectionHandler {
             }
         }
         this.changeDrawCanvasSize();
-
     }
 
     static displaySpriteDescription(sprite) {
@@ -296,7 +304,7 @@ class DrawSectionHandler {
         button.onclick = () => {
             const plusButton = document.getElementById("additionalFrameButton");
             this.spriteAnimationEl.removeChild(plusButton);
-            sprite.animation.push(SpritePixelArrays.EMPTY_ANIMATION_FRAME);
+            sprite.animation.push(JSON.parse(JSON.stringify(SpritePixelArrays.createDynamicEmptySprite(this.currentSpriteWidth, this.currentSpriteHeight))));
             this.newFrameAddedOrDeleted(sprite, 1);
         };
         button.appendChild(plusImg);
@@ -326,6 +334,8 @@ class DrawSectionHandler {
             };
             canvasFrameWrapper.appendChild(deleteImg);
         }
+        canvas.height = this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize;
+        canvas.width = this.currentSpriteWidth * this.tileMapHandler.pixelArrayUnitSize;
         canvasFrameWrapper.appendChild(canvas);
         this.spriteAnimationEl.appendChild(canvasFrameWrapper);
         const ctx = canvas.getContext('2d');
@@ -365,9 +375,7 @@ class DrawSectionHandler {
         Display.drawPixelArray(currentSprite.sprite, 0, 0, this.pixelSize, currentSprite.sprite[0].length, currentSprite.sprite.length,
             this.redrawSpriteCanvasCtx)
         const { tileSize } = this.tileMapHandler;
-        const gridWidth = this.currentSprite.sprite.animation[0].sprite[0].length;
-        const gridHeight = this.currentSprite.sprite.animation[0].sprite.length;
-        Display.drawGrid(gridWidth, gridHeight, tileSize, '383838', 1, this.redrawSpriteCanvasCtx);
+        Display.drawGrid(this.currentSpriteWidth, this.currentSpriteHeight, tileSize, '383838', 1, this.redrawSpriteCanvasCtx);
     }
 
     static findIndexOfOption(text) {
@@ -421,7 +429,7 @@ class DrawSectionHandler {
         const color = Controller.mousePressed ? this.currentColor : "transp";
         const colorChanged = sprite.animation[animationFrame].sprite[posInArray.y][posInArray.x] != color;
         sprite.animation[animationFrame].sprite[posInArray.y][posInArray.x] = color;
-        if(colorChanged) {
+        if (colorChanged) {
             Helpers.debounce(() => {
                 this.redrawOutsideCanvases();
             }, 300);

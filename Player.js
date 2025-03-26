@@ -238,6 +238,7 @@ class Player {
         this.currentSpriteIndex = this.spriteIndexIdle;
         this.currentAnimationIndex = 0;
         this.originalHeight = idleSprite.animation[0].sprite.length * WorldDataHandler.pixelArrayUnitSize;
+        this.height = this.originalHeight - this.heightOffset;
     }
 
     resetAnimationAttributes() {
@@ -284,14 +285,14 @@ class Player {
             case this.deathTypes.explode:
                 this.radians += 0.15;
                 Display.explodeSprite(this.spriteCanvas, animationIndex * this.tileSize, this.currentAnimationCanvasYPos,
-                    this.tileSize, this.x, this.y, offSet, this.radians);
+                    this.originalHeight, this.x, this.y, offSet, this.radians);
                 break;
             case this.deathTypes.upwardsAndRotate:
                 this.y -= 2;
                 this.radians += 0.25;
                 Display.drawImageWithRotation(this.spriteCanvas, animationIndex * this.tileSize,
                     this.currentAnimationCanvasYPos, this.tileSize,
-                    this.tileSize - 1, this.x, this.y - 2,
+                    this.originalHeight - 1, this.x, this.y - 2,
                     this.drawWidth, this.drawHeight, this.radians);
                 break;
             default:
