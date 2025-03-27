@@ -2562,6 +2562,7 @@ class SpritePixelArrays {
     for(var i = 0; i < width; i++) {
       widthArray.push("transp");
     }
+    
     let heightArray = [];
     for(var i = 0; i < height; i++) {
       heightArray.push(widthArray);

@@ -171,7 +171,8 @@ class DrawSectionHandler {
             sprite.animation.forEach(animationSprite => {
                 if (newSpriteBigger) {
                     for (var i = 0; i < difference; i++) {
-                        animationSprite.sprite.unshift(["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"])
+                        const widthArray = Array(this.currentSpriteWidth).fill("transp")
+                        animationSprite.sprite.unshift(widthArray)
                     }
                 }
                 else {
@@ -180,6 +181,7 @@ class DrawSectionHandler {
                     }
                 }
             })
+            spriteSheetCreator.redrawSprite(sprite, SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName"))
         });
         this.changeCurrentSelectedSpriteDimensions();
         player.setAnimationProperties();
