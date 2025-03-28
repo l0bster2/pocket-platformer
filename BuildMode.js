@@ -41,6 +41,8 @@ class BuildMode {
             ObjectTypes.ROTATING_FIREBALL_CENTER,
             ObjectTypes.MOVING_PLATFORM,
         ];
+        this.currentPreviewOffset = 0;
+        this.currentPreviewOffsetChanger = -0.025;
         this.objectsWithoutSFXAfterPlacing = [ObjectTypes.DISAPPEARING_BLOCK, ObjectTypes.BLUE_BLOCK, ObjectTypes.RED_BLOCK];
     }
 
@@ -65,6 +67,16 @@ class BuildMode {
             else {
                 this.currentObjectDirection = directions[currentIndex + 1];
             }
+        }
+    }
+
+    static updatePermissionsSquareOffset() {
+        this.currentPreviewOffset += this.currentPreviewOffsetChanger;
+        if(this.currentPreviewOffset < -0.5) {
+            this.currentPreviewOffsetChanger = this.currentPreviewOffsetChanger * -1;
+        }
+        else if(this.currentPreviewOffset > 0) {
+            this.currentPreviewOffsetChanger = this.currentPreviewOffsetChanger * -1;
         }
     }
 
@@ -559,7 +571,8 @@ class BuildMode {
         this.rectangleDrawingEndingPoint = { x: endPosX, y: endPosY };
         const yValues = MathHelpers.sortNumbers([y, endPosY]);
         const xValues = MathHelpers.sortNumbers([x, endPosX]);
-        this.drawPermissionSquare(xValues[0], yValues[0], xValues[1] + 1, yValues[1] + 1, color);
+        this.drawPermissionSquare(xValues[0], yValues[0], 
+            xValues[1] + 1, yValues[1] + 1, color);
     }
 
     static drawObjectPreviewOnScreen(actualXPos, actualYPos) {
@@ -574,20 +587,25 @@ class BuildMode {
 
         Display.drawImageWithAlpha(tileMapHandler.spriteCanvas,
             xPosInSpriteCanvas, this.currentSelectedObject.canvasYSpritePos,
-            tileSize, tileSize, actualXPos, actualYPos, tileSize, tileSize, 0.6);
+            tileSize, tileSize, 
+            actualXPos, actualYPos, 
+            tileSize, tileSize, 0.6);
     }
 
     static drawPermissionSquare(x, y, endPosX, endPosY, color, centerOffset = 0) {
+        this.updatePermissionsSquareOffset();
         const { tileSize } = tileMapHandler;
-        const actualXPos = x * tileSize;
-        const actualYPos = y * tileSize;
+        const previewX = x * tileSize;
+        const previewY = y * tileSize;
 
         if (color === '90ee90') {
-            this.drawObjectPreviewOnScreen(actualXPos + centerOffset, actualYPos);
+            this.drawObjectPreviewOnScreen(previewX + centerOffset, previewY);
         }
+        const actualXPos = previewX + this.currentPreviewOffset;
+        const actualYPos = previewY + this.currentPreviewOffset;
 
-        const actualXEndPos = endPosX * tileSize - 1;
-        const actualYEndPos = endPosY * tileSize - 1;
+        const actualXEndPos = endPosX * tileSize - 1 - this.currentPreviewOffset;
+        const actualYEndPos = endPosY * tileSize - 1 - this.currentPreviewOffset;
         Display.drawLine(actualXPos, actualYPos, actualXEndPos, actualYPos, color, 3);
         Display.drawLine(actualXPos, actualYEndPos, actualXEndPos, actualYEndPos, color, 3);
         Display.drawLine(actualXPos, actualYPos, actualXPos, actualYEndPos, color, 3);

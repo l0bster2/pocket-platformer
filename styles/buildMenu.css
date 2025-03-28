@@ -163,8 +163,39 @@ input:checked+.switchSlider:before {
     padding-bottom: 8px;
 }
 
-#playerAnimationWrapper > * {
+#playerAnimationWrapper>* {
     margin-top: 8px;
+}
+
+.playbutton {
+    /* Variables */
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    background: #bab8b8;
+}
+
+.playbutton_top {
+    display: block;
+    box-sizing: border-box;
+    border: 2px solid #DCDCDC;
+    border-radius: 6px;
+    padding: 0.75em 1.5em;
+    background: #DCDCDC;
+    color:  #000000;
+    transform: translateY(-0.2em);
+    transition: transform 0.1s ease;
+}
+
+.playbutton:hover .playbutton_top {
+    /* Pull the button upwards when hovered */
+    transform: translateY(-0.33em);
+}
+
+.playbutton:active .playbutton_top {
+    /* Push the button downwards when pressed */
+    transform: translateY(0);
 }
 
 .radioButtonAsSvg>input[type="radio"] {
@@ -259,7 +290,8 @@ input:checked+.switchSlider:before {
     padding: 4px 0 4px 20px;
 }
 
-.sfxTemplateSection, .sfxAttributeSection {
+.sfxTemplateSection,
+.sfxAttributeSection {
     padding: 2px;
     background: #fdfde9;
 }
@@ -295,7 +327,7 @@ input:checked+.switchSlider:before {
 }
 
 .soundControlsDescription {
-    flex: 1; 
+    flex: 1;
     padding: 12px;
 }
 
@@ -341,11 +373,14 @@ input:checked+.switchSlider:before {
     transition: .4s;
 }
 
-.tabButton, .colorTabButton {
+.tabButton,
+.colorTabButton {
     flex: 1;
+    border-radius: 0;
 }
 
-.tabButton.active, .colorTabButton.active {
+.tabButton.active,
+.colorTabButton.active {
     border-bottom: none;
     background: white;
 }
@@ -390,7 +425,7 @@ input:checked+.switchSlider:before {
     padding: 8px 0;
     border: none;
 
-    > img {
+    >img {
         padding-left: 8px;
     }
 }
@@ -444,7 +479,7 @@ input:checked+.switchSlider:before {
 }
 
 .rotate90Degrees {
-    transform: rotate(90deg); 
+    transform: rotate(90deg);
     vertical-align: middle;
 }
 
@@ -522,7 +557,7 @@ details summary::-webkit-details-marker {
     border-bottom: 1px solid lightgrey;
 }
 
-.dropdown-nav-item > * {
+.dropdown-nav-item>* {
     position: relative;
     display: block;
     padding: 12px 8px;
@@ -539,7 +574,7 @@ details summary::-webkit-details-marker {
     cursor: pointer;
 }
 
-.dropdown-nav-item > img {
+.dropdown-nav-item>img {
     float: right;
     padding-right: 4px;
 }

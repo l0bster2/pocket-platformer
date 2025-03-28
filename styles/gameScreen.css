@@ -175,6 +175,7 @@ details summary:hover {
 
 .levelNavigationButton {
     border: 1px solid lightgrey;
+    border-radius: 6px;
     padding: 10px;
     position: relative;
     background: #DCDCDC;

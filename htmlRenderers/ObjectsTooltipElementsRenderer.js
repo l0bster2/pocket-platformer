@@ -438,7 +438,7 @@ class ObjectsTooltipElementsRenderer {
     }
 
     static renderPlayButton(firstTime) {
-        document.getElementById("changeGameMode").innerHTML = `<div> 
+        document.getElementById("changeGameMode").innerHTML = `<div class="playbutton_top"> 
             <img src="images/icons/right.svg" class="iconInButtonWithText" alt="play" width="14" height="14">
             <span id="playPauseText"style="display: inline-block;">Play</span>
         </div>`;
@@ -446,7 +446,7 @@ class ObjectsTooltipElementsRenderer {
     }
 
     static renderPauseButton(firstTime) {
-        document.getElementById("changeGameMode").innerHTML = `<div> 
+        document.getElementById("changeGameMode").innerHTML = `<div class="playbutton_top"> 
             <img src="images/icons/pause.svg" class="iconInButtonWithText" alt="pause" width="14" height="14">
             <span id="playPauseText" style="display: inline-block;">Stop</span>
         </div>`;

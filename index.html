@@ -133,7 +133,7 @@
                         </div>
                     </div>
                     <button id="changeGameMode"
-                        class="levelNavigationButton fullWidth buttonWithIconAndText marginTop16"
+                        class="fullWidth marginTop16 playbutton"
                         onclick="Game.changeGameMode()">
                         <div>
                             <img src="images/icons/right.svg" class="iconInButtonWithText" alt="play" width="14"
@@ -233,8 +233,8 @@
                         </div>
                         <canvas id="redrawSpriteCanvas" class="pencilCursor" width="192" height="192"></canvas>
                     </div>
-                    <div class="subSection marginTop8">
-                        <div id="heightAnimationChanger" class="changeableAttributesWrapper" style="display: none">
+                    <div>
+                        <div id="heightAnimationChanger" class="changeableAttributesWrapper subSection marginTop8" style="display: none">
                             <label for="height">Height</label>
                             <input type="range" style="width: 50px" min="8" max="16" value="8" name="height" step="1" id="spriteHeightSlider"
                                 onChange='DrawSectionHandler.changeSpriteHeight(event)' class="attributeSlider">
