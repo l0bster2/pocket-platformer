@@ -24,12 +24,12 @@ class TileMapHandler {
         });
     }
 
-    resetLevel(levelIndex) {
+    resetLevel(levelIndex, flagIndex) {
         SFXHandler.resetSfx();
         this.tileMap = WorldDataHandler.levels[levelIndex].tileData;
         Camera.updateViewportRelatedToScale(WorldDataHandler.levels[levelIndex].zoomFactor || 1)
         this.updateLevelDimensions();
-        this.setInitialPlayerAndCameraPos(levelIndex);
+        this.#setInitialPlayerAndCameraPos(levelIndex, flagIndex);
         this.levelObjects = [];
         this.levelObjects = this.createInitialObjects(WorldDataHandler.levels[levelIndex].levelObjects);
         this.deko = this.createInitialDeko(WorldDataHandler.levels[levelIndex].deko);
@@ -53,24 +53,44 @@ class TileMapHandler {
         }
     }
 
-    setInitialPlayerAndCameraPos(levelIndex) {
-        //This is a fallback, in case no flag was set in a level (start, ending, or if user forgot to set it)
-        let initialPlayerValue = { x: 0, y: 0 };
-        WorldDataHandler.levels[levelIndex].levelObjects.forEach(levelObject => {
-            if (levelObject.type === ObjectTypes.START_FLAG) {
-                initialPlayerValue.x = levelObject.x * this.tileSize;
-                initialPlayerValue.y = levelObject.y * this.tileSize;
-            }
-        })
-        this.player.initialY = initialPlayerValue.x;
-        this.player.initialX = initialPlayerValue.y;
-        Camera.moveTo(initialPlayerValue.x, initialPlayerValue.y);
+    #setInitialPlayerAndCameraPos(levelIndex, flagIndex) {
+        const initialPlayerTile = this.#getInitialPlayerTile(levelIndex, flagIndex);
+        this.#setPlayerInitialTile(initialPlayerTile);
+
+        const initialPlayerPosition = {
+            x: initialPlayerTile.x * this.tileSize,
+            y: initialPlayerTile.y * this.tileSize
+        };
+
+        Camera.moveTo(initialPlayerPosition.x, initialPlayerPosition.y);
 
         //startRemoval 
         if (typeof LevelSizeHandler === 'function') {
-            LevelSizeHandler.updateCameraSliders(this.levelWidth * this.tileSize, this.levelHeight * this.tileSize, initialPlayerValue);
+            LevelSizeHandler.updateCameraSliders(this.levelWidth * this.tileSize, this.levelHeight * this.tileSize, initialPlayerPosition);
         }
         //endRemoval
+    }
+
+    #getInitialPlayerTile(levelIndex, flagIndex) {
+        const startFlagsInLevel = WorldDataHandler.levels[levelIndex].levelObjects.filter(levelObject => levelObject.type === ObjectTypes.START_FLAG);
+
+        const customEntryFlag = flagIndex && startFlagsInLevel.find(startFlag => startFlag?.extraAttributes?.flagIndex === flagIndex);
+
+        const levelStartFlag = (!customEntryFlag) && startFlagsInLevel.find(startFlag => startFlag?.extraAttributes?.levelStartFlag);
+
+        const lastFlag = (!levelStartFlag && !customEntryFlag) && startFlagsInLevel[startFlagsInLevel.length - 1];
+
+        return customEntryFlag ||
+            levelStartFlag ||
+            lastFlag ||
+            { x: 0, y: 0 };
+    }
+
+    #setPlayerInitialTile(tile) {
+        if (this?.player) {
+            this.player.initialX = tile.x * this.tileSize;
+            this.player.initialY = tile.y * this.tileSize;
+        }
     }
 
     updateLevelDimensions() {
@@ -235,7 +255,7 @@ class TileMapHandler {
             if (this.currentLevel === levelAmounth - 1) {
                 GameStatistics.stopTimer();
             }
-            this.resetLevel(this.currentLevel);
+            this.resetLevel(this.currentLevel, PlayMode.customExit?.flagIndex);
             if (typeof LevelNavigationHandler === 'function') {
                 LevelNavigationHandler.updateLevel();
                 LevelNavigationHandler.adaptLevelList();
