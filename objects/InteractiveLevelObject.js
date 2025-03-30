@@ -24,7 +24,7 @@ class InteractiveLevelObject extends LevelObject {
                 }
                 if (key === "customName") {
                     this.spriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(value);
-                    this.canvasYSpritePos = SpritePixelArrays.getIndexOfSprite(value, 0, "descriptiveName") * tileSize;
+                    this.canvasYSpritePos = this.spriteObject?.[0].canvasYPos;
                 }
             }
 

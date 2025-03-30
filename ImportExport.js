@@ -61,6 +61,7 @@ function resetUIValuesInTool() {
   TransitionAnimationHandler.setDurationElementValue(TransitionAnimationHandler.animationFrames);
   TransitionAnimationHandler.setTypeElementValue(TransitionAnimationHandler.animationType);
   SpritePixelArrays.fillAllSprites();
+  SpritePixelArrays.indexAllSprites();
   tileMapHandler.setTileTypes();
   spriteSheetCreator.setCanvasSize();
   spriteSheetCreator.createSpriteSheet();

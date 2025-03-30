@@ -1513,8 +1513,8 @@ class SpritePixelArrays {
         { name: this.changeableAttributeTypes.size, defaultValue: 3, minValue: 1, maxValue: 15, step: 2 },
         { name: this.changeableAttributeTypes.speed, defaultValue: 3, minValue: 1, maxValue: 7, mapper: this.pathMovementMapper },
         {
-          name: "activationOnce", 
-          formElement: this.changeableAttributeFormElements.toggle, 
+          name: "activationOnce",
+          formElement: this.changeableAttributeFormElements.toggle,
           defaultValue: "moving endlessly when touched",
           options: [{ "true": "moving endlessly when touched" }, { "false": "moving when player on it" }]
         },
@@ -2523,7 +2523,21 @@ class SpritePixelArrays {
       ).map(object => object[1])
     };
 
+    this.indexAllSprites = () => {
+      this.allSprites = this.allSprites.map(object => {
+        const index = this.getIndexOfSprite(object.descriptiveName, 0, "descriptiveName");
+        const canvasYPos = this.getCanvasSpriteYPosition(index);
+
+        const objectCopy = {
+          ...object,
+          canvasYPos,
+        }
+        return objectCopy;
+      })
+    };
+
     this.fillAllSprites();
+    this.indexAllSprites();
   }
 
   static allTileSprites() {
@@ -2559,12 +2573,12 @@ class SpritePixelArrays {
 
   static createDynamicEmptySprite(width, height) {
     let widthArray = [];
-    for(var i = 0; i < width; i++) {
+    for (var i = 0; i < width; i++) {
       widthArray.push("transp");
     }
-    
+
     let heightArray = [];
-    for(var i = 0; i < height; i++) {
+    for (var i = 0; i < height; i++) {
       heightArray.push(widthArray);
     }
     return {
@@ -2592,24 +2606,19 @@ class SpritePixelArrays {
     return this.allSprites.filter(sprite => sprite.descriptiveName === descriptiveName);
   }
 
-  static getCanvasSpriteYPosition(SpriteObject, spriteObjectIndex) {
+  static getCanvasSpriteYPosition(spriteObjectIndex) {
     const { pixelArrayUnitSize, tileSize } = WorldDataHandler;
-    if(SpriteObject.commonType) {
-        let currentYPos = 0;
-        for(var i = 0; i < spriteObjectIndex; i++) {
-            if(!this.allSprites[i].commonType){
-                currentYPos += tileSize;
-            }
-            else {
-                currentYPos += SpritePixelArrays.allSprites[i].animation[0].sprite.length * pixelArrayUnitSize;
-            }
-        }
-        return currentYPos;
+    let currentYPos = 0;
+    for (var i = 0; i < spriteObjectIndex; i++) {
+      if (!this.allSprites[i].commonType && !this.allSprites[i].custom) {
+        currentYPos += tileSize;
+      }
+      else {
+        currentYPos += SpritePixelArrays.allSprites[i].animation[0].sprite.length * pixelArrayUnitSize;
+      }
     }
-    else {
-        return spriteObjectIndex * tileSize;
-    }
-}
+    return currentYPos;
+  }
 
   static getIndexOfSprite(searchValue, index = 0, searchKey = "name") {
     let indexInSpriteArray = 0;

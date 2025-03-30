@@ -94,7 +94,7 @@ class DrawSectionHandler {
                     var canvas = document.createElement('canvas');
                     Helpers.addAttributesToHTMLElement(canvas, {
                         "width": this.currentSpriteWidth * this.tileMapHandler.pixelArrayUnitSize,
-                        "height": this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize, 
+                        "height": this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize,
                         "id": 1, "class": "canvasInSpriteSelector"
                     });
                     canvas.onclick = (e) => {
@@ -145,17 +145,23 @@ class DrawSectionHandler {
         }
     }
 
-    static changeDrawCanvasSize() {
+    static changeDrawCanvasSize(manuallyChangedSpriteSize = false) {
         this.redrawSpriteCanvas.height = this.currentSprite.sprite.animation[0].sprite.length * tileMapHandler.tileSize;
         this.canvasHeight = this.redrawSpriteCanvas.height;
         this.changeAnimationFramesSize();
         this.drawCurrentSprite();
         this.redrawOutsideCanvases();
+        if (manuallyChangedSpriteSize) {
+            TabNavigation.drawSpritesByType();
+            if (TabNavigation.currentSelectedTab === SpritePixelArrays.customType) {
+                TabNavigation.redrawAfterAddedOrDeletedSprite();
+            }
+            this.tileMapHandler.updateYCanvasAttributeForSetObjects();
+        }
     }
 
     static changeSpriteHeight(event) {
         const currentSpriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(this.currentSprite.sprite.descriptiveName)?.[0];
-        const objectSprites = SpritePixelArrays.allSprites.filter(sprite => sprite.commonType === currentSpriteObject.commonType);
         let objectToChange = currentSpriteObject.commonType === "player" ? player : this.getObjectByCommonType(currentSpriteObject.type);
         const oldHeight = objectToChange.height;
         const oldValue = this.currentSprite.sprite.animation[0].sprite.length;
@@ -167,7 +173,7 @@ class DrawSectionHandler {
 
         const newSpriteBigger = newValue > oldValue;
         const difference = Math.abs(newValue - oldValue);
-        objectSprites.forEach(sprite => {
+        SpritePixelArrays.allSprites.filter(sprite => sprite.commonType === currentSpriteObject.commonType).forEach(sprite => {
             sprite.animation.forEach(animationSprite => {
                 if (newSpriteBigger) {
                     for (var i = 0; i < difference; i++) {
@@ -184,8 +190,10 @@ class DrawSectionHandler {
             spriteSheetCreator.redrawSprite(sprite, SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName"))
         });
         this.changeCurrentSelectedSpriteDimensions();
+        SpritePixelArrays.indexAllSprites();
         player.setAnimationProperties();
-        this.changeDrawCanvasSize();
+        this.changeDrawCanvasSize(true);
+        this.changeDrawCanvasSize(true);
     }
 
     static checkHeightWidthSlidersVisibility(sprite) {

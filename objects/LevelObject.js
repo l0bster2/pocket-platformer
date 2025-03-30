@@ -21,7 +21,7 @@ class LevelObject {
     setSpriteAttributes(type) {
         this.spriteIndex = SpritePixelArrays.getIndexOfSprite(type);
         this.spriteObject = SpritePixelArrays.getSpritesByName(type);
-        this.canvasYSpritePos = this.spriteIndex * this.tileSize;
+        this.canvasYSpritePos = this.spriteObject[0].canvasYPos;
         this.canvasXSpritePos = 0;
     }
 

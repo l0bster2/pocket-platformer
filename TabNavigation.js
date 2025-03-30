@@ -115,10 +115,7 @@ class TabNavigation {
       this.selectableSpritesCtx.fillStyle = "#" + WorldColorChanger.getCurrentColor(tileMapHandler.currentLevel);
       this.selectableSpritesCtx.fillRect(x, y, tileSize + this.padding * 2, tileSize + this.padding * 2);
 
-      const spriteIndex = SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName");
-      const canvasYSpritePos = spriteIndex * tileSize;
-
-      this.drawSelectableSprite(this.spriteCanvas, 0, canvasYSpritePos,
+      this.drawSelectableSprite(this.spriteCanvas, 0, sprite.canvasYPos,
         tileSize, tileSize, x + this.padding, y + this.padding, tileSize, tileSize);
     }
   }
@@ -179,10 +176,8 @@ class TabNavigation {
         const allDekoSprites = SpritePixelArrays.getSpritesByType(SpritePixelArrays.SPRITE_TYPES.deko);
         indexInSpriteArray = allDekoSprites.findIndex((deko) => deko.descriptiveName === selectedSprite.descriptiveName);
       }
-      const canvasYSpritePos = SpritePixelArrays.getIndexOfSprite(selectedSprite.descriptiveName, 0, "descriptiveName") * WorldDataHandler.tileSize;
-
       BuildMode.setCurrentSelectedObject({ name: selectedSprite.name, index: indexInSpriteArray, type: selectedSprite.type, extraAttributes,
-        canvasYSpritePos, sprite: selectedSprite, 
+        canvasYSpritePos: selectedSprite.canvasYPos, sprite: selectedSprite, 
         size: SpritePixelArrays.movingPlatformSprites.includes(selectedSprite.name) ? 3 : 1 });
       DrawSectionHandler.changeSelectedSprite({ target: { value: selectedSprite.descriptiveName } }, true);
       this.markSelectedSprite(index, yPos)

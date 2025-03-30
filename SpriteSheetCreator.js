@@ -35,7 +35,7 @@ class SpriteSheetCreator {
     }
 
     createSprite(SpriteObject, spriteObjectIndex) {
-        const canvasYPosition = SpritePixelArrays.getCanvasSpriteYPosition(SpriteObject, spriteObjectIndex);
+        const canvasYPosition = SpriteObject.canvasYPos;
         if (SpriteObject?.directions) {
             const { right, left, top, bottom } = AnimationHelper.facingDirections;
             if (SpriteObject.directions[0] === bottom || SpriteObject.directions[0] === top) {

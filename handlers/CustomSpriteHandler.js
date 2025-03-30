@@ -194,6 +194,7 @@ class CustomSpriteHandler {
         this.removeSpritesFromWorldData(spriteToRemove);
         TabNavigation.removeOldDeleteIcons();
         TabNavigation.selectableSprites.splice(index, 1);
+        SpritePixelArrays.indexAllSprites();
         this.spriteAddedOrDeleted();
         if (DrawSectionHandler?.currentSprite?.sprite.descriptiveName === spriteToRemove.descriptiveName) {
             DrawSectionHandler.changeSelectedSprite({ target: { value: SpritePixelArrays.TILE_1.descriptiveName } });
@@ -217,6 +218,7 @@ class CustomSpriteHandler {
         }
 
         SpritePixelArrays.allSprites.push(clonedSprite);
+        SpritePixelArrays.indexAllSprites();
         this.spriteAddedOrDeleted();
         const customSpritesAmount = TabNavigation.selectableSprites.length;
         const spriteIndex = customSpritesAmount - TabPagination.getPageOffset() - 1;

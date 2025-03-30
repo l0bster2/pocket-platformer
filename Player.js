@@ -224,11 +224,11 @@ class Player {
         this.facingDirection = AnimationHelper.facingDirections.right;
         this.spriteIndexIdle = SpritePixelArrays.getIndexOfSprite(ObjectTypes.PLAYER_IDLE);
         const idleSprite = SpritePixelArrays.getSpritesByIndex(this.spriteIndexIdle);
-        this.spriteIndexIdleCanvasYPos = SpritePixelArrays.getCanvasSpriteYPosition(idleSprite, this.spriteIndexIdle);
+        this.spriteIndexIdleCanvasYPos = idleSprite.canvasYPos;
         this.spriteIndexJump = SpritePixelArrays.getIndexOfSprite(ObjectTypes.PLAYER_JUMP);
-        this.spriteIndexJumpCanvasYPos = SpritePixelArrays.getCanvasSpriteYPosition(SpritePixelArrays.getSpritesByIndex(this.spriteIndexJump), this.spriteIndexJump);
+        this.spriteIndexJumpCanvasYPos = SpritePixelArrays.getSpritesByIndex(this.spriteIndexJump).canvasYPos;
         this.spriteIndexWalk = SpritePixelArrays.getIndexOfSprite(ObjectTypes.PLAYER_WALK);
-        this.spriteIndexWalkCanvasYPos = SpritePixelArrays.getCanvasSpriteYPosition(SpritePixelArrays.getSpritesByIndex(this.spriteIndexWalk), this.spriteIndexWalk);
+        this.spriteIndexWalkCanvasYPos = SpritePixelArrays.getSpritesByIndex(this.spriteIndexWalk).canvasYPos;
         this.animationLengths = {
             [this.spriteIndexIdle]: SpritePixelArrays.PLAYER_IDLE_SPRITE.animation.length,
             [this.spriteIndexJump]: SpritePixelArrays.PLAYER_JUMP_SPRITE.animation.length,

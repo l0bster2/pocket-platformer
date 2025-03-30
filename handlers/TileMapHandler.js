@@ -20,8 +20,19 @@ class TileMapHandler {
     setTileTypes() {
         this.TILE_TYPES = {};
         SpritePixelArrays.allTileSprites().forEach(sprite => {
-            this.TILE_TYPES[sprite.name] = SpritePixelArrays.getIndexOfSprite(sprite.name);
+            const canvasYPos = SpritePixelArrays.getCanvasSpriteYPosition(SpritePixelArrays.getIndexOfSprite(sprite.name));
+            this.TILE_TYPES[sprite.name] = canvasYPos;
         });
+    }
+
+    updateYCanvasAttributeForSetObjects() {
+        this.levelObjects.forEach(levelObject => {
+            if(levelObject.extraAttributes.customName) {
+                const spriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(levelObject.extraAttributes.customName);
+                levelObject.canvasYSpritePos = spriteObject?.[0].canvasYPos;
+            }
+        })
+        this.setTileTypes();
     }
 
     resetLevel(levelIndex) {
@@ -145,7 +156,7 @@ class TileMapHandler {
                 }
 
                 if (tileType !== 0) {
-                    Display.drawImage(this.spriteCanvas, 0, this.TILE_TYPES[tileType] * this.tileSize,
+                    Display.drawImage(this.spriteCanvas, 0, this.TILE_TYPES[tileType],
                         this.tileSize, this.tileSize, tilePosX * this.tileSize, tilePosY * this.tileSize, this.tileSize, this.tileSize, Display.tileCtx);
                 }
             }
