@@ -88,7 +88,7 @@ class SpriteSheetCreator {
     drawAnimation(animation, canvasYPosition, loop = 0) {
         const { tileSize, pixelArrayUnitSize } = this.tileMapHandler;
         animation.forEach((SpritePixelArray, spriteIndex) => {
-            Display.drawPixelArray(SpritePixelArray.sprite, (spriteIndex + (animation.length * loop)) * tileSize,
+            Display.drawPixelArray(SpritePixelArray.sprite, (spriteIndex + (animation.length * loop)) * (SpritePixelArray.sprite[0].length * pixelArrayUnitSize),
                 canvasYPosition, pixelArrayUnitSize,
                 SpritePixelArray.sprite[0].length, SpritePixelArray.sprite.length, this.spriteCtx);
         });

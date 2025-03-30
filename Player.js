@@ -238,7 +238,9 @@ class Player {
         this.currentSpriteIndex = this.spriteIndexIdle;
         this.currentAnimationIndex = 0;
         this.originalHeight = idleSprite.animation[0].sprite.length * WorldDataHandler.pixelArrayUnitSize;
+        this.originalWidth = idleSprite.animation[0].sprite[0].length * WorldDataHandler.pixelArrayUnitSize;
         this.height = this.originalHeight - this.heightOffset;
+        this.width = this.originalWidth - this.widthOffset;
     }
 
     resetAnimationAttributes() {
@@ -284,14 +286,14 @@ class Player {
         switch (this.deathType) {
             case this.deathTypes.explode:
                 this.radians += 0.15;
-                Display.explodeSprite(this.spriteCanvas, animationIndex * this.tileSize, this.currentAnimationCanvasYPos,
+                Display.explodeSprite(this.spriteCanvas, animationIndex * this.originalWidth, this.currentAnimationCanvasYPos,
                     this.originalHeight, this.x, this.y, offSet, this.radians);
                 break;
             case this.deathTypes.upwardsAndRotate:
                 this.y -= 2;
                 this.radians += 0.25;
-                Display.drawImageWithRotation(this.spriteCanvas, animationIndex * this.tileSize,
-                    this.currentAnimationCanvasYPos, this.tileSize,
+                Display.drawImageWithRotation(this.spriteCanvas, animationIndex * this.originalWidth,
+                    this.currentAnimationCanvasYPos, this.originalWidth,
                     this.originalHeight - 1, this.x, this.y - 2,
                     this.drawWidth, this.drawHeight, this.radians);
                 break;
@@ -356,14 +358,14 @@ class Player {
 
         if (this.fixedSpeed) {
             this.radians += 0.25;
-            Display.drawImageWithRotation(this.spriteCanvas, animationIndex * this.tileSize,
-                this.currentAnimationCanvasYPos, this.tileSize,
+            Display.drawImageWithRotation(this.spriteCanvas, animationIndex * this.originalWidth,
+                this.currentAnimationCanvasYPos, this.originalWidth,
                 this.originalHeight - 1, this.x - this.squishXOffset, this.y - 2 - this.squishYOffset,
                 this.drawWidth, this.drawHeight, this.radians);
         }
         else {
-            !this.invisible && Display.drawImage(this.spriteCanvas, animationIndex * this.tileSize,
-                this.currentAnimationCanvasYPos, this.tileSize,
+            !this.invisible && Display.drawImage(this.spriteCanvas, animationIndex * this.originalWidth,
+                this.currentAnimationCanvasYPos, this.originalWidth,
                 this.originalHeight - 1, this.x - this.squishXOffset, this.y - 2 - this.squishYOffset,
                 this.drawWidth, this.drawHeight);
         }

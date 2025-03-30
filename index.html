@@ -242,7 +242,8 @@
                         </div>
                         <div id="widthAnimationChanger" class="changeableAttributesWrapper marginTop8" style="display: none">
                             <label for="width">Width</label>
-                            <input type="range" style="width: 50px" min="8" max="16" value="8" name="width" step="1" id="spriteWidthSlider" class="attributeSlider">
+                            <input type="range" style="width: 50px" min="8" max="16" value="8" name="width" step="1" id="spriteWidthSlider" 
+                            onChange='DrawSectionHandler.changeSpriteWidth(event)' class="attributeSlider">
                             <span class="sliderValue" id="widthsliderValue">8</span>
                         </div>
                     </div>
