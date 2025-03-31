@@ -31,5 +31,6 @@ class ExportedGameInitializer {
         SpritePixelArrays.fillAllSprites();
         SpritePixelArrays.indexAllSprites();
         player.setAnimationProperties();
+        player.updateExtraColissionPoints();
     }
 }

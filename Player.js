@@ -90,7 +90,6 @@ class Player {
     updateExtraColissionPoints() {
         this.extraHeightPoints = Math.floor((this.height + 3) / this.tileSize);
         this.heightForExtraColissionPoints = this.extraHeightPoints ? Math.round(this.height / (this.extraHeightPoints + 1)) : 0;
-
         this.extraWidthPoints = Math.floor((this.width + 2) / this.tileSize);
         this.widthForExtraColissionPoints = this.extraWidthPoints ? Math.round(this.width / (this.extraWidthPoints + 1)) : 0;
     }
