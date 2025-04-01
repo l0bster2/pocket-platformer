@@ -141,8 +141,8 @@ class DrawSectionHandler {
     static changeAnimationFramesSize() {
         const animationCanvases = document.getElementsByClassName("animationFrameCanvas");
         for (var i = 0; i < animationCanvases.length; i++) {
-            animationCanvases[i].height = this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize;
-            animationCanvases[i].width = this.currentSpriteWidth * this.tileMapHandler.pixelArrayUnitSize;
+            animationCanvases[i].height = this.currenteSpritePixelHeight;
+            animationCanvases[i].width = this.currentSpritePixelWidth;
         }
     }
 
@@ -261,6 +261,8 @@ class DrawSectionHandler {
     static changeCurrentSelectedSpriteDimensions() {
         this.currentSpriteHeight = this.currentSprite.sprite.animation[0].sprite.length;
         this.currentSpriteWidth = this.currentSprite.sprite.animation[0].sprite[0].length;
+        this.currenteSpritePixelHeight = this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize;
+        this.currentSpritePixelWidth = this.currentSpriteWidth * this.tileMapHandler.pixelArrayUnitSize;
     }
 
     static changeSelectedSprite(event, changeSelectOption = false) {
@@ -389,8 +391,8 @@ class DrawSectionHandler {
             };
             canvasFrameWrapper.appendChild(deleteImg);
         }
-        canvas.height = this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize;
-        canvas.width = this.currentSpriteWidth * this.tileMapHandler.pixelArrayUnitSize;
+        canvas.height = this.currenteSpritePixelHeight;
+        canvas.width = this.currentSpritePixelWidth;
         canvasFrameWrapper.appendChild(canvas);
         this.spriteAnimationEl.appendChild(canvasFrameWrapper);
         const ctx = canvas.getContext('2d');
@@ -502,12 +504,11 @@ class DrawSectionHandler {
     }
 
     static redrawOutsideCanvases(forceRedraw = false) {
-        const { animationFrame } = this.currentSprite;
         //animation underneath sprite redraw
         if (this.animationCanvases.length > 0) {
             for (var i = 0; i < this.animationCanvases.length; i++) {
-                const { pixelArrayUnitSize, pixelArrayUnitAmount, tileSize } = this.tileMapHandler;
-                this.animationCanvases[i].clearRect(0, 0, tileSize * 2, tileSize * 2);
+                const { pixelArrayUnitSize } = this.tileMapHandler;
+                this.animationCanvases[i].clearRect(0, 0, this.currentSpritePixelWidth, this.currentSpriteHeight);
                 const currentSprite = this.currentSprite.sprite.animation[i];
                 Display.drawPixelArray(currentSprite.sprite, 0, 0, pixelArrayUnitSize, currentSprite.sprite[0].length, currentSprite.sprite.length,
                     this.animationCanvases[i]);

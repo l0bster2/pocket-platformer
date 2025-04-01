@@ -113,7 +113,8 @@ class TabNavigation {
       const { tileSize } = WorldDataHandler;
       const { x, y } = this.getPositionForSingleSprite(index);
       this.selectableSpritesCtx.fillStyle = "#" + WorldColorChanger.getCurrentColor(tileMapHandler.currentLevel);
-      this.selectableSpritesCtx.fillRect(x, y, tileSize + this.padding * 2, tileSize + this.padding * 2);
+      const selectableSpriteSize = tileSize + this.padding * 2
+      this.selectableSpritesCtx.fillRect(x, y, selectableSpriteSize, selectableSpriteSize);
 
       this.drawSelectableSprite(this.spriteCanvas, 0, sprite.canvasYPos,
         tileSize, tileSize, x + this.padding, y + this.padding, tileSize, tileSize);

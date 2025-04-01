@@ -37,7 +37,7 @@ class PlayMode {
         const { player } = this;
 
         PauseHandler.checkPause();
-
+        
         if (!player.death && this.currentPauseFrames === 0 && !DialogueHandler.active && !PauseHandler.paused) {
             this.updateGeneralFrameCounter();
             var walking = WalkHandler.walkHandler();
