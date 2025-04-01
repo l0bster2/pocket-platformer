@@ -193,8 +193,8 @@ class Display {
         this.ctx.fillText(text, xPos, yPos);
     }
     
-    static explodeSprite(img, sx, sy, tileSize, x, y, offSet, radians) {
-        const halfTileSize = tileSize / 2;
+    static explodeSprite(img, sx, sy, objectSize, x, y, offSet, radians) {
+        const halfTileSize = objectSize / 2;
         Display.drawImageWithRotation(img, sx,
             sy, halfTileSize,
             halfTileSize, x + offSet * -1, y + offSet * -1,

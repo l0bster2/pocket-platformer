@@ -123,14 +123,13 @@ class TilemapHelpers {
 
     static doTwoObjectsSeeEachOther(obj1, obj2, tilemapHandler, angle) {
         let objectsSeeEachOther = true;
-        const halfTile = WorldDataHandler.tileSize / 2;
+        const halfTile = tilemapHandler.halfTileSize;
         const ob1XCenter = obj1.x + halfTile;
         const ob1YCenter = obj1.y + halfTile;
         const dx = (obj2.x + halfTile) - ob1XCenter;
         const dy = (obj2.y + halfTile) - ob1YCenter;
-        const checkDistance = tilemapHandler.tileSize / 2;
-        const xFrames = Math.abs(Math.round(dx / checkDistance));
-        const yFrames = Math.abs(Math.round(dy / checkDistance));
+        const xFrames = Math.abs(Math.round(dx / halfTile));
+        const yFrames = Math.abs(Math.round(dy / halfTile));
         const biggerFrames = Math.max(xFrames, yFrames);
         const incrementX = dx / biggerFrames;
         const incrementY = dy / biggerFrames;

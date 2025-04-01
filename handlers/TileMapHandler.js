@@ -3,6 +3,7 @@ class TileMapHandler {
     constructor(tileSize, startingLevel, spriteCanvas, player) {
         this.setTileTypes();
         this.tileSize = tileSize;
+        this.halfTileSize = tileSize / 2;
         this.pixelArrayUnitAmount = 8;
         this.pixelArrayUnitSize = tileSize / this.pixelArrayUnitAmount;
         this.player = player;
@@ -291,8 +292,8 @@ class TileMapHandler {
 
     getValuePositionsForTile(tileX, tileY) {
         return {
-            x: tileX * this.tileSize + this.tileSize / 2,
-            y: tileY * this.tileSize + this.tileSize / 2,
+            x: tileX * this.tileSize + this.halfTileSize,
+            y: tileY * this.tileSize + this.halfTileSize,
         }
     }
 

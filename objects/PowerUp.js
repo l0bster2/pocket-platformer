@@ -49,7 +49,7 @@ class PowerUp extends InteractiveLevelObject {
                     true, 40, 1, "backgroundSFX")
             }
             Display.displayText(this.PowerUp,
-                this.x + this.tileSize / 2, this.y - this.tileSize * 1.1, 14,
+                this.x + this.tilemapHandler.halfTileSize, this.y - this.tileSize * 1.1, 14,
                 this.currentMessageFrame % 20 > 10 ? "#FFFFFF" : "#000000");
             this.currentMessageFrame--;
         }

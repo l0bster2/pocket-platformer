@@ -4,6 +4,7 @@ class Rocket extends InteractiveLevelObject {
         const hitBoxOffset = -tileSize / 6;
         super(x, y, tileSize, type, hitBoxOffset);
         this.tileMapHandler = tileMapHandler;
+        this.halfTileSize = tileMapHandler.halfTileSize;
         this.movingSpeed = speed;
         this.key = this.makeid(5);
         this.angle = angle;
@@ -17,8 +18,8 @@ class Rocket extends InteractiveLevelObject {
 
     setInitialPosition() {
         const radians = MathHelpers.getRadians(this.angle);
-        this.x -= Math.cos(radians) * (this.tileSize / 2);
-        this.y -= Math.sin(radians) * (this.tileSize / 2);
+        this.x -= Math.cos(radians) * (this.halfTileSize);
+        this.y -= Math.sin(radians) * (this.halfTileSize);
     }
 
     collisionEvent() {

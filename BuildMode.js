@@ -424,7 +424,7 @@ class BuildMode {
         content.appendChild(submitButtonWrapper);
 
         const posInTool = this.tileMapHandler.getValuePositionsForTile(tilePosX, tilePosY + 1);
-        const xPos = canvasOffsetLeft + posInTool.x - 120 - this.tileMapHandler.tileSize / 2 - Camera.viewport.left;
+        const xPos = canvasOffsetLeft + posInTool.x - 120 - this.tileMapHandler.halfTileSize - Camera.viewport.left;
         const yPos = canvasOffsetTop + posInTool.y - Camera.viewport.top;
         TooltipHandler.repositionAndShowTooltip("canvasObjectToolTip", yPos, xPos, heading, content)
     }

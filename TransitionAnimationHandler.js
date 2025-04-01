@@ -81,7 +81,7 @@ class TransitionAnimationHandler {
         Display.ctx.fillStyle = `rgb(0,0,0)`;
         Display.ctx.beginPath();
         Display.ctx.rect(Camera.viewport.left, Camera.viewport.top, Camera.viewport.width, Camera.viewport.height);
-        Display.ctx.arc(player.x + tileMapHandler.tileSize / 2, player.y + tileMapHandler.tileSize / 2, 
+        Display.ctx.arc(player.x + tileMapHandler.halfTileSize, player.y + tileMapHandler.halfTileSize, 
             radius, 0, 2 * Math.PI, true);
         Display.ctx.fill();
         Display.ctx.closePath();

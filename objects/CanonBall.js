@@ -6,7 +6,7 @@ class CanonBall extends InteractiveLevelObject {
         this.tileMapHandler = tileMapHandler;
         this.facingDirection = facingDirection;
         this.movingSpeed = speed;
-        this.yCenter = tileSize / 2;
+        this.yCenter = tileMapHandler.halfTileSize;
         this.key = this.makeid(5);
         this.collidesWithWalls = collidesWithWalls;
         this.currentTrailFrame = 0;

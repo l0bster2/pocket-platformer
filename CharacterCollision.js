@@ -168,7 +168,7 @@ class CharacterCollision {
 
     static checkTopCornerCorrection(obj) {
         const offset = Math.floor(this.tileMapHandler.tileSize / 4)
-        const topY = obj.top_right_pos.y - Math.floor(this.tileMapHandler.tileSize / 2);
+        const topY = obj.top_right_pos.y - Math.floor(this.tileMapHandler.halfTileSize);
         const rightX = obj.top_right_pos.x - offset;
         const leftX = obj.top_left_pos.x + offset;
         const rightTileVaue = tileMapHandler.getTileValueForPosition(rightX);
