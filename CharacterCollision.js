@@ -177,10 +177,13 @@ class CharacterCollision {
         const topRightTileValue = tileMapHandler.getTileLayerValueByIndex(topValue, rightTileVaue);
         const topLeftTileValue = tileMapHandler.getTileLayerValueByIndex(topValue, leftTileVaue);
         const touchingSwitch = [obj.top_left, obj.top_right].includes(ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch);
-        if (!touchingSwitch && this.passableTiles.includes(topRightTileValue) && this.passableTiles.includes(obj.top_left)) {
-            obj.x = rightTileVaue * this.tileMapHandler.tileSize;
+
+        if (!touchingSwitch && this.passableTiles.includes(topRightTileValue) && this.passableTiles.includes(obj.top_left)
+            && MathHelpers.arraysHaveSameValues([...obj.extraTopPoints], this.passableTiles)) {
+            obj.x = (rightTileVaue + 1) * this.tileMapHandler.tileSize - obj.width - 1;
         }
-        else if (!touchingSwitch && this.passableTiles.includes(topLeftTileValue) && this.passableTiles.includes(obj.top_right)) {
+        else if (!touchingSwitch && this.passableTiles.includes(topLeftTileValue) && this.passableTiles.includes(obj.top_right)
+            && MathHelpers.arraysHaveSameValues([...obj.extraTopPoints], this.passableTiles)) {
             obj.x = leftTileVaue * this.tileMapHandler.tileSize + 1;
         }
         else {
