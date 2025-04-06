@@ -15,13 +15,17 @@ class WorldColorChanger {
         this.setBackgroundColor(color)
     }
 
-    static setBackgroundColor(color) {
-        const newColor = color.startsWith('#') ? color : "#" + color;
+    static setColorInGameCanvas(newColor) {
         const gameCanvas = document.getElementById("myCanvas");
 
         if (gameCanvas) {
             gameCanvas.style.backgroundColor = newColor;
         }
+    }
+
+    static setBackgroundColor(color) {
+        const newColor = color.startsWith('#') ? color : "#" + color;
+        this.setColorInGameCanvas(newColor)
 
         if (WorldDataHandler.insideTool) {
             const drawCanvas = document.getElementById("redrawSpriteCanvas");
