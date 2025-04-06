@@ -65,7 +65,8 @@ class Path {
         this.pathPoints.forEach(pathPoint => {
             const objectOnPath = this.tileMapHandler?.levelObjects && this.tileMapHandler.levelObjects.find(levelObject =>
                 levelObject.initialX === pathPoint.initialX && levelObject.initialY === pathPoint.initialY &&
-                !SpritePixelArrays.backgroundSprites.includes(levelObject.type)
+                !SpritePixelArrays.backgroundSprites.includes(levelObject.type) &&
+                !SpritePixelArrays.foregroundSprites.includes(levelObject.type)
             );
             if(objectOnPath) {
                 this.objectsOnPath.push(objectOnPath);
