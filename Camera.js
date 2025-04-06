@@ -103,6 +103,10 @@ class Camera {
         if (this.screenShake.currentFrame > 0) {
             this.doScreenShake();
             positionChanged = true;
+            if(this.screenShake.currentFrame === 0) {
+                this.follow.x = this.outOfBoundsXCorrection(x);
+                this.follow.y = this.outOfBoundsYCorrection(y);
+            }
         }
         if (positionChanged) {
             this.updateViewport();
@@ -164,18 +168,13 @@ class Camera {
             const cameraXCenter = Camera.viewport.left + Camera.viewport.halfWidth;
             const cameraYCenter = Camera.viewport.top + Camera.viewport.halfHeight;
             const cameraMovementSpeed = Math.round(Camera.viewport.width / 100 * (scaleSpeed * 100));
-            if (MathHelpers.getDistanceBetween2Objects({ x: cameraXCenter, y: cameraYCenter }, obj) < cameraMovementSpeed) {
-                Camera.viewport.left = obj.x + (obj.width / 2) - Camera.viewport.halfWidth;
-                Camera.viewport.top = obj.y + (obj.height / 2) - Camera.viewport.halfHeight;
-            }
-            else {
-                Camera.updateViewportRelatedToScale(Camera.viewport.scale + scaleSpeed);
-                const newAngle = MathHelpers.getAngle(cameraXCenter, cameraYCenter, obj.x, obj.y);
-                const angle = MathHelpers.normalizeAngle(newAngle);
-                const radians = MathHelpers.getRadians(angle);
-                Camera.viewport.left -= Math.cos(radians) * cameraMovementSpeed;
-                Camera.viewport.top -= Math.sin(radians) * cameraMovementSpeed;
-            }
+
+            this.follow.x = obj.x + obj.width / 2;
+            this.follow.y = obj.y + obj.height / 2;
+            this.follow.x = this.outOfBoundsXCorrection(obj.x);
+            this.follow.y = this.outOfBoundsYCorrection(obj.y);
+            Camera.updateViewportRelatedToScale(Camera.viewport.scale + scaleSpeed);
+            this.updateViewport();
         }
     }
 }

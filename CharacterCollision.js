@@ -159,7 +159,7 @@ class CharacterCollision {
             (Collision.pointAndObjectColliding(obj.bottom_right_pos, hitBox) ||
                 Collision.pointAndObjectColliding(obj.bottom_left_pos, hitBox))
         ) {
-            obj.hitBottom(true);
+        obj.hitBottom(true);
             obj.y = movingPlatform.y - obj.height;
             obj.movingPlatformKey = movingPlatform.key;
             obj.onMovingPlatform = true;
