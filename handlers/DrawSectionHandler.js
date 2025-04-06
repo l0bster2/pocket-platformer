@@ -508,7 +508,7 @@ class DrawSectionHandler {
         if (this.animationCanvases.length > 0) {
             for (var i = 0; i < this.animationCanvases.length; i++) {
                 const { pixelArrayUnitSize } = this.tileMapHandler;
-                this.animationCanvases[i].clearRect(0, 0, this.currentSpritePixelWidth, this.currentSpriteHeight);
+                this.animationCanvases[i].clearRect(0, 0, tileMapHandler.tileSize * 2, tileMapHandler.tileSize * 2);
                 const currentSprite = this.currentSprite.sprite.animation[i];
                 Display.drawPixelArray(currentSprite.sprite, 0, 0, pixelArrayUnitSize, currentSprite.sprite[0].length, currentSprite.sprite.length,
                     this.animationCanvases[i]);

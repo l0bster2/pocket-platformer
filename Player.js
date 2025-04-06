@@ -272,7 +272,9 @@ class Player {
         }
 
         if (this.currentTrailFrame === finalFrame) {
-            SFXHandler.createSFX(this.bottom_left_pos.x, this.bottom_left_pos.y - this.tileSize + 1,
+            const leftPos = this.facingDirection === AnimationHelper.facingDirections.right
+                ? this.bottom_left_pos.x : this.bottom_right_pos.x - this.tileSize;
+            SFXHandler.createSFX(leftPos, this.bottom_left_pos.y - this.tileSize + 1,
                 sfxIndex, this.facingDirection, 0, 0, true)
             this.currentTrailFrame = 0;
         }
