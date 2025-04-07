@@ -7,6 +7,7 @@ class WorldDataHandler {
         this.gamesName = "Example name";
         this.endingMessage = "Thx for playing!";
         this.backgroundColor = '000000';
+        this.backgroundImage = null;
         this.textColor = 'ffffff';
         this.effects = [];
         this.pixelArrayUnitAmount = 8;
@@ -43,6 +44,7 @@ class WorldDataHandler {
             backgroundColor: "transp",
             zoomFactor: 1,
             song: null,
+            backgroundImage: null,
         };
     }
 
@@ -68,6 +70,7 @@ class WorldDataHandler {
             backgroundColor: "transp",
             zoomFactor: 1,
             song: null,
+            backgroundImage: "Background example 1",
         };
     }
 

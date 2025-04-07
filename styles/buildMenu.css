@@ -8,6 +8,10 @@
     flex: 1;
 }
 
+.backgroundImagePreview {
+    width: 100%;
+}
+
 #buildMenu {
     width: 200px;
 }
@@ -321,17 +325,17 @@ input:checked+.switchSlider:before {
     border-left: 1px solid lightgrey;
 }
 
-.soundControls {
+.soundControls, .imageControls {
     padding: 2px 0;
     display: flex;
 }
 
-.soundControlsDescription {
+.soundControlsDescription, .imageControlsDescription {
     flex: 1;
     padding: 12px;
 }
 
-#soundView {
+#soundView, #imageView {
     gap: 8px;
 }
 

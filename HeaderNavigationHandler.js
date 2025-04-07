@@ -14,17 +14,31 @@ function navDropDownClick(event, id = "myDropdown") {
 function changeView(value) {
     if(value === "sounds") {
         document.getElementById("gameView").style.display = "none";
+        document.getElementById("imageView").style.display = "none";
         document.getElementById("soundView").style.display = "flex";
         document.getElementById("gameViewCheckmark").style.display = "none";
+        document.getElementById("imageViewCheckmark").style.display = "none";
         document.getElementById("soundViewCheckmark").style.display = "block";
         SoundHandlerRenderer.createSoundOverview();
     }
-    else {
+    else if(value === "game"){
         document.getElementById("gameView").style.display = "block";
         document.getElementById("soundView").style.display = "none";
+        document.getElementById("imageView").style.display = "none";
         document.getElementById("gameViewCheckmark").style.display = "block";
+        document.getElementById("imageViewCheckmark").style.display = "none";
         document.getElementById("soundViewCheckmark").style.display = "none";
         SoundHandler.checkSongOnLevelReset(tileMapHandler.currentLevel);
+        ImageHandler.setBackgroundImage();
+    }
+    else {
+        document.getElementById("gameView").style.display = "none";
+        document.getElementById("imageView").style.display = "flex";
+        document.getElementById("soundView").style.display = "none";
+        document.getElementById("gameViewCheckmark").style.display = "none";
+        document.getElementById("imageViewCheckmark").style.display = "block";
+        document.getElementById("soundViewCheckmark").style.display = "none";
+        ImageHandlerRenderer.createImageOverview();
     }
     SoundHandler.stopAllSounds();
 }
