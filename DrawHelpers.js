@@ -2,7 +2,8 @@ class DrawHelpers {
     
     static deleteSprite() {
         const { animationFrame, sprite } = DrawSectionHandler.currentSprite;
-        sprite.animation[animationFrame].sprite = SpritePixelArrays.EMPTY_ANIMATION_FRAME.sprite;
+        const emptySprite = JSON.parse(JSON.stringify(SpritePixelArrays.createDynamicEmptySprite(DrawSectionHandler.currentSpriteWidth, DrawSectionHandler.currentSpriteHeight)));
+        sprite.animation[animationFrame].sprite = emptySprite.sprite;
         this.redrawAllSprites();
     }
 
