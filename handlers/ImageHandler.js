@@ -35,8 +35,10 @@ class ImageHandler {
             if (level.backgroundImage === this.imageToDelete) {
                 level.backgroundImage = null;
             }
+        })
+        if(WorldDataHandler.backgroundImage === this.imageToDelete) {
+            WorldDataHandler.backgroundImage = null;
         }
-        )
     }
 
     static uploadNewImage() {
@@ -81,7 +83,6 @@ class ImageHandler {
         }
         const newImage = this.images.find((image) =>
             image.name === imageName);
-
         if (newImage) {
             this.currentLevelImage = newImage;
             this.initializeImageOnImageCanvas(newImage);

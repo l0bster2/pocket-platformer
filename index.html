@@ -486,16 +486,29 @@
                             <button class="color-input-text buttonWithIconAndText" value="#FFFFFF"
                                 style="margin-left: 52px" />
                         </div>
+                        <div class="marginTop8">
+                            <span class="colorModalAttribute">Background-image:</span>
+                            <select name="backgroundImageSelector" id="backgroundImageWorldSelector" 
+                                onchange="WorldColorHandler.changeWorldBackgroundImage(event)" class="backgroundImageSelect">
+                              </select>
+                        </div>
                         <div class="subSection12Gap">
-                            <div class="flexGap12">
-                                <div style="margin: auto 0">Level background-color:</div>
-                                <button class="color-input-level-background" value="transp" id="levelColorButton">
+                            <div style="font-weight: bold;">Level color settings</div>
+                            <div class="flexGap12 marginTop12">
+                                <div class="colorModalAttribute" style="margin: auto 0">background-color:</div>
+                                <button class="color-input-level-background" style="margin-left: 5px" value="transp" id="levelColorButton">
                                     <img alt="plus" width="80" height="40" src="images/icons/transparentIcon.svg"
                                         class="iconInButtonWithText">
                                 </button>
                                 <img id="deleteLevelColorButton" alt="delete" width="16" height="16"
                                     src="images/icons/delete.svg" class="marginTop8 hovereableRedSvg"
                                     style="margin: auto 0" onClick="WorldColorHandler.deleteLevelColor()">
+                            </div>
+                            <div class="marginTop8">
+                                <span class="colorModalAttribute">Background-image:</span>
+                                <select name="backgroundImageSelector" id="backgroundImageLevelSelector" 
+                                    onchange="WorldColorHandler.changeLevelBackgroundImage(event)" class="backgroundImageSelect">
+                                  </select>
                             </div>
                         </div>
                     </div>
@@ -810,6 +823,7 @@
                 function build() {
                     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
                     Camera.begin();
+                    ImageHandler.displayBackgroundImage();
                     tileMapHandler.drawGrid();
                     tileMapHandler.displayLevel();
                     if (tileMapHandler.currentLevel === 0) {
@@ -843,6 +857,7 @@
                     if (!Game.refreshRateHigher60 || Game.elapsed > Game.fpsInterval) {
                         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
                         Camera.begin();
+                        ImageHandler.displayBackgroundImage();
                         tileMapHandler.displayLevel();
                         Controller.handleGamepadInput();
                         if (tileMapHandler.currentLevel === 0) {

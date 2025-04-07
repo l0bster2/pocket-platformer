@@ -45,6 +45,48 @@ class WorldColorHandler {
         levelColorButton.value = "transp";
     }
 
+    static fillImageBackgroundSelectWithValues(element) {
+        var i, L = element.options.length - 1;
+        for(i = L; i >= 0; i--) {
+            element.remove(i);
+        }
+
+        var emptyEl = document.createElement("option");
+        emptyEl.textContent = "None";
+        emptyEl.value = "none";
+        element.appendChild(emptyEl);
+
+        ImageHandler.images.forEach(image => {
+            var el = document.createElement("option");
+            el.textContent = image.name;
+            el.value = image.name;
+            element.appendChild(el);
+        })
+    }
+
+    static changeLevelBackgroundImage(event) {
+        const value = event.target.value;
+        WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage = value || null;
+        ImageHandler.setBackgroundImage();
+    }
+
+    static changeWorldBackgroundImage(event) {
+        const value = event.target.value;
+        WorldDataHandler.backgroundImage = value || null;
+        ImageHandler.setBackgroundImage();
+    }
+
+    static initializeBackgroundImageSelects() {
+        const backgroundImageWorldSelector = document.getElementById("backgroundImageWorldSelector");
+        const backgroundImageLevelSelector = document.getElementById("backgroundImageLevelSelector");
+        this.fillImageBackgroundSelectWithValues(backgroundImageWorldSelector);
+        this.fillImageBackgroundSelectWithValues(backgroundImageLevelSelector);
+        const levelImage = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage || "none";
+        const worldImage = WorldDataHandler.backgroundImage || "none";
+        backgroundImageLevelSelector.value = levelImage;
+        backgroundImageWorldSelector.value = worldImage;
+    }
+
     static initializeModal() {
         const levelColor = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundColor;
         if (levelColor && levelColor !== "transp") {
@@ -54,6 +96,7 @@ class WorldColorHandler {
         else {
             this.resetLevelColorUI();
         }
+        this.initializeBackgroundImageSelects();
         this.backgroundHuebee.setColor("#" + WorldDataHandler.backgroundColor)
         this.textHuebee.setColor("#" + WorldDataHandler.textColor)
         EffectsHandler.updateExistingSFXSection();

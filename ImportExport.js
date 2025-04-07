@@ -124,6 +124,7 @@ function exportGame() {
   allData.effects = WorldDataHandler.effects;
   allData.backgroundColor = WorldDataHandler.backgroundColor;
   allData.textColor = WorldDataHandler.textColor;
+  allData.backgroundImage = WorldDataHandler.backgroundImage;
   allData.animationFrames = TransitionAnimationHandler.animationFrames;
   allData.animationType = TransitionAnimationHandler.animationType;
   allData.playerObject = createPlayerAttributesSectionForAllData();

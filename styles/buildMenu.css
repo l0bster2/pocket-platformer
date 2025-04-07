@@ -12,6 +12,11 @@
     width: 100%;
 }
 
+.backgroundImageSelect {
+    padding: 10px 6px;
+    width: 160px;
+}
+
 #buildMenu {
     width: 200px;
 }

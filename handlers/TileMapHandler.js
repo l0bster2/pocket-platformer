@@ -196,7 +196,6 @@ class TileMapHandler {
             }
         }
         this.layers = this.splitLevelObjectsInLayers();
-        ImageHandler.displayBackgroundImage();
         this.displayObjects(this.layers[0]);
         this.displayObjectsOrDeko(this.deko);
         SFXHandler.updateSfxAnimations("backgroundSFX");

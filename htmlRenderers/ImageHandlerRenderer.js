@@ -14,7 +14,7 @@ class ImageHandlerRenderer {
                 <img src="images/icons/delete.svg" width="14" height="14">
             </button>
             <button id="${image.name}Preview" class="levelNavigationButton" onClick="ImageHandler.showPreviewImage('${image.name}')">
-                <img src="images/icons/right.svg" width="14" height="14">
+                <img src="images/icons/eye.svg" width="14" height="14">
             </button>
     </div>`;
     }
