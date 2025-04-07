@@ -244,7 +244,7 @@ class DrawSectionHandler {
     static checkHeightWidthSlidersVisibility(sprite) {
         const heightChanger = document.getElementById("heightAnimationChanger");
         const widthChanger = document.getElementById("widthAnimationChanger");
-        if (sprite.name.toString().toLowerCase().includes("player")) {
+        if (sprite.name.toString().toLowerCase().includes("player") && sprite.commonType) {
             heightChanger.style.display = "flex";
             document.getElementById("spriteHeightSlider").value = this.currentSpriteHeight;
             document.getElementById("heightsliderValue").innerHTML = this.currentSpriteHeight;

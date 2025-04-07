@@ -26,9 +26,9 @@ class ExportedGameInitializer {
         for (const [key, value] of Object.entries(allData.sprites)) {
             if (key !== "TELEPORT" && key !== "TELEPORT2" && key !== "SFX4") {
                 SpritePixelArrays[key] = value;
-                if(key.includes("PLAYER")) {
+                /*if(key.includes("PLAYER")) {
                     SpritePixelArrays[key].commonType = "player";
-                }
+                }*/
             }
         }
         SpritePixelArrays.fillAllSprites();
