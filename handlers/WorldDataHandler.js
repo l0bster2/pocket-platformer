@@ -70,7 +70,7 @@ class WorldDataHandler {
             backgroundColor: "transp",
             zoomFactor: 1,
             song: null,
-            backgroundImage: "Background example 1",
+            backgroundImage: null,
         };
     }
 

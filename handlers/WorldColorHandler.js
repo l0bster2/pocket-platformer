@@ -76,6 +76,14 @@ class WorldColorHandler {
         ImageHandler.setBackgroundImage();
     }
 
+    static changeLevelImageSize(event) {
+
+    }
+
+    static changeWorldImageSize(event) {
+        
+    }
+
     static initializeBackgroundImageSelects() {
         const backgroundImageWorldSelector = document.getElementById("backgroundImageWorldSelector");
         const backgroundImageLevelSelector = document.getElementById("backgroundImageLevelSelector");

@@ -129,6 +129,7 @@ function exportGame() {
   allData.animationType = TransitionAnimationHandler.animationType;
   allData.playerObject = createPlayerAttributesSectionForAllData();
   allData.sounds = getCustomSounds();
+  allData.images = ImageHandler.images;
   allData.sprites = createChangedSpitesObject();
   bundledScripts = bundledScripts.replace("//putAllDataHere",
     `${allDataStartComment}

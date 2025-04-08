@@ -492,6 +492,15 @@
                                 onchange="WorldColorHandler.changeWorldBackgroundImage(event)" class="backgroundImageSelect">
                               </select>
                         </div>
+                        <div class="marginTop8">
+                            <span class="colorModalAttribute">Image-size:</span>
+                            <select name="imageSizeWorldSelector" id="imageSizeWorldSelector" style="margin-left: 52px;"
+                                onchange="WorldColorHandler.changeLevelImageSize(event)" class="backgroundImageSelect">
+                                <option value="original">Original</option>
+                                <option value="stretch">Stretch</option>
+                                <option value="fixed">Fixed/Parallax</option>
+                              </select>
+                        </div>
                         <div class="subSection12Gap">
                             <div style="font-weight: bold;">Level color settings</div>
                             <div class="flexGap12 marginTop12">
@@ -509,6 +518,19 @@
                                 <select name="backgroundImageSelector" id="backgroundImageLevelSelector" 
                                     onchange="WorldColorHandler.changeLevelBackgroundImage(event)" class="backgroundImageSelect">
                                   </select>
+                            </div>
+                            <div class="marginTop8">
+                                <span class="colorModalAttribute">Image-size:</span>
+                                <select name="imageSizeLevelSelector" id="imageSizeLevelSelector" style="margin-left: 52px;"
+                                    onchange="WorldColorHandler.changeWorldImageSize(event)" class="backgroundImageSelect">
+                                    <option value="original">Original</option>
+                                    <option value="stretch">Stretch</option>
+                                    <option value="fixed">Fixed/Parallax</option>
+                                  </select>
+                            </div>
+                            <div class="textAsLink marginTop16" onClick="ImageHandler.switchTouploadView()">
+                                <img alt="plus" width="14" height="14" class="blue-filter" src="images/icons/plus.svg"
+                                class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Upload more background images</span>
                             </div>
                         </div>
                     </div>

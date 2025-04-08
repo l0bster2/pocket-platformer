@@ -22,7 +22,7 @@ class ImageHandler {
 
     static deleteImage() {
         const index = this.images.findIndex(image => image.name === this.imageToDelete);
-        if (this.currentLevelImage.name === this.imageToDelete) {
+        if (this.currentLevelImage && this.currentLevelImage.name === this.imageToDelete) {
             this.currentLevelImage = null;
             this.imageCanvasCtx.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
         }
@@ -36,9 +36,16 @@ class ImageHandler {
                 level.backgroundImage = null;
             }
         })
-        if(WorldDataHandler.backgroundImage === this.imageToDelete) {
+        if (WorldDataHandler.backgroundImage === this.imageToDelete) {
             WorldDataHandler.backgroundImage = null;
         }
+        this.images.length ? this.showPreviewImage(this.images[0].name) :
+            this.imageCanvasCtx.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
+    }
+
+    static switchTouploadView() {
+        ModalHandler.closeModal('worldColorModal');
+        changeView("images");
     }
 
     static uploadNewImage() {
@@ -57,6 +64,7 @@ class ImageHandler {
                         };
                         this.images.push(newImage);
                         ImageHandlerRenderer.createImageOverview();
+                        this.showPreviewImage(newImage.name)
                     };
                     img.src = base64String;
                 };
@@ -110,7 +118,7 @@ class ImageHandler {
             Display.drawImage(this.imageCanvas, 0, 0,
                 this.currentLevelImage.width, this.currentLevelImage.height,
                 0, 0,
-                Camera.originalWidth, Camera.originalHeight);
+                tileMapHandler.levelWidthInPx, tileMapHandler.levelHeightInPx);
         }
     }
 }

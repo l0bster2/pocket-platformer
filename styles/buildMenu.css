@@ -17,6 +17,10 @@
     width: 160px;
 }
 
+.blue-filter {
+    filter: brightness(0) saturate(100%) invert(12%) sepia(85%) saturate(5000%) hue-rotate(210deg);
+}
+
 #buildMenu {
     width: 200px;
 }
