@@ -8,6 +8,7 @@ class WorldDataHandler {
         this.endingMessage = "Thx for playing!";
         this.backgroundColor = '000000';
         this.backgroundImage = null;
+        this.backgroundImageSize = null;
         this.textColor = 'ffffff';
         this.effects = [];
         this.pixelArrayUnitAmount = 8;
@@ -45,6 +46,7 @@ class WorldDataHandler {
             zoomFactor: 1,
             song: null,
             backgroundImage: null,
+            backgroundImageSize: null,
         };
     }
 
@@ -71,6 +73,7 @@ class WorldDataHandler {
             zoomFactor: 1,
             song: null,
             backgroundImage: null,
+            backgroundImageSize: null,
         };
     }
 

@@ -47,7 +47,7 @@ class WorldColorHandler {
 
     static fillImageBackgroundSelectWithValues(element) {
         var i, L = element.options.length - 1;
-        for(i = L; i >= 0; i--) {
+        for (i = L; i >= 0; i--) {
             element.remove(i);
         }
 
@@ -67,32 +67,48 @@ class WorldColorHandler {
     static changeLevelBackgroundImage(event) {
         const value = event.target.value;
         WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage = value || null;
+        WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize = "stretch";
         ImageHandler.setBackgroundImage();
+        document.getElementById("imageSizeLevelSelectorWrapper").style.display = value === "none" || value === null ? "none" : "block";
+        document.getElementById("imageSizeLevelSelector").value = "stretch";
     }
 
     static changeWorldBackgroundImage(event) {
         const value = event.target.value;
         WorldDataHandler.backgroundImage = value || null;
+        WorldDataHandler.backgroundImageSize = "stretch";
         ImageHandler.setBackgroundImage();
+        document.getElementById("imageSizeWorldSelectorWrapper").style.display = backgroundImageWorldSelector.value === "none" || backgroundImageWorldSelector.value === null ? "none" : "block";
+        document.getElementById("imageSizeWorldSelector").value = "stretch";
     }
 
     static changeLevelImageSize(event) {
-
+        const value = event.target.value;
+        WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize = value || null;
+        ImageHandler.setBackgroundImage();
     }
 
     static changeWorldImageSize(event) {
-        
+        const value = event.target.value;
+        WorldDataHandler.backgroundImageSize = value || null;
+        ImageHandler.setBackgroundImage();
     }
 
     static initializeBackgroundImageSelects() {
         const backgroundImageWorldSelector = document.getElementById("backgroundImageWorldSelector");
         const backgroundImageLevelSelector = document.getElementById("backgroundImageLevelSelector");
-        this.fillImageBackgroundSelectWithValues(backgroundImageWorldSelector);
-        this.fillImageBackgroundSelectWithValues(backgroundImageLevelSelector);
+        const backgroundImageSizeLevelSelector = document.getElementById("imageSizeLevelSelectorWrapper");
+        const backgroundImageSizeWorldSelector = document.getElementById("imageSizeWorldSelectorWrapper");
+        imageSizeWorldSelector
+        this.fillImageBackgroundSelectWithValues(backgroundImageWorldSelector, backgroundImageSizeWorldSelector);
+        this.fillImageBackgroundSelectWithValues(backgroundImageLevelSelector, backgroundImageSizeLevelSelector);
         const levelImage = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage || "none";
         const worldImage = WorldDataHandler.backgroundImage || "none";
         backgroundImageLevelSelector.value = levelImage;
         backgroundImageWorldSelector.value = worldImage;
+
+        backgroundImageSizeLevelSelector.style.display = levelImage === "none" || levelImage === null ? "none" : "block";
+        backgroundImageSizeWorldSelector.style.display = worldImage === "none" || worldImage === null ? "none" : "block";
     }
 
     static initializeModal() {

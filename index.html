@@ -400,7 +400,13 @@
             <div class="section" style="display: none;" id="imageView">
                 <div class="soundSection">
                     <h2 class="sectionHeading">Images</h2>
-                    <div class="sectionContent" id="imageContent"></div>
+                    <div class="sectionContent">
+                        <div id="imageContent"></div>
+                            <div class="textAsLink marginTop16" onClick="changeView('game')">
+                                <img alt="plus" width="14" height="14" class="blue-filter" src="images/icons/left.svg"
+                                class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Back to game-screen</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="soundSection">
                     <h2 class="sectionHeading">Preview</h2>
@@ -467,6 +473,9 @@
                             id="colorModalColorsSectionButton"
                             onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalColorsSection')">Color</button>
                         <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
+                            id="colorModalBackgroundSelectionButton"
+                            onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalBackgroundSelection')">Backgrounds</button>
+                        <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
                             id="colorModalTransitionSectionButton"
                             onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalTransitionSection')">Transitions</button>
                         <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
@@ -486,21 +495,6 @@
                             <button class="color-input-text buttonWithIconAndText" value="#FFFFFF"
                                 style="margin-left: 52px" />
                         </div>
-                        <div class="marginTop8">
-                            <span class="colorModalAttribute">Background-image:</span>
-                            <select name="backgroundImageSelector" id="backgroundImageWorldSelector" 
-                                onchange="WorldColorHandler.changeWorldBackgroundImage(event)" class="backgroundImageSelect">
-                              </select>
-                        </div>
-                        <div class="marginTop8">
-                            <span class="colorModalAttribute">Image-size:</span>
-                            <select name="imageSizeWorldSelector" id="imageSizeWorldSelector" style="margin-left: 52px;"
-                                onchange="WorldColorHandler.changeLevelImageSize(event)" class="backgroundImageSelect">
-                                <option value="original">Original</option>
-                                <option value="stretch">Stretch</option>
-                                <option value="fixed">Fixed/Parallax</option>
-                              </select>
-                        </div>
                         <div class="subSection12Gap">
                             <div style="font-weight: bold;">Level color settings</div>
                             <div class="flexGap12 marginTop12">
@@ -513,18 +507,39 @@
                                     src="images/icons/delete.svg" class="marginTop8 hovereableRedSvg"
                                     style="margin: auto 0" onClick="WorldColorHandler.deleteLevelColor()">
                             </div>
+                        </div>
+                    </div>
+                    <div id="colorModalBackgroundSelection" class="marginTop8 colorModalSection" style="display: none">
+                        <div style="font-weight: bold;">General background settings</div>
+                        <div class="marginTop8">
+                            <span class="colorModalAttribute">Background-image:</span>
+                            <select name="backgroundImageSelector" id="backgroundImageWorldSelector" 
+                                onchange="WorldColorHandler.changeWorldBackgroundImage(event)" class="backgroundImageSelect">
+                              </select>
+                        </div>
+                        <div class="marginTop8" id="imageSizeWorldSelectorWrapper">
+                            <span class="colorModalAttribute">Image-size:</span>
+                            <select name="imageSizeWorldSelector" id="imageSizeWorldSelector" style="margin-left: 52px;"
+                                onchange="WorldColorHandler.changeWorldImageSize(event)" class="backgroundImageSelect">
+                                <option value="stretch">Stretch</option>
+                                <option value="original">Original</option>
+                                <option value="fixed">Fixed/Parallax</option>
+                              </select>
+                        </div>
+                        <div class="subSection12Gap">
+                            <div style="font-weight: bold;">Level background settings</div>
                             <div class="marginTop8">
                                 <span class="colorModalAttribute">Background-image:</span>
                                 <select name="backgroundImageSelector" id="backgroundImageLevelSelector" 
                                     onchange="WorldColorHandler.changeLevelBackgroundImage(event)" class="backgroundImageSelect">
                                   </select>
                             </div>
-                            <div class="marginTop8">
+                            <div class="marginTop8" id="imageSizeLevelSelectorWrapper">
                                 <span class="colorModalAttribute">Image-size:</span>
                                 <select name="imageSizeLevelSelector" id="imageSizeLevelSelector" style="margin-left: 52px;"
-                                    onchange="WorldColorHandler.changeWorldImageSize(event)" class="backgroundImageSelect">
-                                    <option value="original">Original</option>
+                                    onchange="WorldColorHandler.changeLevelImageSize(event)" class="backgroundImageSelect">
                                     <option value="stretch">Stretch</option>
+                                    <option value="original">Original</option>
                                     <option value="fixed">Fixed/Parallax</option>
                                   </select>
                             </div>

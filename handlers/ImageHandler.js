@@ -85,9 +85,11 @@ class ImageHandler {
 
     static setBackgroundImage() {
         let imageName = WorldDataHandler.backgroundImage;
+        this.currentLevelImageSize = WorldDataHandler.backgroundImageSize;
         const levelImage = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage;
         if (levelImage) {
             imageName = levelImage;
+            this.currentLevelImageSize = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize;
         }
         const newImage = this.images.find((image) =>
             image.name === imageName);
@@ -115,10 +117,29 @@ class ImageHandler {
 
     static displayBackgroundImage() {
         if (this.currentLevelImage) {
-            Display.drawImage(this.imageCanvas, 0, 0,
-                this.currentLevelImage.width, this.currentLevelImage.height,
-                0, 0,
-                tileMapHandler.levelWidthInPx, tileMapHandler.levelHeightInPx);
+            switch (this.currentLevelImageSize) {
+                case "stretch":
+                    Display.drawImage(this.imageCanvas, 0, 0,
+                        this.currentLevelImage.width, this.currentLevelImage.height,
+                        0, 0,
+                        tileMapHandler.levelWidthInPx, tileMapHandler.levelHeightInPx);
+                    break;
+                case "original":
+                    Display.drawImage(this.imageCanvas, 0, 0,
+                        this.currentLevelImage.width, this.currentLevelImage.height,
+                        0, 0,
+                        this.currentLevelImage.width, this.currentLevelImage.height);
+                    break;
+                case "fixed":
+                    Display.drawImage(this.imageCanvas, 0, 0,
+                        this.currentLevelImage.width, this.currentLevelImage.height,
+                        Camera.viewport.left, Camera.viewport.top,
+                        Camera.viewport.width, Camera.viewport.height);
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }
