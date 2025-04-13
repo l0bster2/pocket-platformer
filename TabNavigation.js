@@ -16,7 +16,7 @@ class TabNavigation {
     this.maxSpritesPerTab = 18;
     this.changeTab(null, SpritePixelArrays.SPRITE_TYPES.tile);
     this.handleSelectedSprite(0, 0);
-    this.colorModalSections = ["colorModalColorsSection", "colorModalTransitionSection", "colorModalEffectsSection"];
+    this.colorModalSections = ["colorModalColorsSection", "colorModalTransitionSection", "colorModalEffectsSection", "colorModalBackgroundSelection"];
   }
 
   static redrawAfterAddedOrDeletedSprite() {

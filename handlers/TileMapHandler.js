@@ -40,6 +40,7 @@ class TileMapHandler {
         SFXHandler.resetSfx();
         this.tileMap = WorldDataHandler.levels[levelIndex].tileData;
         Camera.updateViewportRelatedToScale(WorldDataHandler.levels[levelIndex].zoomFactor || 1)
+        ImageHandler.setBackgroundImage();
         this.updateLevelDimensions();
         this.setInitialPlayerAndCameraPos(levelIndex);
         this.levelObjects = [];

@@ -62,6 +62,12 @@
                                 style="display: none;" id="soundViewCheckmark">
                         </div>
                     </li>
+                    <li class="dropdown-nav-item" onClick="changeView('images')">
+                        <div>Images
+                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12"
+                                style="display: none;" id="imageViewCheckmark">
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -391,6 +397,24 @@
                     <div class="sectionContent" id="musicContent"></div>
                 </div>
             </div>
+            <div class="section" style="display: none;" id="imageView">
+                <div class="soundSection">
+                    <h2 class="sectionHeading">Images</h2>
+                    <div class="sectionContent">
+                        <div id="imageContent"></div>
+                            <div class="textAsLink marginTop16" onClick="changeView('game')">
+                                <img alt="plus" width="14" height="14" class="blue-filter" src="images/icons/left.svg"
+                                class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Back to game-screen</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="soundSection">
+                    <h2 class="sectionHeading">Preview</h2>
+                    <div class="sectionContent" id="previewContent">
+                        <canvas id="imagePreviewCanvas" class="backgroundImagePreview"></canvas>
+                    </div>
+                </div>
+            </div>
             <div id="protipSection" class="sectionContent">
                 <b>ProTip: </b><span id="proTip"></span>
                 <img src="images/icons/longArrowRight.svg" class="hoverableGreySvg" alt="discord" width="16" height="16"
@@ -406,6 +430,20 @@
                         onclick="LevelNavigationHandler.deleteLevel();">Yes</button>
                     <button class="levelNavigationButton halfWidth secondaryButton"
                         onclick="event.preventDefault(); ModalHandler.closeModal('deleteLevelModal');">No</button>
+                </div>
+            </div>
+            <div class='modal' id='deleteImageModal'>
+                <div class="headerWrapper">
+                    <div class="tooltipHeading">Delete Image</div>
+                </div>
+                <div class="marginTop8">
+                    Are you sure?
+                </div>
+                <div class="marginTop8">
+                    <button class="levelNavigationButton halfWidth" type="submit"
+                        onclick="ImageHandler.deleteImage();">Yes</button>
+                    <button class="levelNavigationButton halfWidth secondaryButton"
+                        onclick="event.preventDefault(); ModalHandler.closeModal('deleteImageModal');">No</button>
                 </div>
             </div>
             <div class='modal' id='pasteLevelModal'>
@@ -435,6 +473,9 @@
                             id="colorModalColorsSectionButton"
                             onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalColorsSection')">Color</button>
                         <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
+                            id="colorModalBackgroundSelectionButton"
+                            onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalBackgroundSelection')">Backgrounds</button>
+                        <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
                             id="colorModalTransitionSectionButton"
                             onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalTransitionSection')">Transitions</button>
                         <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
@@ -455,15 +496,56 @@
                                 style="margin-left: 52px" />
                         </div>
                         <div class="subSection12Gap">
-                            <div class="flexGap12">
-                                <div style="margin: auto 0">Level background-color:</div>
-                                <button class="color-input-level-background" value="transp" id="levelColorButton">
+                            <div style="font-weight: bold;">Level color settings</div>
+                            <div class="flexGap12 marginTop12">
+                                <div class="colorModalAttribute" style="margin: auto 0">background-color:</div>
+                                <button class="color-input-level-background" style="margin-left: 5px" value="transp" id="levelColorButton">
                                     <img alt="plus" width="80" height="40" src="images/icons/transparentIcon.svg"
                                         class="iconInButtonWithText">
                                 </button>
                                 <img id="deleteLevelColorButton" alt="delete" width="16" height="16"
                                     src="images/icons/delete.svg" class="marginTop8 hovereableRedSvg"
                                     style="margin: auto 0" onClick="WorldColorHandler.deleteLevelColor()">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="colorModalBackgroundSelection" class="marginTop8 colorModalSection" style="display: none">
+                        <div style="font-weight: bold;">General background settings</div>
+                        <div class="marginTop8">
+                            <span class="colorModalAttribute">Background-image:</span>
+                            <select name="backgroundImageSelector" id="backgroundImageWorldSelector" 
+                                onchange="WorldColorHandler.changeWorldBackgroundImage(event)" class="backgroundImageSelect">
+                              </select>
+                        </div>
+                        <div class="marginTop8" id="imageSizeWorldSelectorWrapper">
+                            <span class="colorModalAttribute">Image-size:</span>
+                            <select name="imageSizeWorldSelector" id="imageSizeWorldSelector" style="margin-left: 52px;"
+                                onchange="WorldColorHandler.changeWorldImageSize(event)" class="backgroundImageSelect">
+                                <option value="stretch">Stretch</option>
+                                <option value="original">Original</option>
+                                <option value="fixed">Fixed/Parallax</option>
+                              </select>
+                        </div>
+                        <div class="subSection12Gap">
+                            <div style="font-weight: bold;">Level background settings</div>
+                            <div class="marginTop8">
+                                <span class="colorModalAttribute">Background-image:</span>
+                                <select name="backgroundImageSelector" id="backgroundImageLevelSelector" 
+                                    onchange="WorldColorHandler.changeLevelBackgroundImage(event)" class="backgroundImageSelect">
+                                  </select>
+                            </div>
+                            <div class="marginTop8" id="imageSizeLevelSelectorWrapper">
+                                <span class="colorModalAttribute">Image-size:</span>
+                                <select name="imageSizeLevelSelector" id="imageSizeLevelSelector" style="margin-left: 52px;"
+                                    onchange="WorldColorHandler.changeLevelImageSize(event)" class="backgroundImageSelect">
+                                    <option value="stretch">Stretch</option>
+                                    <option value="original">Original</option>
+                                    <option value="fixed">Fixed/Parallax</option>
+                                  </select>
+                            </div>
+                            <div class="textAsLink marginTop16" onClick="ImageHandler.switchTouploadView()">
+                                <img alt="plus" width="14" height="14" class="blue-filter" src="images/icons/plus.svg"
+                                class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Upload more background images</span>
                             </div>
                         </div>
                     </div>
@@ -659,9 +741,11 @@
             <script src="utils/SpritePixelArrays.js"></script>
             <script src="handlers/LevelNavigationHandler.js"></script>
             <script src="Sounds/Base64Sounds.js"></script>
-            <script src="images/icons/Base64Images.js"></script>
+            <script src="images/Base64Images.js"></script>
+            <script src="images/Base64BackgroundImages.js"></script>
             <script src="Sound.js"></script>
             <script src="handlers/SoundHandler.js"></script>
+            <script src="handlers/ImageHandler.js"></script>
             <script src="handlers/EffectsHandler.js"></script>
             <script src="EffectsRenderer.js"></script>
             <script src="handlers/DialogueHandler.js"></script>
@@ -693,6 +777,7 @@
             <script src="htmlRenderers/EffectHtmlRenderer.js"></script>
             <script src="htmlRenderers/CustomSpritesElementsRenderer.js"></script>
             <script src="htmlRenderers/SoundHandlerRenderer.js"></script>
+            <script src="htmlRenderers/ImageHandlerRenderer.js"></script>
             <link rel="stylesheet" type="text/css" href="styles/gameScreen.css">
             <link rel="stylesheet" type="text/css" href="styles/buildMenu.css">
             <link rel="stylesheet" type="text/css" href="styles/drawSection.css">
@@ -709,6 +794,7 @@
                 WorldDataHandler.staticConstructor();
                 const spriteCanvas = document.getElementById("sprites");
                 SoundHandler.staticConstructor();
+                ImageHandler.staticConstructor();
                 AnimationHelper.staticConstructor();
                 SpritePixelArrays.staticConstructor();
                 const player = new Player(WorldDataHandler.initialPlayerPosition.x,
@@ -774,6 +860,7 @@
                 function build() {
                     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
                     Camera.begin();
+                    ImageHandler.displayBackgroundImage();
                     tileMapHandler.drawGrid();
                     tileMapHandler.displayLevel();
                     if (tileMapHandler.currentLevel === 0) {
@@ -807,6 +894,7 @@
                     if (!Game.refreshRateHigher60 || Game.elapsed > Game.fpsInterval) {
                         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
                         Camera.begin();
+                        ImageHandler.displayBackgroundImage();
                         tileMapHandler.displayLevel();
                         Controller.handleGamepadInput();
                         if (tileMapHandler.currentLevel === 0) {

@@ -6,8 +6,15 @@ class ExportedGameInitializer {
         WorldDataHandler.effects = allData.effects;
         WorldDataHandler.backgroundColor = allData.backgroundColor;
         WorldDataHandler.textColor = allData.textColor;
+        WorldDataHandler.backgroundImage = allData.backgroundImage;
         TransitionAnimationHandler.animationFrames = allData.animationFrames;
         TransitionAnimationHandler.animationType = allData.animationType;
+        if(allData.images) {
+            ImageHandler.images = allData.images;
+        }
+        else {
+            ImageHandler.images = [];
+        }
 
         if(allData?.sounds) {
             allData.sounds.forEach(sound => {

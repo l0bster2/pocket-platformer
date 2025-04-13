@@ -124,10 +124,12 @@ function exportGame() {
   allData.effects = WorldDataHandler.effects;
   allData.backgroundColor = WorldDataHandler.backgroundColor;
   allData.textColor = WorldDataHandler.textColor;
+  allData.backgroundImage = WorldDataHandler.backgroundImage;
   allData.animationFrames = TransitionAnimationHandler.animationFrames;
   allData.animationType = TransitionAnimationHandler.animationType;
   allData.playerObject = createPlayerAttributesSectionForAllData();
   allData.sounds = getCustomSounds();
+  allData.images = ImageHandler.images;
   allData.sprites = createChangedSpitesObject();
   bundledScripts = bundledScripts.replace("//putAllDataHere",
     `${allDataStartComment}
@@ -251,6 +253,11 @@ function createHtmlDocoumentWithCanvas() {
   Helpers.addAttributesToHTMLElement(noiseCanvas, { "id": "noiseCanvas", "width": "900ox", height: "520px" });
   noiseCanvas.style.display = "none";
   gameScreen.appendChild(noiseCanvas);
+
+  var backgroundImagesCanvas = emptyHtmlDocument.createElement("canvas");
+  Helpers.addAttributesToHTMLElement(backgroundImagesCanvas, { "id": "imagePreviewCanvas", "width": "400ox", height: "400px" });
+  backgroundImagesCanvas.style.display = "none";
+  gameScreen.appendChild(backgroundImagesCanvas);
 
   const mobileControls = Object.assign(
     document.createElement(`div`),
