@@ -13,7 +13,7 @@ class LevelNavigationHandler {
 
     static createNewEmptyLevel() {
         const nextLevel = tileMapHandler.currentLevel + 1;
-        WorldDataHandler.levels.splice(nextLevel, 0, WorldDataHandler.exampleLevel());
+        WorldDataHandler.levels.splice(nextLevel, 0, WorldDataHandler.exampleLevel(false));
         tileMapHandler.currentLevel = nextLevel;
         this.adjustObjectsToAddedLevel(nextLevel);
         this.adjustEffectsAfterLevelAmountChange(nextLevel);

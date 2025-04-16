@@ -7,13 +7,14 @@ class ExportedGameInitializer {
         WorldDataHandler.backgroundColor = allData.backgroundColor;
         WorldDataHandler.textColor = allData.textColor;
         WorldDataHandler.backgroundImage = allData.backgroundImage;
+        WorldDataHandler.backgroundImageSize = allData.backgroundImageSize;
         TransitionAnimationHandler.animationFrames = allData.animationFrames;
         TransitionAnimationHandler.animationType = allData.animationType;
         if(allData.images) {
             ImageHandler.images = allData.images;
         }
         else {
-            ImageHandler.images = [];
+            //ImageHandler.images = [];
         }
 
         if(allData?.sounds) {

@@ -5,8 +5,10 @@ class ImageHandler {
         this.imageCanvasCtx = this.imageCanvas.getContext("2d");
 
         this.images = [
-            { name: "Background example 1", value: Base64BackgroundImages.backgroundExample1, width: 736, height: 621 },
-            { name: "Background example 2", value: Base64BackgroundImages.backgroundExample2, width: 1920, height: 1080 },
+            { name: "Castle.png", value: Base64BackgroundImages.backgroundExample1, width: 1280, height: 720 },
+            { name: "Nightsky.png", value: Base64BackgroundImages.backgroundExample2, width: 1280, height: 720 },
+            { name: "Swamp.png", value: Base64BackgroundImages.backgroundExample3, width: 1280, height: 720 },
+            { name: "Spooky.png", value: Base64BackgroundImages.backgroundExample4, width: 1280, height: 720 },
         ];
         if (this.images.length) {
             this.initializeImageOnImageCanvas(this.images[0])

@@ -2,7 +2,7 @@ class WorldDataHandler {
 
     static staticConstructor() {
         this.initialPlayerPosition = { x: 2, y: 10 };
-        this.levels = [this.createEmptyLevel(), this.exampleLevel(), this.createEmptyLevel()];
+        this.levels = [this.createEmptyLevel(), this.exampleLevel(true), this.createEmptyLevel()];
         this.tileSize = 24;
         this.gamesName = "Example name";
         this.endingMessage = "Thx for playing!";
@@ -50,7 +50,7 @@ class WorldDataHandler {
         };
     }
 
-    static exampleLevel() {
+    static exampleLevel(withDefaultImage = false) {
         let exampleLevelTileData = this.createEmptyLevel().tileData;
         for(var i = 1; i < 6; i++) {
             exampleLevelTileData[11][i] = 2;
@@ -72,8 +72,8 @@ class WorldDataHandler {
             backgroundColor: "transp",
             zoomFactor: 1,
             song: null,
-            backgroundImage: null,
-            backgroundImageSize: null,
+            backgroundImage: withDefaultImage ? "Castle.png" : null,
+            backgroundImageSize: withDefaultImage ? "stretch" : null,
         };
     }
 
