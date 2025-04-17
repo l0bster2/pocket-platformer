@@ -67,19 +67,15 @@ class WorldColorHandler {
     static changeLevelBackgroundImage(event) {
         const value = event.target.value;
         WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage = value || null;
-        WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize = "stretch";
         ImageHandler.setBackgroundImage();
         document.getElementById("imageSizeLevelSelectorWrapper").style.display = value === "none" || value === null ? "none" : "block";
-        document.getElementById("imageSizeLevelSelector").value = "stretch";
     }
 
     static changeWorldBackgroundImage(event) {
         const value = event.target.value;
         WorldDataHandler.backgroundImage = value || null;
-        WorldDataHandler.backgroundImageSize = "stretch";
         ImageHandler.setBackgroundImage();
         document.getElementById("imageSizeWorldSelectorWrapper").style.display = backgroundImageWorldSelector.value === "none" || backgroundImageWorldSelector.value === null ? "none" : "block";
-        document.getElementById("imageSizeWorldSelector").value = "stretch";
     }
 
     static changeLevelImageSize(event) {
