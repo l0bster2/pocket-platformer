@@ -63,18 +63,21 @@ class TabNavigation {
   }
 
   static drawDeleteIconsForCustomSprites() {
-    if (this.currentSelectedTab === SpritePixelArrays.customType) {
-      this.removeOldDeleteIcons();
-      const { startIndex, endIndex } = this.getStartAndEndIndexPerPage();
+    const onBeta = false;
+    if (onBeta) {
+      if (this.currentSelectedTab === SpritePixelArrays.customType) {
+        this.removeOldDeleteIcons();
+        const { startIndex, endIndex } = this.getStartAndEndIndexPerPage();
 
-      for (var index = startIndex; index < endIndex; index++) {
-        const { x, y } = TabNavigation.getPositionForSingleSprite(index);
-        const deleteImgWrapper = CustomSpritesElementsRenderer.createRemoveCustomSpriteIcon(x, y, index)
-        deleteImgWrapper.onclick = (event) => {
-          const id = parseInt(event.target.id.replace("removeCustomSprite", ""));
-          CustomSpriteHandler.showDeleteModal(id);
-        };
-        this.canvasWrapper.appendChild(deleteImgWrapper);
+        for (var index = startIndex; index < endIndex; index++) {
+          const { x, y } = TabNavigation.getPositionForSingleSprite(index);
+          const deleteImgWrapper = CustomSpritesElementsRenderer.createRemoveCustomSpriteIcon(x, y, index)
+          deleteImgWrapper.onclick = (event) => {
+            const id = parseInt(event.target.id.replace("removeCustomSprite", ""));
+            CustomSpriteHandler.showDeleteModal(id);
+          };
+          this.canvasWrapper.appendChild(deleteImgWrapper);
+        }
       }
     }
   }
@@ -88,7 +91,7 @@ class TabNavigation {
       && !(startIndex === endIndex)) {
       this.createNewSpriteButton.style.display = "none";
     }
-    else if(this.currentSelectedTab === 'custom'){
+    else if (this.currentSelectedTab === 'custom') {
       const { x, y } = this.getPositionForSingleSprite(customSpritesAmount);
       this.createNewSpriteButton.style.display = "block";
       this.createNewSpriteButton.style.left = `${x}px`;
@@ -177,9 +180,11 @@ class TabNavigation {
         const allDekoSprites = SpritePixelArrays.getSpritesByType(SpritePixelArrays.SPRITE_TYPES.deko);
         indexInSpriteArray = allDekoSprites.findIndex((deko) => deko.descriptiveName === selectedSprite.descriptiveName);
       }
-      BuildMode.setCurrentSelectedObject({ name: selectedSprite.name, index: indexInSpriteArray, type: selectedSprite.type, extraAttributes,
-        canvasYSpritePos: selectedSprite.canvasYPos, sprite: selectedSprite, 
-        size: SpritePixelArrays.movingPlatformSprites.includes(selectedSprite.name) ? 3 : 1 });
+      BuildMode.setCurrentSelectedObject({
+        name: selectedSprite.name, index: indexInSpriteArray, type: selectedSprite.type, extraAttributes,
+        canvasYSpritePos: selectedSprite.canvasYPos, sprite: selectedSprite,
+        size: SpritePixelArrays.movingPlatformSprites.includes(selectedSprite.name) ? 3 : 1
+      });
       DrawSectionHandler.changeSelectedSprite({ target: { value: selectedSprite.descriptiveName } }, true);
       this.markSelectedSprite(index, yPos)
     }
