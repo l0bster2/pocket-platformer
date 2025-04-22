@@ -2527,7 +2527,6 @@ class SpritePixelArrays {
       this.allSprites = this.allSprites.map(object => {
         const index = this.getIndexOfSprite(object.descriptiveName, 0, "descriptiveName");
         const canvasYPos = this.getCanvasSpriteYPosition(index);
-
         const objectCopy = {
           ...object,
           canvasYPos,

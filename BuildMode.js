@@ -72,10 +72,10 @@ class BuildMode {
 
     static updatePermissionsSquareOffset() {
         this.currentPreviewOffset += this.currentPreviewOffsetChanger;
-        if(this.currentPreviewOffset < -0.5) {
+        if (this.currentPreviewOffset < -0.5) {
             this.currentPreviewOffsetChanger = this.currentPreviewOffsetChanger * -1;
         }
-        else if(this.currentPreviewOffset > 0) {
+        else if (this.currentPreviewOffset > 0) {
             this.currentPreviewOffsetChanger = this.currentPreviewOffsetChanger * -1;
         }
     }
@@ -502,7 +502,7 @@ class BuildMode {
     }
 
     static deleteObject(currentTile, allObjectsAtCurrentTile, tilePosX, tilePosY) {
-        if (currentTile !== 0) {
+        if (currentTile !== 0 && LayerHandler.tileLayer) {
             tileMapHandler.tileMap[tilePosY][tilePosX] = 0;
         }
         if (allObjectsAtCurrentTile.length) {
@@ -519,7 +519,7 @@ class BuildMode {
                 const { tilePosX, tilePosY } = positionToRemove;
                 this.removeFromData("levelObjects", tilePosX, tilePosY);
                 this.removeFromData("deko", tilePosX, tilePosY);
-                PathBuildHandler.removePathFromData(tilePosX, tilePosY, this.objectsDeletedInOneGo);
+                LayerHandler.objectLayer && PathBuildHandler.removePathFromData(tilePosX, tilePosY, this.objectsDeletedInOneGo);
             })
         }
         tileMapHandler.createStaticTiles();
@@ -541,6 +541,20 @@ class BuildMode {
         const arrLength = arr.length - 1;
         for (var i = arrLength; i >= 0; i--) {
             if (arr[i].initialX === tilePosX && arr[i].initialY === tilePosY) {
+                // Check if layer is visible
+                if (arr[i].type === ObjectTypes.WATER && !LayerHandler.waterLayer) {
+                    return;
+                }
+                if (arr[i].type === ObjectTypes.DEKO && !LayerHandler.decoLayer) {
+                    return;
+                }
+                if (arr[i]?.spriteObject?.[0]?.type === SpritePixelArrays.SPRITE_TYPES.object && !LayerHandler.objectLayer && arr[i].type !== ObjectTypes.WATER) {
+                    return;
+                }
+                if (SpritePixelArrays.foregroundSprites.includes(arr[i].type) && !LayerHandler.foregroundLayer) {
+                    return;
+                }
+                // Delete
                 this.objectsDeletedInOneGo.push({ x: tilePosX, y: tilePosY });
                 arr[i]?.type === ObjectTypes.START_FLAG && this.resetInitialPlayerPosition(tilePosX, tilePosY);
                 arr.splice(i, 1);
@@ -571,7 +585,7 @@ class BuildMode {
         this.rectangleDrawingEndingPoint = { x: endPosX, y: endPosY };
         const yValues = MathHelpers.sortNumbers([y, endPosY]);
         const xValues = MathHelpers.sortNumbers([x, endPosX]);
-        this.drawPermissionSquare(xValues[0], yValues[0], 
+        this.drawPermissionSquare(xValues[0], yValues[0],
             xValues[1] + 1, yValues[1] + 1, color);
     }
 
@@ -587,8 +601,8 @@ class BuildMode {
 
         Display.drawImageWithAlpha(tileMapHandler.spriteCanvas,
             xPosInSpriteCanvas, this.currentSelectedObject.canvasYSpritePos,
-            tileSize, tileSize, 
-            actualXPos, actualYPos, 
+            tileSize, tileSize,
+            actualXPos, actualYPos,
             tileSize, tileSize, 0.6);
     }
 

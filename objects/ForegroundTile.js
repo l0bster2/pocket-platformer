@@ -10,6 +10,6 @@ class ForegroundTile extends InteractiveLevelObject {
     }
 
     draw(spriteCanvas) {
-        Game.playMode === Game.PLAY_MODE ? super.draw(spriteCanvas) : super.drawWithAlpha(spriteCanvas, 0.2);
+        Game.playMode === Game.PLAY_MODE ? super.draw(spriteCanvas) : super.drawWithAlpha(spriteCanvas, 0.4);
     }
 }

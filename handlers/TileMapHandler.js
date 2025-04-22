@@ -28,10 +28,16 @@ class TileMapHandler {
 
     updateYCanvasAttributeForSetObjects() {
         this.levelObjects.forEach(levelObject => {
-            if(levelObject.extraAttributes.customName) {
+            if (levelObject.extraAttributes.customName) {
                 const spriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(levelObject.extraAttributes.customName);
                 levelObject.canvasYSpritePos = spriteObject?.[0].canvasYPos;
             }
+        })
+        this.deko.forEach(dekoObject => {
+            const spriteIndex = SpritePixelArrays.getIndexOfSprite(dekoObject.type, dekoObject.dekoIndex);
+            const spriteObject = [SpritePixelArrays.getSpritesByIndex(spriteIndex)];
+            const canvasYSpritePos = spriteObject?.[0].canvasYPos;
+            dekoObject.canvasYSpritePos = canvasYSpritePos;
         })
         this.setTileTypes();
     }
@@ -58,7 +64,7 @@ class TileMapHandler {
     }
 
     changeJumpSwitchBlockType() {
-        if(this.currentJumpSwitchBlockType === this.jumpSwitchBlockTypes.violet) {
+        if (this.currentJumpSwitchBlockType === this.jumpSwitchBlockTypes.violet) {
             this.currentJumpSwitchBlockType = this.jumpSwitchBlockTypes.pink
         }
         else {
@@ -196,19 +202,25 @@ class TileMapHandler {
             }
         }
         this.layers = this.splitLevelObjectsInLayers();
-        this.displayObjects(this.layers[0]);
-        this.displayObjectsOrDeko(this.deko);
+        // water
+        (isPlayMode || LayerHandler.waterLayer) && this.displayObjects(this.layers[0]);
+        (isPlayMode || LayerHandler.decoLayer) && this.displayObjectsOrDeko(this.deko);
         SFXHandler.updateSfxAnimations("backgroundSFX");
         isPlayMode && this.effects.length && EffectsRenderer.displayEffects();
-        //background objects, like water
-        this.displayObjectsOrDeko(this.paths);
-        //normal objects
-        this.displayObjects(this.layers[1]);
-        this.displayObjects(this.layers[2]);
-        //moving platforms
-        this.displayObjects(this.layers[3]);
-        this.displayStaticTiles();
-        //projectiles
+        // paths
+        if (isPlayMode || LayerHandler.objectLayer) {
+            this.displayObjectsOrDeko(this.paths);
+            // normal objects
+            this.displayObjects(this.layers[1]);
+            this.displayObjects(this.layers[2]);
+            //moving platforms
+            this.displayObjects(this.layers[3]);
+        }
+        // tiles
+        if (isPlayMode || LayerHandler.tileLayer) {
+            this.displayStaticTiles();
+        }
+        // projectiles
         this.displayObjects(this.layers[4]);
     }
 
@@ -217,19 +229,19 @@ class TileMapHandler {
             [], [], [], [], [], []
         ];
         this.levelObjects.forEach(levelObject => {
-            if(SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
+            if (SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
                 layers[0].push(levelObject);
             }
-            else if(SpritePixelArrays.projectileSprites.includes(levelObject.type)) {
+            else if (SpritePixelArrays.projectileSprites.includes(levelObject.type)) {
                 layers[4].push(levelObject);
             }
-            else if(SpritePixelArrays.movingPlatformSprites.includes(levelObject.type)) {
+            else if (SpritePixelArrays.movingPlatformSprites.includes(levelObject.type)) {
                 layers[3].push(levelObject);
             }
-            else if(SpritePixelArrays.foregroundSprites.includes(levelObject.type)) {
+            else if (SpritePixelArrays.foregroundSprites.includes(levelObject.type)) {
                 layers[5].push(levelObject);
             }
-            else if(levelObject.type === ObjectTypes.TRAMPOLINE) {
+            else if (levelObject.type === ObjectTypes.TRAMPOLINE) {
                 layers[2].push(levelObject);
             }
             else {

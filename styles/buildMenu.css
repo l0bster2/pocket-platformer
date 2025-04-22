@@ -1,3 +1,13 @@
+td,
+th {
+    text-align: left;
+    padding: 4px;
+}
+
+tr:nth-child(even) {
+    background-color: aliceblue;
+}
+
 #attributeSlider {
     margin-left: 8px;
     flex: 1;
@@ -148,6 +158,14 @@
     margin-left: 8px;
 }
 
+.layerButton {
+    padding: 4px;
+
+    img {
+        pointer-events: none;
+    }
+}
+
 .leftLabel {
     margin: auto 8px auto 0;
 }
@@ -196,7 +214,7 @@ input:checked+.switchSlider:before {
     border-radius: 6px;
     padding: 0.75em 1.5em;
     background: #DCDCDC;
-    color:  #000000;
+    color: #000000;
     transform: translateY(-0.2em);
     transition: transform 0.1s ease;
 }
@@ -334,17 +352,20 @@ input:checked+.switchSlider:before {
     border-left: 1px solid lightgrey;
 }
 
-.soundControls, .imageControls {
+.soundControls,
+.imageControls {
     padding: 2px 0;
     display: flex;
 }
 
-.soundControlsDescription, .imageControlsDescription {
+.soundControlsDescription,
+.imageControlsDescription {
     flex: 1;
     padding: 12px;
 }
 
-#soundView, #imageView {
+#soundView,
+#imageView {
     gap: 8px;
 }
 

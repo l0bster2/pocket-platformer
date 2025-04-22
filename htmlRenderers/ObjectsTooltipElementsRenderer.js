@@ -294,7 +294,7 @@ class ObjectsTooltipElementsRenderer {
                     break;
                 }
             }
-            if(WorldDataHandler.levels.length - 1 === currentObject.customExit.levelIndex) {
+            if (WorldDataHandler.levels.length - 1 === currentObject.customExit.levelIndex) {
                 options[options.length - 1].selected = true;
             }
         }
@@ -494,7 +494,7 @@ class ObjectsTooltipElementsRenderer {
         const { currentSpriteHeight, currentSpriteWidth } = DrawSectionHandler;
         const sameHeightAndWidth = currentSpriteHeight === currentSpriteWidth;
         const disabledOption = sameHeightAndWidth ? "" : "disabled";
-        const rotateButtonClasses = sameHeightAndWidth ?  "iconInButtonWithText" : "iconInButtonWithText greyFilter";
+        const rotateButtonClasses = sameHeightAndWidth ? "iconInButtonWithText" : "iconInButtonWithText greyFilter";
 
         const template = Object.assign(
             document.createElement(`div`),
@@ -557,6 +557,69 @@ class ObjectsTooltipElementsRenderer {
             });
         template.style.whiteSpace = "initial";
         return template
+    }
+
+    static getRightEyeIcon(layerVisibility) {
+        return layerVisibility ? "images/icons/eye.svg" : "images/icons/closedEye.svg";
+    }
+
+    static createLayersTooltip() {
+        const template = Object.assign(
+            document.createElement(`div`),
+            {
+                innerHTML:
+                    `
+                                <table class="fullWidth">
+                                    <tr>
+                                        <td style="width: 24px">
+                                            <button id="waterLayer" class="layerButton levelNavigationButton"
+                                                onClick="LayerHandler.layerVisibilityButtonClicked(event)">
+                                                <img src=${this.getRightEyeIcon(LayerHandler.waterLayer)} width="16" height="16">
+                                            </button>
+                                        </td>
+                                        <td>Water</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button id="decoLayer" class="layerButton levelNavigationButton"
+                                                onClick="LayerHandler.layerVisibilityButtonClicked(event)">
+                                                <img src=${this.getRightEyeIcon(LayerHandler.decoLayer)} width="16" height="16">
+                                            </button>
+                                        </td>
+                                        <td>Deco</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button id="objectLayer" class="layerButton levelNavigationButton"
+                                                onClick="LayerHandler.layerVisibilityButtonClicked(event)">
+                                                <img src=${this.getRightEyeIcon(LayerHandler.objectLayer)} width="16" height="16">
+                                            </button>
+                                        </td>
+                                        <td>Objects</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button id="tileLayer" class="layerButton levelNavigationButton"
+                                                onClick="LayerHandler.layerVisibilityButtonClicked(event)">
+                                                <img src=${this.getRightEyeIcon(LayerHandler.tileLayer)} width="16" height="16">
+                                            </button>
+                                        </td>
+                                        <td>Tiles</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button id="foregroundLayer" class="layerButton levelNavigationButton"
+                                                onClick="LayerHandler.layerVisibilityButtonClicked(event)">
+                                                <img src=${this.getRightEyeIcon(LayerHandler.foregroundLayer)} width="16" height="16">
+                                            </button>
+                                        </td>
+                                        <td>Foreground</td>
+                                    </tr>
+                                </table>
+                            `
+            });
+        template.style.whiteSpace = "normal";
+        return template;
     }
 
     static createDialogueContent(attribute, currentObject, dialogueWrapper) {
