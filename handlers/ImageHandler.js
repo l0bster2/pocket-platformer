@@ -4,6 +4,7 @@ class ImageHandler {
         this.imageCanvas = document.getElementById("imagePreviewCanvas");
         this.imageCanvasCtx = this.imageCanvas.getContext("2d");
         this.currentVerticalScrollingPos = 0;
+        this.verticalScrollingSpeed = -0.2;
         this.images = [
             { name: "Castle.png", value: Base64BackgroundImages.backgroundExample1, width: 1280, height: 720 },
             { name: "Nightsky.png", value: Base64BackgroundImages.backgroundExample2, width: 1280, height: 720 },
@@ -86,6 +87,7 @@ class ImageHandler {
     }
 
     static setBackgroundImage() {
+        this.currentVerticalScrollingPos = 0;
         let imageName = WorldDataHandler.backgroundImage;
         this.currentLevelImageSize = WorldDataHandler.backgroundImageSize;
         const levelImage = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage;
@@ -137,6 +139,24 @@ class ImageHandler {
                         this.currentLevelImage.width, this.currentLevelImage.height,
                         Camera.viewport.left, Camera.viewport.top,
                         Camera.viewport.width, Camera.viewport.height);
+                    break;
+                case "horizontalScroll":
+                    if (Game.playMode === Game.PLAY_MODE) {
+                        this.currentVerticalScrollingPos += this.verticalScrollingSpeed;
+                        if (this.currentVerticalScrollingPos <= Camera.viewport.width * -1) {
+                            this.currentVerticalScrollingPos = 0;
+                        }
+                    }
+                    else {
+                        this.currentVerticalScrollingPos = 0;
+                    }
+                    const backgroundImageAmount = Math.round(tileMapHandler.levelWidthInPx / Camera.viewport.width) + 1;
+                    for (var i = 0; i < backgroundImageAmount; i++) {
+                        Display.drawImage(this.imageCanvas, 0, 0,
+                            this.currentLevelImage.width, this.currentLevelImage.height,
+                            Camera.viewport.width * i + this.currentVerticalScrollingPos, Camera.viewport.top,
+                            Camera.viewport.width, Camera.viewport.height);
+                    }
                     break;
                 default:
                     break;

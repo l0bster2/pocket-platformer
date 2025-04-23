@@ -3,7 +3,7 @@ class Stomper extends InteractiveLevelObject {
     constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
         super(x, y, tileSize, type, -1, extraAttributes);
         this.tilemapHandler = tilemapHandler;
-        this.distanceToCheckCollission = tilemapHandler.halfTileSize;
+        this.distanceToCheckCollission =  tileSize / 2;
         this.speed = 6;
         this.pauseFrames = 20;
         this.currentPauseFrame = 0;

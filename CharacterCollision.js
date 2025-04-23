@@ -105,7 +105,7 @@ class CharacterCollision {
         // collision to the top
         else if (obj.yspeed < 0) {
             if (!MathHelpers.arraysHaveSameValues([obj.top_right, obj.top_left, ...obj.extraTopPoints], this.passableTiles)) {
-                cornerCorrection && this.checkTopCornerCorrection(obj);
+                cornerCorrection ? this.checkTopCornerCorrection(obj) : this.correctTopPosition(obj);;
             }
         }
 
