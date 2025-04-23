@@ -124,7 +124,7 @@ class BuildMode {
         this.dragPlayerHandler(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY);
 
         //If tile is free -> logic for setting new objects
-        if (placementAllowed && !this.draggingPlayer && !hoveredOverPlayer) {
+        if (placementAllowed && !this.draggingPlayer && !hoveredOverPlayer && !Controller.jump) {
             this.changeMouseCursor(this.mouseCursorStyles.default);
 
             if (this.rectangleStyleDrawing) {
@@ -175,19 +175,39 @@ class BuildMode {
                     this.drawPermissionSquare(tilePosX, tilePosY, tilePosX + 1, tilePosY + 1, readyForToolTip ? 'FFA500' : '8b0000');
                 }
 
-                //Tooltip if click on occupied tile again
                 if (Controller.mousePressed && !this.mousePressed) {
                     this.mousePressed = true;
-
-                    if (changeableObjectsHoveringOver.length) {
+                    //copy sprite
+                    if(Controller.jump) {
+                        this.copySprite(currentTile, allObjectsAtCurrentTile);
+                    }
+                    //Tooltip if click on occupied tile again
+                    else if (changeableObjectsHoveringOver.length) {
                         //pass all objects hovering over (should be only paths and objects on top). reverse, so that path attributes are at the bottom
                         this.showTooltipWithExtraAttributes(tilePosX, tilePosY, changeableObjectsHoveringOver.reverse());
                     }
+
                 }
             }
         }
         //Deleting object
         this.deleteHandler(allObjectsAtCurrentTile, currentTile, tilePosX, tilePosY);
+    }
+
+    static copySprite(currentTile, allObjectsAtCurrentTile) {
+        if(currentTile) {
+            const copiedSprite = SpritePixelArrays.allSprites.find((sprite) => sprite.name === currentTile);
+            if (copiedSprite) {
+                TabNavigation.setSelectedSprite(copiedSprite, 0);
+            }
+        }
+        else if(allObjectsAtCurrentTile) {
+            const topSpriteDescriptiveName = allObjectsAtCurrentTile.reverse()[0]?.spriteObject?.[0].descriptiveName;
+            const copiedSprite = SpritePixelArrays.allSprites.find((sprite) => sprite.descriptiveName === topSpriteDescriptiveName);
+            if (copiedSprite) {
+                TabNavigation.setSelectedSprite(copiedSprite, 0);
+            }
+        }
     }
 
     static drawingAreaReleased(option = "setObjects") {

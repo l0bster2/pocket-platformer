@@ -172,22 +172,27 @@ class TabNavigation {
     const indexRelativeToPage = index + TabPagination.getPageOffset();
     const selectedSprite = this.selectableSprites[indexRelativeToPage];
     if (selectedSprite) {
-      let extraAttributes = {};
-      if (selectedSprite.custom) {
-        extraAttributes.customName = selectedSprite.descriptiveName;
-      }
-      if (selectedSprite.type === SpritePixelArrays.SPRITE_TYPES.deko) {
-        const allDekoSprites = SpritePixelArrays.getSpritesByType(SpritePixelArrays.SPRITE_TYPES.deko);
-        indexInSpriteArray = allDekoSprites.findIndex((deko) => deko.descriptiveName === selectedSprite.descriptiveName);
-      }
-      BuildMode.setCurrentSelectedObject({
-        name: selectedSprite.name, index: indexInSpriteArray, type: selectedSprite.type, extraAttributes,
-        canvasYSpritePos: selectedSprite.canvasYPos, sprite: selectedSprite,
-        size: SpritePixelArrays.movingPlatformSprites.includes(selectedSprite.name) ? 3 : 1
-      });
-      DrawSectionHandler.changeSelectedSprite({ target: { value: selectedSprite.descriptiveName } }, true);
+      this.setSelectedSprite(selectedSprite, indexInSpriteArray)
       this.markSelectedSprite(index, yPos)
     }
+  }
+
+  static setSelectedSprite(selectedSprite, indexInSpriteArray) {
+    var index = indexInSpriteArray;
+    let extraAttributes = {};
+    if (selectedSprite.custom) {
+      extraAttributes.customName = selectedSprite.descriptiveName;
+    }
+    if (selectedSprite.type === SpritePixelArrays.SPRITE_TYPES.deko) {
+      const allDekoSprites = SpritePixelArrays.getSpritesByType(SpritePixelArrays.SPRITE_TYPES.deko);
+      index = allDekoSprites.findIndex((deko) => deko.descriptiveName === selectedSprite.descriptiveName);
+    }
+    BuildMode.setCurrentSelectedObject({
+      name: selectedSprite.name, index, type: selectedSprite.type, extraAttributes,
+      canvasYSpritePos: selectedSprite.canvasYPos, sprite: selectedSprite,
+      size: SpritePixelArrays.movingPlatformSprites.includes(selectedSprite.name) ? 3 : 1
+    });
+    DrawSectionHandler.changeSelectedSprite({ target: { value: selectedSprite.descriptiveName } }, true);
   }
 
   static markSelectedSprite(index, yPos) {

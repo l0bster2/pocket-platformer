@@ -3,7 +3,7 @@ class ImageHandler {
     static staticConstructor() {
         this.imageCanvas = document.getElementById("imagePreviewCanvas");
         this.imageCanvasCtx = this.imageCanvas.getContext("2d");
-
+        this.currentVerticalScrollingPos = 0;
         this.images = [
             { name: "Castle.png", value: Base64BackgroundImages.backgroundExample1, width: 1280, height: 720 },
             { name: "Nightsky.png", value: Base64BackgroundImages.backgroundExample2, width: 1280, height: 720 },
