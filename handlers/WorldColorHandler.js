@@ -74,6 +74,9 @@ class WorldColorHandler {
     static changeWorldBackgroundImage(event) {
         const value = event.target.value;
         WorldDataHandler.backgroundImage = value || null;
+        if(WorldDataHandler.backgroundImageSize == null) {
+            WorldDataHandler.backgroundImageSize = 'stretch';
+        }
         ImageHandler.setBackgroundImage();
         document.getElementById("imageSizeWorldSelectorWrapper").style.display = backgroundImageWorldSelector.value === "none" || backgroundImageWorldSelector.value === null ? "none" : "block";
     }

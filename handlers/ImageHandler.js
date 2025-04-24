@@ -3,6 +3,9 @@ class ImageHandler {
     static staticConstructor() {
         this.imageCanvas = document.getElementById("imagePreviewCanvas");
         this.imageCanvasCtx = this.imageCanvas.getContext("2d");
+        this.currentHorizontalScrollingPos = 0;
+        this.horizontalScrollingSpeed = -0.2;
+
         this.currentVerticalScrollingPos = 0;
         this.verticalScrollingSpeed = -0.2;
         this.images = [
@@ -16,6 +19,17 @@ class ImageHandler {
         }
         this.currentLevelImage = null;
         this.imageToDelete = null;
+
+        this.scrollMapper = {
+            1: 0.2,
+            2: 0.5,
+            3: 1,
+            4: 2,
+            5: 4,
+            6: 6,
+            7: 8,
+            8: 12
+        }
     }
 
     static showDeleteLevelModal(name) {
@@ -88,10 +102,11 @@ class ImageHandler {
 
     static setBackgroundImage() {
         this.currentVerticalScrollingPos = 0;
+        this.currentHorizontalScrollingPos = 0;
         let imageName = WorldDataHandler.backgroundImage;
         this.currentLevelImageSize = WorldDataHandler.backgroundImageSize;
         const levelImage = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage;
-        if (levelImage) {
+        if (levelImage && levelImage !== "none") {
             imageName = levelImage;
             this.currentLevelImageSize = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize;
         }
@@ -119,6 +134,13 @@ class ImageHandler {
         img.src = image.value;
     }
 
+    static changeScrollSpeed(event) {
+        const value = event.target.value;
+        const realValue = this.scrollMapper[value];
+        this.horizontalScrollingSpeed = realValue * -1;
+        document.getElementById("scrollSpeedWorldValue").innerHTML = realValue;
+    }
+
     static displayBackgroundImage() {
         if (this.currentLevelImage) {
             switch (this.currentLevelImageSize) {
@@ -142,19 +164,37 @@ class ImageHandler {
                     break;
                 case "horizontalScroll":
                     if (Game.playMode === Game.PLAY_MODE) {
+                        this.currentHorizontalScrollingPos += this.horizontalScrollingSpeed;
+                        if (this.currentHorizontalScrollingPos <= Camera.viewport.width * -1) {
+                            this.currentHorizontalScrollingPos = 0;
+                        }
+                    }
+                    else {
+                        this.currentHorizontalScrollingPos = 0;
+                    }
+                    const backgroundImageAmount = Math.round(tileMapHandler.levelWidthInPx / Camera.viewport.width) + 1;
+                    for (var i = 0; i < backgroundImageAmount; i++) {
+                        Display.drawImage(this.imageCanvas, 0, 0,
+                            this.currentLevelImage.width, this.currentLevelImage.height,
+                            Camera.viewport.width * i + this.currentHorizontalScrollingPos, Camera.viewport.top,
+                            Camera.viewport.width, Camera.viewport.height);
+                    }
+                    break;
+                case "verticalScroll":
+                    if (Game.playMode === Game.PLAY_MODE) {
                         this.currentVerticalScrollingPos += this.verticalScrollingSpeed;
-                        if (this.currentVerticalScrollingPos <= Camera.viewport.width * -1) {
+                        if (this.currentVerticalScrollingPos <= Camera.viewport.height * -1) {
                             this.currentVerticalScrollingPos = 0;
                         }
                     }
                     else {
                         this.currentVerticalScrollingPos = 0;
                     }
-                    const backgroundImageAmount = Math.round(tileMapHandler.levelWidthInPx / Camera.viewport.width) + 1;
-                    for (var i = 0; i < backgroundImageAmount; i++) {
+                    const verticalBackgroundImageAmount = Math.round(tileMapHandler.levelHeightInPx / Camera.viewport.height) + 1;
+                    for (var i = 0; i < verticalBackgroundImageAmount; i++) {
                         Display.drawImage(this.imageCanvas, 0, 0,
                             this.currentLevelImage.width, this.currentLevelImage.height,
-                            Camera.viewport.width * i + this.currentVerticalScrollingPos, Camera.viewport.top,
+                            Camera.viewport.left, Camera.viewport.height * i + this.currentVerticalScrollingPos,
                             Camera.viewport.width, Camera.viewport.height);
                     }
                     break;

@@ -529,13 +529,22 @@
                         </select>
                     </div>
                     <div class="marginTop8" id="imageSizeWorldSelectorWrapper">
-                        <span class="colorModalAttribute">Image-size:</span>
+                        <span class="colorModalAttribute">Image-type:</span>
                         <select name="imageSizeWorldSelector" id="imageSizeWorldSelector" style="margin-left: 52px;"
                             onchange="WorldColorHandler.changeWorldImageSize(event)" class="backgroundImageSelect">
                             <option value="stretch">Stretch</option>
                             <option value="original">Original</option>
                             <option value="fixed">Fixed/Parallax</option>
+                            <option value="horizontalScroll">Horizontal scroll</option>
+                            <option value="verticalScroll">Vertical scroll</option>
                         </select>
+                    </div>
+                    <div class="marginTop12 changeableAttributesWrapper">
+                        <span class="colorModalAttribute">Scroll speed:</span>
+                        <input style="margin-right:12px" type="range" min="1" max="8" value="1" step="1"
+                            class="slider" id="scrollSpeedWorld"
+                            onchange="ImageHandler.changeScrollSpeed(event)">
+                        <span id="scrollSpeedWorldValue">0.2</span>
                     </div>
                     <div class="subSection12Gap">
                         <div style="font-weight: bold;">Level background settings</div>
@@ -547,12 +556,14 @@
                             </select>
                         </div>
                         <div class="marginTop8" id="imageSizeLevelSelectorWrapper">
-                            <span class="colorModalAttribute">Image-size:</span>
+                            <span class="colorModalAttribute">Image-type:</span>
                             <select name="imageSizeLevelSelector" id="imageSizeLevelSelector" style="margin-left: 52px;"
                                 onchange="WorldColorHandler.changeLevelImageSize(event)" class="backgroundImageSelect">
                                 <option value="stretch">Stretch</option>
                                 <option value="original">Original</option>
                                 <option value="fixed">Fixed/Parallax</option>
+                                <option value="horizontalScroll">Horizontal scroll</option>
+                                <option value="verticalScroll">Vertical scroll</option>
                             </select>
                         </div>
                         <div class="textAsLink marginTop16" onClick="ImageHandler.switchTouploadView()">
