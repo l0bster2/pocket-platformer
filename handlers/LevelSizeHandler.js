@@ -39,6 +39,7 @@ class LevelSizeHandler {
             { x: this.tileMapHandler.player.x, y: this.tileMapHandler.player.y });
 
         this.tileMapHandler.changeTileCanvasSize();
+        ImageHandler.setBackgroundImage();
     }
 
     static adaptZoomForSmallerThanDefaultLevels(width, height, zoom) {

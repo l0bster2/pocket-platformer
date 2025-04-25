@@ -84,6 +84,12 @@ class WorldColorHandler {
     static changeLevelImageSize(event) {
         const value = event.target.value;
         WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize = value || null;
+        if(value === 'verticalScroll' || value === 'horizontalScroll') {
+            document.getElementById("levelScrollSpeed").style.display = "block";
+        }
+        else {
+            document.getElementById("levelScrollSpeed").style.display = "none";
+        }
         ImageHandler.setBackgroundImage();
     }
 
@@ -91,6 +97,12 @@ class WorldColorHandler {
         const value = event.target.value;
         WorldDataHandler.backgroundImageSize = value || null;
         ImageHandler.setBackgroundImage();
+        if(value === 'verticalScroll' || value === 'horizontalScroll') {
+            document.getElementById("worldScrollSpeed").style.display = "block";
+        }
+        else {
+            document.getElementById("worldScrollSpeed").style.display = "none";
+        }
     }
 
     static initializeBackgroundImageSelects() {

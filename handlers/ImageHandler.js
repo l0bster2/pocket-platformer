@@ -4,10 +4,8 @@ class ImageHandler {
         this.imageCanvas = document.getElementById("imagePreviewCanvas");
         this.imageCanvasCtx = this.imageCanvas.getContext("2d");
         this.currentHorizontalScrollingPos = 0;
-        this.horizontalScrollingSpeed = -0.2;
-
-        this.currentVerticalScrollingPos = 0;
-        this.verticalScrollingSpeed = -0.2;
+        this.scrollSpeed = -0.2;
+        this.currentScrollingPos = 0;
         this.images = [
             { name: "Castle.png", value: Base64BackgroundImages.backgroundExample1, width: 1280, height: 720 },
             { name: "Nightsky.png", value: Base64BackgroundImages.backgroundExample2, width: 1280, height: 720 },
@@ -101,14 +99,17 @@ class ImageHandler {
     }
 
     static setBackgroundImage() {
-        this.currentVerticalScrollingPos = 0;
-        this.currentHorizontalScrollingPos = 0;
+        this.currentScrollingPos = 0;
+        this.scrollSpeed = WorldDataHandler.backgroundImageScrollSpeed;
         let imageName = WorldDataHandler.backgroundImage;
         this.currentLevelImageSize = WorldDataHandler.backgroundImageSize;
         const levelImage = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage;
         if (levelImage && levelImage !== "none") {
             imageName = levelImage;
             this.currentLevelImageSize = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize;
+            if (this.currentLevelImageSize === 'horizontalScroll' || this.currentLevelImageSize === 'verticalScroll') {
+                this.scrollSpeed = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageScrollSpeed;
+            }
         }
         const newImage = this.images.find((image) =>
             image.name === imageName);
@@ -126,19 +127,60 @@ class ImageHandler {
         this.imageCanvasCtx.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
         const img = new Image();
         img.onload = () => {
-            this.imageCanvas.width = image.width;
-            this.imageCanvas.height = image.height;
-            this.imageCanvasCtx.drawImage(img, 0, 0);
+            if (this.currentLevelImageSize === "horizontalScroll") {
+                const backgroundImageAmount = Math.round(tileMapHandler.levelWidthInPx / Camera.viewport.width) + 1;
+                this.imageCanvas.width = img.width * backgroundImageAmount;
+                this.imageCanvas.height = img.height;
+
+                for (let i = 0; i < backgroundImageAmount; i++) {
+                    this.imageCanvasCtx.drawImage(img, i * img.width, 0);
+                }
+            }
+            else if (this.currentLevelImageSize === "verticalScroll") {
+                const backgroundImageAmount = Math.round(tileMapHandler.levelHeightInPx / Camera.viewport.height) + 1;
+                this.imageCanvas.width = img.width;
+                this.imageCanvas.height = img.height * backgroundImageAmount;
+
+                for (let i = 0; i < backgroundImageAmount; i++) {
+                    this.imageCanvasCtx.drawImage(img, 0, i * img.height);
+                }
+            }
+            else {
+                this.imageCanvas.width = image.width;
+                this.imageCanvas.height = image.height;
+                this.imageCanvasCtx.drawImage(img, 0, 0);
+            }
         };
 
         img.src = image.value;
     }
 
-    static changeScrollSpeed(event) {
+    static changeWorldScrollSpeed(event) {
         const value = event.target.value;
         const realValue = this.scrollMapper[value];
-        this.horizontalScrollingSpeed = realValue * -1;
+        WorldDataHandler.backgroundImageScrollSpeed = realValue;
         document.getElementById("scrollSpeedWorldValue").innerHTML = realValue;
+        ImageHandler.setBackgroundImage();
+    }
+
+    static changeLevelScrollSpeed(event) {
+        const value = event.target.value;
+        const realValue = this.scrollMapper[value];
+        WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageScrollSpeed = realValue;
+        document.getElementById("scrollSpeedLevelValue").innerHTML = realValue;
+        ImageHandler.setBackgroundImage();
+    }
+
+    static updateScrollPos(maxPos) {
+        if (Game.playMode === Game.PLAY_MODE) {
+            this.currentScrollingPos += this.scrollSpeed * -1;
+            if (this.currentScrollingPos <= maxPos) {
+                this.currentScrollingPos = 0;
+            }
+        }
+        else {
+            this.currentScrollingPos = 0;
+        }
     }
 
     static displayBackgroundImage() {
@@ -163,40 +205,22 @@ class ImageHandler {
                         Camera.viewport.width, Camera.viewport.height);
                     break;
                 case "horizontalScroll":
-                    if (Game.playMode === Game.PLAY_MODE) {
-                        this.currentHorizontalScrollingPos += this.horizontalScrollingSpeed;
-                        if (this.currentHorizontalScrollingPos <= Camera.viewport.width * -1) {
-                            this.currentHorizontalScrollingPos = 0;
-                        }
-                    }
-                    else {
-                        this.currentHorizontalScrollingPos = 0;
-                    }
+                    this.updateScrollPos(Camera.viewport.width * -1);
                     const backgroundImageAmount = Math.round(tileMapHandler.levelWidthInPx / Camera.viewport.width) + 1;
-                    for (var i = 0; i < backgroundImageAmount; i++) {
-                        Display.drawImage(this.imageCanvas, 0, 0,
-                            this.currentLevelImage.width, this.currentLevelImage.height,
-                            Camera.viewport.width * i + this.currentHorizontalScrollingPos, Camera.viewport.top,
-                            Camera.viewport.width, Camera.viewport.height);
-                    }
+
+                    Display.drawImage(this.imageCanvas, 0, 0,
+                        this.currentLevelImage.width * backgroundImageAmount, this.currentLevelImage.height,
+                        this.currentScrollingPos, Camera.viewport.top,
+                        Camera.viewport.width * backgroundImageAmount, Camera.viewport.height);
                     break;
                 case "verticalScroll":
-                    if (Game.playMode === Game.PLAY_MODE) {
-                        this.currentVerticalScrollingPos += this.verticalScrollingSpeed;
-                        if (this.currentVerticalScrollingPos <= Camera.viewport.height * -1) {
-                            this.currentVerticalScrollingPos = 0;
-                        }
-                    }
-                    else {
-                        this.currentVerticalScrollingPos = 0;
-                    }
-                    const verticalBackgroundImageAmount = Math.round(tileMapHandler.levelHeightInPx / Camera.viewport.height) + 1;
-                    for (var i = 0; i < verticalBackgroundImageAmount; i++) {
-                        Display.drawImage(this.imageCanvas, 0, 0,
-                            this.currentLevelImage.width, this.currentLevelImage.height,
-                            Camera.viewport.left, Camera.viewport.height * i + this.currentVerticalScrollingPos,
-                            Camera.viewport.width, Camera.viewport.height);
-                    }
+                    this.updateScrollPos(Camera.viewport.height * -1);
+                    const verticalBackgroundImageAmount = Math.round(tileMapHandler.levelWidthInPx / Camera.viewport.width) + 1;
+
+                    Display.drawImage(this.imageCanvas, 0, 0,
+                        this.currentLevelImage.width, this.currentLevelImage.height * verticalBackgroundImageAmount,
+                        Camera.viewport.left, this.currentScrollingPos,
+                        Camera.viewport.width, Camera.viewport.height  * verticalBackgroundImageAmount);
                     break;
                 default:
                     break;

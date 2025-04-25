@@ -539,11 +539,11 @@
                             <option value="verticalScroll">Vertical scroll</option>
                         </select>
                     </div>
-                    <div class="marginTop12 changeableAttributesWrapper">
+                    <div class="marginTop12 changeableAttributesWrapper" id="worldScrollSpeed" style="display: none">
                         <span class="colorModalAttribute">Scroll speed:</span>
                         <input style="margin-right:12px" type="range" min="1" max="8" value="1" step="1"
                             class="slider" id="scrollSpeedWorld"
-                            onchange="ImageHandler.changeScrollSpeed(event)">
+                            onchange="ImageHandler.changeWorldScrollSpeed(event)">
                         <span id="scrollSpeedWorldValue">0.2</span>
                     </div>
                     <div class="subSection12Gap">
@@ -565,6 +565,13 @@
                                 <option value="horizontalScroll">Horizontal scroll</option>
                                 <option value="verticalScroll">Vertical scroll</option>
                             </select>
+                        </div>
+                        <div class="marginTop12 changeableAttributesWrapper" id="levelScrollSpeed" style="display: none">
+                            <span class="colorModalAttribute">Scroll speed:</span>
+                            <input style="margin-right:12px" type="range" min="1" max="8" value="1" step="1"
+                                class="slider" id="scrollSpeedWorld"
+                                onchange="ImageHandler.changeLevelScrollSpeed(event)">
+                            <span id="scrollSpeedLevelValue">0.2</span>
                         </div>
                         <div class="textAsLink marginTop16" onClick="ImageHandler.switchTouploadView()">
                             <img alt="plus" width="14" height="14" class="blue-filter" src="images/icons/plus.svg"

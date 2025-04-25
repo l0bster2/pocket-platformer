@@ -9,6 +9,7 @@ class WorldDataHandler {
         this.backgroundColor = '000000';
         this.backgroundImage = null;
         this.backgroundImageSize = null;
+        this.backgroundImageScrollSpeed = 0.2;
         this.textColor = 'ffffff';
         this.effects = [];
         this.pixelArrayUnitAmount = 8;
@@ -74,6 +75,7 @@ class WorldDataHandler {
             song: null,
             backgroundImage: withDefaultImage ? "Castle.png" : null,
             backgroundImageSize: withDefaultImage ? "stretch" : null,
+            backgroundImageScrollSpeed: 0.2,
         };
     }
 
