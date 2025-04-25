@@ -54,6 +54,10 @@ class ImageHandler {
         if (WorldDataHandler.backgroundImage === this.imageToDelete) {
             WorldDataHandler.backgroundImage = null;
         }
+        this.showFirstPreviewImage();
+    }
+
+    static showFirstPreviewImage() {
         this.images.length ? this.showPreviewImage(this.images[0].name) :
             this.imageCanvasCtx.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
     }
@@ -95,7 +99,7 @@ class ImageHandler {
 
     static showPreviewImage(name) {
         const previewImage = this.images.find(image => image.name === name);
-        this.initializeImageOnImageCanvas(previewImage);
+        this.initializeImageOnImageCanvas(previewImage, true);
     }
 
     static setBackgroundImage() {
@@ -123,11 +127,11 @@ class ImageHandler {
         }
     }
 
-    static initializeImageOnImageCanvas(image) {
+    static initializeImageOnImageCanvas(image, defaultPreview = false) {
         this.imageCanvasCtx.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
         const img = new Image();
         img.onload = () => {
-            if (this.currentLevelImageSize === "horizontalScroll") {
+            if (this.currentLevelImageSize === "horizontalScroll" && !defaultPreview) {
                 const backgroundImageAmount = Math.round(tileMapHandler.levelWidthInPx / Camera.viewport.width) + 1;
                 this.imageCanvas.width = img.width * backgroundImageAmount;
                 this.imageCanvas.height = img.height;
@@ -136,7 +140,7 @@ class ImageHandler {
                     this.imageCanvasCtx.drawImage(img, i * img.width, 0);
                 }
             }
-            else if (this.currentLevelImageSize === "verticalScroll") {
+            else if (this.currentLevelImageSize === "verticalScroll" && !defaultPreview) {
                 const backgroundImageAmount = Math.round(tileMapHandler.levelHeightInPx / Camera.viewport.height) + 1;
                 this.imageCanvas.width = img.width;
                 this.imageCanvas.height = img.height * backgroundImageAmount;

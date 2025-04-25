@@ -39,6 +39,7 @@ function changeView(value) {
         document.getElementById("imageViewCheckmark").style.display = "block";
         document.getElementById("soundViewCheckmark").style.display = "none";
         ImageHandlerRenderer.createImageOverview();
+        ImageHandler.showFirstPreviewImage();
     }
     SoundHandler.stopAllSounds();
 }
