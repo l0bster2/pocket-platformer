@@ -399,6 +399,10 @@ class BuildMode {
                 const finishFlagToolTip = ObjectsTooltipElementsRenderer.finishFlagToolTip(currentObject, this.tileMapHandler);
                 content.appendChild(finishFlagToolTip);
             }
+            else if(currentObject?.type === ObjectTypes.EVENT_TRIGGER) {
+                const eventsToolTip = EventsTooltipRenderer.renderEventsTooltip(currentObject);
+                content.appendChild(eventsToolTip);
+            }
             if (spriteObject.directions && currentObject?.type !== ObjectTypes.PATH_POINT) {
                 const rotationWrapper = ObjectsTooltipElementsRenderer.createRotationHandlerForObjects(currentObject, spriteObject.directions);
                 content.appendChild(rotationWrapper);

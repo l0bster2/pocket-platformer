@@ -39,6 +39,10 @@ class ObjectTypes {
     return 'connectedDisappearingBlock';
   }
 
+  static get EVENT_TRIGGER(){
+    return 'eventTrigger'
+  }
+
   static get TREADMILL() {
     return 'treadmill';
   }
@@ -225,6 +229,7 @@ class ObjectTypes {
       [this.POWER_UP]: PowerUp,
       [this.MOVING_PLATFORM]: MovingPlatform,
       [this.TRIGGERED_PLATFORM]: TriggeredPlatform,
+      [this.EVENT_TRIGGER]: EventTrigger,
       [this.WATER]: Water,
       [this.TOGGLE_MINE]: ToggleMine,
       [this.ROCKET_LAUNCHER]: RocketLauncher,

@@ -117,14 +117,50 @@ class Display {
             progressWidth, loadingBarHeight - progressPadding * 2, WorldDataHandler.textColor);
     }
 
+    static getTotalTextWidth(text) {
+        let width = 0;
+        for (let i = 0; i < text.length; i++) {
+            width += ctx.measureText(text[i]).width;
+        }
+        return width;
+    }
+
     static displayStartScreen(currentGeneralFrame, maxFrames) {
         PlayMode.updateGeneralFrameCounter();
         const textColor = "#" + WorldDataHandler.textColor;
         this.displayText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, 30, textColor);
-
         var moduloDivider = maxFrames / 3;
         if (currentGeneralFrame % moduloDivider < moduloDivider / 2) {
             this.displayText("Press enter to continue", this.canvasWidth / 2, this.canvasHeight / 2 + 40, 18, textColor);
+        }
+    }
+
+    static displayWobblyText(text = "", xPos, yPos, size = 30, currentGeneralFrame, maxFrames, color = "white") {
+        this.ctx.font = size + "px DotGothic16";
+        this.ctx.fillStyle = color;
+        this.ctx.textAlign = "center";
+
+        const totalWidth = this.getTotalTextWidth(text);
+        const startX = xPos - (totalWidth / 2);
+
+        let x = startX;
+
+        const time = (currentGeneralFrame) % maxFrames;
+        const waveAmplitude = 3;   // how high the wave is (adjust to wobble less)
+        const waveLength = 15;      // distance between wave peaks (in pixels)
+        const waveSpeed =(2 * Math.PI / 480) * 5; // full loop in 480 frames
+      
+        for (let i = 0; i < text.length; i++) {
+          const char = text[i];
+          const charWidth = ctx.measureText(char).width;
+      
+          // Each character offset by its X position along the wave
+          const phase = x / waveLength;  // characters further right are phase-shifted
+          const yOffset = Math.sin(time * waveSpeed + phase) * waveAmplitude;
+      
+          this.ctx.fillText(char, x, yPos + yOffset);
+      
+          x += charWidth;
         }
     }
 
@@ -192,7 +228,7 @@ class Display {
         this.ctx.textAlign = alignPos;
         this.ctx.fillText(text, xPos, yPos);
     }
-    
+
     static explodeSprite(img, sx, sy, objectSize, x, y, offSet, radians) {
         const halfTileSize = objectSize / 2;
         Display.drawImageWithRotation(img, sx,

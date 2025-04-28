@@ -58,6 +58,8 @@ class SpritePixelArrays {
       fireBallsAmount: "fireBallsAmount",
       powerUpType: "PowerUp",
       size: "size",
+      height: "height",
+      width: "width",
     };
 
     this.backgroundSprites = [
@@ -1534,6 +1536,31 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+          ]
+      },
+      ]
+    };
+
+    this.EVENT_TRIGGER = {
+      name: ObjectTypes.EVENT_TRIGGER,
+      changeableAttributes: [
+        { name: this.changeableAttributeTypes.width, defaultValue: 1, minValue: 1, maxValue: 9, step: 2 },
+        { name: this.changeableAttributeTypes.height, defaultValue: 1, minValue: 1, maxValue: 9, step: 2 },
+      ],
+      descriptiveName: "Event trigger",
+      description: "Once the player touches it, a lot of events can be triggered. Click on a set event trigger again to add events or change size.",
+      type: this.SPRITE_TYPES.object,
+      animation: [{
+        sprite:
+          [
+            ["FF5555", "FF5555", "transp", "transp", "transp", "transp", "FF5555", "FF5555"],
+            ["FF5555", "transp", "transp", "FF1C1C", "FF1C1C", "transp", "transp", "FF5555"],
+            ["transp", "transp", "transp", "FF1C1C", "FF1C1C", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF1C1C", "FF1C1C", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FF1C1C", "FF1C1C", "transp", "transp", "transp"],
+            ["FF5555", "transp", "transp", "FF1C1C", "FF1C1C", "transp", "transp", "FF5555"],
+            ["FF5555", "FF5555", "transp", "transp", "transp", "transp", "FF5555", "FF5555"],
           ]
       },
       ]

@@ -615,6 +615,15 @@ class ObjectsTooltipElementsRenderer {
                                         </td>
                                         <td>Foreground</td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <button id="triggerLayer" class="layerButton levelNavigationButton"
+                                                onClick="LayerHandler.layerVisibilityButtonClicked(event)">
+                                                <img src=${this.getRightEyeIcon(LayerHandler.triggerLayer)} width="16" height="16">
+                                            </button>
+                                        </td>
+                                        <td>Event triggers</td>
+                                    </tr>
                                 </table>
                             `
             });

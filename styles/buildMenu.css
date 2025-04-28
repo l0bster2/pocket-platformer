@@ -27,6 +27,12 @@ tr:nth-child(even) {
     width: 160px;
 }
 
+.bottomSectionDivider {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid lightgrey;
+}
+
 .blue-filter {
     filter: brightness(0) saturate(100%) invert(12%) sepia(85%) saturate(5000%) hue-rotate(210deg);
 }

@@ -6,6 +6,7 @@ class LayerHandler {
         this.objectLayer = true;
         this.tileLayer = true;
         this.foregroundLayer = true;
+        this.triggerLayer = true;
     }
 
     static layerVisibilityButtonClicked(event) {

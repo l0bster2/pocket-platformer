@@ -534,7 +534,7 @@
                             onchange="WorldColorHandler.changeWorldImageSize(event)" class="backgroundImageSelect">
                             <option value="stretch">Stretch</option>
                             <option value="original">Original</option>
-                            <option value="fixed">Fixed/Parallax</option>
+                            <option value="fixed">Fixed</option>
                             <option value="horizontalScroll">Horizontal scroll</option>
                             <option value="verticalScroll">Vertical scroll</option>
                         </select>
@@ -561,7 +561,7 @@
                                 onchange="WorldColorHandler.changeLevelImageSize(event)" class="backgroundImageSelect">
                                 <option value="stretch">Stretch</option>
                                 <option value="original">Original</option>
-                                <option value="fixed">Fixed/Parallax</option>
+                                <option value="fixed">Fixed</option>
                                 <option value="horizontalScroll">Horizontal scroll</option>
                                 <option value="verticalScroll">Vertical scroll</option>
                             </select>
@@ -766,6 +766,7 @@
         <script src="objects/DefaultMovingPlatform.js"></script>
         <script src="objects/MovingPlatform.js"></script>
         <script src="objects/TriggeredPlatform.js"></script>
+        <script src="objects/EventTrigger.js"></script>
         <script src="SpriteSheetCreator.js"></script>
         <script src="utils/ObjectTypes.js"></script>
         <script src="ImportExport.js"></script>
@@ -809,6 +810,7 @@
         <script src="htmlRenderers/EffectHtmlRenderer.js"></script>
         <script src="htmlRenderers/CustomSpritesElementsRenderer.js"></script>
         <script src="htmlRenderers/SoundHandlerRenderer.js"></script>
+        <script src="htmlRenderers/EventsTooltipRenderer.js"></script>
         <script src="htmlRenderers/ImageHandlerRenderer.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/gameScreen.css">
         <link rel="stylesheet" type="text/css" href="styles/buildMenu.css">
@@ -910,6 +912,8 @@
                 }
                 //foreground objects
                 LayerHandler.foregroundLayer && tileMapHandler.displayObjects(tileMapHandler.layers[5]);
+                //event triggers
+                LayerHandler.triggerLayer && tileMapHandler.displayObjects(tileMapHandler.layers[6]);
                 DrawSectionHandler.draw();
                 BuildMode.runBuildLogic();
                 SFXHandler.updateSfxAnimations();
@@ -945,6 +949,8 @@
                         player.draw();
                         //foreground objects
                         tileMapHandler.displayObjects(tileMapHandler.layers[5]);
+                        // event triggers
+                        tileMapHandler.displayObjects(tileMapHandler.layers[6]);
                         EffectsRenderer.displayEffects(1);
                         DialogueHandler.handleDialogue();
                         PlayMode.pauseFramesHandler();
