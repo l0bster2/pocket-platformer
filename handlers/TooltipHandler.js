@@ -64,7 +64,7 @@ class TooltipHandler {
     }
 
     static watchForClickOutside(evt, id) {
-        if (!this.getSelectionText()) {
+        if (!this.getSelectionText() && !ModalHandler.open) {
             const flyoutElement = this["toolTipEl" + id];
             let targetElement = evt.target; // clicked element
             do {

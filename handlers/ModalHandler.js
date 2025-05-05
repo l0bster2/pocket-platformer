@@ -2,7 +2,12 @@
 
 class ModalHandler {
 
+    static staticConstructor() {
+        this.open = false;
+    }
+
     static showModal(id) {
+        this.open = true;
         let el = document.getElementById(id);  
         if(Game.playMode === Game.PLAY_MODE){
             Game.changeGameMode();
@@ -11,7 +16,6 @@ class ModalHandler {
         else {
             el.setAttribute('data-initial-game-mode', Game.BUILD_MODE);
         }
-        
         let body = document.querySelector("body");
         let bg = document.createElement("div");
         bg.className = "modal-js-overlay";
@@ -32,6 +36,7 @@ class ModalHandler {
     }
 
     static closeModal(id) {
+        this.open = false;
         let body = document.querySelector("body");
         let el = document.getElementById(id);
         const initialGameMode = el.getAttribute('data-initial-game-mode');

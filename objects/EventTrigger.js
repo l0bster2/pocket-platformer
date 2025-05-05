@@ -46,6 +46,13 @@ class EventTrigger extends InteractiveLevelObject {
     collisionEvent() {
         if(!this.touched) {
             this.touched = true;
+
+            this.events.forEach(event => {
+                switch (event.type) {
+                    case "screenshake": 
+                        Camera.setScreenShake(60, 0.01);
+                }
+            })
         }
     }
 

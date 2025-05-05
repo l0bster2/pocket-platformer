@@ -16,6 +16,7 @@ class SpritePixelArrays {
       toggle: "toggle",
       checkbox: "checkbox",
       select: "select",
+      events: "events",
     }
 
     this.playerPowerUpMapper = {
@@ -60,6 +61,7 @@ class SpritePixelArrays {
       size: "size",
       height: "height",
       width: "width",
+      events: "events",
     };
 
     this.backgroundSprites = [
@@ -1544,6 +1546,7 @@ class SpritePixelArrays {
     this.EVENT_TRIGGER = {
       name: ObjectTypes.EVENT_TRIGGER,
       changeableAttributes: [
+        { name: this.changeableAttributeTypes.events, defaultValue: [], formElement: this.changeableAttributeFormElements.events },
         { name: this.changeableAttributeTypes.width, defaultValue: 1, minValue: 1, maxValue: 9, step: 2 },
         { name: this.changeableAttributeTypes.height, defaultValue: 1, minValue: 1, maxValue: 9, step: 2 },
       ],

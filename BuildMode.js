@@ -399,10 +399,6 @@ class BuildMode {
                 const finishFlagToolTip = ObjectsTooltipElementsRenderer.finishFlagToolTip(currentObject, this.tileMapHandler);
                 content.appendChild(finishFlagToolTip);
             }
-            else if(currentObject?.type === ObjectTypes.EVENT_TRIGGER) {
-                const eventsToolTip = EventsTooltipRenderer.renderEventsTooltip(currentObject);
-                content.appendChild(eventsToolTip);
-            }
             if (spriteObject.directions && currentObject?.type !== ObjectTypes.PATH_POINT) {
                 const rotationWrapper = ObjectsTooltipElementsRenderer.createRotationHandlerForObjects(currentObject, spriteObject.directions);
                 content.appendChild(rotationWrapper);
@@ -412,6 +408,10 @@ class BuildMode {
                     if (attribute.name === SpritePixelArrays.changeableAttributeTypes.dialogue) {
                         const dialogueWindow = ObjectsTooltipElementsRenderer.createDialogueWindow(attribute, currentObject);
                         content.appendChild(dialogueWindow);
+                    }
+                    else if(attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.events) {
+                        const eventsToolTip = EventsTooltipRenderer.renderEventsTooltip(currentObject);
+                        content.appendChild(eventsToolTip);
                     }
                     else if (attribute.formElement === SpritePixelArrays.changeableAttributeFormElements.toggle) {
                         const toggleSwitch = ObjectsTooltipElementsRenderer.createToggleSwitch(attribute, currentObject);

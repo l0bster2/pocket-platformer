@@ -201,9 +201,11 @@
                         <input class="cameraXSlider" oninput="LevelSizeHandler.moveCamera(event)" type="range" min="1"
                             max="100" value="0" id="cameraXSlider">
                     </div>
-                    <div class="textAsLink marginTop8" onClick="LayerHandler.showLayersTooltip()" style="width: max-content">
+                    <div class="textAsLink marginTop8" onClick="LayerHandler.showLayersTooltip()"
+                        style="width: max-content">
                         <img alt="eye" width="14" height="14" class="blue-filter" src="images/icons/eye.svg"
-                            class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">LAYERS</span>
+                            class="iconInButtonWithText"><span
+                            style="margin-left: 8px; vertical-align: top;">LAYERS</span>
                     </div>
                     <div id="layersTooltip"></div>
                 </div>
@@ -541,9 +543,8 @@
                     </div>
                     <div class="marginTop12 changeableAttributesWrapper" id="worldScrollSpeed" style="display: none">
                         <span class="colorModalAttribute">Scroll speed:</span>
-                        <input style="margin-right:12px" type="range" min="1" max="8" value="1" step="1"
-                            class="slider" id="scrollSpeedWorld"
-                            onchange="ImageHandler.changeWorldScrollSpeed(event)">
+                        <input style="margin-right:12px" type="range" min="1" max="8" value="1" step="1" class="slider"
+                            id="scrollSpeedWorld" onchange="ImageHandler.changeWorldScrollSpeed(event)">
                         <span id="scrollSpeedWorldValue">0.2</span>
                     </div>
                     <div class="subSection12Gap">
@@ -566,7 +567,8 @@
                                 <option value="verticalScroll">Vertical scroll</option>
                             </select>
                         </div>
-                        <div class="marginTop12 changeableAttributesWrapper" id="levelScrollSpeed" style="display: none">
+                        <div class="marginTop12 changeableAttributesWrapper" id="levelScrollSpeed"
+                            style="display: none">
                             <span class="colorModalAttribute">Scroll speed:</span>
                             <input style="margin-right:12px" type="range" min="1" max="8" value="1" step="1"
                                 class="slider" id="scrollSpeedWorld"
@@ -648,6 +650,35 @@
             </form>
         </div>
 
+        <div class='modal' id='eventsModal'>
+            <div class="headerWrapper">
+                <div class="tooltipHeading">Add event</div>
+            </div>
+            <form class="marginTop16" onsubmit="EventHandler.submitEvent(event)">
+                <div>
+                    <span>Type: </span>
+                    <select id="eventType" class="marginTop8"
+                        onchange="EventHandler.changeEventType(parseInt(event.target.value))">
+                        <option value="screenshake">Add screenshake</option>
+                        <option value="backgroundImage">Change background image</option>
+                    </select>
+                </div>
+                <div id="eventAttributes" class="subSection marginTop12">
+                    <div class="flexGap12" style="padding: 8px 0;">
+                        <label for="speed">intensity</label>
+                        <input type="range" min="1" max="10" value="1" name="speed" step="1" id="zoomFactor"
+                            onchange="LevelSizeHandler.changeZoomHtmlValue(event)">
+                        <span id="zoomFactorValue">6</span>
+                    </div>
+                </div>
+                <div class="subSection">
+                    <button class="levelNavigationButton halfWidth" type="submit">Ok</button>
+                    <button class="levelNavigationButton secondaryButton halfWidth"
+                        onclick="event.preventDefault(); ModalHandler.closeModal('eventsModal');">Cancel</button>
+                </div>
+            </form>
+        </div>
+
         <div class='modal' id='levelSizeModal'>
             <div class="headerWrapper">
                 <div class="tooltipHeading">Change level size</div>
@@ -716,6 +747,7 @@
         <script src="CharacterCollision.js"></script>
         <script src="handlers/WorldDataHandler.js"></script>
         <script src="handlers/TileMapHandler.js"></script>
+        <script src="handlers/EventHandler.js"></script>
         <script src="Controller.js"></script>
         <script src="Player.js"></script>
         <script src="PlayLoop/PlayMode.js"></script>
@@ -829,6 +861,7 @@
             const spriteCanvas = document.getElementById("sprites");
             SoundHandler.staticConstructor();
             ImageHandler.staticConstructor();
+            EventHandler.staticConstructor();
             AnimationHelper.staticConstructor();
             SpritePixelArrays.staticConstructor();
             const player = new Player(WorldDataHandler.initialPlayerPosition.x,
@@ -885,6 +918,7 @@
             ProTipHandler.staticConstructor();
             TooltipHandler.staticConstructor();
             LayerHandler.staticConstructor();
+            ModalHandler.staticConstructor();
             LevelSizeHandler.staticConstructor(tileMapHandler);
             PlayerAttributesHandler.staticConstructor(player);
             CustomSpriteHandler.staticConstructor();
