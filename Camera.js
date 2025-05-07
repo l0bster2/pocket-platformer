@@ -123,9 +123,9 @@ class Camera {
 
     static doScreenShake() {
         this.screenShake.currentFrame--;
-        this.follow.x += MathHelpers.getSometimesNegativeRandomNumber(1, this.screenShake.intensity, false);
-        this.follow.y += MathHelpers.getSometimesNegativeRandomNumber(1, this.screenShake.intensity, false);
-
+        const direction = this.screenShake.currentFrame % 2 === 0 ? 1 : -1;
+        this.follow.x += MathHelpers.getRandomNumberBetweenTwoNumbers(this.screenShake.intensity / 2, this.screenShake.intensity, false) * direction;
+        this.follow.y += MathHelpers.getRandomNumberBetweenTwoNumbers(this.screenShake.intensity / 2, this.screenShake.intensity, false) * direction;
     }
 
     static outOfBoundsXCorrection(x) {

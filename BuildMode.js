@@ -233,7 +233,7 @@ class BuildMode {
     static setSingleObject(tilePosX, tilePosY) {
         let { levelObjects, deko } = this.tileMapHandler;
 
-        //Tiles are numbers, other objects are no
+        //Tiles are numbers, other objects are not
         if (isNaN(this.currentSelectedObject?.name)) {
             //deko
             if (this.currentSelectedObject.name === ObjectTypes.DEKO) {

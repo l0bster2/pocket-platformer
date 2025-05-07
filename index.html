@@ -654,7 +654,7 @@
             <div class="headerWrapper">
                 <div class="tooltipHeading">Add event</div>
             </div>
-            <form class="marginTop16" onsubmit="EventHandler.submitEvent(event)">
+            <form class="marginTop16" id="eventForm" onsubmit="EventHandler.submitEvent(event);">
                 <div>
                     <span>Type: </span>
                     <select id="eventType" class="marginTop8"
@@ -664,12 +664,7 @@
                     </select>
                 </div>
                 <div id="eventAttributes" class="subSection marginTop12">
-                    <div class="flexGap12" style="padding: 8px 0;">
-                        <label for="speed">intensity</label>
-                        <input type="range" min="1" max="10" value="1" name="speed" step="1" id="zoomFactor"
-                            onchange="LevelSizeHandler.changeZoomHtmlValue(event)">
-                        <span id="zoomFactorValue">6</span>
-                    </div>
+                    <div id="eventModalForm"></div>
                 </div>
                 <div class="subSection">
                     <button class="levelNavigationButton halfWidth" type="submit">Ok</button>

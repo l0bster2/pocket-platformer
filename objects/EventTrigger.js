@@ -44,13 +44,13 @@ class EventTrigger extends InteractiveLevelObject {
     }
 
     collisionEvent() {
-        if(!this.touched) {
+        if (!this.touched) {
             this.touched = true;
 
             this.events.forEach(event => {
                 switch (event.type) {
-                    case "screenshake": 
-                        Camera.setScreenShake(60, 0.01);
+                    case "screenshake":
+                        Camera.setScreenShake(event.screenshakeDuration, event.screenshakeIntensity);
                 }
             })
         }
@@ -60,20 +60,20 @@ class EventTrigger extends InteractiveLevelObject {
         if (Game.playMode === Game.BUILD_MODE) {
             super.draw(spriteCanvas);
 
-            if(this.width > 1 || this.height > 1) {
+            if (this.width > 1 || this.height > 1) {
                 const xDifference = Math.ceil(this.width / 2) - 1;
-                const xStartingPoint = this.initialX  - xDifference;
-                const xEndingPoint =  this.initialX + xDifference;
-    
+                const xStartingPoint = this.initialX - xDifference;
+                const xEndingPoint = this.initialX + xDifference;
+
                 const yDifference = Math.ceil(this.height / 2) - 1;
                 const yStartingPoint = this.initialY - yDifference;
                 const yEndingPoint = this.initialY + yDifference;
-    
-                for(var i = xStartingPoint; i <= xEndingPoint; i++) {
-                    for(var j = yStartingPoint; j <= yEndingPoint; j++) {
+
+                for (var i = xStartingPoint; i <= xEndingPoint; i++) {
+                    for (var j = yStartingPoint; j <= yEndingPoint; j++) {
                         Display.drawImageWithAlpha(spriteCanvas, 0, this.canvasYSpritePos, this.tileSize, this.tileSize,
                             i * this.tileSize, j * this.tileSize,
-                             this.tileSize, this.tileSize, 0.5);
+                            this.tileSize, this.tileSize, 0.5);
                     }
                 }
             }

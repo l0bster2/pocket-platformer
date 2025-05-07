@@ -139,6 +139,18 @@ tr:nth-child(even) {
     background: #fdfde9;
 }
 
+.eventItem {
+    padding: 4px 0;
+}
+
+.eventItem:nth-child(even) {
+    background: #fdfde9;
+}
+
+.eventItem:last-child {
+    margin-bottom: 4px;
+}
+
 .effectSliderValue {
     min-width: 28px;
     text-align: center;

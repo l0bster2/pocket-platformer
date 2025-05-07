@@ -9,6 +9,11 @@ class MathHelpers {
     return randomNumber *= Math.round(Math.random()) ? 1 : -1;
   }
 
+  static getBalancedRandomNumber(min, max) {
+    const value = Math.random() * (max - min) + min;
+    return (Math.random() < 0.5 ? -1 : 1) * value;
+  }
+
   static sortNumbers(numberArray) {
     return numberArray.sort((a, b) => a - b)
   }
@@ -39,7 +44,7 @@ class MathHelpers {
   }
 
   static arraysHaveSameValues(arr1, arr2) {
-    return arr1.every(r=> arr2.includes(r));
+    return arr1.every(r => arr2.includes(r));
   }
 
   static raycastFindEdge(angle, origin, lineSightInTiles) {
