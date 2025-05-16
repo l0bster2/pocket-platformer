@@ -36,7 +36,8 @@ class EventsTooltipRenderer {
                 <span class="marginTop8">Change to: </span>
                 <select name="eventBackgroundImage">
                     ${ImageHandler.images.map(image => 
-                        `<option value="${image.name}">${image.name}</option>`
+                        `<option value="${image.name}" ${image.name === event?.backgroundImage ? "selected" : ""}>
+                        ${image.name}</option>`
                     )
                     }
                 </select>
