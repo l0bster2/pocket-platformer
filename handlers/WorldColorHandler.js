@@ -67,6 +67,9 @@ class WorldColorHandler {
     static changeLevelBackgroundImage(event) {
         const value = event.target.value;
         WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage = value || null;
+        if(WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize == null) {
+            WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImageSize = 'stretch';
+        }
         ImageHandler.setBackgroundImage();
         document.getElementById("imageSizeLevelSelectorWrapper").style.display = value === "none" || value === null ? "none" : "block";
     }

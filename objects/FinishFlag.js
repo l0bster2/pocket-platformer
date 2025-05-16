@@ -13,15 +13,28 @@ class FinishFlag extends InteractiveLevelObject {
                 levelObject => levelObject.type === ObjectTypes.COLLECTIBLE
             );
         }
+        this.transition = extraAttributes?.transition || "Default transition";
     }
 
     collisionEvent() {
         if (!this.collidedWithPlayer && !this.closed) {
             this.collidedWithPlayer = true;
             SoundHandler.win.stopAndPlay();
+
+            if(this.transition === "Default transition" || !this.transitionType || !this.transitionLength) {
+
+                TransitionAnimationHandler.currentAnimationType = TransitionAnimationHandler.animationType;
+                TransitionAnimationHandler.currentAnimationFrames = TransitionAnimationHandler.animationFrames;
+            }
+            else {
+                TransitionAnimationHandler.currentAnimationType = this.transitionType;
+                TransitionAnimationHandler.currentAnimationFrames = this.transitionLength;
+            }
+
             PlayMode.animateToNextLevel = true;
-            PlayMode.currentPauseFrames = TransitionAnimationHandler.animationFrames;
+            PlayMode.currentPauseFrames = TransitionAnimationHandler.currentAnimationFrames;
             PlayMode.customExit = this.customExit;
+
 
             if (this.tilemapHandler.currentLevel === WorldDataHandler.levels.length - 2 && !this.customExit
                 && !WorldDataHandler.insideTool && SoundHandler.currentSong) {
