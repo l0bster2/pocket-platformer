@@ -655,21 +655,21 @@
                 <div class="tooltipHeading">Add event</div>
             </div>
             <form class="marginTop16" id="eventForm" onsubmit="EventHandler.submitEvent(event);">
-                <div>
+                <div id="eventTypeWrapper" class="subSectionBottom">
                     <span>Type: </span>
                     <select id="eventType" class="marginTop8"
-                        onchange="EventHandler.changeEventType(parseInt(event.target.value))">
+                        onchange="EventHandler.changeEventType(event.target.value)">
                         <option value="screenshake">Add screenshake</option>
-                        <option value="backgroundImage">Change background image</option>
+                        <option value="background-image">Change background image</option>
                     </select>
                 </div>
-                <div id="eventAttributes" class="subSection marginTop12">
+                <div id="eventAttributes">
                     <div id="eventModalForm"></div>
                 </div>
                 <div class="subSection">
                     <button class="levelNavigationButton halfWidth" type="submit">Ok</button>
                     <button class="levelNavigationButton secondaryButton halfWidth"
-                        onclick="event.preventDefault(); ModalHandler.closeModal('eventsModal');">Cancel</button>
+                        onclick="event.preventDefault(); event.stopPropagation(); ModalHandler.closeModal('eventsModal');">Cancel</button>
                 </div>
             </form>
         </div>

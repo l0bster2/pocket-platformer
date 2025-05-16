@@ -15,27 +15,47 @@ class EventsTooltipRenderer {
 
     static renderExistingEvents(currentObject) {
         const eventsWrapper = document.createElement("div");
-        currentObject.events.forEach(event => {
+        currentObject.events.forEach((event, index) => {
             const eventContent = document.createElement("div");
             eventContent.className = "eventItem";
-            eventContent.innerHTML = event.name;
+            eventContent.innerHTML = `
+            <div style="flex: 1">${index + 1} ${event.name}</div>
+            <div style="margin-right: 4px">
+                <img src='images/icons/pencil.svg' onClick='EventHandler.editEvent(${index})' class='singleActionIcon hovereableGreenSvg' alt='colorpicker' width='16' height='16'></img> 
+                <img src='images/icons/delete.svg' onClick='EventHandler.removeEvent(event, "${event.id}")' class='singleActionIcon hovereableRedSvg' alt='delete' width='16' height='16'></img>
+            </div>
+            `
             eventsWrapper.appendChild(eventContent);
         });
         return eventsWrapper;
     }
 
-    static renderScreenShakeAttributes() {
+    static renderBackgroundImageAttributes(event = null) {
+        return `
+            <div class="flexGap12" style="padding: 8px 0;">
+                <span class="marginTop8">Change to: </span>
+                <select name="eventBackgroundImage">
+                    ${ImageHandler.images.map(image => 
+                        `<option value="${image.name}">${image.name}</option>`
+                    )
+                    }
+                </select>
+            </div>
+        `
+    }
+
+    static renderScreenShakeAttributes(event = null) {
         return `
                 <div class="flexGap12" style="padding: 8px 0;">
                     <label for="screenshakeIntensity">intensity</label>
-                    <input type="range" min="1" max="10" value="2" name="screenshakeIntensity" step="0.5" id="screenshakeIntensity"
+                    <input type="range" min="1" max="10" value="${event?.screenshakeIntensity || 2}" name="screenshakeIntensity" step="0.5" id="screenshakeIntensity"
                         onchange="EventsTooltipRenderer.changeScreenshakeIntensity(event)">
-                    <span id="screenshakeIntensityValue">2</span>
+                    <span id="screenshakeIntensityValue">${event?.screenshakeIntensity || 2}</span>
                 </div>
                 <div>
                     <label for="screenshakeDuration">Duration (in frames):</label>
                     <input id="screenshakeDuration" required min="1" step="1" type="number"
-                        size="15" value="45" />
+                        size="15" value="${event?.screenshakeDuration || 45}" />
                 </div>
         `
     }
@@ -43,11 +63,14 @@ class EventsTooltipRenderer {
     static renderAddEventButton(currentObject) {
         const button = document.createElement("button");
         button.className = "fullWidth levelNavigationButton ";
+        EventHandler.currentObject = currentObject;
+
         button.onclick = (e) => {
             e.stopPropagation();
-            document.getElementById("eventModalForm").innerHTML = this.renderScreenShakeAttributes(currentObject);
+            document.getElementById("eventType").value = "screenshake";
+            document.getElementById("eventTypeWrapper").style.display = "block";
+            document.getElementById("eventModalForm").innerHTML = this.renderScreenShakeAttributes();
             ModalHandler.showModal('eventsModal');
-            EventHandler.currentObject = currentObject;
         };
         button.innerHTML = `
             <div>

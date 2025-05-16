@@ -140,6 +140,7 @@ tr:nth-child(even) {
 }
 
 .eventItem {
+    display: flex;
     padding: 4px 0;
 }
 

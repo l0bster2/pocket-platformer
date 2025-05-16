@@ -43,6 +43,15 @@ class EventTrigger extends InteractiveLevelObject {
         }
     }
 
+    setNewBackgroundImage(imageName) {
+        const newImage = ImageHandler.images.find((image) =>
+            image.name === imageName);
+        if (newImage) {
+            ImageHandler.currentLevelImage = newImage;
+            ImageHandler.initializeImageOnImageCanvas(newImage);
+        }
+    }
+
     collisionEvent() {
         if (!this.touched) {
             this.touched = true;
@@ -51,6 +60,8 @@ class EventTrigger extends InteractiveLevelObject {
                 switch (event.type) {
                     case "screenshake":
                         Camera.setScreenShake(event.screenshakeDuration, event.screenshakeIntensity);
+                    case "background-image":
+                        this.setNewBackgroundImage(event.backgroundImage)
                 }
             })
         }
