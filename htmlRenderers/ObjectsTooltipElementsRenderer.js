@@ -327,7 +327,7 @@ class ObjectsTooltipElementsRenderer {
         const transitionFallbackFn = (value) => {
             const customValue = value === "Custom";
             document.getElementById("transitionAttributes").style.display = customValue ? "block" : "none";
-            if(customValue) {
+            if (customValue) {
                 currentObject.addChangeableAttribute("transitionType", currentObject?.transitionType ? currentObject.transitionType : TransitionAnimationHandler.animationType)
                 currentObject.addChangeableAttribute("transitionLength", currentObject?.transitionLength ? currentObject.transitionLength : TransitionAnimationHandler.animationFrames);
             }
@@ -358,7 +358,7 @@ class ObjectsTooltipElementsRenderer {
         selectType.onchange = (event) => {
             currentObject.addChangeableAttribute("transitionType", event.target.value)
         };
-        
+
         transitionAttributes.appendChild(selectType);
         this.createTransitionOption("none", "None", selectType, currentObject);
         this.createTransitionOption("tiles", "Fading tiles", selectType, currentObject);
@@ -389,6 +389,38 @@ class ObjectsTooltipElementsRenderer {
 
         transitionAttributes.appendChild(transitionDurationWrapper);
         finishFlagWrapper.appendChild(transitionAttributes);
+
+        const soundSelectorWrapper = document.createElement("div");
+        soundSelectorWrapper.className = "subSection";
+
+        const soundImg = document.createElement("img");
+        Helpers.addAttributesToHTMLElement(soundImg, {
+            "src": "images/icons/sound.svg", width: 16, height: 16,
+            class: "iconInButtonWithText"
+        });
+        soundSelectorWrapper.appendChild(soundImg);
+
+        const soundSelect = document.createElement("select");
+        soundSelect.name = "soundSelect";
+        soundSelect.id = "soundSelect";
+        soundSelect.style.width = "212px";
+        soundSelect.style.marginLeft = "8px";
+        soundSelect.onchange = (event) => {
+            currentObject.addChangeableAttribute("sound", event.target.value)
+        };
+        SoundHandler.sounds.forEach(sound => {
+            if (sound.type === "sound") {
+                const selectedValue = currentObject.sound === sound.key || sound.key === "win" && !currentObject.sound;
+                const optionEl = document.createElement("option");
+                optionEl.value = sound.key;
+                optionEl.innerHTML = sound.descriptiveName;
+                optionEl.selected = selectedValue;
+                soundSelect.appendChild(optionEl);
+            }
+        })
+        soundSelectorWrapper.appendChild(soundSelect);
+
+        finishFlagWrapper.appendChild(soundSelectorWrapper);
 
         return finishFlagWrapper;
     }

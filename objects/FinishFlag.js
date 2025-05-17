@@ -16,10 +16,22 @@ class FinishFlag extends InteractiveLevelObject {
         this.transition = extraAttributes?.transition || "Default transition";
     }
 
+    getSound() {
+        // if no sound set
+        if(!this.sound) {
+            return "win";
+        }
+        // if sound set, but not found in soundhandler
+        if(!SoundHandler[this.sound]) {
+            return "win";
+        }
+        return this.sound;
+    }
+
     collisionEvent() {
         if (!this.collidedWithPlayer && !this.closed) {
             this.collidedWithPlayer = true;
-            SoundHandler.win.stopAndPlay();
+            SoundHandler[this.getSound()].stopAndPlay();
 
             if(this.transition === "Default transition" || !this.transitionType || !this.transitionLength) {
 

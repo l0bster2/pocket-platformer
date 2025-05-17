@@ -200,6 +200,10 @@ input:checked+.switchSlider:before {
     padding-bottom: 8px;
 }
 
+.paddingTop8 {
+    padding-top: 8px !important;
+}
+
 #playerAnimationWrapper>* {
     margin-top: 8px;
 }
