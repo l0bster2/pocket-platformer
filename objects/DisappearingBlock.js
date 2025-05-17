@@ -33,6 +33,11 @@ class DisappearingBlock extends InteractiveLevelObject {
             }
 
             const currentHeight = currentDisappearingDrawFrame * this.disappearingBoxHeight;
+
+            if(this.currentDisappearingFrame % this.disappearingFrameSteps === 0 && this.currentDisappearingFrame < this.blockNotSolidAt) {
+                SFXHandler.createSFX(this.x, this.y + currentHeight - 6, 14, AnimationHelper.facingDirections.bottom, 
+                    0, 0, true, 8, 0, "backgroundSFX");
+            }
             
             Display.drawImage(spriteCanvas, 0, this.canvasYSpritePos,
                 this.tileSize, currentHeight,
