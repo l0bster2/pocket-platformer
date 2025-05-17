@@ -2437,12 +2437,12 @@ class SpritePixelArrays {
       name: ObjectTypes.SFX,
       descriptiveName: "SFX 15",
       directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
-      description: "Plays when disappearing block is touched",
+      description: "Plays when <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Disappearing block'} }, true)\">Disappearing block</span> or <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Connected Disappearing block'} }, true)\">Connected block</span> are touched",
       animation: [{
         sprite:
           [
-            ["transp", "transp", "713900", "713900", "713900", "713900", "transp", "transp"],
-            ["transp", "transp", "transp", "713900", "713900", "transp", "transp", "transp"],
+            ["transp", "transp", "AA7139", "AA7139", "AA7139", "AA7139", "transp", "transp"],
+            ["transp", "transp", "transp", "AA7139", "AA7139", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2455,8 +2455,8 @@ class SpritePixelArrays {
         sprite:
           [
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "713900", "713900", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "713900", "713900", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "AA7139", "AA7139", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "AA7139", "AA7139", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
