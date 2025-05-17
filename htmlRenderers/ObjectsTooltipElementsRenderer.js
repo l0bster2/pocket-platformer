@@ -228,6 +228,14 @@ class ObjectsTooltipElementsRenderer {
         return checkboxWrapper;
     }
 
+    static createTransitionOption(optionValue, optionName, parentElement, currentObject) {
+        const optionEl = document.createElement("option");
+        optionEl.value = optionValue;
+        optionEl.innerHTML = optionName;
+        optionEl.selected = currentObject.transitionType === optionValue;
+        parentElement.appendChild(optionEl);
+    }
+
     static finishFlagToolTip(currentObject) {
         const finishFlagWrapper = document.createElement("div");
         finishFlagWrapper.className = "marginTop8";
@@ -315,8 +323,104 @@ class ObjectsTooltipElementsRenderer {
         const checkboxWrapper = this.createCheckbox(changeableAttribute,
             "Collectibles needed for opening",
             currentObject);
-
         finishFlagWrapper.append(firstButtonWrapper, secondButtonWrapper, checkboxWrapper);
+        const transitionFallbackFn = (value) => {
+            const customValue = value === "Custom";
+            document.getElementById("transitionAttributes").style.display = customValue ? "block" : "none";
+            if (customValue) {
+                currentObject.addChangeableAttribute("transitionType", currentObject?.transitionType ? currentObject.transitionType : TransitionAnimationHandler.animationType)
+                currentObject.addChangeableAttribute("transitionLength", currentObject?.transitionLength ? currentObject.transitionLength : TransitionAnimationHandler.animationFrames);
+            }
+        };
+        const transitionToggleAttributes = {
+            name: "transition", defaultValue: currentObject?.transition === "Default transition" ? "Default transition" : "Custom",
+            options: [{ "false": "Custom" }, { "true": "Default transition" }],
+            callbackFunction: transitionFallbackFn
+        };
+
+        const defaultTransitionWrapper = document.createElement("div");
+        defaultTransitionWrapper.className = "subSection";
+        const defaultTransitionLabel = this.createToggleSwitch(transitionToggleAttributes, currentObject);
+        defaultTransitionWrapper.appendChild(defaultTransitionLabel);
+        finishFlagWrapper.appendChild(defaultTransitionWrapper);
+        const transitionAttributes = document.createElement("div");
+        transitionAttributes.className = "marginTop8";
+        transitionAttributes.style.display = currentObject?.transition === "Default transition" ? "none" : "block";
+        transitionAttributes.style.whiteSpace = "nowrap"
+        transitionAttributes.id = "transitionAttributes";
+        const typeLabel = document.createElement("span");
+        typeLabel.className = "colorModalAttribute";
+        typeLabel.innerHTML = "Type:";
+        transitionAttributes.appendChild(typeLabel);
+        const selectType = document.createElement("select");
+        selectType.name = "transitionType";
+        selectType.id = "transitionType";
+        selectType.onchange = (event) => {
+            currentObject.addChangeableAttribute("transitionType", event.target.value)
+        };
+
+        transitionAttributes.appendChild(selectType);
+        this.createTransitionOption("none", "None", selectType, currentObject);
+        this.createTransitionOption("tiles", "Fading tiles", selectType, currentObject);
+        this.createTransitionOption("cutOutCircle", "Cut out circle", selectType, currentObject);
+        this.createTransitionOption("wholeScreen", "Screen fade", selectType, currentObject);
+        const transitionDurationWrapper = document.createElement("div");
+        transitionDurationWrapper.className = "marginTop12 changeableAttributesWrapper";
+        const transitionDurationLabel = document.createElement("span");
+        transitionDurationLabel.className = "colorModalAttribute";
+        transitionDurationLabel.innerHTML = "Length:";
+        transitionDurationWrapper.appendChild(transitionDurationLabel);
+        const transitionDurationInput = document.createElement("input");
+        transitionDurationInput.style.marginRight = "12px";
+        Helpers.addAttributesToHTMLElement(transitionDurationInput, {
+            "type": "range", min: 2, max: 96, value: currentObject.transitionLength || 48,
+            class: "slider", step: 2, id: "customTransitionDuration"
+        });
+        transitionDurationInput.onchange = (event) => {
+            const value = event.target.value;
+            document.getElementById("customTransitionDurationValue").innerHTML = value;
+            currentObject.addChangeableAttribute("transitionLength", value);
+        }
+        transitionDurationWrapper.appendChild(transitionDurationInput);
+        const transitionDurationValue = document.createElement("span");
+        transitionDurationValue.id = "customTransitionDurationValue";
+        transitionDurationValue.innerHTML = currentObject.transitionLength || 48;
+        transitionDurationWrapper.appendChild(transitionDurationValue);
+
+        transitionAttributes.appendChild(transitionDurationWrapper);
+        finishFlagWrapper.appendChild(transitionAttributes);
+
+        const soundSelectorWrapper = document.createElement("div");
+        soundSelectorWrapper.className = "subSection";
+
+        const soundImg = document.createElement("img");
+        Helpers.addAttributesToHTMLElement(soundImg, {
+            "src": "images/icons/sound.svg", width: 16, height: 16,
+            class: "iconInButtonWithText"
+        });
+        soundSelectorWrapper.appendChild(soundImg);
+
+        const soundSelect = document.createElement("select");
+        soundSelect.name = "soundSelect";
+        soundSelect.id = "soundSelect";
+        soundSelect.style.width = "212px";
+        soundSelect.style.marginLeft = "8px";
+        soundSelect.onchange = (event) => {
+            currentObject.addChangeableAttribute("sound", event.target.value)
+        };
+        SoundHandler.sounds.forEach(sound => {
+            if (sound.type === "sound") {
+                const selectedValue = currentObject.sound === sound.key || sound.key === "win" && !currentObject.sound;
+                const optionEl = document.createElement("option");
+                optionEl.value = sound.key;
+                optionEl.innerHTML = sound.descriptiveName;
+                optionEl.selected = selectedValue;
+                soundSelect.appendChild(optionEl);
+            }
+        })
+        soundSelectorWrapper.appendChild(soundSelect);
+
+        finishFlagWrapper.appendChild(soundSelectorWrapper);
 
         return finishFlagWrapper;
     }
@@ -399,6 +503,7 @@ class ObjectsTooltipElementsRenderer {
             const currentValue = currentOption[checkboxValue];
             currentObject && currentObject.addChangeableAttribute(attribute.name, currentValue);
             document.getElementById("switchValue").innerHTML = currentValue;
+            attribute.callbackFunction && attribute.callbackFunction(currentValue);
         };
 
         const spanEl = document.createElement("span");

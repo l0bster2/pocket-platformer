@@ -632,7 +632,7 @@ class SpritePixelArrays {
     this.DISAPPEARING_BLOCK_SPRITE = {
       name: ObjectTypes.DISAPPEARING_BLOCK,
       descriptiveName: "Disappearing block",
-      description: "A block that will disappear upon touching it. It will reappear after a certain time.",
+      description: "A block that will disappear upon touching it. It will reappear after a certain time. <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 15'} }, true)\">SFX</span> will be played.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:
@@ -653,7 +653,7 @@ class SpritePixelArrays {
     this.CONNECTED_DISAPPEARING_BLOCK_SPRITE = {
       name: ObjectTypes.CONNECTED_DISAPPEARING_BLOCK,
       descriptiveName: "Connected Disappearing block",
-      description: "Works same as the standard disappearing block, but it will also make the neighbouring disappearing blocks disappear.",
+      description: "Works same as the standard disappearing block, but it will also make the neighbouring disappearing blocks disappear.  <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'SFX 15'} }, true)\">SFX</span> will be played.",
       type: this.SPRITE_TYPES.tile,
       animation: [{
         sprite:
@@ -2429,6 +2429,40 @@ class SpritePixelArrays {
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "393939", "transp", "transp", "393939", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.SFX15 = {
+      name: ObjectTypes.SFX,
+      descriptiveName: "SFX 15",
+      directions: [AnimationHelper.facingDirections.bottom, AnimationHelper.facingDirections.left, AnimationHelper.facingDirections.top, AnimationHelper.facingDirections.right],
+      description: "Plays when <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Disappearing block'} }, true)\">Disappearing block</span> or <span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Connected Disappearing block'} }, true)\">Connected block</span> are touched",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "AA7139", "AA7139", "AA7139", "AA7139", "transp", "transp"],
+            ["transp", "transp", "transp", "AA7139", "AA7139", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "AA7139", "AA7139", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "AA7139", "AA7139", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]

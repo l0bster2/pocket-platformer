@@ -166,7 +166,12 @@ class SoundHandlerRenderer {
     }
 
     static createSoundControls(sound) {
-        return `<div class="soundControls">
+        let extraClass = "";
+        if(sound.key === "custom1") {
+            extraClass = "subSection paddingTop8 ";
+        }
+
+        return `<div class=" ${extraClass} soundControls">
             <button id="${sound.key}Stop" style="display: none" class="levelNavigationButton" onClick="SoundHandlerRenderer.stopSound('${sound.key}')">
                 <img src="images/icons/pause.svg" width="14" height="14">
             </button>

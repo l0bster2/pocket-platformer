@@ -129,6 +129,7 @@ class Display {
         PlayMode.updateGeneralFrameCounter();
         const textColor = "#" + WorldDataHandler.textColor;
         this.displayText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, 30, textColor);
+        //this.displayWobblyText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, 30, currentGeneralFrame, 100, textColor);
         var moduloDivider = maxFrames / 3;
         if (currentGeneralFrame % moduloDivider < moduloDivider / 2) {
             this.displayText("Press enter to continue", this.canvasWidth / 2, this.canvasHeight / 2 + 40, 18, textColor);
