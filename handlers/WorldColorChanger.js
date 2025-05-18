@@ -15,9 +15,9 @@ class WorldColorChanger {
         this.setBackgroundColor(color)
     }
 
-    static setColorInGameCanvas(newColor) {
+    static setColorInGameCanvas(newColor, animationDuration = 0) {
         const gameCanvas = document.getElementById("myCanvas");
-
+        gameCanvas.style.transition = animationDuration > 0  ? `background-color ${animationDuration}s ease` : 'none';   
         if (gameCanvas) {
             gameCanvas.style.backgroundColor = newColor;
         }

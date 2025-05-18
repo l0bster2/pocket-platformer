@@ -43,11 +43,12 @@ class EventTrigger extends InteractiveLevelObject {
         }
     }
 
-    setNewBackgroundImage(imageName) {
+    setNewBackgroundImage(imageName, backgroundImageSize) {
         const newImage = ImageHandler.images.find((image) =>
             image.name === imageName);
         if (newImage) {
             ImageHandler.currentLevelImage = newImage;
+            ImageHandler.currentLevelImageSize = backgroundImageSize;
             ImageHandler.initializeImageOnImageCanvas(newImage);
         }
     }
@@ -60,8 +61,16 @@ class EventTrigger extends InteractiveLevelObject {
                 switch (event.type) {
                     case "screenshake":
                         Camera.setScreenShake(event.screenshakeDuration, event.screenshakeIntensity);
+                        break;
                     case "background-image":
-                        this.setNewBackgroundImage(event.backgroundImage)
+                        this.setNewBackgroundImage(event.backgroundImage, event.backgroundImageSize);
+                        break;
+                    case "background-color":
+                        WorldColorChanger.setColorInGameCanvas(event.backgroundColor, event.animationDuration);
+                        break;
+                    case "play-sound":
+                        SoundHandler[event.sound] && SoundHandler[event.sound].stopAndPlay();
+                        break;
                 }
             })
         }

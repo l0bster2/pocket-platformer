@@ -37,7 +37,7 @@ class PlayMode {
         const { player } = this;
 
         PauseHandler.checkPause();
-        
+
         if (!player.death && this.currentPauseFrames === 0 && !DialogueHandler.active && !PauseHandler.paused) {
             this.updateGeneralFrameCounter();
             var walking = WalkHandler.walkHandler();
@@ -65,6 +65,12 @@ class PlayMode {
         }
     }
 
+    static resetEventAttributes() {
+        //those events may have changed with events. reset them to levels default attributes
+        ImageHandler.setBackgroundImage();
+        WorldColorChanger.changeLevelColor(tileMapHandler.levelIndex);
+    }
+
     static pauseFramesHandler() {
         if (PauseHandler.paused) {
             PauseHandler.handlePause();
@@ -73,6 +79,7 @@ class PlayMode {
             this.currentPauseFrames--
             if (player.death) {
                 if (this.currentPauseFrames === this.deathPauseFrames / 2) {
+                    this.resetEventAttributes();
                     this.player.resetPosition(true);
                     this.player.invisible = false;
                     this.player.death = false;

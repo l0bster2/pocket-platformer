@@ -12,6 +12,17 @@ class EventHandler {
             case "background-image":
                 document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderBackgroundImageAttributes(currentEvent);
                 break;
+            case "background-color":
+                document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderBackgroundColorAttributes(currentEvent);
+                const huebeeProperties = Helpers.getHuebeeDefaultProperties();
+                this.hueb = new Huebee('#eventBackgroundColor', {
+                    ...huebeeProperties,
+                    setText: true
+                });
+                break;
+            case "play-sound":
+                document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderSoundAttributes(currentEvent);
+                break;
             default:
                 console.log('Did not find event');
         }
@@ -29,6 +40,7 @@ class EventHandler {
 
     static editEvent(index) {
         const currentEvent = this.currentObject.events[index];
+        document.getElementById("eventType").value = currentEvent.type;
         this.editingEventIndex = index;
         document.getElementById("eventTypeWrapper").style.display = "none";
         this.changeEventType(currentEvent.type, currentEvent)
@@ -84,9 +96,25 @@ class EventHandler {
             case "background-image":
                 const additionalBackgroundImageAttributes = {
                     backgroundImage: attributes.eventBackgroundImage.value,
+                    backgroundImageSize: attributes.eventBackgroundImageSize.value,
                 }
                 const newBackgroundImageEvent = this.createNewEvent("background-image", additionalBackgroundImageAttributes, this.currentObject);
                 this.handleEventSubmit(newBackgroundImageEvent);
+                break;
+            case "background-color":
+                const additionalBackgroundColorAttributes = {
+                    backgroundColor: attributes.eventBackgroundColor.value,
+                    animationDuration: attributes.animationDuration.value,
+                }
+                const newBackgroundColorEvent = this.createNewEvent("background-color", additionalBackgroundColorAttributes, this.currentObject);
+                this.handleEventSubmit(newBackgroundColorEvent);
+                break;
+            case "play-sound":
+                const additionalSoundAttributes = {
+                    sound: attributes.eventSound.value,
+                }
+                const newSoundEvent = this.createNewEvent("play-sound", additionalSoundAttributes, this.currentObject);
+                this.handleEventSubmit(newSoundEvent);
                 break;
             default:
                 console.log('Did not find event');

@@ -32,7 +32,7 @@ class EventsTooltipRenderer {
 
     static renderBackgroundImageAttributes(event = null) {
         return `
-            <div class="flexGap12" style="padding: 8px 0;">
+            <div style="padding: 8px 0;">
                 <span class="marginTop8">Change to: </span>
                 <select name="eventBackgroundImage">
                     ${ImageHandler.images.map(image => 
@@ -40,6 +40,56 @@ class EventsTooltipRenderer {
                         ${image.name}</option>`
                     )
                     }
+                </select>
+                <div class="marginTop8">
+                <span>Size: </span>
+                <select name="eventBackgroundImageSize">
+                        <option value="stretch" ${event?.backgroundImageSize === "stretch" ? "selected" : ""}>Stretch</option>
+                        <option value="original" ${event?.backgroundImageSize === "original" ? "selected" : ""}>Original</option>
+                        <option value="fixed" ${event?.backgroundImageSize === "fixed" ? "selected" : ""}>Fixed</option>
+                        <option value="horizontalScroll" ${event?.backgroundImageSize === "horizontalScroll" ? "selected" : ""}>Horizontal scroll</option>
+                        <option value="verticalScroll" ${event?.backgroundImageSize === "verticalScroll" ? "selected" : ""}>Vertical scroll</option>
+                </select>
+                </div>
+            </div>
+        `
+    }
+
+    static renderBackgroundColorAttributes(event = null) {
+        return `
+            <div style="padding: 8px 0;">
+                <div>
+                    <span class="marginTop8">Change to: </span>
+                    <input class="color-input" id="eventBackgroundColor" value="${event?.backgroundColor || "#000000"}" style="padding: 6px; width: 120px" />
+                </div>
+                <div class="marginTop12">
+                    <label for="animationDuration">Animation duration:</label>
+                    <input type="range" min="0" max="10" value="${event?.animationDuration || 2}" name="animationDuration" step="1" id="animationDuration"
+                        onchange="EventsTooltipRenderer.changeBackgroundAnimationDuration(event)">
+                    <span id="animationDurationValue">${event?.animationDuration || 2}</span>
+                </div>
+            </div>
+        `
+    }
+
+    static changeBackgroundAnimationDuration(event) {
+        document.getElementById('animationDurationValue').innerHTML = event.target.value;
+    }
+
+    static renderSoundAttributes(event = null) {
+        return `
+            <div class="flexGap12" style="padding: 8px 0;">
+                <span class="marginTop8">Select sound: </span>
+                <select name="eventSound">
+                    ${SoundHandler.sounds.flatMap(sound => {
+                        if(sound.type !== "sound") {
+                            return null;
+                        }
+                        return `<option value="${sound.key}" ${sound.key === event?.sound ? "selected" : ""}>
+                            ${sound.descriptiveName}</option>`
+                        }
+                    )
+                }
                 </select>
             </div>
         `
