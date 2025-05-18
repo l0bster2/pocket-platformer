@@ -71,6 +71,9 @@ class EventTrigger extends InteractiveLevelObject {
                     case "play-sound":
                         SoundHandler[event.sound] && SoundHandler[event.sound].stopAndPlay();
                         break;
+                    case "change-music":
+                        SoundHandler[event.music] && SoundHandler.changeSong(event.music);
+                        break;
                 }
             })
         }

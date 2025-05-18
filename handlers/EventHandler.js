@@ -23,6 +23,9 @@ class EventHandler {
             case "play-sound":
                 document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderSoundAttributes(currentEvent);
                 break;
+            case "change-music":
+                document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderMusicAttributes(currentEvent);
+                break;
             default:
                 console.log('Did not find event');
         }
@@ -115,6 +118,13 @@ class EventHandler {
                 }
                 const newSoundEvent = this.createNewEvent("play-sound", additionalSoundAttributes, this.currentObject);
                 this.handleEventSubmit(newSoundEvent);
+                break;
+            case "change-music":
+                const additionalMusicAttributes = {
+                    music: attributes.eventMusic.value,
+                }
+                const newMusicEvent = this.createNewEvent("change-music", additionalMusicAttributes, this.currentObject);
+                this.handleEventSubmit(newMusicEvent);
                 break;
             default:
                 console.log('Did not find event');

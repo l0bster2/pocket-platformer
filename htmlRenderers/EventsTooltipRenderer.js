@@ -30,6 +30,37 @@ class EventsTooltipRenderer {
         return eventsWrapper;
     }
 
+    static goToSoundView() {
+        ModalHandler.closeModal('eventsModal');
+        changeView('sounds');
+    }
+
+    static renderMusicAttributes(event = null) {
+        return `
+            <div style="padding: 8px 0;">
+                <div class="textAsLink marginTop8" onClick="EventsTooltipRenderer.goToSoundView();">
+                <img alt="plus" width="14" height="14" class="blue-filter" src="images/icons/plus.svg"
+                        class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Upload
+                        more music here</span>
+                </div>
+                <div class="marginTop12">
+                <span class="marginTop8">Select sound: </span>
+                <select name="eventMusic">
+                    ${SoundHandler.sounds.flatMap(sound => {
+                        if(sound.type !== "music" || sound.key === 'song') {
+                            return null;
+                        }
+                        return `<option value="${sound.key}" ${sound.key === event?.sound ? "selected" : ""}>
+                            ${sound.key}</option>`
+                        }
+                    )
+                }
+                </select>
+                </div>
+            </div>
+        `
+    }
+
     static renderBackgroundImageAttributes(event = null) {
         return `
             <div style="padding: 8px 0;">

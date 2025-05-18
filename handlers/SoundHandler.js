@@ -54,21 +54,24 @@ class SoundHandler {
 
   static checkSongOnLevelReset(currentLevelIndex) {
     const { song } = WorldDataHandler.levels[currentLevelIndex];
+    this.changeSong(song);
+  }
 
+  static changeSong(song) {
     // if no song currently playing, set new current song
-    if(!this.currentSong && song) {
+    if (!this.currentSong && song) {
       this.currentSong = song;
       Game.playMode === Game.PLAY_MODE && this[this.currentSong].stopAndPlay();
     }
     // if other song is currently playing, change song
-    else if(song && this.currentSong && this.currentSong !== song) {
+    else if (song && this.currentSong && this.currentSong !== song) {
       this[this.currentSong].stop();
       this[this.currentSong].currentTime = 0;
       this.currentSong = song;
       Game.playMode === Game.PLAY_MODE && this[this.currentSong].stopAndPlay();
     }
     // if song is playing, but current level has no song, stop song
-    else if(this.currentSong && !song) {
+    else if (this.currentSong && !song) {
       this[this.currentSong].stop();
       this[this.currentSong].currentTime = 0;
       this.currentSong = null;
