@@ -95,7 +95,7 @@ class EventsTooltipRenderer {
                 </div>
                 <div class="marginTop12">
                     <label for="animationDuration">Animation duration:</label>
-                    <input type="range" min="0" max="10" value="${event?.animationDuration || 2}" name="animationDuration" step="1" id="animationDuration"
+                    <input type="range" min="0" max="10" value="${event?.animationDuration || 2}" name="animationDuration" step="0.5" id="animationDuration"
                         onchange="EventsTooltipRenderer.changeBackgroundAnimationDuration(event)">
                     <span id="animationDurationValue">${event?.animationDuration || 2}</span>
                 </div>
