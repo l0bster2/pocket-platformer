@@ -86,8 +86,6 @@ class Camera {
         if (this.objectToZoomTo) {
             this.zoomToObject(this.objectToZoomTo.zoomSpeed, this.objectToZoomTo.desiredZoomFactor);
             positionChanged = true;
-            changingXNecessary = true;
-            changingYNecessary = true;
         }
 
         newFollowX = this.outOfBoundsXCorrection(x);

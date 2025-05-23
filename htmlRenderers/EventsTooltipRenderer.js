@@ -44,7 +44,7 @@ class EventsTooltipRenderer {
                         more music here</span>
                 </div>
                 <div class="marginTop12">
-                <span class="marginTop8">Select sound: </span>
+                <span class="marginTop8">Select song: </span>
                 <select name="eventMusic">
                     ${SoundHandler.sounds.flatMap(sound => {
                         if(sound.type !== "music" || sound.key === 'song') {
