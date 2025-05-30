@@ -327,3 +327,8 @@ input[type="file"] {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.textBreakNormal {
+    white-space: normal;
+    text-transform: none;
+}

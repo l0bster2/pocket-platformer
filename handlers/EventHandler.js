@@ -26,6 +26,9 @@ class EventHandler {
             case "change-music":
                 document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderMusicAttributes(currentEvent);
                 break;
+            case "show-static-image":
+                document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderStaticImageAttributes(currentEvent);
+                break;
             default:
                 console.log('Did not find event');
         }
@@ -125,6 +128,14 @@ class EventHandler {
                 }
                 const newMusicEvent = this.createNewEvent("change-music", additionalMusicAttributes, this.currentObject);
                 this.handleEventSubmit(newMusicEvent);
+                break;
+            case "show-static-image":
+                const additionalStaticImageAttributes = {
+                    imageName: attributes.eventStaticImage.value,
+                    imageAnimationDuration: attributes.imageAnimationDuration.value,
+                }
+                const newStaticImageEvent = this.createNewEvent("show-static-image", additionalStaticImageAttributes, this.currentObject);
+                this.handleEventSubmit(newStaticImageEvent);
                 break;
             default:
                 console.log('Did not find event');

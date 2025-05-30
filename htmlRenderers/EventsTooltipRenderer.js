@@ -31,9 +31,46 @@ class EventsTooltipRenderer {
         return eventsWrapper;
     }
 
+    static renderStaticImageAttributes(event) {
+        return `
+            <div style="padding: 8px 0;">
+                <div class="subSectionBottom textBreakNormal">
+                    It will show an image in the foreground at camera position.
+                </div>
+                <div class="textAsLink marginTop8" onClick="EventsTooltipRenderer.goToImageView();">
+                <img alt="plus" width="14" height="14" class="blue-filter" src="images/icons/plus.svg"
+                        class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Upload
+                        more images here</span>
+                </div>
+                <div class="marginTop12">
+                <span class="marginTop8">Select image: </span>
+                <select name="eventStaticImage">
+                    ${ImageHandler.images.map(image => {
+                        return `<option value="${image.name}" ${image.name === event?.imageName ? "selected" : ""}>
+                            ${image.name}</option>`
+                            }
+                        )
+                    }
+                </select>
+                <div class="subSection">
+                    <label for="imageAnimationDuration">Duration:</label>
+                    <input type="range" min="0" max="20" value="${event?.imageAnimationDuration || 3}" name="imageAnimationDuration" step="0.5" id="imageAnimationDuration"
+                        onchange="EventsTooltipRenderer.changeStaticImageAnimationDuration(event)">
+                    <span id="imageAnimationDurationValue">${event?.imageAnimationDuration || 3}</span>
+                </div>
+                </div>
+            </div>
+        `
+    }
+
     static goToSoundView() {
         ModalHandler.closeModal('eventsModal');
         changeView('sounds');
+    }
+
+    static goToImageView() {
+        ModalHandler.closeModal('eventsModal');
+        changeView('images');
     }
 
     static renderMusicAttributes(event = null) {
@@ -48,15 +85,15 @@ class EventsTooltipRenderer {
                 <span class="marginTop8">Select song: </span>
                 <select name="eventMusic">
                     ${SoundHandler.sounds.flatMap(sound => {
-                        if(sound.type !== "music" || sound.key === 'song') {
-                            return null;
-                        }
-                        return `<option value="${sound.key}" ${sound.key === event?.sound ? "selected" : ""}>
+            if (sound.type !== "music" || sound.key === 'song') {
+                return null;
+            }
+            return `<option value="${sound.key}" ${sound.key === event?.sound ? "selected" : ""}>
                             ${sound.key}</option>`
-                        }
-                    )
-                }
-                </select>
+        }
+        )
+            }
+            </select>
                 </div>
             </div>
         `
@@ -67,11 +104,11 @@ class EventsTooltipRenderer {
             <div style="padding: 8px 0;">
                 <span class="marginTop8">Change to: </span>
                 <select name="eventBackgroundImage">
-                    ${ImageHandler.images.map(image => 
-                        `<option value="${image.name}" ${image.name === event?.backgroundImage ? "selected" : ""}>
+                    ${ImageHandler.images.map(image =>
+            `<option value="${image.name}" ${image.name === event?.backgroundImage ? "selected" : ""}>
                         ${image.name}</option>`
-                    )
-                    }
+        )
+            }
                 </select>
                 <div class="marginTop8">
                 <span>Size: </span>
@@ -104,6 +141,10 @@ class EventsTooltipRenderer {
         `
     }
 
+    static changeStaticImageAnimationDuration(event) {
+        document.getElementById('imageAnimationDurationValue').innerHTML = event.target.value;
+    }
+
     static changeBackgroundAnimationDuration(event) {
         document.getElementById('animationDurationValue').innerHTML = event.target.value;
     }
@@ -114,14 +155,14 @@ class EventsTooltipRenderer {
                 <span class="marginTop8">Select sound: </span>
                 <select name="eventSound">
                     ${SoundHandler.sounds.flatMap(sound => {
-                        if(sound.type !== "sound") {
-                            return null;
-                        }
-                        return `<option value="${sound.key}" ${sound.key === event?.sound ? "selected" : ""}>
+            if (sound.type !== "sound") {
+                return null;
+            }
+            return `<option value="${sound.key}" ${sound.key === event?.sound ? "selected" : ""}>
                             ${sound.descriptiveName}</option>`
-                        }
-                    )
-                }
+        }
+        )
+            }
                 </select>
             </div>
         `

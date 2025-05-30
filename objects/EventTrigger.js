@@ -5,6 +5,7 @@ class EventTrigger extends InteractiveLevelObject {
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
         this.resetObject();
         this.adaptWidthToSize();
+        this.tilemapHandler = tilemapHandler;
         this.colissionFunction = this.fakeColission;
     }
 
@@ -73,6 +74,10 @@ class EventTrigger extends InteractiveLevelObject {
                         break;
                     case "change-music":
                         SoundHandler[event.music] && SoundHandler.changeSong(event.music);
+                        break;
+                    case "show-static-image":
+                        const imgObj = new ImageInGame(event.imageName, event.imageAnimationDuration);
+                        this.tilemapHandler.levelObjects.push(imgObj);
                         break;
                 }
             })
