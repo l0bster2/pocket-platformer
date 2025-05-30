@@ -52,19 +52,34 @@ class EventsTooltipRenderer {
                         )
                     }
                 </select>
-                <div class="subSection">
+                <div class="marginTop12 flexGap12 ">
                     <label for="imageAnimationDuration">Duration:</label>
                     <input type="range" min="0" max="20" value="${event?.imageAnimationDuration || 3}" name="imageAnimationDuration" step="0.5" id="imageAnimationDuration"
                         onchange="EventsTooltipRenderer.changeStaticImageAnimationDuration(event)">
-                    <span id="imageAnimationDurationValue">${event?.imageAnimationDuration || 3}</span>
+                    <span id="imageAnimationDurationValue">${event?.imageAnimationDuration || 3}</span> Sec.
                 </div>
-                <div class="marginTop8">
+                <div class="marginTop12 flexGap12 ">
+                    <label for="staticImageSize">Image size:</label>
+                    <input type="range" min="1" max="100" value="${event?.staticImageSize || 100}" name="staticImageSize" step="1" id="staticImageSize"
+                        onchange="EventsTooltipRenderer.changeStaticImageSize(event)">
+                    <span id="staticImageSizeValue">${event?.staticImageSize || 100}</span>%
+                </div>
+                <div class="subSection">
                 <span>Fade in animation: </span>
                 <select name="staticImageFadeAnimation">
-                        <option value="none" ${event?.fadeAnimation === "none" ? "selected" : ""}>None</option>
-                        <option value="fadeIn" ${event?.fadeAnimation === "fadeIn" ? "selected" : ""}>Fade in</option>
-                        <option value="swipe" ${event?.fadeAnimation === "swipe" ? "selected" : ""}>Swipe</option>
+                        <option value="none" ${event?.fadeInAnimation === "none" ? "selected" : ""}>None</option>
+                        <option value="fadeIn" ${event?.fadeInAnimation === "fadeIn" ? "selected" : ""}>Fade in</option>
+                        <option value="swipe-left" ${event?.fadeInAnimation === "swipe-left" ? "selected" : ""}>Swipe-left</option>
+                        <option value="swipe-top" ${event?.fadeInAnimation === "swipe-top" ? "selected" : ""}>Swipe-top</option>
+                        <option value="swipe-right" ${event?.fadeInAnimation === "swipe-right" ? "selected" : ""}>Swipe-right</option>
+                        <option value="swipe-bottom" ${event?.fadeInAnimation === "swipe-bottom" ? "selected" : ""}>Swipe-bottom</option>
                 </select>
+                </div>
+                <div class="marginTop12 flexGap12">
+                    <label for="fadeInAnimationDuration">Animation duration:</label>
+                    <input type="range" min="0" max="4" value="${event?.fadeInAnimationDuration || 0.4}" name="fadeInAnimationDuration" step="0.2" id="fadeInAnimationDuration"
+                        onchange="EventsTooltipRenderer.changeBackgroundFadeInAnimationDuration(event)">
+                    <span id="fadeInAnimationDurationValue">${event?.fadeInAnimationDuration || 0.4}</span> Sec.
                 </div>
                 </div>
             </div>
@@ -147,6 +162,14 @@ class EventsTooltipRenderer {
                 </div>
             </div>
         `
+    }
+
+    static changeStaticImageSize(event) {
+        document.getElementById('staticImageSizeValue').innerHTML = event.target.value;
+    }
+
+    static changeBackgroundFadeInAnimationDuration(event) {
+        document.getElementById('fadeInAnimationDurationValue').innerHTML = event.target.value;
     }
 
     static changeStaticImageAnimationDuration(event) {

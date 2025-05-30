@@ -76,7 +76,7 @@ class EventTrigger extends InteractiveLevelObject {
                         SoundHandler[event.music] && SoundHandler.changeSong(event.music);
                         break;
                     case "show-static-image":
-                        const imgObj = new ImageInGame(event.imageName, event.imageAnimationDuration, event.fadeInAnimation);
+                        const imgObj = new ImageInGame(event.imageName, event.imageAnimationDuration, event.fadeInAnimation, event.fadeInAnimationDuration, event.staticImageSize);
                         this.tilemapHandler.levelObjects.push(imgObj);
                         break;
                 }

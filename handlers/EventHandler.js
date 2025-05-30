@@ -134,6 +134,8 @@ class EventHandler {
                     imageName: attributes.eventStaticImage.value,
                     imageAnimationDuration: attributes.imageAnimationDuration.value,
                     fadeInAnimation: attributes.staticImageFadeAnimation.value,
+                    fadeInAnimationDuration: attributes.fadeInAnimationDuration.value,
+                    staticImageSize: attributes.staticImageSize.value,
                 }
                 const newStaticImageEvent = this.createNewEvent("show-static-image", additionalStaticImageAttributes, this.currentObject);
                 this.handleEventSubmit(newStaticImageEvent);
