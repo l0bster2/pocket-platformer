@@ -85,7 +85,7 @@ class EventTrigger extends InteractiveLevelObject {
     }
 
     draw(spriteCanvas) {
-        if (Game.playMode === Game.BUILD_MODE) {
+        if (Game.playMode === Game.BUILD_MODE || this.spriteObject?.[0].showInGame) {
             super.draw(spriteCanvas);
 
             if (this.width > 1 || this.height > 1) {

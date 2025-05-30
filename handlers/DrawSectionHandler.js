@@ -318,7 +318,7 @@ class DrawSectionHandler {
                     this.createButtonForAdditionalFrame(sprite);
                 }
             }
-            [{ attributeName: "squishAble", description: "Squish animation" },
+            [{ attributeName: "squishAble", description: "Squish animation" }, { attributeName: "showInGame", description: "Show in Game" },
             { attributeName: "rotateable", description: "Rotateable" }].forEach(attribute => {
                 if (sprite[attribute.attributeName] !== undefined) {
                     this.createCheckboxForSquishAnimation(sprite, attribute.attributeName, attribute.description);

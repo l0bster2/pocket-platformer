@@ -1554,6 +1554,7 @@ class SpritePixelArrays {
       descriptiveName: "Event trigger",
       description: "Once the player touches it, a lot of events can be triggered. Click on a set event trigger again to add events or change size.",
       type: this.SPRITE_TYPES.object,
+      showInGame: false,
       animation: [{
         sprite:
           [
