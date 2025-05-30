@@ -39,7 +39,7 @@ class ObjectTypes {
     return 'connectedDisappearingBlock';
   }
 
-  static get EVENT_TRIGGER(){
+  static get EVENT_TRIGGER() {
     return 'eventTrigger'
   }
 
@@ -171,7 +171,7 @@ class ObjectTypes {
     return 'collectible';
   }
 
-  static  get POWER_UP() {
+  static get POWER_UP() {
     return 'powerUp';
   }
 
@@ -181,6 +181,10 @@ class ObjectTypes {
 
   static get TRIGGERED_PLATFORM() {
     return 'triggeredPlatform';
+  }
+
+  static get IMAGE_IN_GAME() {
+    return 'imageInGame';
   }
 
   static get SPECIAL_BLOCK_VALUES() {

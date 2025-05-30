@@ -57,14 +57,5 @@ class InteractiveLevelObject extends LevelObject {
     }
 
     //for now it's used for bullets (canonballs and rockets), which can be deleted during game-time
-    deleteObjectFromLevel(tilemapHandler, showSfx = true) {
-        showSfx && SFXHandler.createSFX(this.x, this.y, 1)
-        for (var i = tilemapHandler.levelObjects.length - 1; i >= 0; i--) {
-            var levelObject = tilemapHandler.levelObjects[i];
-            if (this.key === levelObject.key && levelObject.initialX === this.initialX && levelObject.initialY === this.initialY && levelObject.type === this.type) {
-                tilemapHandler.levelObjects.splice(i, 1);
-                break;
-            }
-        }
-    }
+
 }

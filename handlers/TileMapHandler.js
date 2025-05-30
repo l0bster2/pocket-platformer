@@ -226,7 +226,7 @@ class TileMapHandler {
 
     splitLevelObjectsInLayers() {
         const layers = [
-            [], [], [], [], [], [], [],
+            [], [], [], [], [], [], [], [],
         ];
         this.levelObjects.forEach(levelObject => {
             if (SpritePixelArrays.backgroundSprites.includes(levelObject.type)) {
@@ -244,8 +244,11 @@ class TileMapHandler {
             else if (levelObject.type === ObjectTypes.TRAMPOLINE) {
                 layers[2].push(levelObject);
             }
-            else if(levelObject.type === ObjectTypes.EVENT_TRIGGER) {
+            else if (levelObject.type === ObjectTypes.EVENT_TRIGGER) {
                 layers[6].push(levelObject)
+            }
+            else if (levelObject.type === ObjectTypes.IMAGE_IN_GAME) {
+                layers[7].push(levelObject)
             }
             else {
                 layers[1].push(levelObject);

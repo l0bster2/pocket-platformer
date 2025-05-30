@@ -988,6 +988,8 @@
                         DialogueHandler.handleDialogue();
                         PlayMode.pauseFramesHandler();
                         EffectsRenderer.displayEffects(2);
+                        // foreground images
+                        tileMapHandler.displayObjects(tileMapHandler.layers[7]);
                         Camera.followObject(player.x, player.y);
                     }
                     //startRemoval 
