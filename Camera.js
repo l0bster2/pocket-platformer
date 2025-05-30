@@ -25,6 +25,8 @@ class Camera {
             intensity: 0,
         };
         this.objectToZoomTo = null;
+        this.currentScreenshakeOffsetX = 0;
+        this.currentScreenshakeOffsetY = 0;
     }
 
     static begin() {
@@ -121,9 +123,15 @@ class Camera {
 
     static doScreenShake() {
         this.screenShake.currentFrame--;
-        const direction = this.screenShake.currentFrame % 2 === 0 ? 1 : -1;
-        this.follow.x += MathHelpers.getRandomNumberBetweenTwoNumbers(this.screenShake.intensity / 2, this.screenShake.intensity, false) * direction;
-        this.follow.y += MathHelpers.getRandomNumberBetweenTwoNumbers(this.screenShake.intensity / 2, this.screenShake.intensity, false) * direction;
+        let direction = -1;
+        const evenFrame = this.screenShake.currentFrame % 2 === 0;
+        if(evenFrame) {
+            this.currentScreenshakeOffsetX = MathHelpers.getRandomNumberBetweenTwoNumbers(this.screenShake.intensity / 2, this.screenShake.intensity, false);
+            this.currentScreenshakeOffsetY = MathHelpers.getRandomNumberBetweenTwoNumbers(this.screenShake.intensity / 2, this.screenShake.intensity, false);
+            direction = 1;
+        }
+        this.follow.x += this.currentScreenshakeOffsetX * direction;
+        this.follow.y += this.currentScreenshakeOffsetY * direction;
     }
 
     static outOfBoundsXCorrection(x) {
