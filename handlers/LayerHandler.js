@@ -12,7 +12,7 @@ class LayerHandler {
     static layerVisibilityButtonClicked(event) {
         const target = event.target;
         const eyeIcon = target.children[0];
-        if(eyeIcon.src.includes('images/icons/eye.svg')) {
+        if (eyeIcon.src.includes('images/icons/eye.svg')) {
             eyeIcon.src = 'images/icons/closedEye.svg';
             this[target.id] = false;
         }
@@ -23,7 +23,10 @@ class LayerHandler {
     }
 
     static showLayersTooltip() {
+        if (Game.playMode === Game.PLAY_MODE) {
+            Game.changeGameMode();
+        }
         const template = ObjectsTooltipElementsRenderer.createLayersTooltip();
         TooltipHandler.showTooltip("layersTooltip", "Visibility", template);
     }
- }
+}
