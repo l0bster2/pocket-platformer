@@ -12,6 +12,7 @@ class ImageInGame {
         this.loaded = false;
         this.img.onload = () => {
             this.loaded = true;
+            PlayMode.currentPauseFrames = this.maxFrames;
         }
         this.key = TilemapHelpers.makeid(4);
         this.colissionFunction = () => {};
