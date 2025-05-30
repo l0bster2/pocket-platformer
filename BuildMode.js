@@ -318,7 +318,7 @@ class BuildMode {
         const decoHoveringOver = allObjectsAtCurrentTile.filter(o => o.type === SpritePixelArrays.SPRITE_TYPES.deko);
 
         //Objects
-        if (this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.object) {
+        if (this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.object && !SpritePixelArrays.backgroundSprites.includes(this.currentSelectedObject?.name)) {
             //Moving platform
             if (SpritePixelArrays.movingPlatformSprites.includes(this.currentSelectedObject?.name)) {
                 const touchingOtherMovingPlatForm = this.tileMapHandler.layers[3].some(movingPlatform =>
@@ -380,13 +380,13 @@ class BuildMode {
         const content = document.createElement("div");
         this.showingToolTip = true;
 
-        const objectsInlcudePath = currentObjects.some(o => o.type === ObjectTypes.PATH_POINT);
+        const needsDoubleHeading = currentObjects.length > 1 && currentObjects.some(o => o.type === ObjectTypes.PATH_POINT || o.type === ObjectTypes.EVENT_TRIGGER);
 
         currentObjects.forEach((currentObject, index) => {
             const spriteObject = SpritePixelArrays.getSpritesByName(currentObject.type)[0];
 
             // If mutliple objects or only path, clarify which properties belong wo which object
-            if (objectsInlcudePath) {
+            if (needsDoubleHeading) {
                 const heading = ObjectsTooltipElementsRenderer.createSmallHeading(`${spriteObject.descriptiveName} properties:`);
                 content.appendChild(heading);
             }

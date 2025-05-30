@@ -66,6 +66,7 @@ class SpritePixelArrays {
 
     this.backgroundSprites = [
       ObjectTypes.WATER,
+      ObjectTypes.EVENT_TRIGGER,
     ];
 
     this.foregroundSprites = [

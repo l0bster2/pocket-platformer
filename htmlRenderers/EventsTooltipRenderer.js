@@ -27,6 +27,7 @@ class EventsTooltipRenderer {
             `
             eventsWrapper.appendChild(eventContent);
         });
+        eventsWrapper.className = "marginTop8";
         return eventsWrapper;
     }
 
@@ -144,7 +145,7 @@ class EventsTooltipRenderer {
 
     static renderAddEventButton(currentObject) {
         const button = document.createElement("button");
-        button.className = "fullWidth levelNavigationButton ";
+        button.className = "fullWidth levelNavigationButton";
         EventHandler.currentObject = currentObject;
 
         button.onclick = (e) => {
