@@ -58,6 +58,14 @@ class EventsTooltipRenderer {
                         onchange="EventsTooltipRenderer.changeStaticImageAnimationDuration(event)">
                     <span id="imageAnimationDurationValue">${event?.imageAnimationDuration || 3}</span>
                 </div>
+                <div class="marginTop8">
+                <span>Fade in animation: </span>
+                <select name="staticImageFadeAnimation">
+                        <option value="none" ${event?.fadeAnimation === "none" ? "selected" : ""}>None</option>
+                        <option value="fadeIn" ${event?.fadeAnimation === "fadeIn" ? "selected" : ""}>Fade in</option>
+                        <option value="swipe" ${event?.fadeAnimation === "swipe" ? "selected" : ""}>Swipe</option>
+                </select>
+                </div>
                 </div>
             </div>
         `
