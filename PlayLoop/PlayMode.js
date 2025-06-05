@@ -68,7 +68,7 @@ class PlayMode {
     static resetEventAttributes() {
         //those events may have changed with events. reset them to levels default attributes
         ImageHandler.setBackgroundImage();
-        WorldColorChanger.changeLevelColor(tileMapHandler.levelIndex);
+        WorldColorChanger.changeLevelColor(tileMapHandler.currentLevel);
     }
 
     static pauseFramesHandler() {
