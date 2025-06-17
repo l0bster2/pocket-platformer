@@ -269,9 +269,12 @@ class EffectHtmlRenderer {
                 innerHTML: `       
                 <div class="marginTop8" id="sfxTemplate">
                     <form onsubmit="EffectsHandler.addEffect(event, ${index})">
-                        <select style="margin-right: -2px; display: ${index === null ? 'block' : 'none'}" onChange="EffectsHandler.changeTemplate()" id="templateHandler">
+                        <div class="flexGap12 subSectionBottom" style="display: ${index === null ? 'block' : 'none'}">
+                        <span class="marginTop8">Select effect type: </span>
+                        <select style="margin-right: -2px;" onChange="EffectsHandler.changeTemplate()" id="templateHandler">
                             ${this.createEffectsSelect(effectsObject)}
                         </select>
+                        </div>
                         <details class="marginTop4">
                             <summary class="sfxTemplateSummary">Select levels</summary>
                             <div class="sfxTemplateSection">

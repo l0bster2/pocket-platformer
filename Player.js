@@ -331,6 +331,13 @@ class Player {
 
         this.checkTrailAnimation();
 
+        // jump trail
+        /*
+        if((this.jumping || this.falling) && tileMapHandler.currentGeneralFrameCounter % 3 === 0) {
+            SFXHandler.createSFX(this.x, this.y,
+                1, this.facingDirection, 0, 0, true);
+        }*/
+
         const animationLength = this.animationLengths[this.currentSpriteIndex];
 
         const frameDuration = this.currentSpriteIndex === this.spriteIndexIdle
