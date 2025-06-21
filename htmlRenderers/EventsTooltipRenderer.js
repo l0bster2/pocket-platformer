@@ -215,6 +215,15 @@ class EventsTooltipRenderer {
         `
     }
 
+    static renderUrlAttributes(event = null) {
+        return `
+                <div>
+                    <label for="URLPath">Duration (in frames):</label>
+                    <input id="URLPath" required type="url" value="${event?.url}" />
+                </div>
+        `
+    }
+
     static renderAddEventButton(currentObject) {
         const button = document.createElement("button");
         button.className = "fullWidth levelNavigationButton";
