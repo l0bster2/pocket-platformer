@@ -145,7 +145,7 @@ class EventHandler {
                 break;
             case "open-url":
                 const additionalUrlAttributes = {
-                    url: parseInt(attributes.url.value),
+                    url: attributes.url.value
                 }
                 const newUrlEvent = this.createNewEvent("open-url", additionalUrlAttributes, this.currentObject);
                 this.handleEventSubmit(newUrlEvent);

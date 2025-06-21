@@ -218,7 +218,7 @@ class EventsTooltipRenderer {
     static renderUrlAttributes(event = null) {
         return `
                 <div>
-                    <label for="URLPath">Duration (in frames):</label>
+                    <label for="URLPath">URL to open:</label>
                     <input id="URLPath" required type="url" value="${event?.url}" />
                 </div>
         `
