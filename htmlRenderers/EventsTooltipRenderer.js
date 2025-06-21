@@ -219,7 +219,7 @@ class EventsTooltipRenderer {
         return `
                 <div>
                     <label for="url">URL to open:</label>
-                    <input id="url" required type="url" value="${event?.url}" />
+                    <input id="url" required type="url" value="${event?.url || 'about:blank'}" />
                 </div>
         `
     }
