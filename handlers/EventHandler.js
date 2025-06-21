@@ -29,6 +29,9 @@ class EventHandler {
             case "show-static-image":
                 document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderStaticImageAttributes(currentEvent);
                 break;
+            case "open-url":
+               document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderUrlAttributes(currentEvent);
+                break;
             default:
                 console.log('Did not find event');
         }
@@ -139,6 +142,13 @@ class EventHandler {
                 }
                 const newStaticImageEvent = this.createNewEvent("show-static-image", additionalStaticImageAttributes, this.currentObject);
                 this.handleEventSubmit(newStaticImageEvent);
+                break;
+            case "open-url":
+                const additionalUrlAttributes = {
+                    url: parseInt(attributes.url.value),
+                }
+                const newUrlEvent = this.createNewEvent("open-url", additionalUrlAttributes, this.currentObject);
+                this.handleEventSubmit(newUrlEvent);
                 break;
             default:
                 console.log('Did not find event');
