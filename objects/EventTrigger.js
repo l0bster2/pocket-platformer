@@ -80,7 +80,27 @@ class EventTrigger extends InteractiveLevelObject {
                         this.tilemapHandler.levelObjects.push(imgObj);
                         break;
                     case "open-url":
-                        window.open(this.url, '_blank');
+                        const a = document.createElement("a");
+                        a.href = event.url;
+                        const evt = document.createEvent("MouseEvents");
+                        evt.initMouseEvent(
+                            "click",
+                            true,
+                            true,
+                            window,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            true,
+                            false,
+                            false,
+                            false,
+                            0,
+                            null
+                        );
+                        a.dispatchEvent(evt);
                         break;
                 }
             })
