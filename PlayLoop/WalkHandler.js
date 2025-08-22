@@ -13,9 +13,6 @@ class WalkHandler extends PlayMode {
                 if (player.xspeed - player.speed > newMaxSpeed * -1) {
                     player.xspeed -= player.speed;
                 }
-                else if (player.xspeed > newMaxSpeed * -1 && player.wallJumping) {
-                    player.xspeed -= player.speed;
-                }
                 else {
                     if (player.swimming) {
                         player.xspeed = newMaxSpeed * -1;
@@ -31,9 +28,6 @@ class WalkHandler extends PlayMode {
             }
             if ((Controller.right || player.fixedSpeedRight) && !player.fixedSpeedLeft) {
                 if (player.xspeed + player.speed < newMaxSpeed) {
-                    player.xspeed += player.speed;
-                }
-                else if (player.xspeed < newMaxSpeed && player.wallJumping) {
                     player.xspeed += player.speed;
                 }
                 else {
