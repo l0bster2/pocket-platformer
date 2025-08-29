@@ -12,15 +12,7 @@ function importGame() {
     reader.readAsText(file, "UTF-8");
     reader.onload = function (evt) {
       try {
-        /*
-          Initially, set all abilitiy checkboxes to false. in case user implemented a game, where
-          an ability has not been implemented yet (f.e. dash)
-        */
-        player["dashChecked"] = false;
-        player["runChecked"] = false;
-        PlayerAttributesHandler.setInitialCheckboxValue("dashChecked");
-        PlayerAttributesHandler.setInitialCheckboxValue("runChecked");
-
+        resetPlayerMechanics();
         const fileContent = evt.target.result;
         const indexOfNewImporter = fileContent.indexOf(allDataStartComment);
         if (indexOfNewImporter > 0) {
@@ -51,6 +43,17 @@ function importGame() {
       console.log("error");
     }
   }
+}
+
+function resetPlayerMechanics() {
+  /*
+    Initially, set all abilitiy checkboxes to false. in case user implemented a game, where
+    an ability has not been implemented yet (f.e. dash)
+  */
+  player["dashChecked"] = false;
+  player["runChecked"] = false;
+  PlayerAttributesHandler.setInitialCheckboxValue("dashChecked");
+  PlayerAttributesHandler.setInitialCheckboxValue("runChecked");
 }
 
 function resetUIValuesInTool() {
@@ -315,7 +318,7 @@ function checkIfSoundEmptyOrExternal(url) {
 
 function bundleAllScripts() {
   var scriptTexts = '';
-  const unNeededScripts = ['demoLevels', 'htmlgame', 'ImportExport', 'LegacyImporter', 'WorldColorHandler', 'DrawHelpers', 'BuildMode', 'CustomSpritesElementsRenderer',
+  const unNeededScripts = ['EmptyGame', 'demoLevels', 'htmlgame', 'ImportExport', 'LegacyImporter', 'WorldColorHandler', 'DrawHelpers', 'BuildMode', 'CustomSpritesElementsRenderer',
     'LevelNavigationHandler', 'TabNavigation', 'TabPagination', 'DrawSectionHandler', 'helpers', 'ObjectsTooltipElementsRenderer', 'HeaderNavigationHandler',
     'huebee.min', 'ProTipHandler', 'TooltipHandler', 'LevelSizeHandler', 'EffectHtmlRenderer', 'SoundHandlerRenderer', 'PathBuildHandler', 'FileSaver', 'Base64Images'];
 

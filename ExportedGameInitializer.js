@@ -1,6 +1,6 @@
 class ExportedGameInitializer {
     static initializeExportedGame(allData) {
-        WorldDataHandler.levels = allData.levels;
+        WorldDataHandler.levels = [...allData.levels];
         WorldDataHandler.gamesName = allData.gamesName;
         WorldDataHandler.endingMessage = allData.endingMessage;
         WorldDataHandler.effects = allData.effects;
@@ -10,16 +10,16 @@ class ExportedGameInitializer {
         WorldDataHandler.backgroundImageSize = allData.backgroundImageSize;
         TransitionAnimationHandler.animationFrames = allData.animationFrames;
         TransitionAnimationHandler.animationType = allData.animationType;
-        if(allData.images) {
+        if (allData.images) {
             ImageHandler.images = allData.images;
         }
         else {
             //ImageHandler.images = [];
         }
 
-        if(allData?.sounds) {
+        if (allData?.sounds) {
             allData.sounds.forEach(sound => {
-                if(sound.type === 'music' && !SoundHandler.doesSoundExist(sound.key)) {
+                if (sound.type === 'music' && !SoundHandler.doesSoundExist(sound.key)) {
                     SoundHandler.sounds.push({
                         key: sound.key, descriptiveName: "", value: sound.value, type: "music", customValue: true,
                     });

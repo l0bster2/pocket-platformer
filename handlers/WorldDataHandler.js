@@ -2,7 +2,12 @@ class WorldDataHandler {
 
     static staticConstructor() {
         this.initialPlayerPosition = { x: 2, y: 10 };
-        this.levels = [this.createEmptyLevel(), this.createDemoLevel(), this.createEmptyLevel()];
+        if(WorldDataHandler.insideTool) {
+            this.levels = [this.createEmptyLevel(), this.createDemoLevel(), this.createEmptyLevel()];
+        } 
+        else {
+            this.levels = [this.createEmptyLevel(), this.createEmptyLevel(), this.createEmptyLevel()];
+        }
         this.tileSize = 24;
         this.pixelArrayUnitAmount = 8;
         this.pixelArrayUnitSize = this.tileSize / this.pixelArrayUnitAmount;
@@ -22,14 +27,20 @@ class WorldDataHandler {
 
     static createNewGame() {
         this.levels.length = 0; // empty the array completely
-        this.levels.push(
-            structuredClone(this.createEmptyLevel()),
-            structuredClone(this.exampleLevel(true)),
-            structuredClone(this.createEmptyLevel())
-        );
-        tileMapHandler.currentLevel = 1;
-        tileMapHandler.resetLevel(1);
-        ModalHandler.closeModal('newGameModal');
+        resetPlayerMechanics();
+        const gameData = { ...emptyGameData };
+        ExportedGameInitializer.initializeExportedGame(gameData);
+        SoundHandlerRenderer.createSoundOverview();
+        setTimeout(() => {
+            tileMapHandler.currentLevel = 1;
+            tileMapHandler.resetLevel(1);
+            ModalHandler.closeModal('newGameModal');
+            resetUIValuesInTool();
+
+            if (Game.playMode === Game.PLAY_MODE) {
+                Game.changeGameMode();
+            }
+        }, "500");
     }
 
     static createEmptyLevel() {

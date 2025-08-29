@@ -41,7 +41,7 @@ class DefaultMovingPlatform extends InteractiveLevelObject {
 
     addChangeableAttribute(attribute, value, levelToChange = null) {
         super.addChangeableAttribute(attribute, value, levelToChange);
-        if (attribute === SpritePixelArrays.changeableAttributeTypes.size) {
+        if (attribute === DefaultSprites.changeableAttributeTypes.size) {
             this.adaptWidthToSize();
         }
     }

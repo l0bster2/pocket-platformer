@@ -27,9 +27,11 @@
                 </button>
                 <ul class="dropdown-content" id="myDropdown">
                     <li class="dropdown-nav-item" onClick="ModalHandler.showModal('newGameModal');">
-                        <div>
-                            New game
-                        </div>
+                        <label>
+                            <span>New game</span>
+                            <img src="images/icons/rotate.svg" class="iconInButtonWithText" alt="import" width="12"
+                                height="12">
+                        </label>
                     </li>
                     <li class="dropdown-nav-item">
                         <label>
@@ -856,6 +858,7 @@
         <script src="HeaderNavigationHandler.js"></script>
         <script src="TransitionAnimationHandler.js"></script>
         <script src="ExportedGameInitializer.js"></script>
+        <script src="EmptyGame.js"></script>
         <script src="LegacyImporter.js"></script>
         <script src="utils/helpers.js"></script>
         <script src="htmlRenderers/ObjectsTooltipElementsRenderer.js"></script>

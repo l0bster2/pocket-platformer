@@ -39,7 +39,7 @@ class EventTrigger extends InteractiveLevelObject {
 
     addChangeableAttribute(attribute, value, levelToChange = null) {
         super.addChangeableAttribute(attribute, value, levelToChange);
-        if (attribute === SpritePixelArrays.changeableAttributeTypes.height || attribute === SpritePixelArrays.changeableAttributeTypes.width) {
+        if (attribute === DefaultSprites.changeableAttributeTypes.height || attribute === DefaultSprites.changeableAttributeTypes.width) {
             this.adaptWidthToSize();
         }
     }
