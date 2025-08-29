@@ -53,13 +53,13 @@ class Game {
                 this.refreshRateCounter = [];
                 this.currentRetryToGetFps++;
                 this.refreshRates.push(this.refreshRate);
-                if(this.currentRetryToGetFps < this.maxRetriesToGetFps) {
+                if (this.currentRetryToGetFps < this.maxRetriesToGetFps) {
                     this.refreshRate = null;
                 }
                 else {
                     this.averageFps = this.refreshRates.reduce((partialSum, a) => partialSum + a, 0) / this.refreshRates.length;
                     const refreshRateHigher70 = this.refreshRates.filter(refreshRate => refreshRate > 70);
-                    if(refreshRateHigher70.length > 0) {
+                    if (refreshRateHigher70.length > 0) {
                         this.percentOfFpsHigher70 = refreshRateHigher70.length / this.refreshRates.length * 100;
                         this.percentOfFpsHigher70 > 80 ? this.refreshRateHigher60 = true : this.refreshRateHigher60 = false;
                     }
@@ -77,9 +77,11 @@ class Game {
 
     static changeGameMode(firstTime = false) {
         const canvas = document.getElementById("myCanvas");
+        const body = document.body;
 
         if (this.playMode === this.PLAY_MODE) {
             this.playMode = this.BUILD_MODE;
+            body.classList.replace("bodyBackground1", "bodyBackground2");
             this.executeGameMode();
             canvas.addEventListener("mousemove", (e) => { Controller.mouseMove(e) });
             ObjectsTooltipElementsRenderer.renderPlayButton(firstTime);
@@ -88,6 +90,7 @@ class Game {
             return null;
         }
         if (this.playMode === this.BUILD_MODE) {
+            body.classList.replace("bodyBackground2", "bodyBackground1");
             this.playMode = this.PLAY_MODE;
             this.executeGameMode();
             canvas.removeEventListener("mousemove", (e) => { Controller.mouseMove(e) });

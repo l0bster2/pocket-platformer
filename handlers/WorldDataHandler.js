@@ -2,8 +2,14 @@ class WorldDataHandler {
 
     static staticConstructor() {
         this.initialPlayerPosition = { x: 2, y: 10 };
-        this.levels = [this.createEmptyLevel(), this.exampleLevel(true), this.createEmptyLevel()];
+        this.levels = [this.createEmptyLevel(), this.createDemoLevel(), this.createEmptyLevel()];
         this.tileSize = 24;
+        this.pixelArrayUnitAmount = 8;
+        this.pixelArrayUnitSize = this.tileSize / this.pixelArrayUnitAmount;
+        this.resetGameData();
+    }
+
+    static resetGameData() {
         this.gamesName = "Example name";
         this.endingMessage = "Thx for playing!";
         this.backgroundColor = '000000';
@@ -12,8 +18,18 @@ class WorldDataHandler {
         this.backgroundImageScrollSpeed = 0.2;
         this.textColor = 'ffffff';
         this.effects = [];
-        this.pixelArrayUnitAmount = 8;
-        this.pixelArrayUnitSize = this.tileSize / this.pixelArrayUnitAmount;
+    }
+
+    static createNewGame() {
+        this.levels.length = 0; // empty the array completely
+        this.levels.push(
+            structuredClone(this.createEmptyLevel()),
+            structuredClone(this.exampleLevel(true)),
+            structuredClone(this.createEmptyLevel())
+        );
+        tileMapHandler.currentLevel = 1;
+        tileMapHandler.resetLevel(1);
+        ModalHandler.closeModal('newGameModal');
     }
 
     static createEmptyLevel() {
@@ -51,18 +67,22 @@ class WorldDataHandler {
         };
     }
 
+    static createDemoLevel() {
+        return MathHelpers.getRandomItemFromArray(allDemoLevels);
+    }
+
     static exampleLevel(withDefaultImage = false) {
         let exampleLevelTileData = this.createEmptyLevel().tileData;
-        for(var i = 1; i < 6; i++) {
+        for (var i = 1; i < 6; i++) {
             exampleLevelTileData[11][i] = 2;
         }
-        for(var i = exampleLevelTileData[0].length-2; i > exampleLevelTileData[0].length-7; i--) {
+        for (var i = exampleLevelTileData[0].length - 2; i > exampleLevelTileData[0].length - 7; i--) {
             exampleLevelTileData[6][i] = 2;
         }
 
         const levelObjects = [
             { ...this.initialPlayerPosition, type: ObjectTypes.START_FLAG },
-            { x: exampleLevelTileData[0].length-3, y: 5, type: ObjectTypes.FINISH_FLAG }
+            { x: exampleLevelTileData[0].length - 3, y: 5, type: ObjectTypes.FINISH_FLAG }
         ];
 
         return {

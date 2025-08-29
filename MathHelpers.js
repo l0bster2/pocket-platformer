@@ -9,6 +9,10 @@ class MathHelpers {
     return randomNumber *= Math.round(Math.random()) ? 1 : -1;
   }
 
+  static getRandomItemFromArray(arr) {
+    return arr[Math.floor(Math.random()*arr.length)];
+  }
+
   static getBalancedRandomNumber(min, max) {
     const value = Math.random() * (max - min) + min;
     return (Math.random() < 0.5 ? -1 : 1) * value;

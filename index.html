@@ -16,7 +16,7 @@
     </script>
 </head>
 
-<body>
+<body class="bodyBackground1">
     <div id="header" class="sectionContent flexGap8">
         <img src="images/icons/pp.png" height="26px" />
         <div class="topnav" id="myTopnav">
@@ -26,6 +26,11 @@
                     <img src="images/icons/right.svg" alt="right" width="10" height="10" class="rotate90Degrees">
                 </button>
                 <ul class="dropdown-content" id="myDropdown">
+                    <li class="dropdown-nav-item" onClick="ModalHandler.showModal('newGameModal');">
+                        <div>
+                            New game
+                        </div>
+                    </li>
                     <li class="dropdown-nav-item">
                         <label>
                             <input type="file" id="importButton" onChange="importGame(tileMapHandler)" />
@@ -443,6 +448,20 @@
                     onclick="event.preventDefault(); ModalHandler.closeModal('deleteLevelModal');">No</button>
             </div>
         </div>
+        <div class='modal' id='newGameModal'>
+            <div class="headerWrapper">
+                <div class="tooltipHeading">New game</div>
+            </div>
+            <div class="marginTop8">Are you sure? <br><br>
+                This will delete your current game.
+            </div>
+            <div class="marginTop8">
+                <button class="levelNavigationButton halfWidth" type="submit"
+                    onclick="WorldDataHandler.createNewGame();">Yes</button>
+                <button class="levelNavigationButton halfWidth secondaryButton"
+                    onclick="event.preventDefault(); ModalHandler.closeModal('newGameModal');">No</button>
+            </div>
+        </div>
         <div class='modal' id='deleteImageModal'>
             <div class="headerWrapper">
                 <div class="tooltipHeading">Delete Image</div>
@@ -734,6 +753,7 @@
         <div id="loadingText"></div>
         <canvas id="noiseCanvas" width="900px" height="520px" style="display: none"></canvas>
         <canvas id="sprites" width="200" height="2000"></canvas>
+        <script src="DemoLevels/demoLevels.js"></script>
         <script src="Game.js"></script>
         <script src="BuildMode.js"></script>
         <script src="Display.js"></script>

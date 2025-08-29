@@ -37,8 +37,19 @@ body {
     text-transform: uppercase;
     overflow: auto;
     white-space: nowrap;
+    transition: background-image 3s ease;
+}
+
+.bodyBackground1 {
     /**background-color: #d3d3d3;**/
-    background-image:  repeating-linear-gradient(45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0), repeating-linear-gradient(45deg, #d0d0d0 25%, #d3d3d3 25%, #d3d3d3 75%, #d0d0d0 75%, #d0d0d0);
+    background-image: repeating-linear-gradient(45deg, #c8c8c8 25%, transparent 25%, transparent 75%, #c8c8c8 75%, #cbcbcb), repeating-linear-gradient(45deg, #c8c8c8 25%, #cbcbcb 25%, #cbcbcb 75%, #c8c8c8 75%, #c8c8c8);
+    background-position: 0 0, 32px 32px;
+    background-size: 64px 64px;
+}
+
+.bodyBackground2 {
+    /**background-color: #d3d3d3;**/
+    background-image: repeating-linear-gradient(45deg, #d0d0d0 25%, transparent 25%, transparent 75%, #d0d0d0 75%, #d0d0d0), repeating-linear-gradient(45deg, #d0d0d0 25%, #d3d3d3 25%, #d3d3d3 75%, #d0d0d0 75%, #d0d0d0);
     background-position: 0 0, 32px 32px;
     background-size: 64px 64px;
 }
@@ -88,7 +99,8 @@ details summary:hover {
     padding-right: 16px;
 }
 
-#discordLink, .textAsLink {
+#discordLink,
+.textAsLink {
     color: #5865F2
 }
 
