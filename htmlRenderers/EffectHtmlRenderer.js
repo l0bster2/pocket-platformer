@@ -269,8 +269,8 @@ class EffectHtmlRenderer {
                 innerHTML: `       
                 <div class="marginTop8" id="sfxTemplate">
                     <form onsubmit="EffectsHandler.addEffect(event, ${index})">
-                        <div class="flexGap12 subSectionBottom" style="display: ${index === null ? 'block' : 'none'}">
-                        <span class="marginTop8">Select effect type: </span>
+                        <div class="flexGap12 subSectionBottom sfxTemplateSection" style="display: ${index === null ? 'block' : 'none'}; padding: 8px 4px">
+                        <span class="marginTop8"><b>Select effect type: </b></span>
                         <select style="margin-right: -2px;" onChange="EffectsHandler.changeTemplate()" id="templateHandler">
                             ${this.createEffectsSelect(effectsObject)}
                         </select>
@@ -283,7 +283,7 @@ class EffectHtmlRenderer {
                                 </div>
                             </div>
                         </details>
-                        <details id="attributesAccordion" open>
+                        <details id="attributesAccordion">
                             <summary class="sfxTemplateSummary">Adjust attributes</summary>
                             <div id="sfxTemplateSummary" class="sfxAttributeSection">
                                 ${this.chooseSfxAttributesTemplate(effectsObject)}
