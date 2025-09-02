@@ -24,8 +24,8 @@ class LaserCanon extends InteractiveLevelObject {
             if (!this.createdLasers.find(createdLaser => createdLaser.x === x && createdLaser.y === y)) {
                 const laser = new Laser(x, y, this.tileSize, ObjectTypes.LASER, this.tileMapHandler,
                     this.currentFacingDirection, 
-                    this[DefaultSprites.changeableAttributeTypes.laserDuration] - this.currentLaserFrame, 
-                    this[DefaultSprites.changeableAttributeTypes.pauseDuration],
+                    this[SpritePixelArrays.changeableAttributeTypes.laserDuration] - this.currentLaserFrame, 
+                    this[SpritePixelArrays.changeableAttributeTypes.pauseDuration],
                     this.key);
                 this.tileMapHandler.levelObjects.push(laser);
                 this.createdLasers.push({ x, y });
@@ -106,8 +106,8 @@ class LaserCanon extends InteractiveLevelObject {
             this.handleLasers();
             this.currentLaserFrame++;
 
-            if (this.currentLaserFrame === this[DefaultSprites.changeableAttributeTypes.laserDuration]) {
-                if (this[DefaultSprites.changeableAttributeTypes.pauseDuration] > 0) {
+            if (this.currentLaserFrame === this[SpritePixelArrays.changeableAttributeTypes.laserDuration]) {
+                if (this[SpritePixelArrays.changeableAttributeTypes.pauseDuration] > 0) {
                     this.currentTimer = this.possilbeTimers.pauseTimer;
                     this.currentPauseFrame = 0;
                     this.createdLasers = [];
@@ -120,8 +120,8 @@ class LaserCanon extends InteractiveLevelObject {
         else if (this.currentTimer === this.possilbeTimers.pauseTimer) {
             this.currentPauseFrame++;
 
-            if (this.currentPauseFrame === this[DefaultSprites.changeableAttributeTypes.pauseDuration]
-                || this[DefaultSprites.changeableAttributeTypes.pauseDuration] === 0) {
+            if (this.currentPauseFrame === this[SpritePixelArrays.changeableAttributeTypes.pauseDuration]
+                || this[SpritePixelArrays.changeableAttributeTypes.pauseDuration] === 0) {
                 this.currentTimer = this.possilbeTimers.laserTimer;
                 this.currentLaserFrame = 0;
             }
