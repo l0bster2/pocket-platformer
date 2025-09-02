@@ -138,7 +138,7 @@ class DialogueHandler {
                 borderSize,
                 "FFFFFF");
         }
-        Display.drawPixelArray(avatar.spriteObject.animation[animationIndex].sprite,
+        Display.drawPixelArrayWithOffset(avatar.spriteObject.animation[animationIndex].sprite,
             avatarLeftPos, top,
             Math.round(this.tileMapHandler.pixelArrayUnitSize * 3 / Camera.viewport.scale),
             avatar.spriteObject.animation[animationIndex].sprite[0].length, 
@@ -198,13 +198,14 @@ class DialogueHandler {
     static showDialogueUpArrow(xPos, yPos) {
         const { pixelArrayUnitSize, tileSize } = tileMapHandler;
         const yAnchor = yPos + tileSize - pixelArrayUnitSize;
+        const correctedSize = pixelArrayUnitSize + 0.5;
 
         Display.drawRectangle(xPos + pixelArrayUnitSize, yAnchor - pixelArrayUnitSize,
-            pixelArrayUnitSize * 6, pixelArrayUnitSize, "FFFFFF")
+            pixelArrayUnitSize * 6, correctedSize, "FFFFFF")
         Display.drawRectangle(xPos + pixelArrayUnitSize * 2, yAnchor - pixelArrayUnitSize * 2,
-            pixelArrayUnitSize * 4, pixelArrayUnitSize, "FFFFFF")
+            pixelArrayUnitSize * 4, correctedSize, "FFFFFF")
         Display.drawRectangle(xPos + pixelArrayUnitSize * 3, yAnchor - pixelArrayUnitSize * 3,
-            pixelArrayUnitSize * 2, pixelArrayUnitSize, "FFFFFF")
+            pixelArrayUnitSize * 2, correctedSize, "FFFFFF")
     }
 
     static createDialogObject(dialogue, avatar) {

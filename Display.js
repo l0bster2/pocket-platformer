@@ -82,6 +82,25 @@ class Display {
         this.ctx.globalAlpha = 1;
     }
 
+    //same function as drawPixelArray, but with an 0.5 offset, to fix subpixels while zooming (mostly for avatars)
+    static drawPixelArrayWithOffset(pixelArray, x, y, pixelArrayUnitSize, pixelArrayUnitAmountHeight, pixelArrayUnitAmountWidth, ctx = this.ctx) {
+        if (!pixelArray) return;
+
+        for (let pixelArrayPosY = 0; pixelArrayPosY < pixelArrayUnitAmountWidth; pixelArrayPosY++) {
+            for (let pixelArrayPosX = 0; pixelArrayPosX < pixelArrayUnitAmountHeight; pixelArrayPosX++) {
+                const color = pixelArray[pixelArrayPosY][pixelArrayPosX];
+                if (color === 0 || color === "transp") continue;
+                const px = x + pixelArrayPosX * pixelArrayUnitSize;
+                const py = y + pixelArrayPosY * pixelArrayUnitSize;
+
+                // Slightly increase size to overlap blocks (fixes gaps)
+                const size = pixelArrayUnitSize + 0.5;
+
+                this.drawRectangle(px, py, size, size, color, ctx);
+            }
+        }
+    }
+
     static drawPixelArray(pixelArray, x, y, pixelArrayUnitSize, pixelArrayUnitAmountHeight, pixelArrayUnitAmountWidth, ctx = this.ctx) {
         if (pixelArray) {
             for (var pixelArrayPosY = 0; pixelArrayPosY < pixelArrayUnitAmountWidth; pixelArrayPosY++) {
@@ -128,8 +147,8 @@ class Display {
     static displayStartScreen(currentGeneralFrame, maxFrames) {
         PlayMode.updateGeneralFrameCounter();
         const textColor = "#" + WorldDataHandler.textColor;
-        if(WorldDataHandler.gamesName.includes("wobbly:")) {
-            this.displayWobblyText(WorldDataHandler.gamesName.replace('wobbly:',''), this.canvasWidth / 2, this.canvasHeight / 2, 30, currentGeneralFrame, 95, textColor);
+        if (WorldDataHandler.gamesName.includes("wobbly:")) {
+            this.displayWobblyText(WorldDataHandler.gamesName.replace('wobbly:', ''), this.canvasWidth / 2, this.canvasHeight / 2, 30, currentGeneralFrame, 95, textColor);
         }
         else {
             this.displayText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, 30, textColor);
@@ -153,19 +172,19 @@ class Display {
         const time = (currentGeneralFrame) % maxFrames;
         const waveAmplitude = 3;   // how high the wave is (adjust to wobble less)
         const waveLength = 15;      // distance between wave peaks (in pixels)
-        const waveSpeed =(2 * Math.PI / 480) * 5; // full loop in 480 frames
-      
+        const waveSpeed = (2 * Math.PI / 480) * 5; // full loop in 480 frames
+
         for (let i = 0; i < text.length; i++) {
-          const char = text[i];
-          const charWidth = ctx.measureText(char).width;
-      
-          // Each character offset by its X position along the wave
-          const phase = x / waveLength;  // characters further right are phase-shifted
-          const yOffset = Math.sin(time * waveSpeed + phase) * waveAmplitude;
-      
-          this.ctx.fillText(char, x, yPos + yOffset);
-      
-          x += charWidth;
+            const char = text[i];
+            const charWidth = ctx.measureText(char).width;
+
+            // Each character offset by its X position along the wave
+            const phase = x / waveLength;  // characters further right are phase-shifted
+            const yOffset = Math.sin(time * waveSpeed + phase) * waveAmplitude;
+
+            this.ctx.fillText(char, x, yPos + yOffset);
+
+            x += charWidth;
         }
     }
 
@@ -194,14 +213,14 @@ class Display {
 
         const textColor = "#" + WorldDataHandler.textColor;
 
-        if(WorldDataHandler.endingMessage.includes("wobbly:")) {
-            this.displayWobblyText(WorldDataHandler.endingMessage.replace('wobbly:',''), this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, currentGeneralFrame, 95, textColor);
+        if (WorldDataHandler.endingMessage.includes("wobbly:")) {
+            this.displayWobblyText(WorldDataHandler.endingMessage.replace('wobbly:', ''), this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, currentGeneralFrame, 95, textColor);
         }
         else {
             this.displayText(WorldDataHandler.endingMessage, this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, textColor);
         }
 
-        
+
         let endTime = GameStatistics.getFinalTime() || "XX:XX:XX";
         let deathCounter = GameStatistics.deathCounter;
         let collectibleCollectedText = `- ${collectedCollectibles}/${totalCollectibles}`;
