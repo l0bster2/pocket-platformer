@@ -12,6 +12,7 @@ class ProTipHandler {
             "Stompers can collide with each other",
             "Press shift in build mode to rotate the currently selected object (if it's rotateable)",
             "Hold CTRL to draw bigger areas of objects on the screen. Hold CTRL + right mouse to delete bigger areas.",
+            "Write 'wobbly:' before the game's name and see what happens.",
         ]
         this.proTipEl.innerHTML = this.proTips[0];
         this.resetTimer();

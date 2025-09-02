@@ -128,8 +128,12 @@ class Display {
     static displayStartScreen(currentGeneralFrame, maxFrames) {
         PlayMode.updateGeneralFrameCounter();
         const textColor = "#" + WorldDataHandler.textColor;
-        this.displayText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, 30, textColor);
-        //this.displayWobblyText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, 30, currentGeneralFrame, 100, textColor);
+        if(WorldDataHandler.gamesName.includes("wobbly:")) {
+            this.displayWobblyText(WorldDataHandler.gamesName.replace('wobbly:',''), this.canvasWidth / 2, this.canvasHeight / 2, 30, currentGeneralFrame, 95, textColor);
+        }
+        else {
+            this.displayText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, 30, textColor);
+        }
         var moduloDivider = maxFrames / 3;
         if (currentGeneralFrame % moduloDivider < moduloDivider / 2) {
             this.displayText("Press enter to continue", this.canvasWidth / 2, this.canvasHeight / 2 + 40, 18, textColor);
@@ -189,7 +193,15 @@ class Display {
         const extraPadding = collectiblesExist ? 16 : 0;
 
         const textColor = "#" + WorldDataHandler.textColor;
-        this.displayText(WorldDataHandler.endingMessage, this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, textColor);
+
+        if(WorldDataHandler.endingMessage.includes("wobbly:")) {
+            this.displayWobblyText(WorldDataHandler.endingMessage.replace('wobbly:',''), this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, currentGeneralFrame, 95, textColor);
+        }
+        else {
+            this.displayText(WorldDataHandler.endingMessage, this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, textColor);
+        }
+
+        
         let endTime = GameStatistics.getFinalTime() || "XX:XX:XX";
         let deathCounter = GameStatistics.deathCounter;
         let collectibleCollectedText = `- ${collectedCollectibles}/${totalCollectibles}`;
