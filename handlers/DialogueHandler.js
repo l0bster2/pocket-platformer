@@ -34,16 +34,16 @@ class DialogueHandler {
     }
 
     static calculateDialogueWindowPosition() {
-        const border = this.paddingFromBorder / Camera.viewport.scale;
-        this.leftPos = Camera.viewport.left + border;
-        this.rightPos = Camera.viewport.left + Camera.viewport.width - border;
-        this.topPos = Camera.viewport.top + Camera.viewport.height - (this.dialogueHeight / Camera.viewport.scale) - border;
+        const border = this.paddingFromBorder;
+        this.leftPos = border;
+        this.rightPos = Camera.originalWidth - border;
+        this.topPos = Camera.originalHeight - (this.dialogueHeight) - border;
 
         if (this.tileMapHandler) {
-            this.avatarSize = this.tileMapHandler.tileSize * 3 / Camera.viewport.scale;
-            this.avatarRightPos = this.rightPos - this.avatarSize - this.avatarOuterPadding / Camera.viewport.scale
-            this.avatarLeftPos = this.leftPos + this.avatarOuterPadding / Camera.viewport.scale;
-            this.textPosWithAvatarOnTheLeft = this.leftPos + this.avatarSize + (this.avatarInnerPadding + this.avatarOuterPadding) / Camera.viewport.scale;
+            this.avatarSize = this.tileMapHandler.tileSize * 3;
+            this.avatarRightPos = this.rightPos - this.avatarSize - this.avatarOuterPadding;
+            this.avatarLeftPos = this.leftPos + this.avatarOuterPadding;
+            this.textPosWithAvatarOnTheLeft = this.leftPos + this.avatarSize + (this.avatarInnerPadding + this.avatarOuterPadding);
         }
     }
 
@@ -81,11 +81,13 @@ class DialogueHandler {
     }
 
     static displayDialogue() {
+        Display.ctx.save();                          // save world transform
+        Display.ctx.setTransform(1, 0, 0, 1, 0, 0);   // reset to screen
         const { leftPos, topPos } = this;
         const currentLineLength = this.dialogue[this.currentIndex].lineLength;
         const currentLine = Math.floor(this.currentAnimationFrame / this.animationDurationFrames / currentLineLength);
-        const calculatedDialogueWidth = Math.floor(this.dialogueWidth / Camera.viewport.scale);
-        const calculatedDialogueHeight = Math.floor(this.dialogueHeight / Camera.viewport.scale);
+        const calculatedDialogueWidth = Math.floor(this.dialogueWidth);
+        const calculatedDialogueHeight = Math.floor(this.dialogueHeight);
         const currentBoxTopPosition = topPos + ((calculatedDialogueHeight - this.currentAnimationHeight) / 2);
 
         Display.drawRectangle(leftPos, currentBoxTopPosition,
@@ -118,6 +120,7 @@ class DialogueHandler {
             const step = calculatedDialogueHeight / this.frameDurationToShowDialogueBox;
             this.currentAnimationHeight += step;
         }
+        Display.ctx.restore(); 
     }
 
     static displayAvatar(top) {
@@ -129,10 +132,10 @@ class DialogueHandler {
         const avatarLeftPos = avatar.position === AnimationHelper.facingDirections.right
             ? this.avatarRightPos
             : this.avatarLeftPos;
-        const avatarBorderPadding = this.avatarInnerPadding / Camera.viewport.scale;
+        const avatarBorderPadding = this.avatarInnerPadding;
 
         if (avatar.border) {
-            const borderSize = (this.tileMapHandler.tileSize * 3 + this.avatarInnerPadding * 2) / Camera.viewport.scale;
+            const borderSize = (this.tileMapHandler.tileSize * 3 + this.avatarInnerPadding * 2);
             Display.drawRectangleBorder(avatarLeftPos - avatarBorderPadding,
                 top - avatarBorderPadding,
                 borderSize,
@@ -141,7 +144,7 @@ class DialogueHandler {
         }
         Display.drawPixelArrayWithOffset(avatar.spriteObject.animation[animationIndex].sprite,
             avatarLeftPos, top,
-            Math.round(this.tileMapHandler.pixelArrayUnitSize * 3 / Camera.viewport.scale),
+            Math.round(this.tileMapHandler.pixelArrayUnitSize * 3),
             avatar.spriteObject.animation[animationIndex].sprite[0].length,
             avatar.spriteObject.animation[animationIndex].sprite.length
         );
@@ -153,23 +156,23 @@ class DialogueHandler {
         this.arrowUpFrameIndex++;
         const frameModulo = this.arrowUpFrameIndex % 60;
         if (frameModulo < 30) {
-            this.showDialogueUpArrow(leftPos + (this.dialogueWidth / Camera.viewport.scale) - 60, topPos - 15);
+            this.showDialogueUpArrow(leftPos + (this.dialogueWidth) - 60, topPos - 15);
         }
     }
 
     static animateText(leftPos, topPos, lineIndex) {
         let previousLinesLength = 0;
-        const topPadding = 35 / Camera.viewport.scale;
-        const lineBreakHeight = 30 / Camera.viewport.scale;
+        const topPadding = 35;
+        const lineBreakHeight = 30;
         const dialoguesLines = this.dialogue[this.currentIndex].lines;
         for (var i = 0; i < lineIndex; i++) {
             previousLinesLength += dialoguesLines[i].length;
         }
         const currentText = dialoguesLines[lineIndex].substring(0,
             Math.ceil(this.currentAnimationFrame / this.animationDurationFrames - previousLinesLength));
-        Display.displayText(currentText, leftPos + (20 / Camera.viewport.scale),
+        Display.displayText(currentText, leftPos + (20),
             topPos + topPadding + (lineIndex * lineBreakHeight),
-            17 / Camera.viewport.scale, "#FFFFFF", "left");
+            17, "#FFFFFF", "left");
     }
 
     static calculateTextLines(dialogue, lineLength) {
@@ -224,7 +227,7 @@ class DialogueHandler {
                     border: avatar.border,
                     position: avatar.position
                 } : null;
-            lineLength = Camera.viewport.scale > 1 ? lineLength - 10 : lineLength - 6;
+            lineLength = lineLength - 6;
         }
 
         return {
