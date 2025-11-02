@@ -135,7 +135,7 @@ class Controller {
         if (this.gamepadIndex !== null) {
             const DEADZONE = 0.5;
             const myGamepad = navigator.getGamepads()[this.gamepadIndex];
-            if (myGamepad?.buttons) {
+            if (myGamepad?.buttons && myGamepad.buttons.length >= 15) {
                 const primaryButtonPressed = myGamepad.buttons[0].pressed;
                 this.jump = primaryButtonPressed;
                 this.confirm = primaryButtonPressed;
