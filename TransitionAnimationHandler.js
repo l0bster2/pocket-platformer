@@ -9,7 +9,8 @@ class TransitionAnimationHandler {
             wholeScreen: "wholeScreen",
             collide: "collide",
             radialWipe: "radialWipe",
-            explode: "explode"
+            explode: "explode",
+            dissolve: "dissolve"
         }
         this.currentAnimationType = null;
         this.currentAnimationFrames = null;
@@ -57,6 +58,9 @@ class TransitionAnimationHandler {
                 case this.animationTypes.explode:
                     TransitionAnimations.drawDiamondExplosion(currentFrame, fadeInFrames);
                     break;
+                case this.animationTypes.dissolve:
+                    TransitionAnimations.drawDissolve(currentFrame, fadeInFrames);
+                    break;
             }
             //Camera.zoomToObject(0.01, player);
         }
@@ -80,6 +84,9 @@ class TransitionAnimationHandler {
                     break;
                 case this.animationTypes.explode:
                     TransitionAnimations.drawDiamondExplosion(PlayMode.currentPauseFrames, fadeOutFrames);
+                    break;
+                case this.animationTypes.dissolve:
+                    TransitionAnimations.drawDissolve(PlayMode.currentPauseFrames, fadeOutFrames);
                     break;
             }
         }

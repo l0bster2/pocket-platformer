@@ -1,5 +1,28 @@
 class TransitionAnimations {
 
+    static staticConstructor() {
+        const vp = Camera.viewport;
+        const w = vp.width;
+        const h = vp.height;
+
+        const parcelAmount = 15;
+        const tile = h / parcelAmount;
+        const cols = Math.ceil(w / tile);
+        const rows = parcelAmount;
+        const totalTiles = cols * rows;
+
+        const arr = [];
+        const rng = MathHelpers.mulberry32(Date.now() & 0xffffffff);
+        for (let i = 0; i < totalTiles; i++) arr.push(i);
+        MathHelpers.shuffleArray(arr, rng);
+
+        this.tileOrder = arr;
+        this.cols = cols;
+        this.rows = rows;
+        this.tile = tile;
+        this.totalTiles = totalTiles;
+    }
+
     static animateFadeCircle(currenFrame, totalFrames) {
         const biggestRadius = Camera.viewport.width;
         const radiusStep = biggestRadius / totalFrames;
@@ -39,22 +62,29 @@ class TransitionAnimations {
     }
 
     static drawDiamondExplosion(frameIndex, totalFrames) {
-        const w = Display.canvasWidth;
-        const h = Display.canvasHeight;
+        const vp = Camera.viewport;
+        const w = vp.width;
+        const h = vp.height;
+        const camX = vp.left;
+        const camY = vp.top;
+
         const parcelAmount = 10;
         const tile = h / parcelAmount;
+        const cols = Math.ceil(w / tile);
+        const rows = parcelAmount;
 
         const ctx = Display.ctx;
         ctx.fillStyle = "rgb(0,0,0)";
 
+        // camera-centered coordinates for distance calculations
         const centerX = w / 2;
         const centerY = h / 2;
 
-        // Compute distance range
+        // precompute min/max distance
         let minDistance = Infinity;
         let maxDistance = -Infinity;
-        for (let c = 0; c < Math.ceil(w / tile); c++) {
-            for (let r = 0; r < Math.ceil(h / tile); r++) {
+        for (let c = 0; c < cols; c++) {
+            for (let r = 0; r < rows; r++) {
                 const cx = c * tile + tile / 2;
                 const cy = r * tile + tile / 2;
                 const dist = Math.hypot(cx - centerX, cy - centerY);
@@ -65,12 +95,11 @@ class TransitionAnimations {
 
         const overlapFactor = 0.5;
 
-        for (let col = 0; col < Math.ceil(w / tile); col++) {
-            for (let row = 0; row < Math.ceil(h / tile); row++) {
-                const x = col * tile;
-                const y = row * tile;
-                const cx = x + tile / 2;
-                const cy = y + tile / 2;
+        // draw tiles
+        for (let c = 0; c < cols; c++) {
+            for (let r = 0; r < rows; r++) {
+                const cx = c * tile + tile / 2;
+                const cy = r * tile + tile / 2;
 
                 const distance = Math.hypot(cx - centerX, cy - centerY);
                 let phase = (distance - minDistance) / (maxDistance - minDistance);
@@ -83,31 +112,29 @@ class TransitionAnimations {
 
                 ctx.fillStyle = "rgb(0,0,0)";
 
-                // --- expansion phase (diamond grows) ---
+                // draw relative to camera
+                const drawX = c * tile + camX + tile / 2;
+                const drawY = r * tile + camY + tile / 2;
+
                 if (progress < 0.5) {
                     const t = progress / 0.5;
                     const half = (tile / 2) * t;
 
                     ctx.beginPath();
-                    ctx.moveTo(cx, cy - half);
-                    ctx.lineTo(cx + half, cy);
-                    ctx.lineTo(cx, cy + half);
-                    ctx.lineTo(cx - half, cy);
+                    ctx.moveTo(drawX, drawY - half);
+                    ctx.lineTo(drawX + half, drawY);
+                    ctx.lineTo(drawX, drawY + half);
+                    ctx.lineTo(drawX - half, drawY);
                     ctx.closePath();
                     ctx.fill();
-
-                    // --- contraction phase (diamond rotates to square) ---
                 } else {
                     const t = (progress - 0.5) / 0.5;
-
-                    // Start at 45°, end at 90° rotation
                     const angle = Math.PI / 4 + (Math.PI / 4) * t;
-
-                    // constant size
-                    const size = tile;
+                    const scale = 1 + 0.6 * t;
+                    const size = tile * scale;
 
                     ctx.save();
-                    ctx.translate(cx, cy);
+                    ctx.translate(drawX, drawY);
                     ctx.rotate(angle);
                     ctx.fillRect(-size / 2, -size / 2, size, size);
                     ctx.restore();
@@ -116,6 +143,7 @@ class TransitionAnimations {
         }
     }
 
+
     static drawCollide(frameIndex, totalFrames) {
         const vp = Camera.viewport;
         const w = vp.width;
@@ -123,10 +151,7 @@ class TransitionAnimations {
         const x = vp.left;
         const y = vp.top;
 
-        // normalized progress [0–1]
         let progress = frameIndex / totalFrames;
-
-        // compute the growing box widths
         const totalWidth = w;
         const currentWidth = totalWidth * progress;
 
@@ -175,43 +200,33 @@ class TransitionAnimations {
         Display.ctx.restore();
     }
 
-    static drawClouds(frameIndex, totalFrames) {
+    static drawDissolve(frameIndex, totalFrames) {
         const vp = Camera.viewport;
+        const camX = vp.left;
+        const camY = vp.top;
         const w = vp.width;
         const h = vp.height;
-        const left = vp.left;
-        const top = vp.top;
-        const scale = 3 / 100;
 
-        const threshold = 0.05 + 0.95 * (frameIndex / totalFrames);
-        const ctxData = Display.ctx.createImageData(w, h);
-        const data = ctxData.data;
+        const parcelAmount = 15; // number of rows
+        const tile = h / parcelAmount; // tile size dynamically based on camera height
+        const cols = Math.ceil(w / tile);
+        const totalTiles = cols * parcelAmount;
 
-        const fg = [0, 0, 0];
+        const order = this.tileOrder;
+        const tilesToShow = Math.floor((frameIndex / totalFrames) * totalTiles);
 
-        for (let y = 0; y < h; y++) {
-            for (let x = 0; x < w; x++) {
-                const i = (y * w + x) * 4;
+        const ctx = Display.ctx;
+        ctx.fillStyle = "rgb(0,0,0)";
 
-                const worldX = x + left;
-                const worldY = y + top;
+        for (let i = 0; i < tilesToShow; i++) {
+            const tileIndex = order[i];
+            const col = tileIndex % cols;
+            const row = Math.floor(tileIndex / cols);
 
-                let n = (noise.perlin2(worldX * scale, worldY * scale) + 1) / 2;
+            const x = col * tile + camX;
+            const y = row * tile + camY;
 
-                if (n < threshold) {
-                    data[i] = fg[0];
-                    data[i + 1] = fg[1];
-                    data[i + 2] = fg[2];
-                    data[i + 3] = 255;
-                } else {
-                    data[i] = 0;
-                    data[i + 1] = 0;
-                    data[i + 2] = 0;
-                    data[i + 3] = 0;
-                }
-            }
+            ctx.fillRect(x, y, tile + 1, tile + 1); // +1 avoids seams
         }
-
-        Display.ctx.putImageData(ctxData, left, top);
     }
 }
