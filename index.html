@@ -611,10 +611,13 @@
                         <option value="tiles" selected="selected">Fading tiles</option>
                         <option value="cutOutCircle">Cut out circle</option>
                         <option value="wholeScreen">Screen fade</option>
+                        <option value="collide">Colliding boxes</option>
+                        <option value="radialWipe">Radial wipe</option>
+                        <option value="explode">Explode</option>
                     </select>
                     <div class="marginTop12 changeableAttributesWrapper">
                         <span class="colorModalAttribute">Transition-length:</span>
-                        <input style="margin-right:12px" type="range" min="2" max="96" value="48" step="2"
+                        <input style="margin-right:12px" type="range" min="2" max="240" value="48" step="2"
                             class="slider" id="transitionDuration"
                             onchange="TransitionAnimationHandler.changeAnimationDuration(event)">
                         <span id="transitionDurationValue">48</span>
@@ -857,6 +860,7 @@
         <script src="TilemapHelpers.js"></script>
         <script src="HeaderNavigationHandler.js"></script>
         <script src="TransitionAnimationHandler.js"></script>
+        <script src="TransitionAnimations.js"></script>
         <script src="ExportedGameInitializer.js"></script>
         <script src="EmptyGame.js"></script>
         <script src="LegacyImporter.js"></script>
