@@ -15,7 +15,6 @@ class TransitionAnimations {
         const rng = MathHelpers.mulberry32(Date.now() & 0xffffffff);
         for (let i = 0; i < totalTiles; i++) arr.push(i);
         MathHelpers.shuffleArray(arr, rng);
-
         this.tileOrder = arr;
         this.cols = cols;
         this.rows = rows;
@@ -23,46 +22,67 @@ class TransitionAnimations {
         this.totalTiles = totalTiles;
     }
 
-    static animateFadeCircle(currenFrame, totalFrames) {
-        const biggestRadius = Camera.viewport.width;
+    static animateFadeCircle(currenFrame, totalFrames, viewport, ctx, preview) {
+        const biggestRadius = viewport.width;
         const radiusStep = biggestRadius / totalFrames;
-        const radius = radiusStep * currenFrame;
-        Display.ctx.fillStyle = `rgb(0,0,0)`;
-        Display.ctx.beginPath();
-        Display.ctx.rect(Camera.viewport.left, Camera.viewport.top, Camera.viewport.width, Camera.viewport.height);
-        Display.ctx.arc(player.x + tileMapHandler.halfTileSize, player.y + tileMapHandler.halfTileSize,
-            radius, 0, 2 * Math.PI, true);
-        Display.ctx.fill();
-        Display.ctx.closePath();
+
+        const radius = biggestRadius - radiusStep * currenFrame;
+        let xAnchor = player.x + tileMapHandler.halfTileSize;
+        let yAnchor = player.y + tileMapHandler.halfTileSize;
+
+        if (preview) {
+            xAnchor = viewport.width / 2;
+            yAnchor = viewport.height / 2;
+        }
+
+        ctx.fillStyle = "rgb(0,0,0)";
+        ctx.beginPath();
+        ctx.rect(viewport.left, viewport.top, viewport.width, viewport.height);
+        ctx.arc(
+            xAnchor,
+            yAnchor,
+            radius,
+            0,
+            2 * Math.PI,
+            true
+        );
+        ctx.fill();
+        ctx.closePath();
     }
 
-    static animateFadeWholeScreen(currentFrame, totalFrames) {
+    static animateFadeWholeScreen(currentFrame, totalFrames, viewport, ctx) {
         const percent = currentFrame / totalFrames;
-        Display.drawRectangleWithAlpha(Camera.viewport.left,
-            Camera.viewport.top,
-            Camera.viewport.width,
-            Camera.viewport.height, "000000", Display.ctx, percent);
+        Display.drawRectangleWithAlpha(viewport.left,
+            viewport.top,
+            viewport.width,
+            viewport.height, "000000", ctx, percent);
     }
 
-    static animateFade(currentFrame, totalFrames) {
+    static animateFade(currentFrame, totalFrames, viewport, ctx, preview) {
         const percent = currentFrame / totalFrames * 100;
-        const parcelAmount = 10;
-        const parcelHeight = Display.canvasHeight / parcelAmount;
-        const widthParcelAmount = Math.ceil(Display.canvasWidth / parcelHeight);
+        let parcelAmount = 10;
+        let parcelHeight = Display.canvasHeight / parcelAmount;
+        let widthParcelAmount = Math.ceil(Display.canvasWidth / parcelHeight);
+
+        if (preview) {
+            parcelAmount = 5;
+            parcelHeight = viewport.height / parcelAmount;
+            widthParcelAmount = Math.ceil(viewport.width / parcelHeight);
+        }
 
         for (var i = 0; i <= widthParcelAmount; i++) {
             for (var j = 0; j <= parcelAmount; j++) {
                 const relativeWidth = parcelHeight / 100 * percent + 1;
-                Display.drawRectangle(i * parcelHeight + ((parcelHeight - relativeWidth) / 2) + Camera.viewport.left,
-                    j * parcelHeight + ((parcelHeight - relativeWidth) / 2) + Camera.viewport.top,
+                Display.drawRectangle(i * parcelHeight + ((parcelHeight - relativeWidth) / 2) + viewport.left,
+                    j * parcelHeight + ((parcelHeight - relativeWidth) / 2) + viewport.top,
                     relativeWidth,
-                    relativeWidth);
+                    relativeWidth, '000000', ctx);
             }
         }
     }
 
-    static drawDiamondExplosion(frameIndex, totalFrames) {
-        const vp = Camera.viewport;
+    static drawDiamondExplosion(frameIndex, totalFrames, viewport, ctx) {
+        const vp = viewport;
         const w = vp.width;
         const h = vp.height;
         const camX = vp.left;
@@ -73,7 +93,6 @@ class TransitionAnimations {
         const cols = Math.ceil(w / tile);
         const rows = parcelAmount;
 
-        const ctx = Display.ctx;
         ctx.fillStyle = "rgb(0,0,0)";
 
         // camera-centered coordinates for distance calculations
@@ -143,8 +162,8 @@ class TransitionAnimations {
         }
     }
 
-    static drawCollide(frameIndex, totalFrames) {
-        const vp = Camera.viewport;
+    static drawCollide(frameIndex, totalFrames, viewport, ctx) {
+        const vp = viewport;
         const w = vp.width;
         const h = vp.height;
         const x = vp.left;
@@ -157,13 +176,13 @@ class TransitionAnimations {
         const box1 = { x: x + totalWidth - currentWidth, y, width: currentWidth, height: h };
         const box2 = { x, y, width: currentWidth, height: h };
 
-        Display.ctx.fillStyle = "rgb(0,0,0)";
-        Display.ctx.fillRect(box1.x, box1.y, box1.width, box1.height);
-        Display.ctx.fillRect(box2.x, box2.y, box2.width, box2.height);
+        ctx.fillStyle = "rgb(0,0,0)";
+        ctx.fillRect(box1.x, box1.y, box1.width, box1.height);
+        ctx.fillRect(box2.x, box2.y, box2.width, box2.height);
     }
 
-    static drawRadialWipe(frameIndex, totalFrames) {
-        const vp = Camera.viewport;
+    static drawRadialWipe(frameIndex, totalFrames, viewport, ctx) {
+        const vp = viewport;
         const w = vp.width;
         const h = vp.height;
         const centerX = vp.left + w / 2;
@@ -178,8 +197,8 @@ class TransitionAnimations {
         const anglePerLine = totalSweep / numLines;
         const radius = Math.max(w, h);
 
-        Display.ctx.save();
-        Display.ctx.translate(centerX, centerY);
+        ctx.save();
+        ctx.translate(centerX, centerY);
 
         for (let i = 0; i < numLines; i++) {
             const baseAngle = i * anglePerLine;
@@ -188,19 +207,19 @@ class TransitionAnimations {
             const startAngle = baseAngle - Math.PI / 2;
             const endAngle = startAngle + sweep;
 
-            Display.ctx.beginPath();
-            Display.ctx.moveTo(0, 0);
-            Display.ctx.arc(0, 0, radius, startAngle, endAngle, false);
-            Display.ctx.closePath();
-            Display.ctx.fillStyle = "rgb(0,0,0)";
-            Display.ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.arc(0, 0, radius, startAngle, endAngle, false);
+            ctx.closePath();
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fill();
         }
 
-        Display.ctx.restore();
+        ctx.restore();
     }
 
-    static drawDissolve(frameIndex, totalFrames) {
-        const vp = Camera.viewport;
+    static drawDissolve(frameIndex, totalFrames, viewport, ctx) {
+        const vp = viewport;
         const camX = vp.left;
         const camY = vp.top;
         const w = vp.width;
@@ -213,8 +232,6 @@ class TransitionAnimations {
 
         const order = this.tileOrder;
         const tilesToShow = Math.floor((frameIndex / totalFrames) * totalTiles);
-
-        const ctx = Display.ctx;
         ctx.fillStyle = "rgb(0,0,0)";
 
         for (let i = 0; i < tilesToShow; i++) {
@@ -229,13 +246,12 @@ class TransitionAnimations {
         }
     }
 
-    static drawRotatingHole(frameIndex, totalFrames) {
-        const vp = Camera.viewport;
+    static drawRotatingHole(frameIndex, totalFrames, viewport, ctx) {
+        const vp = viewport;
         const w = vp.width;
         const h = vp.height;
         const left = vp.left;
         const top = vp.top;
-        const ctx = Display.ctx;
 
         // --- Normalized + eased progress ---
         const t = Math.max(0, Math.min(frameIndex / totalFrames, 1));
@@ -283,8 +299,8 @@ class TransitionAnimations {
         ctx.restore();
     }
 
-    static drawDiamondSwipe(frameIndex, totalFrames) {
-        const vp = Camera.viewport;
+    static drawDiamondSwipe(frameIndex, totalFrames, viewport, ctx) {
+        const vp = viewport;
         const w = vp.width;
         const h = vp.height;
         const camX = vp.left;
@@ -295,7 +311,6 @@ class TransitionAnimations {
         const cols = Math.ceil(w / tile);
         const rows = parcelAmount;
 
-        const ctx = Display.ctx;
         ctx.fillStyle = "rgb(0,0,0)";
 
         // Direction fixed to SE (1, 1)
