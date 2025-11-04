@@ -118,6 +118,30 @@ class TransitionAnimationHandler {
         }
     }
 
+    static showPreview() {
+        const half = Math.ceil(this.animationFrames / 2);
+        const totalFrames = half;
+        let count = 0; 
+
+        const timer = setInterval(() => {
+            let currentFrame;
+
+            if (count < half) {
+                currentFrame = count + 1;
+            } else {
+                currentFrame = totalFrames - (count - half);
+            }
+
+            console.log(`Frame: ${currentFrame} / ${totalFrames}`);
+
+            count++;
+            if (count >= this.animationFrames) {
+                clearInterval(timer);
+                console.log("Done!");
+            }
+        }, 40); 
+    }
+
     static setTypeElementValue(type) {
         this.animationType = type;
         document.getElementById("transitionType").value = type;
