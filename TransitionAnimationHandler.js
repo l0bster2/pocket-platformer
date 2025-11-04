@@ -158,7 +158,7 @@ class TransitionAnimationHandler {
                 previewCanvasCtx.clearRect(0, 0, fakeViewport.width, fakeViewport.height);
                 console.log("Done!");
             }
-        }, 40);
+        }, 20);
     }
 
     static setTypeElementValue(type) {
