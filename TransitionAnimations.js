@@ -143,7 +143,6 @@ class TransitionAnimations {
         }
     }
 
-
     static drawCollide(frameIndex, totalFrames) {
         const vp = Camera.viewport;
         const w = vp.width;
@@ -227,6 +226,138 @@ class TransitionAnimations {
             const y = row * tile + camY;
 
             ctx.fillRect(x, y, tile + 1, tile + 1); // +1 avoids seams
+        }
+    }
+
+    static drawRotatingHole(frameIndex, totalFrames) {
+        const vp = Camera.viewport;
+        const w = vp.width;
+        const h = vp.height;
+        const left = vp.left;
+        const top = vp.top;
+        const ctx = Display.ctx;
+
+        // --- Normalized + eased progress ---
+        const t = Math.max(0, Math.min(frameIndex / totalFrames, 1));
+        const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // easeInOutQuad
+
+        // --- Oversize factor to avoid gaps when rotating ---
+        const extra = Math.hypot(w, h) * 0.5;
+        const safeW = w + extra * 2;
+        const safeH = h + extra * 2;
+
+        // --- Hole size ---
+        const maxHoleSize = Math.max(w, h) * 1.5;
+        const holeSize = maxHoleSize * (1 - ease); // expanding hole
+        const holeX = (safeW - holeSize) / 2;
+        const holeY = (safeH - holeSize) / 2;
+
+        // --- Rotation setup ---
+        const rotations = 0.5;
+        const wiggleAmplitude = 0.12;
+        const wiggleFrequency = 4;
+        const angle =
+            ease * Math.PI * 2 * rotations +
+            Math.sin(ease * Math.PI * wiggleFrequency) * wiggleAmplitude;
+
+        // --- Draw ---
+        ctx.save();
+        ctx.translate(left + w / 2, top + h / 2);
+        ctx.rotate(angle);
+        ctx.translate(-safeW / 2, -safeH / 2);
+
+        ctx.fillStyle = "black";
+
+        // small overlap value to avoid seams
+        const o = 1; // overlap pixels
+
+        // top
+        ctx.fillRect(0, 0, safeW, holeY + o);
+        // bottom
+        ctx.fillRect(0, holeY + holeSize - o, safeW, safeH - (holeY + holeSize) + o);
+        // left
+        ctx.fillRect(0, holeY - o, holeX + o, holeSize + 2 * o);
+        // right
+        ctx.fillRect(holeX + holeSize - o, holeY - o, safeW - (holeX + holeSize) + o, holeSize + 2 * o);
+
+        ctx.restore();
+    }
+
+    static drawDiamondSwipe(frameIndex, totalFrames) {
+        const vp = Camera.viewport;
+        const w = vp.width;
+        const h = vp.height;
+        const camX = vp.left;
+        const camY = vp.top;
+
+        const parcelAmount = 10;
+        const tile = h / parcelAmount;
+        const cols = Math.ceil(w / tile);
+        const rows = parcelAmount;
+
+        const ctx = Display.ctx;
+        ctx.fillStyle = "rgb(0,0,0)";
+
+        // Direction fixed to SE (1, 1)
+        const dx = 1, dy = 1;
+
+        // Precompute min/max distances for SE diagonal motion
+        let minDistance = Infinity;
+        let maxDistance = -Infinity;
+        for (let c = 0; c < cols; c++) {
+            for (let r = 0; r < rows; r++) {
+                const dist = c * dx + r * dy;
+                if (dist < minDistance) minDistance = dist;
+                if (dist > maxDistance) maxDistance = dist;
+            }
+        }
+
+        const overlapFactor = 0.5;
+
+        // Draw tiles
+        for (let c = 0; c < cols; c++) {
+            for (let r = 0; r < rows; r++) {
+                const distance = c * dx + r * dy;
+                let phase = (distance - minDistance) / (maxDistance - minDistance);
+
+                const start = totalFrames * phase * overlapFactor;
+                const end = start + totalFrames * overlapFactor;
+                let progress = (frameIndex - start) / (end - start);
+                if (progress < 0) continue;
+                if (progress > 1) progress = 1;
+
+                const drawX = c * tile + camX + tile / 2;
+                const drawY = r * tile + camY + tile / 2;
+
+                ctx.fillStyle = "rgb(0,0,0)";
+
+                if (progress < 0.5) {
+                    // diamond growing in
+                    const t = progress / 0.5;
+                    const half = (tile / 2) * t;
+
+                    ctx.beginPath();
+                    ctx.moveTo(drawX, drawY - half);
+                    ctx.lineTo(drawX + half, drawY);
+                    ctx.lineTo(drawX, drawY + half);
+                    ctx.lineTo(drawX - half, drawY);
+                    ctx.closePath();
+                    ctx.fill();
+
+                } else {
+                    // rotate and expand to full tile
+                    const t = (progress - 0.5) / 0.5;
+                    const angle = Math.PI / 4 + (Math.PI / 4) * t;
+                    const scale = 1 + 0.6 * t;
+                    const size = tile * scale;
+
+                    ctx.save();
+                    ctx.translate(drawX, drawY);
+                    ctx.rotate(angle);
+                    ctx.fillRect(-size / 2, -size / 2, size, size);
+                    ctx.restore();
+                }
+            }
         }
     }
 }

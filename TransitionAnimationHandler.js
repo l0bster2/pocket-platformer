@@ -10,7 +10,9 @@ class TransitionAnimationHandler {
             collide: "collide",
             radialWipe: "radialWipe",
             explode: "explode",
-            dissolve: "dissolve"
+            dissolve: "dissolve",
+            rotatingCube: "rotatingCube",
+            diamondSwipe: "diamondSwipe",
         }
         this.currentAnimationType = null;
         this.currentAnimationFrames = null;
@@ -61,6 +63,12 @@ class TransitionAnimationHandler {
                 case this.animationTypes.dissolve:
                     TransitionAnimations.drawDissolve(currentFrame, fadeInFrames);
                     break;
+                case this.animationTypes.rotatingCube:
+                    TransitionAnimations.drawRotatingHole(currentFrame, fadeInFrames);
+                    break;
+                case this.animationTypes.diamondSwipe:
+                    TransitionAnimations.drawDiamondSwipe(currentFrame, fadeInFrames);
+                    break;
             }
             //Camera.zoomToObject(0.01, player);
         }
@@ -87,6 +95,12 @@ class TransitionAnimationHandler {
                     break;
                 case this.animationTypes.dissolve:
                     TransitionAnimations.drawDissolve(PlayMode.currentPauseFrames, fadeOutFrames);
+                    break;
+                case this.animationTypes.rotatingCube:
+                    TransitionAnimations.drawRotatingHole(PlayMode.currentPauseFrames, fadeOutFrames);
+                    break;
+                case this.animationTypes.diamondSwipe:
+                    TransitionAnimations.drawDiamondSwipe(PlayMode.currentPauseFrames, fadeOutFrames);
                     break;
             }
         }
