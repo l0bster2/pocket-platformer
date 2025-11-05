@@ -379,7 +379,7 @@ class ObjectsTooltipElementsRenderer {
         const transitionDurationInput = document.createElement("input");
         transitionDurationInput.style.marginRight = "12px";
         Helpers.addAttributesToHTMLElement(transitionDurationInput, {
-            "type": "range", min: 2, max: 96, value: currentObject.transitionLength || 48,
+            "type": "range", min: 2, max: 160, value: currentObject.transitionLength || 48,
             class: "slider", step: 2, id: "customTransitionDuration"
         });
         transitionDurationInput.onchange = (event) => {

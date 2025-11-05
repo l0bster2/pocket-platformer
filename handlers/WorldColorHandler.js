@@ -81,7 +81,7 @@ class WorldColorHandler {
             WorldDataHandler.backgroundImageSize = 'stretch';
         }
         ImageHandler.setBackgroundImage();
-        document.getElementById("imageSizeWorldSelectorWrapper").style.display = backgroundImageWorldSelector.value === "none" || backgroundImageWorldSelector.value === null ? "none" : "block";
+        //document.getElementById("imageSizeWorldSelectorWrapper").style.display = backgroundImageWorldSelector.value === "none" || backgroundImageWorldSelector.value === null ? "none" : "block";
     }
 
     static changeLevelImageSize(event) {
@@ -112,9 +112,8 @@ class WorldColorHandler {
         const backgroundImageWorldSelector = document.getElementById("backgroundImageWorldSelector");
         const backgroundImageLevelSelector = document.getElementById("backgroundImageLevelSelector");
         const backgroundImageSizeLevelSelector = document.getElementById("imageSizeLevelSelectorWrapper");
-        const backgroundImageSizeWorldSelector = document.getElementById("imageSizeWorldSelectorWrapper");
-        imageSizeWorldSelector
-        this.fillImageBackgroundSelectWithValues(backgroundImageWorldSelector, backgroundImageSizeWorldSelector);
+        //const backgroundImageSizeWorldSelector = document.getElementById("imageSizeWorldSelectorWrapper");
+        //this.fillImageBackgroundSelectWithValues(backgroundImageWorldSelector, backgroundImageSizeWorldSelector);
         this.fillImageBackgroundSelectWithValues(backgroundImageLevelSelector, backgroundImageSizeLevelSelector);
         const levelImage = WorldDataHandler.levels[tileMapHandler.currentLevel].backgroundImage || "none";
         const worldImage = WorldDataHandler.backgroundImage || "none";
@@ -122,7 +121,7 @@ class WorldColorHandler {
         backgroundImageWorldSelector.value = worldImage;
 
         backgroundImageSizeLevelSelector.style.display = levelImage === "none" || levelImage === null ? "none" : "block";
-        backgroundImageSizeWorldSelector.style.display = worldImage === "none" || worldImage === null ? "none" : "block";
+        //backgroundImageSizeWorldSelector.style.display = worldImage === "none" || worldImage === null ? "none" : "block";
     }
 
     static initializeModal() {

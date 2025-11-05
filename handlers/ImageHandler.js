@@ -124,6 +124,12 @@ class ImageHandler {
         else {
             this.imageCanvasCtx.clearRect(0, 0, this.imageCanvas.width, this.imageCanvas.height);
             this.currentLevelImage = null;
+            const smallPreviewCanvas = document.getElementById("backgroundSmallPreview");
+            const smallPreviewCanvasWrapper = document.getElementById("backgroundSmallPreviewWrapper");
+            const smallPreviewCanvasCtx = smallPreviewCanvas.getContext("2d");
+            smallPreviewCanvasCtx.clearRect(0, 0, smallPreviewCanvas.width, smallPreviewCanvas.height);
+            smallPreviewCanvasWrapper.style.display = "none";
+
         }
     }
 
@@ -154,6 +160,11 @@ class ImageHandler {
                 this.imageCanvas.height = image.height;
                 this.imageCanvasCtx.drawImage(img, 0, 0);
             }
+            const smallPreviewCanvas = document.getElementById("backgroundSmallPreview");
+            const smallPreviewCanvasWrapper = document.getElementById("backgroundSmallPreviewWrapper");
+            const smallPreviewCanvasCtx = smallPreviewCanvas.getContext("2d");
+            smallPreviewCanvasWrapper.style.display = "flex";
+            smallPreviewCanvasCtx.drawImage(img, 0, 0, image.width, image.height, 0, 0, smallPreviewCanvas.width, smallPreviewCanvas.height);
         };
 
         img.src = image.value;
@@ -224,7 +235,7 @@ class ImageHandler {
                     Display.drawImage(this.imageCanvas, 0, 0,
                         this.currentLevelImage.width, this.currentLevelImage.height * verticalBackgroundImageAmount,
                         Camera.viewport.left, this.currentScrollingPos,
-                        Camera.viewport.width, Camera.viewport.height  * verticalBackgroundImageAmount);
+                        Camera.viewport.width, Camera.viewport.height * verticalBackgroundImageAmount);
                     break;
                 default:
                     break;
