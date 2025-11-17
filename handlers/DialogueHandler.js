@@ -98,9 +98,6 @@ class DialogueHandler {
         const avatarOnTheLeft = this.dialogue[this.currentIndex].avatar?.position === AnimationHelper.facingDirections.left;
 
         if (this.currentAnimationHeight >= calculatedDialogueHeight) {
-            Display.drawLine(leftPos + calculatedDialogueWidth - 80, currentBoxTopPosition, leftPos + calculatedDialogueWidth - 20, topPos,
-                "000000", 2);
-
             for (var i = 0; i <= currentLine; i++) {
                 if (i < this.dialogue[this.currentIndex].lines.length) {
                     this.animateText(
@@ -153,10 +150,15 @@ class DialogueHandler {
     static displayArrowUpIcon() {
         const { leftPos, topPos } = this;
 
+        const calculatedDialogueHeight = Math.floor(this.dialogueHeight);
+        const currentBoxTopPosition = topPos + ((calculatedDialogueHeight - this.currentAnimationHeight) / 2);
+        Display.drawRectangle(leftPos + (this.dialogueWidth) - 78, currentBoxTopPosition - 9, 54, 22,  "000000")
+        Display.drawRectangleBorder(leftPos + (this.dialogueWidth) - 78, currentBoxTopPosition - 9, 54, 22,  "FFFFFF")
+        
         this.arrowUpFrameIndex++;
         const frameModulo = this.arrowUpFrameIndex % 60;
         if (frameModulo < 30) {
-            this.showDialogueUpArrow(leftPos + (this.dialogueWidth) - 60, topPos - 15);
+            this.showDialogueUpArrow(leftPos + (this.dialogueWidth) - 63, topPos - 15);
         }
     }
 

@@ -593,14 +593,15 @@
                         <div class="marginTop12 changeableAttributesWrapper" id="levelScrollSpeed"
                             style="display: none">
                             <span class="colorModalAttribute">Scroll speed:</span>
-                            <input style="margin-right:12px; margin-left: 34px" type="range" min="1" max="8" value="1" step="1"
-                                class="slider" id="scrollSpeedWorld"
+                            <input style="margin-right:12px; margin-left: 34px" type="range" min="1" max="8" value="1"
+                                step="1" class="slider" id="scrollSpeedWorld"
                                 onchange="ImageHandler.changeLevelScrollSpeed(event)">
                             <span id="scrollSpeedLevelValue">0.2</span>
                         </div>
                         <div class="flexGap12 marginTop12" id="backgroundSmallPreviewWrapper">
                             <span>Preview: </span>
-                            <canvas id="backgroundSmallPreview" width="158" height="86" style="border: 1px solid black; margin-left: 83px">
+                            <canvas id="backgroundSmallPreview" width="158" height="86"
+                                style="border: 1px solid black; margin-left: 83px">
 
                             </canvas>
                         </div>
@@ -612,20 +613,22 @@
                     </div>
                 </div>
                 <div class="marginTop8 colorModalSection" style="display: none;" id="colorModalTransitionSection">
-                    <span class="colorModalAttribute">Level-transition:</span>
-                    <select name="transitionType" id="transitionType"
-                        onchange="TransitionAnimationHandler.changeAnimationType(event)">
-                        <option value="none">None</option>
-                        <option value="tiles" selected="selected">Fading tiles</option>
-                        <option value="cutOutCircle">Cut out circle</option>
-                        <option value="wholeScreen">Screen fade</option>
-                        <option value="collide">Colliding boxes</option>
-                        <option value="radialWipe">Radial wipe</option>
-                        <option value="explode">Explode</option>
-                        <option value="dissolve">Dissolve</option>
-                        <option value="rotatingCube">Rotating cube</option>
-                        <option value="diamondSwipe">Diamond swipe</option>
-                    </select>
+                    <div>
+                        <span class="colorModalAttribute">Transition type:</span>
+                        <select name="transitionType" id="transitionType"
+                            onchange="TransitionAnimationHandler.changeAnimationType(event)">
+                            <option value="none">None</option>
+                            <option value="tiles" selected="selected">Fading tiles</option>
+                            <option value="cutOutCircle">Cut out circle</option>
+                            <option value="wholeScreen">Screen fade</option>
+                            <option value="collide">Colliding boxes</option>
+                            <option value="radialWipe">Radial wipe</option>
+                            <option value="explode">Explode</option>
+                            <option value="dissolve">Dissolve</option>
+                            <option value="rotatingCube">Rotating cube</option>
+                            <option value="diamondSwipe">Diamond swipe</option>
+                        </select>
+                    </div>
                     <div class="marginTop12 changeableAttributesWrapper">
                         <span class="colorModalAttribute">Transition-length:</span>
                         <input style="margin-right:12px" type="range" min="2" max="160" value="48" step="2"
