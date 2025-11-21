@@ -13,6 +13,7 @@ class ExportedGameInitializer {
         if(allData.customFont) {
             FontHandler.loadCustomFont(allData.customFont);
         }
+        WorldDataHandler.fontSize = allData.fontSize || 17;
 
         TransitionAnimationHandler.animationFrames = allData.animationFrames;
         TransitionAnimationHandler.animationType = allData.animationType;

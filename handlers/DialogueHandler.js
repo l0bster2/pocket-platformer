@@ -186,7 +186,7 @@ class DialogueHandler {
         
         Display.displayText(currentText, leftPos + (20),
             topPos + topPadding + (lineIndex * lineBreakHeight),
-            17, "#FFFFFF", "left");
+            WorldDataHandler.fontSize, "#FFFFFF", "left");
     }
 
     static calculateTextLines(dialogue, lineLength) {

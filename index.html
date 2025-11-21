@@ -549,31 +549,56 @@
                 </div>
                 <div class="colorModalSection" id="colorModalFontSection" style="display: none">
                     <div style="font-weight: bold;">Choose font</div>
-
                     <div id="fontPreviewGrid">
-                        <div class="fontOption selected" data-font="DotGothic16" style="font-family: DotGothic16;" onclick="FontHandler.changeFont(event)">Example</div>
-                        <div class="fontOption" data-font="Georgia" style="font-family: Georgia;" onclick="FontHandler.changeFont(event)">Example</div>
-                        <div class="fontOption" data-font="Trebuchet MS" style="font-family: 'Trebuchet MS';" onclick="FontHandler.changeFont(event)">Example
+                        <div class="fontOption selected" data-font="DotGothic16" style="font-family: DotGothic16;"
+                            onclick="FontHandler.changeFont(event)">Example</div>
+                        <div class="fontOption" data-font="Georgia" style="font-family: Georgia;"
+                            onclick="FontHandler.changeFont(event)">Example</div>
+                        <div class="fontOption" data-font="Trebuchet MS" style="font-family: 'Trebuchet MS';"
+                            onclick="FontHandler.changeFont(event)">Example
                         </div>
-                        <div class="fontOption" data-font="Courier New" style="font-family: 'Courier New';" onclick="FontHandler.changeFont(event)">Example
+                        <div class="fontOption" data-font="Courier New" style="font-family: 'Courier New';"
+                            onclick="FontHandler.changeFont(event)">Example
                         </div>
-                        <div class="fontOption" data-font="Impact" style="font-family: Impact;" onclick="FontHandler.changeFont(event)">Example</div>
-                        <div class="fontOption" data-font="Comic Sans MS" style="font-family: 'Comic Sans MS';" onclick="FontHandler.changeFont(event)">Example
+                        <div class="fontOption" data-font="Impact" style="font-family: Impact;"
+                            onclick="FontHandler.changeFont(event)">Example</div>
+                        <div class="fontOption" data-font="Comic Sans MS" style="font-family: 'Comic Sans MS';"
+                            onclick="FontHandler.changeFont(event)">Example
                         </div>
-                        <div class="fontOption" data-font="Palatino Linotype" style="font-family: 'Palatino Linotype';" onclick="FontHandler.changeFont(event)">
+                        <div class="fontOption" data-font="Palatino Linotype" style="font-family: 'Palatino Linotype';"
+                            onclick="FontHandler.changeFont(event)">
                             Example</div>
                         <div class="fontOption" data-font="Lucida Handwriting"
-                            style="font-family: 'Lucida Handwriting';" onclick="FontHandler.changeFont(event)">Example</div>
+                            style="font-family: 'Lucida Handwriting';" onclick="FontHandler.changeFont(event)">Example
+                        </div>
                         <div class="fontOption" data-font="Gill Sans" style="font-family: 'Gill Sans', 'Gill Sans MT';">
                             Example</div>
                     </div>
                     <div class="customFontSection marginTop12">
-                        <div style="font-weight: bold;">Custom Google Font</div>
+                        <div style="font-weight: bold;">Custom Google Font
+                            <span style="display: inline; vertical-align: middle;" data-microtip-size="large"
+                                data-microtip-position="right"
+                                aria-label="Go to https://fonts.google.com. Copy the name of a font you like"
+                                data-microtip-position="top" role="tooltip" class="marginTop8 smallTooltipIcon"><img
+                                    src="images/icons/info.svg" alt="info" width="16" height="16">
+                            </span>
+
+                        </div>
                         <div class="customFontInput marginTop8">
-                            <input type="text" id="customFontName" placeholder="Enter Font name (e.g. Pacifico)" style="width: 280px">
-                            <button id="addCustomFontBtn" class="levelNavigationButton" onclick="FontHandler.addCustomFont()">Add Font</button>
+                            <input type="text" id="customFontName" placeholder="Enter Font name (e.g. Pacifico)"
+                                style="width: 280px">
+                            <button id="addCustomFontBtn" class="levelNavigationButton"
+                                onclick="FontHandler.addCustomFont()">Add Font</button>
                         </div>
                         <div id="customFontPreviewContainer" class="marginTop8"></div>
+                    </div>
+                    <div style="font-weight: bold;" class="marginTop12">Font size</div>
+                    <div>
+                        <div class="changeableAttributesWrapper marginTop8">
+                            <input type="range" min="10" max="30" value="17" name="fontSize" step="1"
+                                id="fontSizeSlider" onchange="FontHandler.changeFontSize(event)">
+                            <span class="sliderValue" id="fontSizeValue" style="margin: initial">17</span>
+                        </div>
                     </div>
                 </div>
                 <div id="colorModalBackgroundSelection" class="marginTop8 colorModalSection" style="display: none">

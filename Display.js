@@ -151,11 +151,11 @@ class Display {
             this.displayWobblyText(WorldDataHandler.gamesName.replace('wobbly:', ''), this.canvasWidth / 2, this.canvasHeight / 2, 30, currentGeneralFrame, 95, textColor);
         }
         else {
-            this.displayText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, 30, textColor);
+            this.displayText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, WorldDataHandler.fontSize + 13, textColor);
         }
         var moduloDivider = maxFrames / 3;
         if (currentGeneralFrame % moduloDivider < moduloDivider / 2) {
-            this.displayText("Press enter to continue", this.canvasWidth / 2, this.canvasHeight / 2 + 40, 18, textColor);
+            this.displayText("Press enter to continue", this.canvasWidth / 2, this.canvasHeight / 2 + 40, WorldDataHandler.fontSize + 1, textColor);
         }
     }
 
@@ -217,7 +217,7 @@ class Display {
             this.displayWobblyText(WorldDataHandler.endingMessage.replace('wobbly:', ''), this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, currentGeneralFrame, 95, textColor);
         }
         else {
-            this.displayText(WorldDataHandler.endingMessage, this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, textColor);
+            this.displayText(WorldDataHandler.endingMessage, this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, WorldDataHandler.fontSize + 17, textColor);
         }
 
 
@@ -229,8 +229,8 @@ class Display {
         deathCounter = "XX";
         collectibleCollectedText = "- X/XX";
         //endRemoval
-        this.displayText(`Time: ${endTime}`, this.canvasWidth / 2, this.canvasHeight / 2 + 4 - extraPadding, 18, textColor);
-        this.displayText(`Deaths: ${deathCounter}`, this.canvasWidth / 2, this.canvasHeight / 2 + 34 - extraPadding, 18, textColor);
+        this.displayText(`Time: ${endTime}`, this.canvasWidth / 2, this.canvasHeight / 2 + 4 - extraPadding, WorldDataHandler.fontSize + 1, textColor);
+        this.displayText(`Deaths: ${deathCounter}`, this.canvasWidth / 2, this.canvasHeight / 2 + 34 - extraPadding, WorldDataHandler.fontSize + 1, textColor);
         if (collectiblesExist) {
             const spriteIndex = SpritePixelArrays.getIndexOfSprite(ObjectTypes.COLLECTIBLE);
             const { tileSize } = WorldDataHandler;
@@ -238,12 +238,12 @@ class Display {
             const collectibleCollectedTextLength = this.ctx.measureText(collectibleCollectedText).width;
             Display.drawImage(spriteCanvas, 0, canvasYSpritePos, tileSize, tileSize,
                 this.canvasWidth / 2 - (collectibleCollectedTextLength / 2) - 15, this.canvasHeight / 2 + 54 - tileSize, tileSize, tileSize);
-            this.displayText(collectibleCollectedText, this.canvasWidth / 2 + 15, this.canvasHeight / 2 + 48, 18, textColor);
+            this.displayText(collectibleCollectedText, this.canvasWidth / 2 + 15, this.canvasHeight / 2 + 48, WorldDataHandler.fontSize, textColor);
         }
         var moduloDivider = maxFrames / 3;
 
         if (currentGeneralFrame % moduloDivider < moduloDivider / 2) {
-            this.displayText("Press enter to restart", this.canvasWidth / 2, this.canvasHeight / 2 + 64 + extraPadding, 12, textColor);
+            this.displayText("Press enter to restart", this.canvasWidth / 2, this.canvasHeight / 2 + 64 + extraPadding, WorldDataHandler.fontSize - 5, textColor);
         }
         if (Controller.enter && !PauseHandler.restartedGame) {
             PauseHandler.restartedGame = true;

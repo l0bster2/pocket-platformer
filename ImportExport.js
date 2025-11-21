@@ -24,10 +24,6 @@ function importGame() {
           const gameDataJson = JSON.parse(gameData);
           ExportedGameInitializer.initializeExportedGame(gameDataJson);
           FontHandler.initializeFontFromExport();
-          if(gameDataJson.customFont) {
-            document.getElementById("customFontName").value = gameDataJson.customFont;
-            FontHandler.initializeCustomFontHtml(gameDataJson.customFont);
-          }
           SoundHandlerRenderer.createSoundOverview();
         }
         else {
@@ -94,6 +90,7 @@ function resetUIValuesInTool() {
     PlayerAttributesHandler.setInitialCheckboxValue(checkBoxValue);
   });
   PlayerAttributesHandler.setDeathType();
+  FontHandler.resetValuesinUi();
 }
 
 function createPlayerAttributesSectionForAllData() {
@@ -142,6 +139,7 @@ function exportGame() {
   allData.sprites = createChangedSpitesObject();
   allData.selectedFont = WorldDataHandler.selectedFont;
   allData.customFont = WorldDataHandler.customFont;
+  allData.fontSize = WorldDataHandler.fontSize;
   bundledScripts = bundledScripts.replace("//putAllDataHere",
     `${allDataStartComment}
   const allData = ${JSON.stringify(allData)}

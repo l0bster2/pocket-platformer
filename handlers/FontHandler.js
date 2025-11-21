@@ -61,4 +61,19 @@ class FontHandler {
             selected.classList.add("selected");
         }
     }
+
+    static changeFontSize(e) {
+        const newValue = parseInt(e.target.value);
+        WorldDataHandler.fontSize = newValue;
+        document.getElementById("fontSizeValue").innerHTML = newValue;
+    }
+
+    static resetValuesinUi() {
+        if (WorldDataHandler.customFont) {
+            document.getElementById("customFontName").value = WorldDataHandler.customFont;
+            FontHandler.initializeCustomFontHtml(WorldDataHandler.customFont);
+        }
+        document.getElementById("fontSizeValue").innerHTML = WorldDataHandler.fontSize;
+        document.getElementById("fontSizeSlider").value = parseInt(WorldDataHandler.fontSize);
+    }
 }

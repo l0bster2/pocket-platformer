@@ -48,12 +48,12 @@ class PauseHandler {
         if(this.paused) {
             const { left, top, width, height } = Camera.viewport;
             Display.drawRectangle(left, top, width, height, WorldDataHandler.backgroundColor);
-            Display.displayText("Paused",left + width / 2, top + height / 2 - 30, 30, '#' + WorldDataHandler.textColor);
+            Display.displayText("Paused",left + width / 2, top + height / 2 - 30, WorldDataHandler.fontSize + 17, '#' + WorldDataHandler.textColor);
             this.options.forEach((option, index) => {
-                Display.displayText(option, left + width / 2, top + height / 2 + 20 + index * 30, 15, '#' + WorldDataHandler.textColor);
+                Display.displayText(option, left + width / 2, top + height / 2 + 20 + index * 30, WorldDataHandler.fontSize - 2, '#' + WorldDataHandler.textColor);
                 if(this.currentOptionIndex === index) {
                     const optionTextLength = Display.measureText(option).width;
-                    Display.displayText("►", left + width / 2 - optionTextLength / 2 - 20, top + height / 2 + 20 + index * 30, 15, '#' + WorldDataHandler.textColor);
+                    Display.displayText("►", left + width / 2 - optionTextLength / 2 - 20, top + height / 2 + 20 + index * 30, WorldDataHandler.fontSize - 2, '#' + WorldDataHandler.textColor);
                 }
             });
 
