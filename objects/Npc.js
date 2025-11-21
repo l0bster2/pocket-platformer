@@ -58,6 +58,7 @@ class Npc extends InteractiveLevelObject {
             DialogueHandler.dialogue = parsedDialogue;
             DialogueHandler.active = true;
             DialogueHandler.calculateDialogueWindowPosition();
+            DialogueHandler.soundPlaying = true;
             SoundHandler.dialogueSound.stopAndPlay();
             player.fixedSpeed = false;
             player.xspeed = 0;

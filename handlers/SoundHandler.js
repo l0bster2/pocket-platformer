@@ -46,7 +46,8 @@ class SoundHandler {
       if (sound.key === "song" && WorldDataHandler.insideTool) {
         this.song = new Sound("", "song", true);
       } else {
-        this[sound.key] = new Sound(sound.value, sound.key, sound.type === "music");
+        const loop = sound.type === "music" || sound.key === "dialogueSound";
+        this[sound.key] = new Sound(sound.value, sound.key, loop);
       }
     });
     this.currentSong = null;

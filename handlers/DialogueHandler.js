@@ -20,6 +20,7 @@ class DialogueHandler {
         this.currentSelectedAvatar = null;
         this.avatarOuterPadding = 40;
         this.avatarInnerPadding = 15;
+        this.soundPlaying = false;
     }
 
     static setDialogueWindowToInactive() {
@@ -64,9 +65,11 @@ class DialogueHandler {
                         this.currentIndex++;
                         this.currentAnimationFrame = 0;
                         this.avatarAnimationFrame = 0;
+                        this.soundPlaying = true;
                     }
                     else {
                         this.setDialogueWindowToInactive();
+                        this.soundPlaying = false;
                     }
                 }
                 this.upButtonReleased = false;
@@ -117,7 +120,7 @@ class DialogueHandler {
             const step = calculatedDialogueHeight / this.frameDurationToShowDialogueBox;
             this.currentAnimationHeight += step;
         }
-        Display.ctx.restore(); 
+        Display.ctx.restore();
     }
 
     static displayAvatar(top) {
@@ -152,9 +155,9 @@ class DialogueHandler {
 
         const calculatedDialogueHeight = Math.floor(this.dialogueHeight);
         const currentBoxTopPosition = topPos + ((calculatedDialogueHeight - this.currentAnimationHeight) / 2);
-        Display.drawRectangle(leftPos + (this.dialogueWidth) - 78, currentBoxTopPosition - 9, 54, 22,  "000000")
-        Display.drawRectangleBorder(leftPos + (this.dialogueWidth) - 78, currentBoxTopPosition - 9, 54, 22,  "FFFFFF")
-        
+        Display.drawRectangle(leftPos + (this.dialogueWidth) - 78, currentBoxTopPosition - 9, 54, 22, "000000")
+        Display.drawRectangleBorder(leftPos + (this.dialogueWidth) - 78, currentBoxTopPosition - 9, 54, 22, "FFFFFF")
+
         this.arrowUpFrameIndex++;
         const frameModulo = this.arrowUpFrameIndex % 60;
         if (frameModulo < 30) {
@@ -172,6 +175,15 @@ class DialogueHandler {
         }
         const currentText = dialoguesLines[lineIndex].substring(0,
             Math.ceil(this.currentAnimationFrame / this.animationDurationFrames - previousLinesLength));
+
+        const lastLine = dialoguesLines[dialoguesLines.length - 1];
+        const isLastLineDisplayed = lineIndex === dialoguesLines.length - 1;
+
+        if(this.soundPlaying && isLastLineDisplayed && lastLine === currentText) {
+            SoundHandler.dialogueSound.stop();
+            this.soundPlaying = false;
+        }
+        
         Display.displayText(currentText, leftPos + (20),
             topPos + topPadding + (lineIndex * lineBreakHeight),
             17, "#FFFFFF", "left");
