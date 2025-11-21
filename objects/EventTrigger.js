@@ -79,6 +79,29 @@ class EventTrigger extends InteractiveLevelObject {
                         const imgObj = new ImageInGame(event.imageName, event.imageAnimationDuration, event.fadeInAnimation, event.fadeInAnimationDuration, event.staticImageSize);
                         this.tilemapHandler.levelObjects.push(imgObj);
                         break;
+                    case "open-url":
+                        const a = document.createElement("a");
+                        a.href = event.url;
+                        const evt = document.createEvent("MouseEvents");
+                        evt.initMouseEvent(
+                            "click",
+                            true,
+                            true,
+                            window,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            true,
+                            false,
+                            false,
+                            false,
+                            0,
+                            null
+                        );
+                        a.dispatchEvent(evt);
+                        break;
                 }
             })
         }
