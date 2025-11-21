@@ -501,31 +501,36 @@
             </div>
             <div id="worldColorModalColorSection">
                 <div style="display: flex;">
-                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton active"
+                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton fontSize10 active"
                         id="colorModalColorsSectionButton"
                         onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalColorsSection')">Color</button>
-                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
+                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton fontSize10"
+                        id="colorModalFontSectionButton"
+                        onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalFontSection')">Font</button>
+                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton fontSize10"
                         id="colorModalBackgroundSelectionButton"
                         onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalBackgroundSelection')">Backgrounds</button>
-                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
+                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton fontSize10"
                         id="colorModalTransitionSectionButton"
                         onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalTransitionSection')">Transitions</button>
-                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton"
+                    <button class="levelNavigationButton buttonWithIconAndText colorTabButton fontSize10"
                         id="colorModalEffectsSectionButton"
                         onclick="TabNavigation.changeColorModalSectionVisibility(event, 'colorModalEffectsSection')">Effects</button>
                 </div>
                 <div id="colorModalColorsSection" class="marginTop8 colorModalSection">
                     <div style="font-weight: bold;">General color settings</div>
-                    <div class="marginTop12">
-                        <span class="colorModalAttribute">Background-color:</span>
-                        <button class="color-input-background buttonWithIconAndText">
-                            Transparent
-                        </button>
-                    </div>
-                    <div class="marginTop8">
-                        <span class="colorModalAttribute">Text-color:</span>
-                        <button class="color-input-text buttonWithIconAndText" value="#FFFFFF"
-                            style="margin-left: 52px" />
+                    <div>
+                        <div class="marginTop12">
+                            <span class="colorModalAttribute">Background-color:</span>
+                            <button class="color-input-background buttonWithIconAndText">
+                                Transparent
+                            </button>
+                        </div>
+                        <div class="marginTop8">
+                            <span class="colorModalAttribute">Text-color:</span>
+                            <button class="color-input-text buttonWithIconAndText" value="#FFFFFF"
+                                style="margin-left: 52px" />
+                        </div>
                     </div>
                     <div class="subSection12Gap">
                         <div style="font-weight: bold;">Level color settings</div>
@@ -540,6 +545,35 @@
                                 src="images/icons/delete.svg" class="marginTop8 hovereableRedSvg" style="margin: auto 0"
                                 onClick="WorldColorHandler.deleteLevelColor()">
                         </div>
+                    </div>
+                </div>
+                <div class="colorModalSection" id="colorModalFontSection" style="display: none">
+                    <div style="font-weight: bold;">Choose font</div>
+
+                    <div id="fontPreviewGrid">
+                        <div class="fontOption selected" data-font="DotGothic16" style="font-family: DotGothic16;" onclick="FontHandler.changeFont(event)">Example</div>
+                        <div class="fontOption" data-font="Georgia" style="font-family: Georgia;" onclick="FontHandler.changeFont(event)">Example</div>
+                        <div class="fontOption" data-font="Trebuchet MS" style="font-family: 'Trebuchet MS';" onclick="FontHandler.changeFont(event)">Example
+                        </div>
+                        <div class="fontOption" data-font="Courier New" style="font-family: 'Courier New';" onclick="FontHandler.changeFont(event)">Example
+                        </div>
+                        <div class="fontOption" data-font="Impact" style="font-family: Impact;" onclick="FontHandler.changeFont(event)">Example</div>
+                        <div class="fontOption" data-font="Comic Sans MS" style="font-family: 'Comic Sans MS';" onclick="FontHandler.changeFont(event)">Example
+                        </div>
+                        <div class="fontOption" data-font="Palatino Linotype" style="font-family: 'Palatino Linotype';" onclick="FontHandler.changeFont(event)">
+                            Example</div>
+                        <div class="fontOption" data-font="Lucida Handwriting"
+                            style="font-family: 'Lucida Handwriting';" onclick="FontHandler.changeFont(event)">Example</div>
+                        <div class="fontOption" data-font="Gill Sans" style="font-family: 'Gill Sans', 'Gill Sans MT';">
+                            Example</div>
+                    </div>
+                    <div class="customFontSection marginTop12">
+                        <div style="font-weight: bold;">Custom Google Font</div>
+                        <div class="customFontInput marginTop8">
+                            <input type="text" id="customFontName" placeholder="Enter Font name (e.g. Pacifico)" style="width: 280px">
+                            <button id="addCustomFontBtn" class="levelNavigationButton" onclick="FontHandler.addCustomFont()">Add Font</button>
+                        </div>
+                        <div id="customFontPreviewContainer" class="marginTop8"></div>
                     </div>
                 </div>
                 <div id="colorModalBackgroundSelection" class="marginTop8 colorModalSection" style="display: none">
@@ -873,6 +907,7 @@
         <script src="handlers/LevelSizeHandler.js"></script>
         <script src="handlers/PlayerAttributesHandler.js"></script>
         <script src="handlers/PathBuildHandler.js"></script>
+        <script src="handlers/FontHandler.js"></script>
         <script src="MathHelpers.js"></script>
         <script src="DrawHelpers.js"></script>
         <script src="objects/Path.js"></script>

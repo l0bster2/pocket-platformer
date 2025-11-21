@@ -255,7 +255,7 @@ class Display {
     }
 
     static displayText(text = "", xPos, yPos, size = 30, color = "white", alignPos = "center") {
-        this.ctx.font = size + "px DotGothic16";
+        this.ctx.font = size + "px " + WorldDataHandler.selectedFont;
         this.ctx.fillStyle = color;
         this.ctx.textAlign = alignPos;
         this.ctx.fillText(text, xPos, yPos);
@@ -265,6 +265,7 @@ class Display {
         const halfTileSize = objectSize / 2;
         Display.drawImageWithRotation(img, sx,
             sy, halfTileSize,
+
             halfTileSize, x + offSet * -1, y + offSet * -1,
             halfTileSize, halfTileSize, radians);
         Display.drawImageWithRotation(img, sx + halfTileSize,

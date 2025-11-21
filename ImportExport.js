@@ -23,6 +23,11 @@ function importGame() {
           gameData = gameData.replace("const allData = ", "");
           const gameDataJson = JSON.parse(gameData);
           ExportedGameInitializer.initializeExportedGame(gameDataJson);
+          FontHandler.initializeFontFromExport();
+          if(gameDataJson.customFont) {
+            document.getElementById("customFontName").value = gameDataJson.customFont;
+            FontHandler.initializeCustomFontHtml(gameDataJson.customFont);
+          }
           SoundHandlerRenderer.createSoundOverview();
         }
         else {
@@ -135,6 +140,8 @@ function exportGame() {
   allData.sounds = getCustomSounds();
   allData.images = ImageHandler.images;
   allData.sprites = createChangedSpitesObject();
+  allData.selectedFont = WorldDataHandler.selectedFont;
+  allData.customFont = WorldDataHandler.customFont;
   bundledScripts = bundledScripts.replace("//putAllDataHere",
     `${allDataStartComment}
   const allData = ${JSON.stringify(allData)}

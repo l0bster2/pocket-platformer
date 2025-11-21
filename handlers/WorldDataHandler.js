@@ -8,6 +8,8 @@ class WorldDataHandler {
         else {
             this.levels = [this.createEmptyLevel(), this.createEmptyLevel(), this.createEmptyLevel()];
         }
+        this.selectedFont = "DotGothic16";
+        this.customFont = null;
         this.tileSize = 24;
         this.pixelArrayUnitAmount = 8;
         this.pixelArrayUnitSize = this.tileSize / this.pixelArrayUnitAmount;
