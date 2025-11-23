@@ -2,15 +2,12 @@ class WorldDataHandler {
 
     static staticConstructor() {
         this.initialPlayerPosition = { x: 2, y: 10 };
-        if(WorldDataHandler.insideTool) {
+        if (WorldDataHandler.insideTool) {
             this.levels = [this.createEmptyLevel(), this.createDemoLevel(), this.createEmptyLevel()];
-        } 
+        }
         else {
             this.levels = [this.createEmptyLevel(), this.createEmptyLevel(), this.createEmptyLevel()];
         }
-        this.fontSize = 17;
-        this.selectedFont = "DotGothic16";
-        this.customFont = null;
         this.tileSize = 24;
         this.pixelArrayUnitAmount = 8;
         this.pixelArrayUnitSize = this.tileSize / this.pixelArrayUnitAmount;
@@ -26,6 +23,9 @@ class WorldDataHandler {
         this.backgroundImageScrollSpeed = 0.2;
         this.textColor = 'ffffff';
         this.effects = [];
+        this.fontSize = 17;
+        this.selectedFont = "DotGothic16";
+        this.customFont = null;
     }
 
     static createNewGame() {
