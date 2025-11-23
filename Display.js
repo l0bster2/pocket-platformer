@@ -123,40 +123,12 @@ class Display {
         }
     }
 
-    static displayLoadingScreen(loadedAssets, soundsLength) {
-        const loadingBarWidth = this.canvasWidth / 3;
-        const loadingBarHeight = 20;
-        const leftPos = this.canvasWidth / 2 - loadingBarWidth / 2;
-        const topPos = this.canvasHeight / 2 - loadingBarHeight / 2;
-        const progressPadding = 5;
-        this.drawRectangleBorder(leftPos, topPos,
-            loadingBarWidth, loadingBarHeight, WorldDataHandler.textColor);
-        const progressWidth = (loadingBarWidth - progressPadding * 2) / soundsLength * loadedAssets;
-        this.drawRectangle(leftPos + progressPadding, topPos + progressPadding,
-            progressWidth, loadingBarHeight - progressPadding * 2, WorldDataHandler.textColor);
-    }
-
     static getTotalTextWidth(text) {
         let width = 0;
         for (let i = 0; i < text.length; i++) {
             width += ctx.measureText(text[i]).width;
         }
         return width;
-    }
-
-    static displayStartScreen(currentGeneralFrame, maxFrames) {
-        PlayMode.updateGeneralFrameCounter();
-        const textColor = "#" + WorldDataHandler.textColor;
-        if (WorldDataHandler.gamesName.includes("wobbly:")) {
-            this.displayWobblyText(WorldDataHandler.gamesName.replace('wobbly:', ''), this.canvasWidth / 2, this.canvasHeight / 2, 30, currentGeneralFrame, 95, textColor);
-        }
-        else {
-            this.displayText(WorldDataHandler.gamesName, this.canvasWidth / 2, this.canvasHeight / 2, WorldDataHandler.fontSize + 13, textColor);
-        }
-        var moduloDivider = maxFrames / 3;
-        if (currentGeneralFrame % moduloDivider < moduloDivider / 2) {
-            this.displayText("Press enter to continue", this.canvasWidth / 2, this.canvasHeight / 2 + 40, WorldDataHandler.fontSize + 1, textColor);
-        }
     }
 
     static displayWobblyText(text = "", xPos, yPos, size = 30, currentGeneralFrame, maxFrames, color = "white") {
@@ -191,67 +163,6 @@ class Display {
     static measureText(text) {
         const measurements = this.ctx.measureText(text);
         return { width: measurements.width, height: measurements.height };
-    }
-
-    static displayEndingScreen(spriteCanvas, currentGeneralFrame, maxFrames) {
-        PlayMode.updateGeneralFrameCounter();
-        let totalCollectibles = 0;
-        let collectedCollectibles = 0;
-
-        WorldDataHandler.levels.forEach(level => {
-            level.levelObjects.forEach(levelObject => {
-                if (levelObject.type === ObjectTypes.COLLECTIBLE) {
-                    totalCollectibles++;
-                    if (levelObject.extraAttributes.collected) {
-                        collectedCollectibles++;
-                    }
-                }
-            })
-        });
-        const collectiblesExist = totalCollectibles > 0;
-        const extraPadding = collectiblesExist ? 16 : 0;
-
-        const textColor = "#" + WorldDataHandler.textColor;
-
-        if (WorldDataHandler.endingMessage.includes("wobbly:")) {
-            this.displayWobblyText(WorldDataHandler.endingMessage.replace('wobbly:', ''), this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, 30, currentGeneralFrame, 95, textColor);
-        }
-        else {
-            this.displayText(WorldDataHandler.endingMessage, this.canvasWidth / 2, this.canvasHeight / 2 - 36 - extraPadding, WorldDataHandler.fontSize + 17, textColor);
-        }
-
-
-        let endTime = GameStatistics.getFinalTime() || "XX:XX:XX";
-        let deathCounter = GameStatistics.deathCounter;
-        let collectibleCollectedText = `- ${collectedCollectibles}/${totalCollectibles}`;
-        //startRemoval 
-        endTime = "XX:XX:XX";
-        deathCounter = "XX";
-        collectibleCollectedText = "- X/XX";
-        //endRemoval
-        this.displayText(`Time: ${endTime}`, this.canvasWidth / 2, this.canvasHeight / 2 + 4 - extraPadding, WorldDataHandler.fontSize + 1, textColor);
-        this.displayText(`Deaths: ${deathCounter}`, this.canvasWidth / 2, this.canvasHeight / 2 + 34 - extraPadding, WorldDataHandler.fontSize + 1, textColor);
-        if (collectiblesExist) {
-            const spriteIndex = SpritePixelArrays.getIndexOfSprite(ObjectTypes.COLLECTIBLE);
-            const { tileSize } = WorldDataHandler;
-            const canvasYSpritePos = spriteIndex * tileSize;
-            const collectibleCollectedTextLength = this.ctx.measureText(collectibleCollectedText).width;
-            Display.drawImage(spriteCanvas, 0, canvasYSpritePos, tileSize, tileSize,
-                this.canvasWidth / 2 - (collectibleCollectedTextLength / 2) - 15, this.canvasHeight / 2 + 54 - tileSize, tileSize, tileSize);
-            this.displayText(collectibleCollectedText, this.canvasWidth / 2 + 15, this.canvasHeight / 2 + 48, WorldDataHandler.fontSize, textColor);
-        }
-        var moduloDivider = maxFrames / 3;
-
-        if (currentGeneralFrame % moduloDivider < moduloDivider / 2) {
-            this.displayText("Press enter to restart", this.canvasWidth / 2, this.canvasHeight / 2 + 64 + extraPadding, WorldDataHandler.fontSize - 5, textColor);
-        }
-        if (Controller.enter && !PauseHandler.restartedGame) {
-            PauseHandler.restartedGame = true;
-            PauseHandler.currentRestartGameFrameCounter = PauseHandler.restartGameMaxFrames;
-            SoundHandler.guiSelect.stopAndPlay();
-            SoundHandler.currentSong && SoundHandler.setVolume(SoundHandler.currentSong, 0.3);
-        }
-        PauseHandler.handleRestart();
     }
 
     static displayText(text = "", xPos, yPos, size = 30, color = "white", alignPos = "center") {

@@ -850,6 +850,7 @@
         <script src="handlers/WorldDataHandler.js"></script>
         <script src="handlers/TileMapHandler.js"></script>
         <script src="handlers/EventHandler.js"></script>
+        <script src="handlers/StartEndScreenHandler.js"></script>
         <script src="Controller.js"></script>
         <script src="Player.js"></script>
         <script src="PlayLoop/PlayMode.js"></script>
@@ -1041,12 +1042,12 @@
                 tileMapHandler.displayLevel();
                 if (tileMapHandler.currentLevel === 0) {
                     PlayMode.runStartScreenLogic();
-                    Display.displayStartScreen(tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
+                    StartEndScreenHandler.displayStartScreen(tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
                 }
                 else if (tileMapHandler.currentLevel === WorldDataHandler.levels.length - 1) {
                     player.x = 0;
                     player.y = 0;
-                    Display.displayEndingScreen(spriteCanvas, tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
+                    StartEndScreenHandler.displayEndingScreen(spriteCanvas, tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
                 }
                 else {
                     player.draw();
@@ -1077,11 +1078,11 @@
                     Controller.handleGamepadInput();
                     if (tileMapHandler.currentLevel === 0) {
                         PlayMode.runStartScreenLogic();
-                        Display.displayStartScreen(tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
+                        StartEndScreenHandler.displayStartScreen(tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
                         EffectsRenderer.displayEffects(1);
                     }
                     else if (tileMapHandler.currentLevel === WorldDataHandler.levels.length - 1) {
-                        Display.displayEndingScreen(spriteCanvas, tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
+                        StartEndScreenHandler.displayEndingScreen(spriteCanvas, tileMapHandler.currentGeneralFrameCounter, tileMapHandler.generalFrameCounterMax);
                         EffectsRenderer.displayEffects(1);
                     }
                     else {
@@ -1126,7 +1127,7 @@
                 }
                 else {
                     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-                    Display.displayLoadingScreen(loadedAssets, SoundHandler.sounds.length);
+                    StartEndScreenHandler.displayLoadingScreen(loadedAssets, SoundHandler.sounds.length);
                     window.requestAnimationFrame(loading);
                 }
             }
