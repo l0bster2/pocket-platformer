@@ -15,6 +15,11 @@ class SoundHandlerRenderer {
 
     static startSound(key) {
         SoundHandler[key].stopAndPlay();
+        if (key === "dialogueSound") {
+            setTimeout(() => {
+                SoundHandler[key].stop();
+            }, "2000");
+        }
     }
 
     static startMusic(key) {
@@ -81,7 +86,7 @@ class SoundHandlerRenderer {
         element.remove();
         //SoundHandler.sounds[soundIndex].value = "";
         WorldDataHandler.levels.forEach(level => {
-            if(level.song === key) {
+            if (level.song === key) {
                 level.song = null;
             }
         })
@@ -102,7 +107,7 @@ class SoundHandlerRenderer {
         const musicOnly = SoundHandler.sounds.filter(sound => sound.type === 'music');
         musicOnly.forEach(music => {
             const songElementWithSameIndex = document.getElementById(`musicLevelChecked${index}${music.key}`);
-            if(songElementWithSameIndex && songElementWithSameIndex.getAttribute('data-song') !== soundKey) {
+            if (songElementWithSameIndex && songElementWithSameIndex.getAttribute('data-song') !== soundKey) {
                 songElementWithSameIndex.checked = false;
                 WorldDataHandler.levels[index].song = null;
             }
@@ -167,7 +172,7 @@ class SoundHandlerRenderer {
 
     static createSoundControls(sound) {
         let extraClass = "";
-        if(sound.key === "custom1") {
+        if (sound.key === "custom1") {
             extraClass = "subSection paddingTop8 ";
         }
 
