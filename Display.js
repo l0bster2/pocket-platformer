@@ -172,56 +172,43 @@ class Display {
         this.ctx.fillText(text, xPos, yPos);
     }
 
-    static displaySpecialText(
-        text = "",
-        xPos,
-        yPos,
-        {
-            size = 30,
-            color = "white",
-            align = "center",
-            outlineColor = null,
-            outlineWidth = 0,
-            shadowColor = null,
-            shadowSize = 0,
-            shadowDirection = "s" // n, ne, e, se, s, sw, w, nw
-        } = {}
-    ) {
-        this.ctx.save();
-        this.ctx.font = size + "px " + WorldDataHandler.selectedFont;
-        this.ctx.textAlign = align;
-        this.ctx.fillStyle = color;
+    static drawStyledChar(ctx, char, x, y, {
+        size,
+        color,
+        outlineColor,
+        outlineWidth,
+        shadowColor,
+        shadowSize,
+        shadowDirection
+    }) {
+        ctx.save();
 
-        let shadowX = 0, shadowY = 0;
-
-        switch (shadowDirection) {
-            case "n": shadowY = -shadowSize; break;
-            case "ne": shadowX = shadowSize; shadowY = -shadowSize; break;
-            case "e": shadowX = shadowSize; break;
-            case "se": shadowX = shadowSize; shadowY = shadowSize; break;
-            case "s": shadowY = shadowSize; break;
-            case "sw": shadowX = -shadowSize; shadowY = shadowSize; break;
-            case "w": shadowX = -shadowSize; break;
-            case "nw": shadowX = -shadowSize; shadowY = -shadowSize; break;
-        }
+        ctx.font = `${size}px ${WorldDataHandler.selectedFont}`;
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "left";
 
         if (shadowSize > 0) {
-            this.ctx.shadowColor = shadowColor ?? "black";
-            this.ctx.shadowOffsetX = shadowX;
-            this.ctx.shadowOffsetY = shadowY;
+            const dirs = {
+                n: [0, -1], ne: [1, -1], e: [1, 0], se: [1, 1],
+                s: [0, 1], sw: [-1, 1], w: [-1, 0], nw: [-1, -1]
+            };
+            const d = dirs[shadowDirection.toLowerCase()] ?? [0, 1];
+            ctx.shadowColor = shadowColor ?? "black";
+            ctx.shadowOffsetX = d[0] * shadowSize;
+            ctx.shadowOffsetY = d[1] * shadowSize;
         }
 
         if (outlineColor && outlineWidth > 0) {
-            this.ctx.strokeStyle = outlineColor;
-            this.ctx.lineWidth = outlineWidth;
-            this.ctx.strokeText(text, xPos, yPos);
+            ctx.lineWidth = outlineWidth;
+            ctx.strokeStyle = outlineColor;
+            ctx.strokeText(char, x, y);
         }
 
-        this.ctx.fillStyle = color;
-        this.ctx.fillText(text, xPos, yPos);
-        this.ctx.restore();
-    }
+        ctx.fillStyle = color;
+        ctx.fillText(char, x, y);
 
+        ctx.restore();
+    }
 
     static explodeSprite(img, sx, sy, objectSize, x, y, offSet, radians) {
         const halfTileSize = objectSize / 2;

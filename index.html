@@ -851,6 +851,7 @@
         <script src="handlers/TileMapHandler.js"></script>
         <script src="handlers/EventHandler.js"></script>
         <script src="handlers/StartEndScreenHandler.js"></script>
+        <script src="handlers/TextAnimationHandler.js"></script>
         <script src="Controller.js"></script>
         <script src="Player.js"></script>
         <script src="PlayLoop/PlayMode.js"></script>
@@ -1014,7 +1015,8 @@
             EffectsRenderer.staticConstructor(tileMapHandler);
             tileMapHandler.resetLevel(startLevel)
             TransitionAnimations.staticConstructor();
-
+            TextAnimationHandler.staticConstructor();
+            
             //startRemoval 
             BuildMode.staticConstructor(tileMapHandler, player);
             PathBuildHandler.staticConstructor(tileMapHandler);

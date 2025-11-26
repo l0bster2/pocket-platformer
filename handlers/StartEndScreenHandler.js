@@ -20,6 +20,16 @@ class StartEndScreenHandler {
             Display.displayWobblyText(WorldDataHandler.gamesName.replace('wobbly:', ''), Display.canvasWidth / 2, Display.canvasHeight / 2, 30, currentGeneralFrame, 95, textColor);
         }
         else {
+            TextAnimationHandler.drawAnimatedText("wavy", ctx, "HELLO!", 400, 200, currentGeneralFrame, {
+                size: 42,
+                color: "white",
+                outlineColor: "black",
+                outlineWidth: 4,
+                shadowColor: "grey",
+                shadowSize: 4,
+                shadowDirection: "se",
+                lineHeight: 48
+            });
             Display.displayText(WorldDataHandler.gamesName, Display.canvasWidth / 2, Display.canvasHeight / 2, WorldDataHandler.fontSize + 13, textColor);
         }
         var moduloDivider = maxFrames / 3;
