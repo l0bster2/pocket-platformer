@@ -2584,6 +2584,7 @@ class SpritePixelArrays {
     this.ENEMY_1_IDLE = {
       name: ObjectTypes.ENEMY_1,
       maxHeight: 16,
+      multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
       descriptiveName: "Enemy 1 Idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
@@ -2600,6 +2601,41 @@ class SpritePixelArrays {
             ["713900", "713900", "713900", "713900", "713900", "713900", "713900", "713900"]
           ]
       },
+      ]
+    };
+
+    this.ENEMY_1_WALK = {
+      name: ObjectTypes.ENEMY_1,
+      maxHeight: 16,
+      multipleSprites: true,
+      descriptiveName: "Enemy 1 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "transp"],
+            ["FF8E1C", "FFFFFF", "FFFFFF", "FF8E1C", "FFFFFF", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "000000", "FFFFFF", "FF8E1C", "000000", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "000000", "FFFFFF", "FF8E1C", "000000", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C"],
+            ["transp", "713900", "713900", "transp", "transp", "713900", "713900", "transp"],
+            ["transp", "713900", "713900", "713900", "transp", "713900", "713900", "713900"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "transp"],
+            ["FF8E1C", "FFFFFF", "FFFFFF", "FF8E1C", "FFFFFF", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "000000", "FFFFFF", "FF8E1C", "000000", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "000000", "FFFFFF", "FF8E1C", "000000", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C"],
+            ["transp", "713900", "713900", "transp", "transp", "713900", "713900", "transp"],
+            ["713900", "713900", "713900", "transp", "713900", "713900", "713900", "transp"]
+          ]
+      }
       ]
     };
 

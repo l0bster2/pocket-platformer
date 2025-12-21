@@ -293,6 +293,17 @@ class DrawSectionHandler {
         if (sprite.description) {
             this.spriteDescriptionWrapper.innerHTML = sprite.description;
         }
+        else if (sprite.multipleSprites) {
+            this.spriteDescriptionWrapper.innerHTML = sprite.description || "";
+            const filteredSprites = SpritePixelArrays.allSprites.filter((s) => s.name === sprite.name);
+            filteredSprites.forEach(es => {
+                this.spriteDescriptionWrapper.innerHTML +=
+                    `<div class="marginTop8"><span class="textAsLink"
+            onclick="DrawSectionHandler.changeSelectedSprite({ target: { value: '${es.descriptiveName}' } }, true)">
+            ${es.descriptiveName}
+        </span></div>`;
+            });
+        }
         else if (sprite.type === SpritePixelArrays.SPRITE_TYPES.deko) {
             this.spriteDescriptionWrapper.innerHTML = "Just a decorational Element";
         }
