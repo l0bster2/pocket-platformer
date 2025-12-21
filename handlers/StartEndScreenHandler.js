@@ -16,22 +16,32 @@ class StartEndScreenHandler {
     static displayStartScreen(currentGeneralFrame, maxFrames) {
         PlayMode.updateGeneralFrameCounter();
         const textColor = "#" + WorldDataHandler.textColor;
-        if (WorldDataHandler.gamesName.includes("wobbly:")) {
-            Display.displayWobblyText(WorldDataHandler.gamesName.replace('wobbly:', ''), Display.canvasWidth / 2, Display.canvasHeight / 2, 30, currentGeneralFrame, 95, textColor);
+        const textAnimationOptions = {
+            size: WorldDataHandler.fontSize + 13,
+            color: textColor,
+            outlineColor: "grey",
+            outlineWidth: 4,
+            shadowColor: "grey",
+            shadowSize: 4,
+            shadowDirection: "se",
+            lineHeight: 48,
+            duration: 40,
+            amplitude: 0.35,
+        };
+        switch (WorldDataHandler.textAnimation) {
+            case "wavy":
+                TextAnimationHandler.drawAnimatedText("wavy", Display.ctx, WorldDataHandler.gamesName, Display.canvasWidth / 2, Display.canvasHeight / 2, currentGeneralFrame, textAnimationOptions);
+                break;
+            case "bounce":
+                TextAnimationHandler.drawAnimatedText("bounce", Display.ctx, WorldDataHandler.gamesName, Display.canvasWidth / 2, Display.canvasHeight / 2, currentGeneralFrame, textAnimationOptions);
+                break;
+            case "typewriter":
+                TextAnimationHandler.drawAnimatedText("typewriter", Display.ctx, WorldDataHandler.gamesName, Display.canvasWidth / 2, Display.canvasHeight / 2, currentGeneralFrame, textAnimationOptions);
+                break;
+            default:
+                Display.displayText(WorldDataHandler.gamesName, Display.canvasWidth / 2, Display.canvasHeight / 2, WorldDataHandler.fontSize + 13, textColor);
         }
-        else {
-            TextAnimationHandler.drawAnimatedText("wavy", ctx, "HELLO!", 400, 200, currentGeneralFrame, {
-                size: 42,
-                color: "white",
-                outlineColor: "black",
-                outlineWidth: 4,
-                shadowColor: "grey",
-                shadowSize: 4,
-                shadowDirection: "se",
-                lineHeight: 48
-            });
-            Display.displayText(WorldDataHandler.gamesName, Display.canvasWidth / 2, Display.canvasHeight / 2, WorldDataHandler.fontSize + 13, textColor);
-        }
+
         var moduloDivider = maxFrames / 3;
         if (currentGeneralFrame % moduloDivider < moduloDivider / 2) {
             Display.displayText("Press enter to continue", Display.canvasWidth / 2, Display.canvasHeight / 2 + 40, WorldDataHandler.fontSize + 1, textColor);

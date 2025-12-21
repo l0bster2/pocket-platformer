@@ -23,9 +23,14 @@ class WorldDataHandler {
         this.backgroundImageScrollSpeed = 0.2;
         this.textColor = 'ffffff';
         this.effects = [];
+        this.resetFontParameters();
+    }
+
+    static resetFontParameters() {
         this.fontSize = 17;
         this.selectedFont = "DotGothic16";
         this.customFont = null;
+        this.textAnimation = "static";
     }
 
     static createNewGame() {

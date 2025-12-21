@@ -185,7 +185,7 @@ class Display {
 
         ctx.font = `${size}px ${WorldDataHandler.selectedFont}`;
         ctx.textBaseline = "middle";
-        ctx.textAlign = "left";
+        ctx.textAlign = "center";
 
         if (shadowSize > 0) {
             const dirs = {
