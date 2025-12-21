@@ -486,6 +486,7 @@ class DrawSectionHandler {
         const color = Controller.mousePressed ? this.currentColor : "transp";
         const colorChanged = sprite.animation[animationFrame].sprite[posInArray.y][posInArray.x] != color;
         sprite.animation[animationFrame].sprite[posInArray.y][posInArray.x] = color;
+
         if (colorChanged) {
             Helpers.debounce(() => {
                 this.redrawOutsideCanvases();

@@ -2581,6 +2581,28 @@ class SpritePixelArrays {
       ]
     };
 
+    this.ENEMY_1_IDLE = {
+      name: ObjectTypes.ENEMY_1,
+      maxHeight: 16,
+      type: this.SPRITE_TYPES.enemies,
+      descriptiveName: "Enemy 1 Idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "transp"],
+            ["FF8E1C", "FFFFFF", "FFFFFF", "FF8E1C", "FFFFFF", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "000000", "FFFFFF", "FF8E1C", "000000", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "000000", "FFFFFF", "FF8E1C", "000000", "FFFFFF", "FF8E1C", "FF8E1C"],
+            ["FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C"],
+            ["transp", "713900", "713900", "transp", "transp", "713900", "713900", "transp"],
+            ["713900", "713900", "713900", "713900", "713900", "713900", "713900", "713900"]
+          ]
+      },
+      ]
+    };
+
     this.allSprites = [];
 
     this.fillAllSprites = () => {
@@ -2616,7 +2638,8 @@ class SpritePixelArrays {
     return {
       tile: "tiles",
       object: "objects",
-      deko: "deco"
+      deko: "deco",
+      enemies: "enemies",
     }
   }
 

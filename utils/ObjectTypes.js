@@ -187,6 +187,10 @@ class ObjectTypes {
     return 'imageInGame';
   }
 
+  static get ENEMY_1() {
+    return 'enemy1';
+  }
+
   static get SPECIAL_BLOCK_VALUES() {
     return {
       canon: 14,
@@ -238,7 +242,8 @@ class ObjectTypes {
       [this.TOGGLE_MINE]: ToggleMine,
       [this.ROCKET_LAUNCHER]: RocketLauncher,
       [this.PORTAL]: Portal,
-      [this.COLLECTIBLE]: Collectible
+      [this.COLLECTIBLE]: Collectible,
+      [this.ENEMY_1]: Enemy1,
     };
   }
 }

@@ -102,6 +102,10 @@
                             <img src="images/icons/deko.svg" alt="deko" width="16" height="16">
                         </button>
                         <button class="levelNavigationButton tabButton"
+                            onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.enemies)">
+                            <img src="images/icons/skull.svg" alt="deko" width="16" height="16">
+                        </button>
+                        <button class="levelNavigationButton tabButton"
                             onclick="TabNavigation.changeTab(event, SpritePixelArrays.customType)">
                             <img src="images/icons/plus.svg" alt="custom" width="16" height="16" style="width: 55%;">
                         </button>
@@ -904,6 +908,7 @@
         <script src="objects/TriggeredPlatform.js"></script>
         <script src="objects/EventTrigger.js"></script>
         <script src="objects/ImageInGame.js"></script>
+        <script src="enemies/Enemy1.js"></script>
         <script src="SpriteSheetCreator.js"></script>
         <script src="utils/ObjectTypes.js"></script>
         <script src="ImportExport.js"></script>
@@ -1016,7 +1021,7 @@
             tileMapHandler.resetLevel(startLevel)
             TransitionAnimations.staticConstructor();
             TextAnimationHandler.staticConstructor();
-            
+
             //startRemoval 
             BuildMode.staticConstructor(tileMapHandler, player);
             PathBuildHandler.staticConstructor(tileMapHandler);

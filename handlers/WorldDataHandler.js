@@ -78,6 +78,7 @@ class WorldDataHandler {
             levelObjects: [],
             deko: [],
             paths: [],
+            enemies: [],
             backgroundColor: "transp",
             zoomFactor: 1,
             song: null,
@@ -87,7 +88,9 @@ class WorldDataHandler {
     }
 
     static createDemoLevel() {
-        return MathHelpers.getRandomItemFromArray(allDemoLevels);
+        const demoLevel = MathHelpers.getRandomItemFromArray(allDemoLevels);
+        demoLevel.enemies = [];
+        return demoLevel;
     }
 
     static exampleLevel(withDefaultImage = false) {
@@ -109,6 +112,7 @@ class WorldDataHandler {
             levelObjects: levelObjects,
             deko: [],
             paths: [],
+            enemies: [],
             backgroundColor: "transp",
             zoomFactor: 1,
             song: null,

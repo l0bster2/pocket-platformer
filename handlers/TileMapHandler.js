@@ -52,6 +52,7 @@ class TileMapHandler {
         this.levelObjects = [];
         this.levelObjects = this.createInitialObjects(WorldDataHandler.levels[levelIndex].levelObjects);
         this.deko = this.createInitialDeko(WorldDataHandler.levels[levelIndex].deko);
+        this.enemies = this.createInitialObjects(WorldDataHandler.levels[levelIndex].enemies);
         this.paths = this.createInitialPaths(WorldDataHandler.levels[levelIndex].paths);
         this.effects = EffectsHandler.getCurrentLevelEffects(this.currentLevel);
         this.currentGeneralFrameCounter = 0;
@@ -220,8 +221,14 @@ class TileMapHandler {
         if (isPlayMode || LayerHandler.tileLayer) {
             this.displayStaticTiles();
         }
+        // enemies
+        this.displayObjects(this.enemies);
         // projectiles
         this.displayObjects(this.layers[4]);
+    }
+
+    displayEnemies(enemies) {
+
     }
 
     splitLevelObjectsInLayers() {
