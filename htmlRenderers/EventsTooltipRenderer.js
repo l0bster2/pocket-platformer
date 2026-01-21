@@ -215,6 +215,15 @@ class EventsTooltipRenderer {
         `
     }
 
+    static renderUrlAttributes(event = null) {
+        return `
+                <div>
+                    <label for="url">URL to open:</label>
+                    <input id="url" required type="url" value="${event?.url || 'about:blank'}" />
+                </div>
+        `
+    }
+
     static renderAddEventButton(currentObject) {
         const button = document.createElement("button");
         button.className = "fullWidth levelNavigationButton";
