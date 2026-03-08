@@ -15,6 +15,10 @@ class CharacterCollision {
 
     static checkCollisionsWithWorld(obj, cornerCorrection = false) {
         this.checkHazardsCollision(obj);
+        this.checkFloorAndTileCollision(obj, cornerCorrection);
+    }
+
+    static checkFloorAndTileCollision(obj, cornerCorrection = false) {
         this.groundUnderFeet(obj);
         obj.xspeed += obj.bonusSpeedX;
         obj.yspeed += obj.bonusSpeedY;
@@ -159,7 +163,7 @@ class CharacterCollision {
             (Collision.pointAndObjectColliding(obj.bottom_right_pos, hitBox) ||
                 Collision.pointAndObjectColliding(obj.bottom_left_pos, hitBox))
         ) {
-        obj.hitBottom(true);
+            obj.hitBottom(true);
             obj.y = movingPlatform.y - obj.height;
             obj.movingPlatformKey = movingPlatform.key;
             obj.onMovingPlatform = true;
@@ -193,7 +197,7 @@ class CharacterCollision {
 
     static groundUnderFeet(obj) {
         const left_foot_x = this.tileMapHandler.getTileValueForPosition(obj.x);
-        const extra_bottom_foot_pos_x = obj.extraBottomPointsX.map(extraPos => 
+        const extra_bottom_foot_pos_x = obj.extraBottomPointsX.map(extraPos =>
             this.tileMapHandler.getTileValueForPosition(extraPos)
         );
         const right_foot_x = this.tileMapHandler.getTileValueForPosition(obj.x + obj.width);
@@ -232,6 +236,7 @@ class CharacterCollision {
                     obj.falling = false;
                     this.setSolidGroundPhysics(obj);
                 }
+
                 break;
             case 5:
                 if (obj.yspeed < 0 &&
@@ -298,11 +303,11 @@ class CharacterCollision {
 
     static checkForExtraEdges(obj) {
         obj.extraLeftPoints = [];
-        obj.extraSidePointsY = []; 
+        obj.extraSidePointsY = [];
         obj.extraRightPoints = [];
 
-        if(obj.extraHeightPoints) {
-            for(var i = 1; i < obj.extraHeightPoints + 1; i++) {
+        if (obj.extraHeightPoints) {
+            for (var i = 1; i < obj.extraHeightPoints + 1; i++) {
                 const extraTop = obj.top_left_pos.y + obj.heightForExtraColissionPoints * i;
                 obj.extraSidePointsY.push(extraTop);
                 const extraLeftTilePosY = tileMapHandler.getTileValueForPosition(extraTop);
@@ -317,8 +322,8 @@ class CharacterCollision {
         obj.extraBottomPointsX = [];
         obj.extraTopPoints = [];
 
-        if(obj.extraWidthPoints) {
-            for(var i = 1; i < obj.extraWidthPoints + 1; i++) {
+        if (obj.extraWidthPoints) {
+            for (var i = 1; i < obj.extraWidthPoints + 1; i++) {
                 const extraLeft = obj.top_left_pos.x + obj.widthForExtraColissionPoints * i;
                 obj.extraBottomPointsX.push(extraLeft);
                 const extraTopTilePosX = tileMapHandler.getTileValueForPosition(extraLeft);
