@@ -43,7 +43,7 @@ class PlayMode {
             var walking = WalkHandler.walkHandler();
             FallHandler.coyoteFrameHandler();
             JumpHandler.wallJumpAllowedHandler();
-            player.forcedJumpSpeed !== 0 && JumpHandler.performJump(player.forcedJumpSpeed, player.maxJumpFrames + player.extraTrampolineJumpFrames);
+            player.forcedJumpSpeed !== 0 && JumpHandler.performJump(player, player.forcedJumpSpeed, player.maxJumpFrames + player.extraTrampolineJumpFrames);
             AlternativeActionHandler.dashHandler();
             Controller.alternativeActionButtonReleased = Controller.alternativeActionButton ? false : true;
             JumpHandler.jumpHandler();
@@ -113,6 +113,8 @@ class PlayMode {
         this.player.resetAttributes();
         GameStatistics.deathCounter++;
         tileMapHandler.currentGeneralFrameCounter = 0;
+        tileMapHandler.enemies.length = 0;
+        tileMapHandler.enemies = tileMapHandler.createInitialObjects(WorldDataHandler.levels[tileMapHandler.currentLevel].enemies);
     }
 
     static checkActiveCheckPoints() {

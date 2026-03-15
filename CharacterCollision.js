@@ -8,7 +8,7 @@ class CharacterCollision {
     static checkHazardsCollision(obj) {
         this.tileMapHandler.levelObjects.forEach(levelObject => {
             if (levelObject.colissionFunction(obj, levelObject)) {
-                levelObject.collisionEvent();
+                levelObject.collisionEvent(obj);
             }
         });
     }

@@ -39,19 +39,19 @@ class JumpHandler extends PlayMode {
         }
     }
 
-    static performJump(jumpSpeed, maxFrames) {
-        player.jumpframes++;
-        if(player.bonusSpeedY > 0 || player.jumpframes > 2) {
-            player.bonusSpeedY = 0;
+    static performJump(obj, jumpSpeed, maxFrames) {
+        obj.jumpframes++;
+        if(obj.bonusSpeedY > 0 || obj.jumpframes > 2) {
+            obj.bonusSpeedY = 0;
         }
 
-        var currentJumpSpeed = -(maxFrames - player.jumpframes) * jumpSpeed;
+        var currentJumpSpeed = -(maxFrames - obj.jumpframes) * jumpSpeed;
         if (currentJumpSpeed !== 0) {
             //easing: currentJumpSpeed * currentJumpSpeed * -1 (and jumpspeed much smaller)
-            player.yspeed = currentJumpSpeed;
+            obj.yspeed = currentJumpSpeed;
         }
-        if (this.player.forcedJumpSpeed !== 0 && this.player.jumpframes >= maxFrames) {
-            this.player.forcedJumpSpeed = 0;
+        if (obj.forcedJumpSpeed !== 0 && obj.jumpframes >= maxFrames) {
+            obj.forcedJumpSpeed = 0;
         }
     }
 
@@ -92,7 +92,7 @@ class JumpHandler extends PlayMode {
                 this.checkMomentumBasedBonusSpeed(player);
                 tileMapHandler.changeJumpSwitchBlockType();
             }
-            this.performJump(player.jumpSpeed, player.maxJumpFrames);
+            this.performJump(player, player.jumpSpeed, player.maxJumpFrames);
             player.jumping = true;
         }
         if (player.jumpframes === player.maxJumpFrames && player.yspeed <= 0) {

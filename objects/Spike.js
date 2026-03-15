@@ -5,7 +5,12 @@ class Spike extends InteractiveLevelObject {
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
     }
 
-    collisionEvent() {
-        PlayMode.playerDeath();
+    collisionEvent(obj) {
+        if(obj.type === "player") {
+            PlayMode.playerDeath();
+        }
+        else {
+            obj.death();
+        }
     }
 }

@@ -1,18 +1,13 @@
 class Enemy extends InteractiveLevelObject {
     constructor(x, y, tileSize, type, hitBoxOffset, extraAttributes) {
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
+        this.key = this.makeid(5);
 
         // size
         this.width = tileSize - 2
         this.height = tileSize - 1
         this.heightOffset = 3
         this.hitBoxOffset = 0
-
-        // velocity
-        this.xspeed = 0
-        this.yspeed = 0
-        this.bonusSpeedX = 0
-        this.bonusSpeedY = 0
 
         // physics
         this.speed = 0
@@ -27,6 +22,7 @@ class Enemy extends InteractiveLevelObject {
         this.friction = this.air_friction
         this.forcedJumpSpeed = 0;
         this.fixedSpeed = false;
+        this.jumpSpeed = 0.44;
 
         // gravity
         this.gravity = 0.5
@@ -39,6 +35,7 @@ class Enemy extends InteractiveLevelObject {
         this.jumpframes = 0
         this.maxJumpFrames = 18
         this.jumpPressedToTheMax = true
+        this.extraTrampolineJumpFrames = 3;
 
         // states
         this.falling = true
@@ -85,10 +82,6 @@ class Enemy extends InteractiveLevelObject {
         this.extraSidePointsY = []
         this.extraBottomPointsX = []
 
-        // wall jump compatibility
-        this.wallJumpChecked = false
-        this.powerUpWallJumpChecked = false
-
         // trampoline
         this.previouslyTouchedTrampolines = false;
         this.walkDirections = {
@@ -96,8 +89,29 @@ class Enemy extends InteractiveLevelObject {
             right: "right",
             none: "none",
         }
+        this.interativeObjects = [
+            ObjectTypes.SPIKE,
+            ObjectTypes.TRAMPOLINE,
+            ObjectTypes.PORTAL,
+            ObjectTypes.MOVING_PLATFORM
+        ];
+
+        this.resetObject();
     }
 
+    resetObject() {
+        this.x = this.initialX * this.tileSize;
+        this.y = this.initialY * this.tileSize;
+        this.resetSpeed();
+    }
+
+    resetSpeed() {
+        // velocity
+        this.xspeed = 0
+        this.yspeed = 0
+        this.bonusSpeedX = 0
+        this.bonusSpeedY = 0
+    }
 
     hitWall(direction) {
         switch (direction) {
@@ -199,6 +213,20 @@ class Enemy extends InteractiveLevelObject {
         }
     }
 
+    slowDownBonusSpeedX() {
+        this.bonusSpeedX *= 0.95;
+        if (Math.abs(this.bonusSpeedX) < 0.3) {
+            this.bonusSpeedX = 0;
+        }
+    }
+
+    slowDownBonusSpeedY() {
+        this.bonusSpeedY *= 0.95;
+        if (Math.abs(this.bonusSpeedY) < 0.3) {
+            this.bonusSpeedY = 0;
+        }
+    }
+
     fallHandler() {
         if (this.falling && !this.fixedSpeed) {
             //If jump is not enforced by trampoline
@@ -217,7 +245,38 @@ class Enemy extends InteractiveLevelObject {
         }
     }
 
+    setStretchAnimation() {
+        
+    }
+
+    checkHazardCollisions() {
+        tileMapHandler.levelObjects.forEach(levelObject => {
+            if (this.interativeObjects.includes(levelObject.type)) {
+                if (levelObject.colissionFunction(this, levelObject)) {
+                    levelObject.collisionEvent(this);
+                }
+            }
+        })
+    }
+
+        //for now it's used for bullets (canonballs and rockets), which can be deleted during game-time
+    deleteEnemyFromLevel(tilemapHandler, showSfx = true) {
+        showSfx && SFXHandler.createSFX(this.x, this.y, 1)
+        for (var i = tilemapHandler.enemies.length - 1; i >= 0; i--) {
+            var levelObject = tilemapHandler.enemies[i];
+            if (this.key === levelObject.key && levelObject.initialX === this.initialX && levelObject.initialY === this.initialY && levelObject.type === this.type) {
+                tilemapHandler.enemies.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    death() {
+        this.deleteEnemyFromLevel(tileMapHandler, true);
+    }
+
     draw(spriteCanvas) {
+        this.checkHazardCollisions();
         super.draw(spriteCanvas);
     }
 }

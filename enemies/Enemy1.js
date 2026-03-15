@@ -23,6 +23,7 @@ class Enemy1 extends Enemy {
         super.draw(spriteCanvas);
         if (Game.playMode === Game.PLAY_MODE) {
             super.walkHandler();
+            this.forcedJumpSpeed !== 0 && JumpHandler.performJump(this, this.forcedJumpSpeed, this.maxJumpFrames + this.extraTrampolineJumpFrames);
             super.fallHandler();
             super.correctMaxYSpeed();
             CharacterCollision.checkFloorAndTileCollision(this, false);

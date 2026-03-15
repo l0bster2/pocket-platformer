@@ -154,6 +154,7 @@ class Player {
         this.invisible = false;
         this.fixedSpeed = false;
         this.onIce = false;
+        this.touchedTrampoline = false;
         this.temporaryDoubleJump = false;
         this.currentTrailFrame = 0;
         this.movingPlatformKey = null;
