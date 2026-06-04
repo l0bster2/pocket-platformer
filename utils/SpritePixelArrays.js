@@ -2674,6 +2674,99 @@ class SpritePixelArrays {
       ]
     };
 
+    this.ENEMY_2_IDLE = {
+      name: ObjectTypes.ENEMY_2,
+      maxHeight: 16,
+      multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies,
+      descriptiveName: "Enemy 2 Idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "transp"],
+            ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF"],
+            ["transp", "2E0854", "2E0854", "transp", "transp", "2E0854", "2E0854", "transp"],
+            ["2E0854", "2E0854", "2E0854", "2E0854", "2E0854", "2E0854", "2E0854", "2E0854"]
+          ]
+      }
+      ]
+    };
+
+    this.ENEMY_2_WALK = {
+      name: ObjectTypes.ENEMY_2,
+      maxHeight: 16,
+      multipleSprites: true,
+      descriptiveName: "Enemy 2 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "transp"],
+            ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF"],
+            ["transp", "2E0854", "2E0854", "transp", "transp", "2E0854", "2E0854", "transp"],
+            ["transp", "2E0854", "2E0854", "2E0854", "transp", "2E0854", "2E0854", "2E0854"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "transp"],
+            ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF"],
+            ["transp", "2E0854", "2E0854", "transp", "transp", "2E0854", "2E0854", "transp"],
+            ["2E0854", "2E0854", "2E0854", "transp", "2E0854", "2E0854", "2E0854", "transp"]
+          ]
+      }
+      ]
+    };
+
+    this.ENEMY_2_JUMP = {
+      name: ObjectTypes.ENEMY_2,
+      maxHeight: 16,
+      multipleSprites: true,
+      descriptiveName: "Enemy 2 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "6B4EFF"],
+            ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "transp"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF"],
+            ["transp", "2E0854", "2E0854", "transp", "transp", "2E0854", "2E0854", "transp"],
+            ["transp", "2E0854", "2E0854", "2E0854", "transp", "2E0854", "2E0854", "2E0854"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "6B4EFF"],
+            ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "transp"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
+            ["6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF"],
+            ["transp", "2E0854", "2E0854", "transp", "transp", "2E0854", "2E0854", "transp"],
+            ["2E0854", "2E0854", "2E0854", "transp", "2E0854", "2E0854", "2E0854", "transp"]
+          ]
+      }
+      ]
+    };
+
     this.allSprites = [];
 
     this.fillAllSprites = () => {

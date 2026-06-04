@@ -102,7 +102,35 @@ class Enemy extends InteractiveLevelObject {
         this.jumpTimer = 0;
         this.jumpIntervalFrames = 120; // Jump every 2 seconds at 60 FPS
         
+        // animation
+        this.currentAnimationIndex = 0;
+        this.currentSpriteIndex = 0; // Index within spriteObject array
+        this.animationLengths = this.initializeAnimationLengths();
+        this.facingDirection = AnimationHelper.facingDirections.right;
+        
         this.resetObject();
+    }
+
+    /**
+     * Initialize animation lengths from spriteObject array
+     */
+    initializeAnimationLengths() {
+        const lengths = {};
+        this.spriteObject.forEach((sprite, index) => {
+            if (sprite.animation && sprite.animation.length > 0) {
+                lengths[index] = sprite.animation.length;
+            }
+        });
+        return lengths;
+    }
+
+    /**
+     * Find sprite index by descriptive name
+     */
+    findSpriteIndexByName(searchTerm) {
+        return this.spriteObject.findIndex(sprite => 
+            sprite.descriptiveName && sprite.descriptiveName.toLowerCase().includes(searchTerm.toLowerCase())
+        );
     }
 
     resetObject() {
@@ -294,6 +322,39 @@ class Enemy extends InteractiveLevelObject {
     draw(spriteCanvas) {
         this.checkHazardCollisions();
         EnemyJumpHandler.updateJump(this, this.jumpIntervalFrames);
-        super.draw(spriteCanvas);
+        
+        // Select sprite based on state
+        if (this.jumping || (this.falling && this.yspeed > 0)) {
+            this.currentSpriteIndex = this.findSpriteIndexByName('jump');
+        } else if (this.walking) {
+            this.currentSpriteIndex = this.findSpriteIndexByName('walk');
+        } else {
+            this.currentSpriteIndex = this.findSpriteIndexByName('idle');
+        }
+
+        // Get animation length for current sprite (update dynamically in case it changes)
+        const currentSprite = this.spriteObject[this.currentSpriteIndex];
+        const animationLength = currentSprite && currentSprite.animation ? currentSprite.animation.length : 1;
+        this.animationLengths[this.currentSpriteIndex] = animationLength;
+
+        // Update frame duration (can be tweaked per sprite type)
+        const frameDuration = AnimationHelper.defaultFrameDuration || 6;
+
+        // Increment animation index
+        this.currentAnimationIndex++;
+        if (this.currentAnimationIndex >= frameDuration * animationLength || Game.playMode === Game.BUILD_MODE) {
+            this.currentAnimationIndex = 0;
+        }
+
+        // Calculate which animation frame to display
+        const animationFrameIndex = Math.floor(this.currentAnimationIndex / frameDuration) || 0;
+
+        // Render the animation frame from spriteCanvas
+        const canvasXSpritePos = animationFrameIndex * this.tileSize;
+        const canvasYSpritePos = currentSprite.canvasYPos;
+        
+        Display.drawImage(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
+            this.tileSize, this.tileSize, this.x, this.y, this.tileSize, this.tileSize);
     }
+
 }
