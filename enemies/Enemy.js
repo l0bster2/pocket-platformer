@@ -96,6 +96,12 @@ class Enemy extends InteractiveLevelObject {
             ObjectTypes.MOVING_PLATFORM,
             ObjectTypes.WATER
         ];
+        
+        // jumping
+        this.jumping = false;
+        this.jumpTimer = 0;
+        this.jumpIntervalFrames = 120; // Jump every 2 seconds at 60 FPS
+        
         this.resetObject();
     }
 
@@ -287,6 +293,7 @@ class Enemy extends InteractiveLevelObject {
 
     draw(spriteCanvas) {
         this.checkHazardCollisions();
+        EnemyJumpHandler.updateJump(this, this.jumpIntervalFrames);
         super.draw(spriteCanvas);
     }
 }
