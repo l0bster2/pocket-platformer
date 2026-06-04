@@ -44,7 +44,7 @@ class Portal extends InteractiveLevelObject {
         return otherExit;
     }
 
-    collisionEvent() {
+    collisionEvent(obj) {
         this.touchingPlayer = true;
         if (this.active && !this.touchingOtherPortals()) {
             AnimationHelper.setSquishValues(this, this.tileSize * 1.2,
@@ -53,9 +53,9 @@ class Portal extends InteractiveLevelObject {
             const otherExit = this.findOtherExit();
             if (otherExit) {
                 otherExit.setToInactive();
-                const { player, tileSize } = this.tilemapHandler;
-                this.tilemapHandler.player.x = otherExit.x + 1;
-                this.tilemapHandler.player.y = otherExit.y + tileSize - player.height - 1;
+                const { tileSize } = this.tilemapHandler;
+                obj.x = otherExit.x + 1;
+                obj.y = otherExit.y + tileSize - obj.height - 1;
                 otherExit.touchingPlayer = true;
                 AnimationHelper.setSquishValues(otherExit, tileSize * 1.2,
                     tileSize * 0.8, 5, this.currentFacingDirection);

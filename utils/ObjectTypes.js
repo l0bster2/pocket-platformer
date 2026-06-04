@@ -188,7 +188,7 @@ class ObjectTypes {
   }
 
   static get ENEMY_1() {
-    return 'enemy1';
+    return 'enemy_1';
   }
 
   static get SPECIAL_BLOCK_VALUES() {

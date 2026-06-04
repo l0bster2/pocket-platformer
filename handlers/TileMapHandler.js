@@ -298,6 +298,8 @@ class TileMapHandler {
         }
         this.paths.forEach(path => path.resetObjectsToInitialPosition());
         //Check here if tilemaphandler is missing objects from WorldDataHandler (if somethign was deleted)
+        this.enemies.length = 0;
+        this.enemies = this.createInitialObjects(WorldDataHandler.levels[this.currentLevel].enemies);
     }
 
     filterObjectsByTypes(types) {

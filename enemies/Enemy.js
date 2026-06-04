@@ -93,9 +93,9 @@ class Enemy extends InteractiveLevelObject {
             ObjectTypes.SPIKE,
             ObjectTypes.TRAMPOLINE,
             ObjectTypes.PORTAL,
-            ObjectTypes.MOVING_PLATFORM
+            ObjectTypes.MOVING_PLATFORM,
+            ObjectTypes.WATER
         ];
-
         this.resetObject();
     }
 
@@ -246,20 +246,30 @@ class Enemy extends InteractiveLevelObject {
     }
 
     setStretchAnimation() {
-        
+
     }
 
     checkHazardCollisions() {
+        let touchingWater = false;
         tileMapHandler.levelObjects.forEach(levelObject => {
             if (this.interativeObjects.includes(levelObject.type)) {
                 if (levelObject.colissionFunction(this, levelObject)) {
+                    if (levelObject.type === ObjectTypes.WATER) {
+                        touchingWater = true;
+                    }
                     levelObject.collisionEvent(this);
                 }
             }
-        })
+        });
+
+        if (this.swimming && !touchingWater) {
+            this.swimming = false;
+            this.currentGravity = this.gravity;
+            this.currentMaxFallSpeed = this.maxFallSpeed;
+        }
     }
 
-        //for now it's used for bullets (canonballs and rockets), which can be deleted during game-time
+    //for now it's used for bullets (canonballs and rockets), which can be deleted during game-time
     deleteEnemyFromLevel(tilemapHandler, showSfx = true) {
         showSfx && SFXHandler.createSFX(this.x, this.y, 1)
         for (var i = tilemapHandler.enemies.length - 1; i >= 0; i--) {

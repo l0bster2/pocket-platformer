@@ -5,24 +5,24 @@ class Water extends InteractiveLevelObject {
         this.tilemapHandler = tilemapHandler;
     }
 
-    collisionEvent() {
-        const { player } = this.tilemapHandler;
-        player.currentGravity = player.gravity / 10;
-        player.currentMaxFallSpeed = player.maxWaterFallSpeed;
-        player.swimming = true;
-        player.fixedSpeed = false;
-        player.temporaryDoubleJump = false;
-        player.resetDoubleJump();
-        this.checkExactCornerCollision();
+    collisionEvent(obj) {
+        obj.currentGravity = obj.gravity / 10;
+        obj.currentMaxFallSpeed = obj.maxWaterFallSpeed;
+        obj.swimming = true;
+        obj.fixedSpeed = false;
+        obj.temporaryDoubleJump = false;
+        if(obj.type === "player") {
+            obj.resetDoubleJump();
+        }
+        this.checkExactCornerCollision(obj);
     }
 
-    checkExactCornerCollision() {
-        const { player } = this.tilemapHandler;
+    checkExactCornerCollision(obj) {
         //we need this initial check, because when the game starts, there are no edges yet. we check if one of the edges exists
-        if(player.top_right_pos) {
+        if(obj.top_right_pos) {
             ["top_right_pos", "top_left_pos", "bottom_right_pos", "bottom_left_pos"].forEach(corner => {
-                if(!player[corner + "_in_water"]) {
-                    player[corner + "_in_water"] = Collision.pointAndObjectColliding(player[corner], this);
+                if(!obj[corner + "_in_water"]) {
+                    obj[corner + "_in_water"] = Collision.pointAndObjectColliding(obj[corner], this);
                 }
             });
         }
