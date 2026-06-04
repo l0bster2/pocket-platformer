@@ -2586,7 +2586,7 @@ class SpritePixelArrays {
       maxHeight: 16,
       multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
-      descriptiveName: "Enemy 1 Idle",
+      descriptiveName: "Enemy 1 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:

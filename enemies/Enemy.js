@@ -129,7 +129,7 @@ class Enemy extends InteractiveLevelObject {
      */
     findSpriteIndexByName(searchTerm) {
         return this.spriteObject.findIndex(sprite => 
-            sprite.descriptiveName && sprite.descriptiveName.toLowerCase().includes(searchTerm.toLowerCase())
+            sprite.descriptiveName && sprite.descriptiveName.toLowerCase().includes(searchTerm)
         );
     }
 
@@ -338,7 +338,7 @@ class Enemy extends InteractiveLevelObject {
         this.animationLengths[this.currentSpriteIndex] = animationLength;
 
         // Update frame duration (can be tweaked per sprite type)
-        const frameDuration = AnimationHelper.defaultFrameDuration || 6;
+        const frameDuration = AnimationHelper.defaultFrameDuration;
 
         // Increment animation index
         this.currentAnimationIndex++;
