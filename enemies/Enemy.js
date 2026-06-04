@@ -11,15 +11,6 @@ class Enemy extends InteractiveLevelObject {
 
         // physics
         this.speed = 0
-        this.maxSpeed = 2
-        this.currentMaxSpeed = 2
-
-        this.groundAcceleration = 0.6
-        this.air_acceleration = 0.6
-
-        this.groundFriction = 0.65
-        this.air_friction = 0.75
-        this.friction = this.air_friction
         this.forcedJumpSpeed = 0;
         this.fixedSpeed = false;
         this.jumpSpeed = 0.44;
@@ -101,6 +92,19 @@ class Enemy extends InteractiveLevelObject {
         this.jumping = false;
         this.jumpTimer = 0;
         this.jumpIntervalFrames = 120; // Jump every 2 seconds at 60 FPS
+        
+        // enemy attributes
+        this.lives = 1;
+        this.canBeStomped = false;
+        
+        // movement attributes (editable)
+        this.maxSpeed = 2;
+        this.currentMaxSpeed = 2;
+        this.groundAcceleration = 0.6;
+        this.air_acceleration = 0.6;
+        this.groundFriction = 0.65;
+        this.air_friction = 0.75;
+        this.friction = this.air_friction;
         
         // animation
         this.currentAnimationIndex = 0;
@@ -277,6 +281,38 @@ class Enemy extends InteractiveLevelObject {
     setActivationConditions(activationConfig, inactivationConfig) {
         this.activationConfig = activationConfig;
         this.inactivationConfig = inactivationConfig;
+    }
+
+    /**
+     * Get all editable attributes as an object for export
+     */
+    getEditableAttributes() {
+        return {
+            lives: this.lives,
+            canBeStomped: this.canBeStomped,
+            maxSpeed: this.maxSpeed,
+            groundAcceleration: this.groundAcceleration,
+            air_acceleration: this.air_acceleration,
+            groundFriction: this.groundFriction,
+            air_friction: this.air_friction,
+            activationConfig: this.activationConfig,
+            inactivationConfig: this.inactivationConfig,
+        };
+    }
+
+    /**
+     * Set editable attributes from imported data
+     */
+    setEditableAttributes(attributes) {
+        if (attributes.lives !== undefined) this.lives = attributes.lives;
+        if (attributes.canBeStomped !== undefined) this.canBeStomped = attributes.canBeStomped;
+        if (attributes.maxSpeed !== undefined) this.maxSpeed = attributes.maxSpeed;
+        if (attributes.groundAcceleration !== undefined) this.groundAcceleration = attributes.groundAcceleration;
+        if (attributes.air_acceleration !== undefined) this.air_acceleration = attributes.air_acceleration;
+        if (attributes.groundFriction !== undefined) this.groundFriction = attributes.groundFriction;
+        if (attributes.air_friction !== undefined) this.air_friction = attributes.air_friction;
+        if (attributes.activationConfig !== undefined) this.activationConfig = attributes.activationConfig;
+        if (attributes.inactivationConfig !== undefined) this.inactivationConfig = attributes.inactivationConfig;
     }
 
 }

@@ -75,6 +75,12 @@
                                 style="display: none;" id="imageViewCheckmark">
                         </div>
                     </li>
+                    <li class="dropdown-nav-item" onClick="changeView('enemies')">
+                        <div>Enemies
+                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12"
+                                style="display: none;" id="enemyViewCheckmark">
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -434,6 +440,19 @@
                 <h2 class="sectionHeading">Preview</h2>
                 <div class="sectionContent" id="previewContent">
                     <canvas id="imagePreviewCanvas" class="backgroundImagePreview"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="section" style="display: none;" id="enemyView">
+            <div class="soundSection">
+                <h2 class="sectionHeading">Enemy Attributes</h2>
+                <div class="sectionContent">
+                    <div id="enemiesContent"></div>
+                    <div class="textAsLink marginTop16" onClick="changeView('game')">
+                        <img alt="back" width="14" height="14" class="blue-filter" src="images/icons/left.svg"
+                            class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Back to
+                            game-screen</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -964,6 +983,7 @@
         <script src="htmlRenderers/SoundHandlerRenderer.js"></script>
         <script src="htmlRenderers/EventsTooltipRenderer.js"></script>
         <script src="htmlRenderers/ImageHandlerRenderer.js"></script>
+        <script src="htmlRenderers/EnemiesAttributesRenderer.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/gameScreen.css">
         <link rel="stylesheet" type="text/css" href="styles/buildMenu.css">
         <link rel="stylesheet" type="text/css" href="styles/drawSection.css">
