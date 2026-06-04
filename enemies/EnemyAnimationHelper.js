@@ -1,0 +1,81 @@
+/**
+ * Handles animation updates for enemies
+ */
+class EnemyAnimationHelper {
+    /**
+     * Update animation based on enemy state
+     * @param {Enemy} enemy - The enemy to update animation for
+     * @param {CanvasRenderingContext2D} spriteCanvas - The canvas with sprites
+     */
+    static updateAnimation(enemy, spriteCanvas) {
+        // Select sprite based on state
+        if (enemy.jumping || (enemy.falling && enemy.yspeed > 0)) {
+            enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'jump');
+        } else if (enemy.walking) {
+            enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'walk');
+        } else {
+            enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'idle');
+        }
+
+        // Get animation length for current sprite (update dynamically in case it changes)
+        const currentSprite = enemy.spriteObject[enemy.currentSpriteIndex];
+        const animationLength = currentSprite && currentSprite.animation ? currentSprite.animation.length : 1;
+        enemy.animationLengths[enemy.currentSpriteIndex] = animationLength;
+
+        // Update frame duration (can be tweaked per sprite type)
+        const frameDuration = AnimationHelper.defaultFrameDuration;
+
+        // Increment animation index
+        enemy.currentAnimationIndex++;
+        if (enemy.currentAnimationIndex >= frameDuration * animationLength || Game.playMode === Game.BUILD_MODE) {
+            enemy.currentAnimationIndex = 0;
+        }
+
+        // Calculate which animation frame to display
+        const animationFrameIndex = Math.floor(enemy.currentAnimationIndex / frameDuration) || 0;
+
+        // Render the animation frame
+        this.renderAnimationFrame(enemy, spriteCanvas, animationFrameIndex);
+    }
+
+    /**
+     * Render the current animation frame
+     * @private
+     */
+    static renderAnimationFrame(enemy, spriteCanvas, frameIndex) {
+        const currentSprite = enemy.spriteObject[enemy.currentSpriteIndex];
+        if (!currentSprite) {
+            return;
+        }
+
+        const canvasXSpritePos = frameIndex * enemy.tileSize;
+        const canvasYSpritePos = currentSprite.canvasYPos;
+        
+        Display.drawImage(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
+            enemy.tileSize, enemy.tileSize, enemy.x, enemy.y, enemy.tileSize, enemy.tileSize);
+    }
+
+    /**
+     * Find sprite index by descriptive name
+     * @private
+     */
+    static findSpriteIndexByName(enemy, searchTerm) {
+        return enemy.spriteObject.findIndex(sprite => 
+            sprite.descriptiveName && sprite.descriptiveName.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }
+
+    /**
+     * Initialize animation lengths from spriteObject array
+     * @static
+     */
+    static initializeAnimationLengths(enemy) {
+        const lengths = {};
+        enemy.spriteObject.forEach((sprite, index) => {
+            if (sprite.animation && sprite.animation.length > 0) {
+                lengths[index] = sprite.animation.length;
+            }
+        });
+        return lengths;
+    }
+}

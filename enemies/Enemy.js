@@ -105,32 +105,17 @@ class Enemy extends InteractiveLevelObject {
         // animation
         this.currentAnimationIndex = 0;
         this.currentSpriteIndex = 0; // Index within spriteObject array
-        this.animationLengths = this.initializeAnimationLengths();
+        this.animationLengths = EnemyAnimationHelper.initializeAnimationLengths(this);
         this.facingDirection = AnimationHelper.facingDirections.right;
         
+        // activation system
+        this.isActive = true; // Enemy starts active by default
+        this.activationConfig = null; // Override with activation conditions
+        this.inactivationConfig = null; // Override with inactivation conditions
+        this.activationTimer = 0;
+        this.inactivationTimer = 0;
+        
         this.resetObject();
-    }
-
-    /**
-     * Initialize animation lengths from spriteObject array
-     */
-    initializeAnimationLengths() {
-        const lengths = {};
-        this.spriteObject.forEach((sprite, index) => {
-            if (sprite.animation && sprite.animation.length > 0) {
-                lengths[index] = sprite.animation.length;
-            }
-        });
-        return lengths;
-    }
-
-    /**
-     * Find sprite index by descriptive name
-     */
-    findSpriteIndexByName(searchTerm) {
-        return this.spriteObject.findIndex(sprite => 
-            sprite.descriptiveName && sprite.descriptiveName.toLowerCase().includes(searchTerm)
-        );
     }
 
     resetObject() {
@@ -169,114 +154,42 @@ class Enemy extends InteractiveLevelObject {
     }
 
     horizontalHit() {
-        this.fixedSpeed = false;
-        this.xspeed = 0;
-        if (this.yspeed !== 0) {
-            this.bonusSpeedX = 0;
-            this.bonusSpeedY = 0;
-        }
-        this.onIce = false;
+        EnemyMovementHandler.handleHorizontalCollision(this);
     }
 
     verticalHit() {
-        this.yspeed = 0;
-        this.falling = false;
-        this.wallJumpFrames = this.maxJumpFrames;
-        this.fixedSpeed = false;
-        this.bonusSpeedY = 0;
-        this.resetJump();
+        EnemyMovementHandler.handleVerticalCollision(this);
     }
 
     hitBottom(onPlatform) {
-        this.verticalHit();
-        this.bonusSpeedX = 0;
-        this.jumpframes = 0;
-        if (onPlatform) {
-            this.jumpPressedToTheMax = true;
-        }
+        EnemyMovementHandler.handleBottomCollision(this, onPlatform);
     }
 
     hitTop() {
-        this.verticalHit();
-        this.forcedJumpSpeed = 0;
-        this.jumpframes = this.maxJumpFrames;
-        this.jumpPressedToTheMax = true;
-
+        EnemyMovementHandler.handleTopCollision(this);
         if (this.onMovingPlatform) {
             //PlayMode.thisDeath();
         }
     }
 
     walkHandler() {
-        this.walking = false;
-        const newMaxSpeed = this.currentMaxSpeed;
-
-        if (this.walkDirection === "left") {
-            if (this.xspeed - this.speed > newMaxSpeed * -1) {
-                this.xspeed -= this.speed;
-            }
-            else {
-                if (this.swimming) {
-                    this.xspeed = newMaxSpeed * -1;
-                }
-                else {
-                    const restSpeed = this.currentMaxSpeed + this.xspeed;
-                    if (restSpeed > 0) {
-                        this.xspeed -= restSpeed;
-                    }
-                }
-            }
-            this.walking = true;
-        }
-        if (this.walkDirection === "right") {
-            if (this.xspeed + this.speed < newMaxSpeed) {
-                this.xspeed += this.speed;
-            }
-            else {
-                if (this.swimming) {
-                    this.xspeed = newMaxSpeed;
-                }
-                else {
-                    const restSpeed = this.currentMaxSpeed - this.xspeed;
-                    if (restSpeed > 0) {
-                        this.xspeed += restSpeed;
-                    }
-                }
-            }
-            this.walking = true;
-        }
+        EnemyMovementHandler.updateWalking(this);
     }
 
     slowDownBonusSpeedX() {
-        this.bonusSpeedX *= 0.95;
-        if (Math.abs(this.bonusSpeedX) < 0.3) {
-            this.bonusSpeedX = 0;
-        }
+        EnemyMovementHandler.slowDownBonusSpeedX(this);
     }
 
     slowDownBonusSpeedY() {
-        this.bonusSpeedY *= 0.95;
-        if (Math.abs(this.bonusSpeedY) < 0.3) {
-            this.bonusSpeedY = 0;
-        }
+        EnemyMovementHandler.slowDownBonusSpeedY(this);
     }
 
     fallHandler() {
-        if (this.falling && !this.fixedSpeed) {
-            //If jump is not enforced by trampoline
-            if (this.forcedJumpSpeed === 0) {
-                this.yspeed += this.currentGravity;
-            }
-        }
+        EnemyMovementHandler.updateFalling(this);
     }
 
     correctMaxYSpeed() {
-        if (!this.falling && this.jumpframes === 0 && !this.swimming && !this.fixedSpeed) {
-            this.yspeed = 0;
-        }
-        if (this.yspeed > this.currentMaxFallSpeed) {
-            this.yspeed = this.currentMaxFallSpeed;
-        }
+        EnemyMovementHandler.correctMaxFallSpeed(this);
     }
 
     setStretchAnimation() {
@@ -320,41 +233,50 @@ class Enemy extends InteractiveLevelObject {
     }
 
     draw(spriteCanvas) {
+        // Update activation state
+        this.updateActivationState();
+
+        // Only execute enemy logic if active
+        if (!this.isActive) {
+            // Still render idle sprite even when inactive
+            EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
+            return;
+        }
+
         this.checkHazardCollisions();
         EnemyJumpHandler.updateJump(this, this.jumpIntervalFrames);
         
-        // Select sprite based on state
-        if (this.jumping || (this.falling && this.yspeed > 0)) {
-            this.currentSpriteIndex = this.findSpriteIndexByName('jump');
-        } else if (this.walking) {
-            this.currentSpriteIndex = this.findSpriteIndexByName('walk');
+        // Update animation
+        EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
+    }
+
+    /**
+     * Update activation state based on conditions
+     */
+    updateActivationState() {
+        if (this.isActive) {
+            // Check if should deactivate
+            if (EnemyActivationHandler.shouldDeactivate(this, this.inactivationConfig)) {
+                this.isActive = false;
+                EnemyActivationHandler.resetTimers(this);
+            }
         } else {
-            this.currentSpriteIndex = this.findSpriteIndexByName('idle');
+            // Check if should activate
+            if (EnemyActivationHandler.shouldActivate(this, this.activationConfig)) {
+                this.isActive = true;
+                EnemyActivationHandler.resetTimers(this);
+            }
         }
+    }
 
-        // Get animation length for current sprite (update dynamically in case it changes)
-        const currentSprite = this.spriteObject[this.currentSpriteIndex];
-        const animationLength = currentSprite && currentSprite.animation ? currentSprite.animation.length : 1;
-        this.animationLengths[this.currentSpriteIndex] = animationLength;
-
-        // Update frame duration (can be tweaked per sprite type)
-        const frameDuration = AnimationHelper.defaultFrameDuration;
-
-        // Increment animation index
-        this.currentAnimationIndex++;
-        if (this.currentAnimationIndex >= frameDuration * animationLength || Game.playMode === Game.BUILD_MODE) {
-            this.currentAnimationIndex = 0;
-        }
-
-        // Calculate which animation frame to display
-        const animationFrameIndex = Math.floor(this.currentAnimationIndex / frameDuration) || 0;
-
-        // Render the animation frame from spriteCanvas
-        const canvasXSpritePos = animationFrameIndex * this.tileSize;
-        const canvasYSpritePos = currentSprite.canvasYPos;
-        
-        Display.drawImage(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
-            this.tileSize, this.tileSize, this.x, this.y, this.tileSize, this.tileSize);
+    /**
+     * Set activation conditions for this enemy
+     * @param {Object} activationConfig - Activation configuration {type, value}
+     * @param {Object} inactivationConfig - Inactivation configuration {type, value}
+     */
+    setActivationConditions(activationConfig, inactivationConfig) {
+        this.activationConfig = activationConfig;
+        this.inactivationConfig = inactivationConfig;
     }
 
 }
