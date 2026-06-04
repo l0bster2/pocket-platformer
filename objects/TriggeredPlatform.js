@@ -58,33 +58,19 @@ class TriggeredPlatform extends DefaultMovingPlatform {
             this.fakeHitBox.x = this.getHitBoxXOffset();
         }
 
-        if (this.player.movingPlatformKey === this.key) {
+        // Update all objects on this platform
+        const objectsOnPlatform = this.getObjectsOnPlatform();
+        if (objectsOnPlatform.length > 0) {
             this.setMovementSpeed();
+            
+            // Move platform if needed
             if (this.activationOnce === "moving when player on it") {
                 this.x += this.xspeed;
                 this.y += this.yspeed;
             }
-
-            const playerAndPlatformMovingUp = this.yspeed <= 0 && this.player.yspeed < 0;
-            const playerJumpingSlowerThanMovingPlatform = playerAndPlatformMovingUp && this.player.yspeed > this.yspeed;
-
-            this.player.bonusSpeedX = this.xspeed;
-            this.player.bonusSpeedY = this.yspeed;
-
-            if (playerJumpingSlowerThanMovingPlatform) {
-                this.player.hitWall(AnimationHelper.facingDirections.bottom);
-                this.player.jumping = false;
-                this.player.y = this.y - this.player.height;
-                this.player.movingPlatformKey = this.key;
-                this.player.onMovingPlatform = true;
-            }
-
-
-            if (!Collision.objectsColliding(this.player, this.fakeHitBox)) {
-                this.player.bonusSpeedX = 0;
-                this.player.movingPlatformKey = null;
-                this.player.onMovingPlatform = false;
-            }
+            
+            // Update each object on platform
+            this.updateObjectsOnPlatform();
         }
 
         if (this.activationOnce === "moving endlessly when touched") {

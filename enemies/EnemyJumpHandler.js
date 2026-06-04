@@ -26,7 +26,23 @@ class EnemyJumpHandler {
     }
 
     /**
-     * Initiate a jump for an enemy
+     * Perform a trampoline jump with boost
+     * Called when enemy lands on a trampoline
+     */
+    static performTrampolineJump(enemy) {
+        if (!enemy.jumping && !enemy.falling) {
+            enemy.jumping = true;
+            enemy.jumpframes = 0;
+            enemy.falling = true;
+            // Add extra frames for trampoline boost (similar to player)
+            const extraTrampolineFrames = Math.round(enemy.maxJumpFrames / 6);
+            enemy.forcedJumpSpeed = enemy.jumpSpeed + (enemy.jumpSpeed / 3.75);
+            this.performJump(enemy, enemy.forcedJumpSpeed, enemy.maxJumpFrames + extraTrampolineFrames);
+        }
+    }
+
+    /**
+     * Initiate a normal jump for an enemy
      */
     static initiateJump(enemy) {
         if (!enemy.jumping && !enemy.falling) {
@@ -54,8 +70,12 @@ class EnemyJumpHandler {
             enemy.jumpTimer = 0;
         }
 
-        // Perform jump if currently jumping
-        if (enemy.jumping) {
+        // Perform forced jump if on trampoline
+        if (enemy.forcedJumpSpeed !== 0 && enemy.jumping) {
+            this.performJump(enemy, enemy.forcedJumpSpeed, enemy.maxJumpFrames + Math.round(enemy.maxJumpFrames / 6));
+        }
+        // Perform normal jump if currently jumping
+        else if (enemy.jumping) {
             this.performJump(enemy, enemy.jumpSpeed, enemy.maxJumpFrames);
         }
     }

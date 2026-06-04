@@ -252,7 +252,7 @@ class Enemy extends InteractiveLevelObject {
     }
 
     setStretchAnimation() {
-
+        AnimationHelper.setSquishValues(this, (this.width + this.widthOffset) * 1.2, (this.height + this.heightOffset) * 0.8);
     }
 
     checkHazardCollisions() {

@@ -55,6 +55,34 @@ class DefaultMovingPlatform extends InteractiveLevelObject {
         }
     }
 
+    /**
+     * Get all objects (player + enemies) that are on this platform
+     */
+    getObjectsOnPlatform() {
+        const objects = [this.player];
+        
+        // Add any enemies on this platform
+        if (this.tilemapHandler.enemies) {
+            this.tilemapHandler.enemies.forEach(enemy => {
+                if (enemy.movingPlatformKey === this.key) {
+                    objects.push(enemy);
+                }
+            });
+        }
+        
+        return objects.filter(obj => obj.movingPlatformKey === this.key);
+    }
+
+    /**
+     * Update all objects on this platform
+     */
+    updateObjectsOnPlatform() {
+        const objectsOnPlatform = this.getObjectsOnPlatform();
+        objectsOnPlatform.forEach(obj => {
+            MovingPlatformHandler.updateSingleObjectOnPlatform(this, obj);
+        });
+    }
+
     drawPlatformsInGame(index) {
         if (this?.spriteObject?.[0].animation.length > 1) {
             if (this.checkFrame()) {
@@ -92,28 +120,8 @@ class DefaultMovingPlatform extends InteractiveLevelObject {
             this.fakeHitBox.x = this.getHitBoxXOffset();
         }
 
-        if (this.player.movingPlatformKey === this.key) {
-            const playerAndPlatformMovingUp = this.yspeed <= 0 && this.player.yspeed < 0;
-            const playerJumpingSlowerThanMovingPlatform = playerAndPlatformMovingUp && this.player.yspeed > this.yspeed;
-
-            this.player.bonusSpeedX = this.xspeed;
-            this.player.bonusSpeedY = this.yspeed;
-
-            if(playerJumpingSlowerThanMovingPlatform) {
-                this.player.hitWall(AnimationHelper.facingDirections.bottom);
-                this.player.jumping = false;
-                this.player.y = this.y - this.player.height;
-                this.player.movingPlatformKey = this.key;
-                this.player.onMovingPlatform = true;
-            }
-
-
-            if (!Collision.objectsColliding(this.player, this.fakeHitBox)) {
-                this.player.bonusSpeedX = 0;
-                this.player.movingPlatformKey = null;
-                this.player.onMovingPlatform = false;
-            }
-        }
+        // Update all objects on this platform
+        this.updateObjectsOnPlatform();
 
         if (this.yspeed >= 0) {
             this.fakeHitBox.y = this.y - 1;
