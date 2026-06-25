@@ -4,6 +4,7 @@ class Enemy1 extends Enemy {
         const hitBoxOffset = -tileSize / 6;
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
         this.walkDirection = this.walkDirections.left;
+        this.canBeStomped = true;
     }
 
     hitWall(direction) {

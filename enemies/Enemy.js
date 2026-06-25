@@ -96,6 +96,7 @@ class Enemy extends InteractiveLevelObject {
         // enemy attributes
         this.lives = 1;
         this.canBeStomped = false;
+        this.killsPlayer = true;
         
         // movement attributes (editable)
         this.maxSpeed = 2;
@@ -248,10 +249,58 @@ class Enemy extends InteractiveLevelObject {
         }
 
         this.checkHazardCollisions();
+        this.checkPlayerCollision();
         EnemyJumpHandler.updateJump(this, this.jumpIntervalFrames);
         
         // Update animation
         EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
+    }
+
+    /**
+     * Check collision with the player: stomping (player lands on top) or damaging the player.
+     */
+    checkPlayerCollision() {
+        if (Game.playMode !== Game.PLAY_MODE) {
+            return;
+        }
+        const player = tileMapHandler.player;
+        if (!player || player.death) {
+            return;
+        }
+        if (!Collision.objectsColliding(player, this)) {
+            return;
+        }
+
+        const playerFalling = player.yspeed > 0 || player.bonusSpeedY > 0;
+        const playerAboveEnemy = player.bottom_left_pos.y < this.y + tileMapHandler.halfTileSize;
+
+        if (this.canBeStomped && playerFalling && playerAboveEnemy) {
+            this.getStomped(player);
+        } else if (this.killsPlayer) {
+            PlayMode.playerDeath();
+        }
+    }
+
+    /**
+     * Player jumped on top of this enemy: lose a life (die at 0) and bounce the player.
+     */
+    getStomped(player) {
+        // small forced jump for the player, similar to a normal jump
+        player.setStretchAnimation();
+        player.forcedJumpSpeed = player.jumpSpeed;
+        player.jumpframes = 0;
+        player.fixedSpeed = false;
+        player.temporaryDoubleJump = false;
+        player.doubleJumpUsed = false;
+        player.currentDashFrame = 0;
+
+        this.lives -= 1;
+        if (this.lives <= 0) {
+            this.death();
+        } else {
+            AnimationHelper.setSquishValues(this, (this.width + this.widthOffset) * 1.2, (this.height + this.heightOffset) * 0.6);
+            SFXHandler.createSFX(this.x, this.y, 1);
+        }
     }
 
     /**
@@ -290,6 +339,7 @@ class Enemy extends InteractiveLevelObject {
         return {
             lives: this.lives,
             canBeStomped: this.canBeStomped,
+            killsPlayer: this.killsPlayer,
             maxSpeed: this.maxSpeed,
             groundAcceleration: this.groundAcceleration,
             air_acceleration: this.air_acceleration,
@@ -306,6 +356,7 @@ class Enemy extends InteractiveLevelObject {
     setEditableAttributes(attributes) {
         if (attributes.lives !== undefined) this.lives = attributes.lives;
         if (attributes.canBeStomped !== undefined) this.canBeStomped = attributes.canBeStomped;
+        if (attributes.killsPlayer !== undefined) this.killsPlayer = attributes.killsPlayer;
         if (attributes.maxSpeed !== undefined) this.maxSpeed = attributes.maxSpeed;
         if (attributes.groundAcceleration !== undefined) this.groundAcceleration = attributes.groundAcceleration;
         if (attributes.air_acceleration !== undefined) this.air_acceleration = attributes.air_acceleration;

@@ -9,6 +9,7 @@ class Enemy2 extends Enemy {
         // Distinct default attributes for Enemy 2 (per-type defaults)
         this.maxSpeed = 3;
         this.currentMaxSpeed = 3;
+        this.canBeStomped = false;
         // Only activates once the player gets close, and deactivates again when far away,
         // so the activation system has a visible effect compared to Enemy 1.
         this.activationConfig = { type: "playerInDistance", value: 5 };

@@ -473,12 +473,14 @@ input:checked+.switchSlider:before {
   background-color: #e1fae1;
 }
 
-#tabWrapper {
+#tabWrapper,
+#enemyTabWrapper {
     font-size: 0;
     display: flex;
 }
 
-#tabContent {
+#tabContent,
+#enemyTabContent {
     border: 1px solid lightgrey;
     border-top: none;
     padding: 12px;

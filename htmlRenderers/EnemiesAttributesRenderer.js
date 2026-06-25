@@ -80,63 +80,81 @@ class EnemiesAttributesRenderer {
             idleSprite = instance.spriteObject[spriteIndex];
         }
 
+        // Render with tab navigation: sprite on top, then tabs for Movement / Other
+        const activationNeedsValue = ['afterSeconds', 'playerInDistance', 'playerApproxSameX', 'playerApproxSameY'].includes(attributes.activationConfig?.type);
+        const inactivationNeedsValue = ['afterSeconds', 'playerFurtherThanDistance', 'playerNotApproxSameX', 'playerNotApproxSameY'].includes(attributes.inactivationConfig?.type);
+
         panel.innerHTML = `
             <div class="enemyDetailsContent">
-                <!-- Idle Sprite Preview -->
+                <!-- Idle Sprite Preview (kept above tabs) -->
                 <div class="marginBottom16">
                     <div class="enemySpritePreview marginTop8">
                         ${this.createSpritePreviewHTML(idleSprite)}
                     </div>
                 </div>
 
-                <!-- Movement Attributes -->
-                <details open class="detailsSection marginBottom16">
-                    <summary class="subHeading">Movement Attributes</summary>
-                    <div class="detailsContent marginTop8">
-                        ${this.createSliderInput('maxSpeed', 'Max Speed', attributes.maxSpeed, 0.5, 10, 0.1, type)}
-                        ${this.createSliderInput('groundAcceleration', 'Ground Acceleration', attributes.groundAcceleration, 0.01, 1, 0.01, type)}
-                        ${this.createSliderInput('air_acceleration', 'Air Acceleration', attributes.air_acceleration, 0.01, 1, 0.01, type)}
-                        ${this.createSliderInput('groundFriction', 'Ground Friction', attributes.groundFriction, 0, 1, 0.01, type)}
-                        ${this.createSliderInput('air_friction', 'Air Friction', attributes.air_friction, 0, 1, 0.01, type)}
-                    </div>
-                </details>
+                <!-- Tab Navigation (styled like Build tools tabs) -->
+                <div id="enemyTabWrapper" class="marginTop8">
+                    <button id="tab_movement" class="levelNavigationButton tabButton active" onclick="EnemiesAttributesRenderer.switchTab('movement')">Movement</button>
+                    <button id="tab_other" class="levelNavigationButton tabButton" onclick="EnemiesAttributesRenderer.switchTab('other')">Other</button>
+                </div>
 
-                <!-- Enemy Attributes -->
-                <details open class="detailsSection marginBottom16">
-                    <summary class="subHeading">Enemy Attributes</summary>
-                    <div class="detailsContent marginTop8">
-                        ${this.createNumberInput('lives', 'Lives', attributes.lives, 1, 100, 1, type)}
-                        ${this.createCheckboxInput('canBeStomped', 'Can be stomped', attributes.canBeStomped, type)}
-                    </div>
-                </details>
-
-                <!-- Activation Settings -->
-                <details open class="detailsSection marginBottom16">
-                    <summary class="subHeading">Activation Settings</summary>
-                    <div class="detailsContent marginTop8">
-                        <div class="marginBottom12">
-                            <label class="labelText">Activate when:</label>
-                            <select id="activationSelect" class="textInput" onchange="EnemiesAttributesRenderer.onActivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
-                                ${this.createActivationOptions(attributes.activationConfig)}
-                            </select>
-                            <input type="number" id="activationValue" class="textInput marginTop4" placeholder="Value (if needed)" 
-                                value="${attributes.activationConfig?.value ?? ''}" 
-                                onchange="EnemiesAttributesRenderer.updateActivationConfig('${type}')">
-                        </div>
-
-                        <div>
-                            <label class="labelText">Deactivate when:</label>
-                            <select id="inactivationSelect" class="textInput" onchange="EnemiesAttributesRenderer.onInactivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
-                                ${this.createInactivationOptions(attributes.inactivationConfig)}
-                            </select>
-                            <input type="number" id="inactivationValue" class="textInput marginTop4" placeholder="Value (if needed)" 
-                                value="${attributes.inactivationConfig?.value ?? ''}" 
-                                onchange="EnemiesAttributesRenderer.updateInactivationConfig('${type}')">
+                <div id="enemyTabContent">
+                    <div id="movementContent">
+                        <div class="detailsSection marginBottom16">
+                            <div class="detailsContent marginTop8">
+                                ${this.createSliderInput('maxSpeed', 'Max Speed', attributes.maxSpeed, 0.5, 10, 0.1, type)}
+                                ${this.createSliderInput('groundAcceleration', 'Ground Acceleration', attributes.groundAcceleration, 0.01, 1, 0.01, type)}
+                                ${this.createSliderInput('air_acceleration', 'Air Acceleration', attributes.air_acceleration, 0.01, 1, 0.01, type)}
+                                ${this.createSliderInput('groundFriction', 'Ground Friction', attributes.groundFriction, 0, 1, 0.01, type)}
+                                ${this.createSliderInput('air_friction', 'Air Friction', attributes.air_friction, 0, 1, 0.01, type)}
+                            </div>
                         </div>
                     </div>
-                </details>
+
+                    <div id="otherContent" style="display:none;">
+                        <div class="detailsSection marginBottom16">
+                            <div class="detailsContent marginTop8">
+                                ${this.createNumberInput('lives', 'Lives', attributes.lives, 1, 100, 1, type)}
+                                ${this.createCheckboxInput('canBeStomped', 'Can be stomped', attributes.canBeStomped, type)}
+                                ${this.createBooleanSelectInput('killsPlayer', 'On player touch', attributes.killsPlayer, 'Kill player', 'Do nothing', type)}
+                            </div>
+                        </div>
+
+                        <div class="detailsSection marginBottom16">
+                            <div class="detailsContent marginTop8">
+                                <div class="marginTop8">
+                                    <label class="labelText">Activate when:</label>
+                                    <select id="activationSelect_${type}" class="textInput" onchange="EnemiesAttributesRenderer.onActivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
+                                        ${this.createActivationOptions(attributes.activationConfig)}
+                                    </select>
+                                    <input type="number" id="activationValue_${type}" class="textInput marginTop4" placeholder="Value (if needed)" 
+                                        value="${attributes.activationConfig?.value ?? ''}" 
+                                        style="display: ${activationNeedsValue ? 'block' : 'none'};"
+                                        onchange="EnemiesAttributesRenderer.updateActivationConfig('${type}')">
+                                </div>
+
+                                <div class="marginTop8">
+                                    <label class="labelText">Deactivate when:</label>
+                                    <select id="inactivationSelect_${type}" class="textInput" onchange="EnemiesAttributesRenderer.onInactivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
+                                        ${this.createInactivationOptions(attributes.inactivationConfig)}
+                                    </select>
+                                    <input type="number" id="inactivationValue_${type}" class="textInput marginTop4" placeholder="Value (if needed)" 
+                                        value="${attributes.inactivationConfig?.value ?? ''}" 
+                                        style="display: ${inactivationNeedsValue ? 'block' : 'none'};"
+                                        onchange="EnemiesAttributesRenderer.updateInactivationConfig('${type}')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
+
+        // Ensure activation inputs reflect current selection
+        this.switchTab('movement');
+        this.onActivationChanged(type);
+        this.onInactivationChanged(type);
     }
 
     /**
@@ -180,7 +198,7 @@ class EnemiesAttributesRenderer {
      */
     static createNumberInput(id, label, value, min, max, step, type) {
         return `
-            <div class="marginBottom8">
+            <div class="marginTop8">
                 <label for="${id}" class="labelText">${label}:</label>
                 <input type="number" id="${id}" class="textInput" value="${value}" min="${min}" max="${max}" step="${step}"
                     onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', '${id}', this.value)">
@@ -200,7 +218,7 @@ class EnemiesAttributesRenderer {
         }
 
         return `
-            <div class="marginBottom8 playerAttributeWrapper">
+            <div class="marginTop8 playerAttributeWrapper">
                 <label for="${id}" style="display:block; margin-bottom:6px;">${label}:</label>
                 <input class="playerAttrSlider enemyAttrSlider" type="range" min="${min}" max="${max}" value="${displayValue}" step="${step}" id="${id}"
                     oninput="EnemiesAttributesRenderer.updateSliderAttribute('${type}', '${id}', this.value, ${mapper ? 'true' : 'false'})">
@@ -214,12 +232,50 @@ class EnemiesAttributesRenderer {
      */
     static createCheckboxInput(id, label, checked, type) {
         return `
-            <div class="marginBottom8">
+            <div class="marginTop8">
                 <input type="checkbox" id="${id}" ${checked ? 'checked' : ''} 
                     onchange="EnemiesAttributesRenderer.updateCheckboxAttribute('${type}', '${id}', this.checked)">
                 <label for="${id}" class="labelText">${label}</label>
             </div>
         `;
+    }
+
+    /**
+     * Create a dropdown bound to a boolean attribute (true = trueText, false = falseText)
+     */
+    static createBooleanSelectInput(id, label, value, trueText, falseText, type) {
+        return `
+            <div class="marginTop8">
+                <label for="${id}" class="labelText">${label}</label>
+                <select id="${id}" class="textInput" style="width: 100%; margin-top: 4px;"
+                    onchange="EnemiesAttributesRenderer.updateBooleanSelectAttribute('${type}', '${id}', this.value)">
+                    <option value="true" ${value ? 'selected' : ''}>${trueText}</option>
+                    <option value="false" ${!value ? 'selected' : ''}>${falseText}</option>
+                </select>
+            </div>
+        `;
+    }
+
+    /**
+     * Switch visible tab in the enemy details panel
+     */
+    static switchTab(tab) {
+        const move = document.getElementById('movementContent');
+        const other = document.getElementById('otherContent');
+        const tabMoveBtn = document.getElementById('tab_movement');
+        const tabOtherBtn = document.getElementById('tab_other');
+        if (!move || !other || !tabMoveBtn || !tabOtherBtn) return;
+        if (tab === 'movement') {
+            move.style.display = 'block';
+            other.style.display = 'none';
+            tabMoveBtn.classList.add('active');
+            tabOtherBtn.classList.remove('active');
+        } else {
+            move.style.display = 'none';
+            other.style.display = 'block';
+            tabMoveBtn.classList.remove('active');
+            tabOtherBtn.classList.add('active');
+        }
     }
 
     /**
@@ -294,6 +350,13 @@ class EnemiesAttributesRenderer {
      */
     static updateCheckboxAttribute(type, attributeName, checked) {
         EnemyTypeAttributesHandler.setAttribute(type, attributeName, checked);
+    }
+
+    /**
+     * Update a boolean attribute from a dropdown ('true'/'false' string)
+     */
+    static updateBooleanSelectAttribute(type, attributeName, value) {
+        EnemyTypeAttributesHandler.setAttribute(type, attributeName, value === 'true');
     }
 
     /**

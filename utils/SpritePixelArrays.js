@@ -2684,7 +2684,7 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8"],
             ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "transp"],
             ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "6B4EFF"],
             ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
@@ -2706,7 +2706,7 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8"],
             ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "transp"],
             ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "6B4EFF"],
             ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
@@ -2719,7 +2719,7 @@ class SpritePixelArrays {
       {
         sprite:
           [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8"],
             ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "transp"],
             ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "6B4EFF"],
             ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
@@ -2741,7 +2741,7 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8"],
             ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "6B4EFF"],
             ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "transp"],
             ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
@@ -2754,7 +2754,7 @@ class SpritePixelArrays {
       {
         sprite:
           [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8", "transp", "C8C8D8"],
             ["transp", "transp", "6B4EFF", "6B4EFF", "6B4EFF", "6B4EFF", "transp", "6B4EFF"],
             ["6B4EFF", "6B4EFF", "FFFFFF", "6B4EFF", "FFFFFF", "FFFFFF", "6B4EFF", "transp"],
             ["6B4EFF", "FFFFFF", "000000", "6B4EFF", "000000", "FFFFFF", "6B4EFF", "6B4EFF"],
