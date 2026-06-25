@@ -22,7 +22,7 @@ class Enemy1 extends Enemy {
     draw(spriteCanvas) {
         super.draw(spriteCanvas);
         if (Game.playMode === Game.PLAY_MODE) {
-            super.walkHandler();
+            this.isActive && super.walkHandler();
             this.forcedJumpSpeed !== 0 && JumpHandler.performJump(this, this.forcedJumpSpeed, this.maxJumpFrames + this.extraTrampolineJumpFrames);
             super.fallHandler();
             super.correctMaxYSpeed();

@@ -134,6 +134,7 @@ function exportGame() {
   allData.animationFrames = TransitionAnimationHandler.animationFrames;
   allData.animationType = TransitionAnimationHandler.animationType;
   allData.playerObject = createPlayerAttributesSectionForAllData();
+  allData.enemyTypeAttributes = WorldDataHandler.enemyTypeAttributes;
   allData.sounds = getCustomSounds();
   allData.images = ImageHandler.images;
   allData.sprites = createChangedSpitesObject();

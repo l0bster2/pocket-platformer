@@ -23,6 +23,7 @@ class WorldDataHandler {
         this.backgroundImageScrollSpeed = 0.2;
         this.textColor = 'ffffff';
         this.effects = [];
+        this.enemyTypeAttributes = {};
         this.resetFontParameters();
     }
 

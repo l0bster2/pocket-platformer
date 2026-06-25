@@ -9,21 +9,21 @@ class EnemiesAttributesRenderer {
         const contentDiv = document.getElementById("enemiesContent");
         if (!contentDiv) return;
 
-        // Get all unique enemy types from enemies in the level
-        const uniqueEnemies = this.getUniqueEnemies();
+        // All enemy types are always editable, regardless of whether they're placed in the level
+        const allTypes = EnemyTypeAttributesHandler.getAllEnemyTypes();
 
-        if (uniqueEnemies.length === 0) {
-            contentDiv.innerHTML = `<div class="marginTop8">No enemies in level. Add enemies in game-screen first.</div>`;
+        if (allTypes.length === 0) {
+            contentDiv.innerHTML = `<div class="marginTop8">No enemy types available.</div>`;
             return;
         }
 
         contentDiv.innerHTML = `
             <div class="enemyEditorWrapper">
                 <div class="marginTop8 marginBottom16">
-                    <label for="enemySelectDropdown">Select enemy:</label>
-                    <select id="enemySelectDropdown" class="textInput" onchange="EnemiesAttributesRenderer.onEnemySelected()" style="width: 100%; margin-top: 4px;">
-                        ${uniqueEnemies.map((enemy, index) => 
-                            `<option value="${index}" data-type="${enemy.type}">${enemy.displayName}</option>`
+                    <label for="enemySelectDropdown">Select enemy type:</label>
+                    <select id="enemySelectDropdown" class="textInput" onchange="EnemiesAttributesRenderer.onEnemyTypeSelected()" style="width: 100%; margin-top: 4px;">
+                        ${allTypes.map((type) =>
+                            `<option value="${type}">${this.getEnemyTypeDisplayName(type)}</option>`
                         ).join('')}
                     </select>
                 </div>
@@ -32,71 +32,58 @@ class EnemiesAttributesRenderer {
             </div>
         `;
 
-        // Show details for first enemy
-        this.onEnemySelected();
+        // Show details for first enemy type
+        this.onEnemyTypeSelected();
     }
 
     /**
-     * Get unique enemies from current level
+     * Get a representative enemy instance for a type (used for the sprite preview).
+     * Prefers an instance placed in the level, otherwise creates a temporary one.
      */
-    static getUniqueEnemies() {
-        if (!tileMapHandler || !tileMapHandler.enemies) return [];
-        
-        const uniqueEnemies = [];
-        const seenTypes = new Set();
-
-        tileMapHandler.enemies.forEach(enemy => {
-            const key = `${enemy.type}_${enemy.initialX}_${enemy.initialY}`;
-            if (!seenTypes.has(key)) {
-                seenTypes.add(key);
-                uniqueEnemies.push({
-                    type: enemy.type,
-                    displayName: this.getEnemyDisplayName(enemy),
-                    instance: enemy
-                });
-            }
-        });
-
-        return uniqueEnemies;
-    }
-
-    /**
-     * Get friendly display name for enemy
-     */
-    static getEnemyDisplayName(enemy) {
-        const typeName = enemy.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-        return `${typeName} (${enemy.initialX}, ${enemy.initialY})`;
-    }
-
-    /**
-     * Handle enemy selection from dropdown
-     */
-    static onEnemySelected() {
-        const dropdown = document.getElementById("enemySelectDropdown");
-        const selectedIndex = parseInt(dropdown.value);
-        const uniqueEnemies = this.getUniqueEnemies();
-        const selectedEnemy = uniqueEnemies[selectedIndex];
-
-        if (selectedEnemy && selectedEnemy.instance) {
-            this.renderEnemyDetails(selectedEnemy.instance);
+    static getInstanceForType(type) {
+        if (tileMapHandler && tileMapHandler.enemies) {
+            const levelInstance = tileMapHandler.enemies.find(enemy => enemy.type === type);
+            if (levelInstance) return levelInstance;
         }
+        return EnemyTypeAttributesHandler.createTempInstance(type);
     }
 
     /**
-     * Render detailed editor for specific enemy
+     * Get friendly display name for an enemy type
      */
-    static renderEnemyDetails(enemy) {
+    static getEnemyTypeDisplayName(type) {
+        return type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+
+    /**
+     * Handle enemy type selection from dropdown
+     */
+    static onEnemyTypeSelected() {
+        const dropdown = document.getElementById("enemySelectDropdown");
+        if (!dropdown) return;
+        this.renderEnemyTypeDetails(dropdown.value);
+    }
+
+    /**
+     * Render detailed editor for a specific enemy type
+     */
+    static renderEnemyTypeDetails(type) {
         const panel = document.getElementById("enemyDetailsPanel");
         if (!panel) return;
 
-        const spriteIndex = EnemyAnimationHelper.findSpriteIndexByName(enemy, 'idle');
-        const idleSprite = enemy.spriteObject[spriteIndex];
+        const attributes = EnemyTypeAttributesHandler.getAttributes(type);
+        const instance = this.getInstanceForType(type);
+
+        let idleSprite = null;
+        if (instance) {
+            const spriteIndex = EnemyAnimationHelper.findSpriteIndexByName(instance, 'idle');
+            idleSprite = instance.spriteObject[spriteIndex];
+        }
 
         panel.innerHTML = `
             <div class="enemyDetailsContent">
                 <!-- Idle Sprite Preview -->
                 <div class="marginBottom16">
-                    <h3 class="subHeading">Sprite Preview</h3>
                     <div class="enemySpritePreview marginTop8">
                         ${this.createSpritePreviewHTML(idleSprite)}
                     </div>
@@ -106,11 +93,11 @@ class EnemiesAttributesRenderer {
                 <details open class="detailsSection marginBottom16">
                     <summary class="subHeading">Movement Attributes</summary>
                     <div class="detailsContent marginTop8">
-                        ${this.createSliderInput('maxSpeed', 'Max Speed', enemy.maxSpeed, 0.5, 10, 0.1, enemy)}
-                        ${this.createSliderInput('groundAcceleration', 'Ground Acceleration', enemy.groundAcceleration, 0.01, 1, 0.01, enemy)}
-                        ${this.createSliderInput('air_acceleration', 'Air Acceleration', enemy.air_acceleration, 0.01, 1, 0.01, enemy)}
-                        ${this.createSliderInput('groundFriction', 'Ground Friction', enemy.groundFriction, 0, 1, 0.01, enemy)}
-                        ${this.createSliderInput('air_friction', 'Air Friction', enemy.air_friction, 0, 1, 0.01, enemy)}
+                        ${this.createSliderInput('maxSpeed', 'Max Speed', attributes.maxSpeed, 0.5, 10, 0.1, type)}
+                        ${this.createSliderInput('groundAcceleration', 'Ground Acceleration', attributes.groundAcceleration, 0.01, 1, 0.01, type)}
+                        ${this.createSliderInput('air_acceleration', 'Air Acceleration', attributes.air_acceleration, 0.01, 1, 0.01, type)}
+                        ${this.createSliderInput('groundFriction', 'Ground Friction', attributes.groundFriction, 0, 1, 0.01, type)}
+                        ${this.createSliderInput('air_friction', 'Air Friction', attributes.air_friction, 0, 1, 0.01, type)}
                     </div>
                 </details>
 
@@ -118,8 +105,8 @@ class EnemiesAttributesRenderer {
                 <details open class="detailsSection marginBottom16">
                     <summary class="subHeading">Enemy Attributes</summary>
                     <div class="detailsContent marginTop8">
-                        ${this.createNumberInput('lives', 'Lives', enemy.lives, 1, 100, 1, enemy)}
-                        ${this.createCheckboxInput('canBeStomped', 'Can be stomped', enemy.canBeStomped, enemy)}
+                        ${this.createNumberInput('lives', 'Lives', attributes.lives, 1, 100, 1, type)}
+                        ${this.createCheckboxInput('canBeStomped', 'Can be stomped', attributes.canBeStomped, type)}
                     </div>
                 </details>
 
@@ -129,22 +116,22 @@ class EnemiesAttributesRenderer {
                     <div class="detailsContent marginTop8">
                         <div class="marginBottom12">
                             <label class="labelText">Activate when:</label>
-                            <select id="activationSelect" class="textInput" onchange="EnemiesAttributesRenderer.onActivationChanged('${enemy.key}')" style="width: 100%; margin-top: 4px;">
-                                ${this.createActivationOptions(enemy.activationConfig)}
+                            <select id="activationSelect" class="textInput" onchange="EnemiesAttributesRenderer.onActivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
+                                ${this.createActivationOptions(attributes.activationConfig)}
                             </select>
                             <input type="number" id="activationValue" class="textInput marginTop4" placeholder="Value (if needed)" 
-                                value="${enemy.activationConfig?.value || ''}" 
-                                onchange="EnemiesAttributesRenderer.updateActivationConfig('${enemy.key}')">
+                                value="${attributes.activationConfig?.value ?? ''}" 
+                                onchange="EnemiesAttributesRenderer.updateActivationConfig('${type}')">
                         </div>
 
                         <div>
                             <label class="labelText">Deactivate when:</label>
-                            <select id="inactivationSelect" class="textInput" onchange="EnemiesAttributesRenderer.onInactivationChanged('${enemy.key}')" style="width: 100%; margin-top: 4px;">
-                                ${this.createInactivationOptions(enemy.inactivationConfig)}
+                            <select id="inactivationSelect" class="textInput" onchange="EnemiesAttributesRenderer.onInactivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
+                                ${this.createInactivationOptions(attributes.inactivationConfig)}
                             </select>
                             <input type="number" id="inactivationValue" class="textInput marginTop4" placeholder="Value (if needed)" 
-                                value="${enemy.inactivationConfig?.value || ''}" 
-                                onchange="EnemiesAttributesRenderer.updateInactivationConfig('${enemy.key}')">
+                                value="${attributes.inactivationConfig?.value ?? ''}" 
+                                onchange="EnemiesAttributesRenderer.updateInactivationConfig('${type}')">
                         </div>
                     </div>
                 </details>
@@ -161,7 +148,7 @@ class EnemiesAttributesRenderer {
         }
 
         const firstFrame = sprite.animation[0].sprite;
-        const pixelSize = 2; // 2px per pixel for visibility
+        const pixelSize = 4; // 4px per pixel for visibility (2x bigger)
         const canvasWidth = 8 * pixelSize;
         const canvasHeight = 8 * pixelSize;
 
@@ -191,12 +178,12 @@ class EnemiesAttributesRenderer {
     /**
      * Create number input HTML
      */
-    static createNumberInput(id, label, value, min, max, step, enemy) {
+    static createNumberInput(id, label, value, min, max, step, type) {
         return `
             <div class="marginBottom8">
                 <label for="${id}" class="labelText">${label}:</label>
                 <input type="number" id="${id}" class="textInput" value="${value}" min="${min}" max="${max}" step="${step}"
-                    onchange="EnemiesAttributesRenderer.updateNumberAttribute('${enemy.key}', '${id}', this.value)">
+                    onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', '${id}', this.value)">
             </div>
         `;
     }
@@ -204,7 +191,7 @@ class EnemiesAttributesRenderer {
     /**
      * Create slider input HTML (mirrors player attribute sliders)
      */
-    static createSliderInput(id, label, value, min, max, step, enemy, mapper) {
+    static createSliderInput(id, label, value, min, max, step, type, mapper) {
         // slider value to display — if mapper provided, try to map the actual value to the slider key
         let displayValue = value;
         if (mapper) {
@@ -216,7 +203,7 @@ class EnemiesAttributesRenderer {
             <div class="marginBottom8 playerAttributeWrapper">
                 <label for="${id}" style="display:block; margin-bottom:6px;">${label}:</label>
                 <input class="playerAttrSlider enemyAttrSlider" type="range" min="${min}" max="${max}" value="${displayValue}" step="${step}" id="${id}"
-                    oninput="EnemiesAttributesRenderer.updateSliderAttribute('${enemy.key}', '${id}', this.value, ${mapper ? 'true' : 'false'})">
+                    oninput="EnemiesAttributesRenderer.updateSliderAttribute('${type}', '${id}', this.value, ${mapper ? 'true' : 'false'})">
                 <span id="${id}Value" class="playerAttrSliderValue">${value}</span>
             </div>
         `;
@@ -225,11 +212,11 @@ class EnemiesAttributesRenderer {
     /**
      * Create checkbox input HTML
      */
-    static createCheckboxInput(id, label, checked, enemy) {
+    static createCheckboxInput(id, label, checked, type) {
         return `
             <div class="marginBottom8">
                 <input type="checkbox" id="${id}" ${checked ? 'checked' : ''} 
-                    onchange="EnemiesAttributesRenderer.updateCheckboxAttribute('${enemy.key}', '${id}', this.checked)">
+                    onchange="EnemiesAttributesRenderer.updateCheckboxAttribute('${type}', '${id}', this.checked)">
                 <label for="${id}" class="labelText">${label}</label>
             </div>
         `;
@@ -273,31 +260,27 @@ class EnemiesAttributesRenderer {
     }
 
     /**
-     * Update number attribute
+     * Update number attribute for a type
      */
-    static updateNumberAttribute(enemyKey, attributeName, value) {
-        const enemy = this.findEnemyByKey(enemyKey);
-        if (enemy) {
-            enemy[attributeName] = parseFloat(value);
-        }
+    static updateNumberAttribute(type, attributeName, value) {
+        EnemyTypeAttributesHandler.setAttribute(type, attributeName, parseFloat(value));
     }
 
     /**
-     * Update slider attribute from UI
+     * Update slider attribute for a type
      */
-    static updateSliderAttribute(enemyKey, attributeName, sliderValue, usesMapper) {
-        const enemy = this.findEnemyByKey(enemyKey);
-        if (!enemy) return;
-
+    static updateSliderAttribute(type, attributeName, sliderValue, usesMapper) {
         let value = sliderValue;
         if (usesMapper && ObjectsTooltipElementsRenderer && typeof ObjectsTooltipElementsRenderer.mapKeyToValue === 'function') {
-            const mapped = ObjectsTooltipElementsRenderer.mapKeyToValue(sliderValue, enemy[attributeName + "Mapper"] || {});
+            const mapper = EnemyTypeAttributesHandler.getAttributes(type)[attributeName + "Mapper"] || {};
+            const mapped = ObjectsTooltipElementsRenderer.mapKeyToValue(sliderValue, mapper);
             if (mapped !== null && mapped !== undefined) value = mapped;
         }
 
         // parse numeric values
         const numeric = parseFloat(value);
-        enemy[attributeName] = isNaN(numeric) ? value : numeric;
+        const finalValue = isNaN(numeric) ? value : numeric;
+        EnemyTypeAttributesHandler.setAttribute(type, attributeName, finalValue);
 
         // update displayed value
         const displayEl = document.getElementById(attributeName + "Value");
@@ -307,19 +290,16 @@ class EnemiesAttributesRenderer {
     }
 
     /**
-     * Update checkbox attribute
+     * Update checkbox attribute for a type
      */
-    static updateCheckboxAttribute(enemyKey, attributeName, checked) {
-        const enemy = this.findEnemyByKey(enemyKey);
-        if (enemy) {
-            enemy[attributeName] = checked;
-        }
+    static updateCheckboxAttribute(type, attributeName, checked) {
+        EnemyTypeAttributesHandler.setAttribute(type, attributeName, checked);
     }
 
     /**
      * Handle activation dropdown change
      */
-    static onActivationChanged(enemyKey) {
+    static onActivationChanged(type) {
         const select = document.getElementById("activationSelect");
         const valueInput = document.getElementById("activationValue");
         const selected = select.value;
@@ -328,28 +308,26 @@ class EnemiesAttributesRenderer {
         const needsValue = ['afterSeconds', 'playerInDistance', 'playerApproxSameX', 'playerApproxSameY'].includes(selected);
         valueInput.style.display = needsValue ? 'block' : 'none';
 
-        this.updateActivationConfig(enemyKey);
+        this.updateActivationConfig(type);
     }
 
     /**
-     * Update activation config
+     * Update activation config for a type
      */
-    static updateActivationConfig(enemyKey) {
-        const enemy = this.findEnemyByKey(enemyKey);
-        if (!enemy) return;
-
+    static updateActivationConfig(type) {
         const select = document.getElementById("activationSelect");
         const valueInput = document.getElementById("activationValue");
-        const type = select.value;
+        const activationType = select.value;
         const value = valueInput.value ? parseFloat(valueInput.value) : undefined;
 
-        enemy.activationConfig = value !== undefined ? { type, value } : { type };
+        const config = value !== undefined ? { type: activationType, value } : { type: activationType };
+        EnemyTypeAttributesHandler.setAttribute(type, "activationConfig", config);
     }
 
     /**
      * Handle inactivation dropdown change
      */
-    static onInactivationChanged(enemyKey) {
+    static onInactivationChanged(type) {
         const select = document.getElementById("inactivationSelect");
         const valueInput = document.getElementById("inactivationValue");
         const selected = select.value;
@@ -358,30 +336,20 @@ class EnemiesAttributesRenderer {
         const needsValue = ['afterSeconds', 'playerFurtherThanDistance', 'playerNotApproxSameX', 'playerNotApproxSameY'].includes(selected);
         valueInput.style.display = needsValue ? 'block' : 'none';
 
-        this.updateInactivationConfig(enemyKey);
+        this.updateInactivationConfig(type);
     }
 
     /**
-     * Update inactivation config
+     * Update inactivation config for a type
      */
-    static updateInactivationConfig(enemyKey) {
-        const enemy = this.findEnemyByKey(enemyKey);
-        if (!enemy) return;
-
+    static updateInactivationConfig(type) {
         const select = document.getElementById("inactivationSelect");
         const valueInput = document.getElementById("inactivationValue");
-        const type = select.value;
+        const inactivationType = select.value;
         const value = valueInput.value ? parseFloat(valueInput.value) : undefined;
 
-        enemy.inactivationConfig = value !== undefined ? { type, value } : { type };
-    }
-
-    /**
-     * Find enemy by key
-     */
-    static findEnemyByKey(key) {
-        if (!tileMapHandler || !tileMapHandler.enemies) return null;
-        return tileMapHandler.enemies.find(enemy => enemy.key === key);
+        const config = value !== undefined ? { type: inactivationType, value } : { type: inactivationType };
+        EnemyTypeAttributesHandler.setAttribute(type, "inactivationConfig", config);
     }
 
     /**

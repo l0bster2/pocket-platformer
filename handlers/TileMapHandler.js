@@ -125,8 +125,12 @@ class TileMapHandler {
             const { type, x, y } = initialObject;
 
             const extraAttributes = initialObject.extraAttributes ? initialObject.extraAttributes : {};
-            levelObjects.push(new ObjectTypes.objectToClass[type](x,
-                y, this.tileSize, type, this, extraAttributes));
+            const createdObject = new ObjectTypes.objectToClass[type](x,
+                y, this.tileSize, type, this, extraAttributes);
+            if (typeof Enemy !== "undefined" && createdObject instanceof Enemy) {
+                EnemyTypeAttributesHandler.applyToInstance(createdObject);
+            }
+            levelObjects.push(createdObject);
         });
         return levelObjects;
     }

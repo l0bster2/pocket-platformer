@@ -113,9 +113,9 @@ class Enemy extends InteractiveLevelObject {
         this.facingDirection = AnimationHelper.facingDirections.right;
         
         // activation system
-        this.isActive = true; // Enemy starts active by default
-        this.activationConfig = null; // Override with activation conditions
-        this.inactivationConfig = null; // Override with inactivation conditions
+        this.isActive = false; // Enemy starts inactive, activation config decides when it turns on
+        this.activationConfig = { type: "alwaysActive" }; // activates immediately by default
+        this.inactivationConfig = { type: "neverInactive" }; // never deactivates by default
         this.activationTimer = 0;
         this.inactivationTimer = 0;
         
