@@ -218,6 +218,10 @@ details summary:hover {
     width: 80%;
 }
 
+.enemyAttrSlider {
+    width: 40%;
+}
+
 .playerAttrSliderValue {
     vertical-align: top;
     float: right;

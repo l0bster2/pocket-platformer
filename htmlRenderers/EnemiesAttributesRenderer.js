@@ -106,11 +106,11 @@ class EnemiesAttributesRenderer {
                 <details open class="detailsSection marginBottom16">
                     <summary class="subHeading">Movement Attributes</summary>
                     <div class="detailsContent marginTop8">
-                        ${this.createNumberInput('maxSpeed', 'Max Speed', enemy.maxSpeed, 0.5, 10, 0.1, enemy)}
-                        ${this.createNumberInput('groundAcceleration', 'Ground Acceleration', enemy.groundAcceleration, 0.1, 2, 0.1, enemy)}
-                        ${this.createNumberInput('air_acceleration', 'Air Acceleration', enemy.air_acceleration, 0.1, 2, 0.1, enemy)}
-                        ${this.createNumberInput('groundFriction', 'Ground Friction', enemy.groundFriction, 0.1, 1, 0.05, enemy)}
-                        ${this.createNumberInput('air_friction', 'Air Friction', enemy.air_friction, 0.1, 1, 0.05, enemy)}
+                        ${this.createSliderInput('maxSpeed', 'Max Speed', enemy.maxSpeed, 0.5, 10, 0.1, enemy)}
+                        ${this.createSliderInput('groundAcceleration', 'Ground Acceleration', enemy.groundAcceleration, 0.01, 1, 0.01, enemy)}
+                        ${this.createSliderInput('air_acceleration', 'Air Acceleration', enemy.air_acceleration, 0.01, 1, 0.01, enemy)}
+                        ${this.createSliderInput('groundFriction', 'Ground Friction', enemy.groundFriction, 0, 1, 0.01, enemy)}
+                        ${this.createSliderInput('air_friction', 'Air Friction', enemy.air_friction, 0, 1, 0.01, enemy)}
                     </div>
                 </details>
 
@@ -202,6 +202,27 @@ class EnemiesAttributesRenderer {
     }
 
     /**
+     * Create slider input HTML (mirrors player attribute sliders)
+     */
+    static createSliderInput(id, label, value, min, max, step, enemy, mapper) {
+        // slider value to display — if mapper provided, try to map the actual value to the slider key
+        let displayValue = value;
+        if (mapper) {
+            // Use ObjectsTooltipElementsRenderer helper if available
+            displayValue = ObjectsTooltipElementsRenderer.mapValueToKey(value, mapper) || value;
+        }
+
+        return `
+            <div class="marginBottom8 playerAttributeWrapper">
+                <label for="${id}" style="display:block; margin-bottom:6px;">${label}:</label>
+                <input class="playerAttrSlider enemyAttrSlider" type="range" min="${min}" max="${max}" value="${displayValue}" step="${step}" id="${id}"
+                    oninput="EnemiesAttributesRenderer.updateSliderAttribute('${enemy.key}', '${id}', this.value, ${mapper ? 'true' : 'false'})">
+                <span id="${id}Value" class="playerAttrSliderValue">${value}</span>
+            </div>
+        `;
+    }
+
+    /**
      * Create checkbox input HTML
      */
     static createCheckboxInput(id, label, checked, enemy) {
@@ -258,6 +279,30 @@ class EnemiesAttributesRenderer {
         const enemy = this.findEnemyByKey(enemyKey);
         if (enemy) {
             enemy[attributeName] = parseFloat(value);
+        }
+    }
+
+    /**
+     * Update slider attribute from UI
+     */
+    static updateSliderAttribute(enemyKey, attributeName, sliderValue, usesMapper) {
+        const enemy = this.findEnemyByKey(enemyKey);
+        if (!enemy) return;
+
+        let value = sliderValue;
+        if (usesMapper && ObjectsTooltipElementsRenderer && typeof ObjectsTooltipElementsRenderer.mapKeyToValue === 'function') {
+            const mapped = ObjectsTooltipElementsRenderer.mapKeyToValue(sliderValue, enemy[attributeName + "Mapper"] || {});
+            if (mapped !== null && mapped !== undefined) value = mapped;
+        }
+
+        // parse numeric values
+        const numeric = parseFloat(value);
+        enemy[attributeName] = isNaN(numeric) ? value : numeric;
+
+        // update displayed value
+        const displayEl = document.getElementById(attributeName + "Value");
+        if (displayEl) {
+            displayEl.innerHTML = isNaN(numeric) ? value : (numeric % 1 !== 0 ? numeric.toFixed(2) : numeric);
         }
     }
 
