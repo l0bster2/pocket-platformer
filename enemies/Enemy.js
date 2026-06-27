@@ -111,7 +111,7 @@ class Enemy extends InteractiveLevelObject {
         this.currentAnimationIndex = 0;
         this.currentSpriteIndex = 0; // Index within spriteObject array
         this.animationLengths = EnemyAnimationHelper.initializeAnimationLengths(this);
-        this.facingDirection = AnimationHelper.facingDirections.right;
+        this.facingDirection = AnimationHelper.facingDirections.left;
         
         // activation system
         this.isActive = false; // Enemy starts inactive, activation config decides when it turns on
@@ -202,23 +202,7 @@ class Enemy extends InteractiveLevelObject {
     }
 
     checkHazardCollisions() {
-        let touchingWater = false;
-        tileMapHandler.levelObjects.forEach(levelObject => {
-            if (this.interativeObjects.includes(levelObject.type)) {
-                if (levelObject.colissionFunction(this, levelObject)) {
-                    if (levelObject.type === ObjectTypes.WATER) {
-                        touchingWater = true;
-                    }
-                    levelObject.collisionEvent(this);
-                }
-            }
-        });
-
-        if (this.swimming && !touchingWater) {
-            this.swimming = false;
-            this.currentGravity = this.gravity;
-            this.currentMaxFallSpeed = this.maxFallSpeed;
-        }
+        EnemyCollisionHandler.checkHazardCollisions(this);
     }
 
     //for now it's used for bullets (canonballs and rockets), which can be deleted during game-time
@@ -260,47 +244,14 @@ class Enemy extends InteractiveLevelObject {
      * Check collision with the player: stomping (player lands on top) or damaging the player.
      */
     checkPlayerCollision() {
-        if (Game.playMode !== Game.PLAY_MODE) {
-            return;
-        }
-        const player = tileMapHandler.player;
-        if (!player || player.death) {
-            return;
-        }
-        if (!Collision.objectsColliding(player, this)) {
-            return;
-        }
-
-        const playerFalling = player.yspeed > 0 || player.bonusSpeedY > 0;
-        const playerAboveEnemy = player.bottom_left_pos.y < this.y + tileMapHandler.halfTileSize;
-
-        if (this.canBeStomped && playerFalling && playerAboveEnemy) {
-            this.getStomped(player);
-        } else if (this.killsPlayer) {
-            PlayMode.playerDeath();
-        }
+        EnemyCollisionHandler.checkPlayerCollision(this);
     }
 
     /**
      * Player jumped on top of this enemy: lose a life (die at 0) and bounce the player.
      */
     getStomped(player) {
-        // small forced jump for the player, similar to a normal jump
-        player.setStretchAnimation();
-        player.forcedJumpSpeed = player.jumpSpeed;
-        player.jumpframes = 0;
-        player.fixedSpeed = false;
-        player.temporaryDoubleJump = false;
-        player.doubleJumpUsed = false;
-        player.currentDashFrame = 0;
-
-        this.lives -= 1;
-        if (this.lives <= 0) {
-            this.death();
-        } else {
-            AnimationHelper.setSquishValues(this, (this.width + this.widthOffset) * 1.2, (this.height + this.heightOffset) * 0.6);
-            SFXHandler.createSFX(this.x, this.y, 1);
-        }
+        EnemyCollisionHandler.getStomped(this, player);
     }
 
     /**
