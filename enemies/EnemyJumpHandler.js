@@ -45,7 +45,7 @@ class EnemyJumpHandler {
      * Initiate a normal jump for an enemy
      */
     static initiateJump(enemy) {
-        if (!enemy.jumping && !enemy.falling) {
+        if (!enemy.jumping && !enemy.falling && enemy.forcedJumpSpeed === 0) {
             enemy.jumping = true;
             enemy.jumpframes = 0;
             enemy.falling = true;
@@ -58,25 +58,30 @@ class EnemyJumpHandler {
      * @param {number} jumpIntervalFrames - How many frames between jumps
      */
     static updateJump(enemy, jumpIntervalFrames = 60) {
-        // Increment jump timer
         if (enemy.jumpTimer === undefined) {
             enemy.jumpTimer = 0;
         }
-        enemy.jumpTimer++;
 
-        // Initiate jump at interval
+        // Continue an in-progress forced (trampoline) jump, never start an interval jump during it
+        if (enemy.forcedJumpSpeed !== 0 && enemy.jumping) {
+            this.performJump(enemy, enemy.forcedJumpSpeed, enemy.maxJumpFrames + Math.round(enemy.maxJumpFrames / 6));
+            return;
+        }
+        // Continue an in-progress normal jump
+        if (enemy.jumping) {
+            this.performJump(enemy, enemy.jumpSpeed, enemy.maxJumpFrames);
+            return;
+        }
+        // Don't start a new jump while airborne (falling) or while launched by a trampoline
+        if (enemy.falling || enemy.forcedJumpSpeed !== 0) {
+            return;
+        }
+
+        // Only tick the interval timer when grounded and able to jump
+        enemy.jumpTimer++;
         if (enemy.jumpTimer >= jumpIntervalFrames) {
             this.initiateJump(enemy);
             enemy.jumpTimer = 0;
-        }
-
-        // Perform forced jump if on trampoline
-        if (enemy.forcedJumpSpeed !== 0 && enemy.jumping) {
-            this.performJump(enemy, enemy.forcedJumpSpeed, enemy.maxJumpFrames + Math.round(enemy.maxJumpFrames / 6));
-        }
-        // Perform normal jump if currently jumping
-        else if (enemy.jumping) {
-            this.performJump(enemy, enemy.jumpSpeed, enemy.maxJumpFrames);
         }
     }
 }
