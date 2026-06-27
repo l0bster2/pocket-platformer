@@ -51,9 +51,6 @@ class EnemyActivationHandler {
         const { type, value } = inactivationConfig;
 
         switch (type) {
-            case 'becomesInactive':
-                return true;
-
             case 'neverInactive':
                 return false;
 

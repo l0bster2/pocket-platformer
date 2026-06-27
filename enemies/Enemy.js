@@ -227,7 +227,7 @@ class Enemy extends InteractiveLevelObject {
 
         // Only execute enemy logic if active
         if (!this.isActive) {
-            // Still render idle sprite even when inactive
+            // Render the idle sprite while inactive (speed was already cleared on deactivation).
             EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
             return;
         }
@@ -258,10 +258,20 @@ class Enemy extends InteractiveLevelObject {
      * Update activation state based on conditions
      */
     updateActivationState() {
+        // Activation/deactivation is a play-time behavior. Skipping it in build mode keeps the
+        // timers from ticking while editing, so e.g. "active after 1 second" is measured from
+        // the moment play starts.
+        if (Game.playMode !== Game.PLAY_MODE) {
+            return;
+        }
+
         if (this.isActive) {
             // Check if should deactivate
             if (EnemyActivationHandler.shouldDeactivate(this, this.inactivationConfig)) {
                 this.isActive = false;
+                // Drop any leftover walking momentum so the enemy stops in place.
+                this.xspeed = 0;
+                this.bonusSpeedX = 0;
                 EnemyActivationHandler.resetTimers(this);
             }
         } else {

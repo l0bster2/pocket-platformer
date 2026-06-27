@@ -307,7 +307,6 @@ class EnemiesAttributesRenderer {
      */
     static createInactivationOptions(currentConfig) {
         const options = [
-            { value: 'becomesInactive', text: 'Becomes Inactive' },
             { value: 'neverInactive', text: 'Never Inactive' },
             { value: 'afterSeconds', text: 'After X seconds inactive' },
             { value: 'playerFurtherThanDistance', text: 'Player further than distance' },

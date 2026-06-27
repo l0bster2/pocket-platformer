@@ -69,10 +69,6 @@
 /**
  * INACTIVATION CONDITIONS (turn enemy OFF)
  * 
- * 'becomesInactive'
- *   - No value needed
- *   - Enemy becomes inactive immediately
- * 
  * 'neverInactive'
  *   - No value needed
  *   - Enemy never becomes inactive once activated
