@@ -9,6 +9,12 @@ class EnemiesAttributesRenderer {
         const contentDiv = document.getElementById("enemiesContent");
         if (!contentDiv) return;
 
+        // Opening the enemy editor switches to build mode, so attribute changes are applied
+        // to freshly spawned enemies as soon as the user returns to the game and presses play.
+        if (typeof Game !== 'undefined' && Game.playMode === Game.PLAY_MODE) {
+            Game.changeGameMode();
+        }
+
         // All enemy types are always editable, regardless of whether they're placed in the level
         const allTypes = EnemyTypeAttributesHandler.getAllEnemyTypes();
 
@@ -218,7 +224,7 @@ class EnemiesAttributesRenderer {
         }
 
         return `
-            <div class="marginTop8 playerAttributeWrapper">
+            <div class="playerAttributeWrapper">
                 <label for="${id}" style="display:block; margin-bottom:6px;">${label}:</label>
                 <input class="playerAttrSlider enemyAttrSlider" type="range" min="${min}" max="${max}" value="${displayValue}" step="${step}" id="${id}"
                     oninput="EnemiesAttributesRenderer.updateSliderAttribute('${type}', '${id}', this.value, ${mapper ? 'true' : 'false'})">
@@ -338,8 +344,12 @@ class EnemiesAttributesRenderer {
         const finalValue = isNaN(numeric) ? value : numeric;
         EnemyTypeAttributesHandler.setAttribute(type, attributeName, finalValue);
 
-        // update displayed value
-        const displayEl = document.getElementById(attributeName + "Value");
+        // update displayed value (scoped to the enemy panel to avoid clashing with the
+        // player attribute sliders, which share the same element ids)
+        const panel = document.getElementById("enemyDetailsPanel");
+        const displayEl = panel
+            ? panel.querySelector(`#${attributeName}Value`)
+            : document.getElementById(attributeName + "Value");
         if (displayEl) {
             displayEl.innerHTML = isNaN(numeric) ? value : (numeric % 1 !== 0 ? numeric.toFixed(2) : numeric);
         }
@@ -363,8 +373,9 @@ class EnemiesAttributesRenderer {
      * Handle activation dropdown change
      */
     static onActivationChanged(type) {
-        const select = document.getElementById("activationSelect");
-        const valueInput = document.getElementById("activationValue");
+        const select = document.getElementById("activationSelect_" + type);
+        const valueInput = document.getElementById("activationValue_" + type);
+        if (!select || !valueInput) return;
         const selected = select.value;
 
         // Show/hide value input based on selection
@@ -378,8 +389,9 @@ class EnemiesAttributesRenderer {
      * Update activation config for a type
      */
     static updateActivationConfig(type) {
-        const select = document.getElementById("activationSelect");
-        const valueInput = document.getElementById("activationValue");
+        const select = document.getElementById("activationSelect_" + type);
+        const valueInput = document.getElementById("activationValue_" + type);
+        if (!select || !valueInput) return;
         const activationType = select.value;
         const value = valueInput.value ? parseFloat(valueInput.value) : undefined;
 
@@ -391,8 +403,9 @@ class EnemiesAttributesRenderer {
      * Handle inactivation dropdown change
      */
     static onInactivationChanged(type) {
-        const select = document.getElementById("inactivationSelect");
-        const valueInput = document.getElementById("inactivationValue");
+        const select = document.getElementById("inactivationSelect_" + type);
+        const valueInput = document.getElementById("inactivationValue_" + type);
+        if (!select || !valueInput) return;
         const selected = select.value;
 
         // Show/hide value input based on selection
@@ -406,8 +419,9 @@ class EnemiesAttributesRenderer {
      * Update inactivation config for a type
      */
     static updateInactivationConfig(type) {
-        const select = document.getElementById("inactivationSelect");
-        const valueInput = document.getElementById("inactivationValue");
+        const select = document.getElementById("inactivationSelect_" + type);
+        const valueInput = document.getElementById("inactivationValue_" + type);
+        if (!select || !valueInput) return;
         const inactivationType = select.value;
         const value = valueInput.value ? parseFloat(valueInput.value) : undefined;
 
