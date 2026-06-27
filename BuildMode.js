@@ -242,8 +242,12 @@ class BuildMode {
             //enemies
             else if (this.currentSelectedObject.type === SpritePixelArrays.SPRITE_TYPES.enemies) {
                 WorldDataHandler.levels[this.tileMapHandler.currentLevel].enemies.push({ x: tilePosX, y: tilePosY, type: this.currentSelectedObject.name });
-                enemies.push(new ObjectTypes.objectToClass[this.currentSelectedObject.name]
-                    (tilePosX, tilePosY, tileMapHandler.tileSize, this.currentSelectedObject.name, this.tileMapHandler, {}));
+                const newEnemy = new ObjectTypes.objectToClass[this.currentSelectedObject.name]
+                    (tilePosX, tilePosY, tileMapHandler.tileSize, this.currentSelectedObject.name, this.tileMapHandler, {});
+                // Apply the type's edited attributes so a newly placed enemy matches others of its
+                // type instead of falling back to constructor defaults until the level is reset.
+                EnemyTypeAttributesHandler.applyToInstance(newEnemy);
+                enemies.push(newEnemy);
             }
             //objects
             else {
