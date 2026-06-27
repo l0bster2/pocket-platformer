@@ -122,8 +122,8 @@ class EnemiesAttributesRenderer {
                         <div class="detailsSection marginBottom16">
                             <div class="detailsContent marginTop8">
                                 ${this.createNumberInput('lives', 'Lives', attributes.lives, 1, 100, 1, type)}
-                                ${this.createCheckboxInput('canBeStomped', 'Can be stomped', attributes.canBeStomped, type)}
-                                ${this.createBooleanSelectInput('killsPlayer', 'On player touch', attributes.killsPlayer, 'Kill player', 'Do nothing', type)}
+                                ${this.createStompSection(attributes, type)}
+                                ${this.createCheckboxInput('killsPlayer', 'Kills player on touch', attributes.killsPlayer, type)}
                             </div>
                         </div>
 
@@ -247,6 +247,27 @@ class EnemiesAttributesRenderer {
     }
 
     /**
+     * Create the "Can be stomped" checkbox together with the conditional "stun enemy for X
+     * seconds" input that is only shown while stomping is enabled.
+     */
+    static createStompSection(attributes, type) {
+        const canBeStomped = !!attributes.canBeStomped;
+        const stunDuration = attributes.stunDuration ?? 0;
+        return `
+            <div class="marginTop8">
+                <input type="checkbox" id="canBeStomped" ${canBeStomped ? 'checked' : ''}
+                    onchange="EnemiesAttributesRenderer.onCanBeStompedChanged('${type}', this.checked)">
+                <label for="canBeStomped" class="labelText">Can be stomped</label>
+            </div>
+            <div id="stunWrapper_${type}" class="marginTop8" style="display: ${canBeStomped ? 'block' : 'none'};">
+                <label for="stunDuration" class="labelText">Stun enemy for (seconds):</label>
+                <input type="number" id="stunDuration" class="textInput" value="${stunDuration}" min="0" max="60" step="0.25"
+                    onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'stunDuration', this.value)">
+            </div>
+        `;
+    }
+
+    /**
      * Create a dropdown bound to a boolean attribute (true = trueText, false = falseText)
      */
     static createBooleanSelectInput(id, label, value, trueText, falseText, type) {
@@ -359,6 +380,20 @@ class EnemiesAttributesRenderer {
      */
     static updateCheckboxAttribute(type, attributeName, checked) {
         EnemyTypeAttributesHandler.setAttribute(type, attributeName, checked);
+    }
+
+    /**
+     * Handle the "Can be stomped" checkbox: store the value and toggle the stun input visibility.
+     */
+    static onCanBeStompedChanged(type, checked) {
+        EnemyTypeAttributesHandler.setAttribute(type, 'canBeStomped', checked);
+        const panel = document.getElementById("enemyDetailsPanel");
+        const wrapper = panel
+            ? panel.querySelector(`#stunWrapper_${type}`)
+            : document.getElementById(`stunWrapper_${type}`);
+        if (wrapper) {
+            wrapper.style.display = checked ? 'block' : 'none';
+        }
     }
 
     /**

@@ -9,7 +9,10 @@ class EnemyAnimationHelper {
      */
     static updateAnimation(enemy, spriteCanvas) {
         // Select sprite based on state
-        if (enemy.jumping || (enemy.falling && enemy.yspeed > 0)) {
+        if (!enemy.isActive) {
+            // Inactive or stunned enemies always show their idle pose.
+            enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'idle');
+        } else if (enemy.jumping || (enemy.falling && enemy.yspeed > 0)) {
             enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'jump');
         } else if (enemy.walking) {
             enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'walk');

@@ -97,6 +97,7 @@ class Enemy extends InteractiveLevelObject {
         this.lives = 1;
         this.canBeStomped = false;
         this.killsPlayer = true;
+        this.stunDuration = 0; // seconds an enemy stays inactive after surviving a stomp (0 = no stun)
         
         // movement attributes (editable)
         this.maxSpeed = 2;
@@ -109,8 +110,10 @@ class Enemy extends InteractiveLevelObject {
         
         // animation
         this.currentAnimationIndex = 0;
-        this.currentSpriteIndex = 0; // Index within spriteObject array
         this.animationLengths = EnemyAnimationHelper.initializeAnimationLengths(this);
+        // Default to the idle pose so the very first rendered frame of a level is idle.
+        const idleSpriteIndex = EnemyAnimationHelper.findSpriteIndexByName(this, 'idle');
+        this.currentSpriteIndex = idleSpriteIndex >= 0 ? idleSpriteIndex : 0; // Index within spriteObject array
         this.facingDirection = AnimationHelper.facingDirections.left;
         
         // activation system
@@ -119,6 +122,10 @@ class Enemy extends InteractiveLevelObject {
         this.inactivationConfig = { type: "neverInactive" }; // never deactivates by default
         this.activationTimer = 0;
         this.inactivationTimer = 0;
+        // Temporary, gameplay-only activation override used when the enemy is stunned after a
+        // survived stomp. Reuses the "after seconds" reactivation logic without touching the
+        // saved activation config.
+        this.stunReactivationConfig = null;
         
         this.resetObject();
     }
@@ -275,9 +282,13 @@ class Enemy extends InteractiveLevelObject {
                 EnemyActivationHandler.resetTimers(this);
             }
         } else {
-            // Check if should activate
-            if (EnemyActivationHandler.shouldActivate(this, this.activationConfig)) {
+            // While stunned (from a survived stomp) the enemy reactivates via the temporary stun
+            // timer instead of its configured activation condition; otherwise the saved config is
+            // used. The stun override is gameplay-only and never persisted.
+            const activationCondition = this.stunReactivationConfig || this.activationConfig;
+            if (EnemyActivationHandler.shouldActivate(this, activationCondition)) {
                 this.isActive = true;
+                this.stunReactivationConfig = null;
                 EnemyActivationHandler.resetTimers(this);
             }
         }
@@ -301,6 +312,7 @@ class Enemy extends InteractiveLevelObject {
             lives: this.lives,
             canBeStomped: this.canBeStomped,
             killsPlayer: this.killsPlayer,
+            stunDuration: this.stunDuration,
             maxSpeed: this.maxSpeed,
             groundAcceleration: this.groundAcceleration,
             air_acceleration: this.air_acceleration,
@@ -318,6 +330,7 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.lives !== undefined) this.lives = attributes.lives;
         if (attributes.canBeStomped !== undefined) this.canBeStomped = attributes.canBeStomped;
         if (attributes.killsPlayer !== undefined) this.killsPlayer = attributes.killsPlayer;
+        if (attributes.stunDuration !== undefined) this.stunDuration = attributes.stunDuration;
         if (attributes.maxSpeed !== undefined) this.maxSpeed = attributes.maxSpeed;
         if (attributes.groundAcceleration !== undefined) this.groundAcceleration = attributes.groundAcceleration;
         if (attributes.air_acceleration !== undefined) this.air_acceleration = attributes.air_acceleration;
