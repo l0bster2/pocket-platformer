@@ -303,6 +303,17 @@ class DrawSectionHandler {
             ${es.descriptiveName}
         </span></div>`;
             });
+
+            // If this animated sprite belongs to an enemy, offer a link straight to its
+            // attributes editor (opens the enemy UI with this enemy type pre-selected).
+            if (typeof EnemyTypeAttributesHandler !== 'undefined' &&
+                EnemyTypeAttributesHandler.getAllEnemyTypes().includes(sprite.name)) {
+                this.spriteDescriptionWrapper.innerHTML +=
+                    `<div class="marginTop8 paddingTop8" style="border-top: 1px solid #ccc;"><span class="textAsLink"
+            onclick="EnemiesAttributesRenderer.openForType('${sprite.name}')">
+            ► Enemy attributes
+        </span></div>`;
+            }
         }
         else if (sprite.type === SpritePixelArrays.SPRITE_TYPES.deko) {
             this.spriteDescriptionWrapper.innerHTML = "Just a decorational Element";

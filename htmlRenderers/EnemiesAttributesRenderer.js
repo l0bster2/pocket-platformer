@@ -43,6 +43,21 @@ class EnemiesAttributesRenderer {
     }
 
     /**
+     * Open the enemy editor view and pre-select a specific enemy type. Used by the link in the
+     * draw section so the user lands directly on the attributes of the enemy they were editing.
+     */
+    static openForType(type) {
+        if (typeof changeView === 'function') {
+            changeView('enemies');
+        }
+        const dropdown = document.getElementById("enemySelectDropdown");
+        if (dropdown) {
+            dropdown.value = type;
+            this.onEnemyTypeSelected();
+        }
+    }
+
+    /**
      * Get a representative enemy instance for a type (used for the sprite preview).
      * Prefers an instance placed in the level, otherwise creates a temporary one.
      */
@@ -102,7 +117,7 @@ class EnemiesAttributesRenderer {
                 <!-- Tab Navigation (styled like Build tools tabs) -->
                 <div id="enemyTabWrapper" class="marginTop8">
                     <button id="tab_movement" class="levelNavigationButton tabButton active" onclick="EnemiesAttributesRenderer.switchTab('movement')">Movement</button>
-                    <button id="tab_other" class="levelNavigationButton tabButton" onclick="EnemiesAttributesRenderer.switchTab('other')">Other</button>
+                    <button id="tab_other" class="levelNavigationButton tabButton" onclick="EnemiesAttributesRenderer.switchTab('other')">Live</button>
                 </div>
 
                 <div id="enemyTabContent">
