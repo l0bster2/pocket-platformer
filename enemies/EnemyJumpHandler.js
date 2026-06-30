@@ -58,6 +58,7 @@ class EnemyJumpHandler {
      * @param {number} jumpIntervalFrames - How many frames between jumps
      */
     static updateJump(enemy, jumpIntervalFrames = 60) {
+        if (enemy.flying) return;
         if (enemy.jumpTimer === undefined) {
             enemy.jumpTimer = 0;
         }

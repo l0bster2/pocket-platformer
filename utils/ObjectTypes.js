@@ -195,6 +195,10 @@ class ObjectTypes {
     return 'enemy_2';
   }
 
+  static get ENEMY_3() {
+    return 'enemy_3';
+  }
+
   static get SPECIAL_BLOCK_VALUES() {
     return {
       canon: 14,
@@ -249,6 +253,7 @@ class ObjectTypes {
       [this.COLLECTIBLE]: Collectible,
       [this.ENEMY_1]: Enemy1,
       [this.ENEMY_2]: Enemy2,
+      [this.ENEMY_3]: Enemy3,
     };
   }
 }

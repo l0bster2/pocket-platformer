@@ -104,6 +104,7 @@ class EnemiesAttributesRenderer {
         // Render with tab navigation: sprite on top, then tabs for Movement / Other
         const activationNeedsValue = ['afterSeconds', 'playerInDistance'].includes(attributes.activationConfig?.type);
         const inactivationNeedsValue = ['afterSeconds', 'playerFurtherThanDistance'].includes(attributes.inactivationConfig?.type);
+        const isFlying = !!attributes.flying;
 
         panel.innerHTML = `
             <div class="enemyDetailsContent">
@@ -147,6 +148,16 @@ class EnemiesAttributesRenderer {
                     <div id="aiContent" style="display:none;">
                         <div class="detailsSection marginBottom16">
                             <div class="detailsContent marginTop8">
+                                <div class="marginBottom8" style="display: flex; gap: 24px;">
+                                    <div style="flex: 1;">
+                                        <label class="labelText">Type:</label>
+                                        <select id="enemyMovementTypeSelect_${type}" class="textInput" onchange="EnemiesAttributesRenderer.onEnemyMovementTypeChanged('${type}', this.value)" style="width: 100%; margin-top: 4px;">
+                                            <option value="walking" ${!isFlying ? 'selected' : ''}>Walking</option>
+                                            <option value="flying" ${isFlying ? 'selected' : ''}>Flying</option>
+                                        </select>
+                                    </div>
+                                    <div style="flex: 1;"></div>
+                                </div>
                                 <div class="marginTop8" style="display: flex; gap: 24px;">
                                     <div style="flex: 1;">
                                         <label class="labelText">Activate when:</label>
@@ -171,12 +182,13 @@ class EnemiesAttributesRenderer {
                                     </div>
                                 </div>
 
-                                ${this.createMovementBehaviourSection(attributes, type)}
+                                ${isFlying ? '' : this.createMovementBehaviourSection(attributes, type)}
                                 <div class="marginTop12" style="display: flex; gap: 24px;">
-                                    ${this.createGapBehaviourSection(attributes, type)}
+                                    ${isFlying ? '' : this.createGapBehaviourSection(attributes, type)}
                                     ${this.createWallBehaviourSection(attributes, type)}
+                                    ${isFlying ? '<div style="flex: 1;"></div>' : ''}
                                 </div>
-                                ${this.createJumpIntervalSection(attributes, type)}
+                                ${isFlying ? '' : this.createJumpIntervalSection(attributes, type)}
                             </div>
                         </div>
                     </div>
@@ -598,6 +610,16 @@ class EnemiesAttributesRenderer {
 
         const config = value !== undefined ? { type: inactivationType, value } : { type: inactivationType };
         EnemyTypeAttributesHandler.setAttribute(type, "inactivationConfig", config);
+    }
+
+    /**
+     * Handle the walking/flying type dropdown: store the flying flag and re-render the AI tab
+     * so the sections that don't apply to flying enemies (gap, movement, jump) are hidden.
+     */
+    static onEnemyMovementTypeChanged(type, value) {
+        EnemyTypeAttributesHandler.setAttribute(type, "flying", value === "flying");
+        this.renderEnemyTypeDetails(type);
+        this.switchTab('ai');
     }
 
     /**

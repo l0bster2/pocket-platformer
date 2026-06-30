@@ -108,6 +108,8 @@ class Enemy extends InteractiveLevelObject {
             continueWalking: "continueWalking",
         }
         this.wallBehaviour = this.wallBehaviours.changeDirection;
+        // Flying enemies ignore gravity, gaps and jumping; they hover and move horizontally.
+        this.flying = false;
         this.interativeObjects = [
             ObjectTypes.SPIKE,
             ObjectTypes.TRAMPOLINE,
@@ -361,6 +363,7 @@ class Enemy extends InteractiveLevelObject {
             randomDuration: this.randomDuration,
             gapBehaviour: this.gapBehaviour,
             wallBehaviour: this.wallBehaviour,
+            flying: this.flying,
             jumpIntervalEnabled: this.jumpIntervalEnabled,
             jumpInterval: this.jumpInterval,
             activationConfig: this.activationConfig,
@@ -385,6 +388,7 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.randomDuration !== undefined) this.randomDuration = attributes.randomDuration;
         if (attributes.gapBehaviour !== undefined) this.gapBehaviour = attributes.gapBehaviour;
         if (attributes.wallBehaviour !== undefined) this.wallBehaviour = attributes.wallBehaviour;
+        if (attributes.flying !== undefined) this.flying = attributes.flying;
         if (attributes.jumpIntervalEnabled !== undefined) this.jumpIntervalEnabled = attributes.jumpIntervalEnabled;
         if (attributes.jumpInterval !== undefined) this.jumpInterval = attributes.jumpInterval;
         if (attributes.movementBehaviour !== undefined) {

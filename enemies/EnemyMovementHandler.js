@@ -89,6 +89,7 @@ class EnemyMovementHandler {
      * @param {Enemy} enemy - The enemy to update
      */
     static handleGap(enemy) {
+        if (enemy.flying) return;
         if (enemy.gapBehaviour === enemy.gapBehaviours.continueWalking) return;
         if (enemy.falling || enemy.jumping) return;
         if (enemy.walkDirection === enemy.walkDirections.none) return;
@@ -167,6 +168,12 @@ class EnemyMovementHandler {
      * @param {Enemy} enemy - The enemy to update
      */
     static updateFalling(enemy) {
+        if (enemy.flying) {
+            // Flying enemies hover: no gravity is applied.
+            enemy.yspeed = 0;
+            enemy.falling = false;
+            return;
+        }
         if (enemy.falling && !enemy.fixedSpeed) {
             // If jump is not enforced by trampoline
             if (enemy.forcedJumpSpeed === 0) {
