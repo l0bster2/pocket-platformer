@@ -1,17 +1,19 @@
-class Enemy2 extends Enemy {
+/**
+ * Hammer Bro: patrols left and right (reversing every 2 seconds) and jumps from time to time.
+ * Always active by default.
+ */
+class HammerBro extends Enemy {
 
     constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
         const hitBoxOffset = -tileSize / 6;
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
-        this.walkDirection = this.walkDirections.right;
-        this.movementBehaviour = this.movementBehaviours.startMovingRight;
-        this.speed = 1;
-
-        // Distinct default attributes for Enemy 2 (per-type defaults)
-        this.maxSpeed = 3;
-        this.currentMaxSpeed = 3;
-        this.canBeStomped = false;
-        // Always active (base defaults: alwaysActive / neverInactive).
+        this.canBeStomped = true;
+        // Walks back and forth, switching direction every 2 seconds.
+        this.movementBehaviour = this.movementBehaviours.patrol;
+        this.patrolDuration = 2;
+        // Jumps every couple of seconds while patrolling.
+        this.jumpIntervalEnabled = true;
+        this.jumpInterval = 2;
     }
 
     draw(spriteCanvas) {

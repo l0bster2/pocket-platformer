@@ -195,6 +195,18 @@ class ObjectTypes {
     return 'enemy_2';
   }
 
+  static get FROG() {
+    return 'frog';
+  }
+
+  static get ZOMBIE() {
+    return 'zombie';
+  }
+
+  static get HAMMER_BRO() {
+    return 'hammer_bro';
+  }
+
   static get ENEMY_3() {
     return 'enemy_3';
   }
@@ -265,6 +277,9 @@ class ObjectTypes {
       [this.COLLECTIBLE]: Collectible,
       [this.ENEMY_1]: Enemy1,
       [this.ENEMY_2]: Enemy2,
+      [this.FROG]: Frog,
+      [this.ZOMBIE]: Zombie,
+      [this.HAMMER_BRO]: HammerBro,
       [this.ENEMY_3]: Enemy3,
       [this.ENEMY_4]: Enemy4,
       [this.ENEMY_5]: Enemy5,
