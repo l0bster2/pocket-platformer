@@ -314,6 +314,7 @@ class Enemy extends InteractiveLevelObject {
                     this.xspeed = 0;
                 }
             }
+            this.checkPlayerCollision();
             EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
             return;
         }
