@@ -118,6 +118,7 @@ class EnemiesAttributesRenderer {
                 <div id="enemyTabWrapper" class="marginTop8">
                     <button id="tab_movement" class="levelNavigationButton tabButton active" onclick="EnemiesAttributesRenderer.switchTab('movement')">Movement</button>
                     <button id="tab_other" class="levelNavigationButton tabButton" onclick="EnemiesAttributesRenderer.switchTab('other')">Live</button>
+                    <button id="tab_ai" class="levelNavigationButton tabButton" onclick="EnemiesAttributesRenderer.switchTab('ai')">Enemy AI</button>
                 </div>
 
                 <div id="enemyTabContent">
@@ -136,12 +137,14 @@ class EnemiesAttributesRenderer {
                     <div id="otherContent" style="display:none;">
                         <div class="detailsSection marginBottom16">
                             <div class="detailsContent marginTop8">
-                                ${this.createNumberInput('lives', 'Lives', attributes.lives, 1, 100, 1, type)}
+                                ${this.createNumberInput('lives', 'Health', attributes.lives, 1, 100, 1, type)}
                                 ${this.createStompSection(attributes, type)}
                                 ${this.createCheckboxInput('killsPlayer', 'Kills player on touch', attributes.killsPlayer, type)}
                             </div>
                         </div>
+                    </div>
 
+                    <div id="aiContent" style="display:none;">
                         <div class="detailsSection marginBottom16">
                             <div class="detailsContent marginTop8">
                                 <div class="marginTop8">
@@ -256,7 +259,7 @@ class EnemiesAttributesRenderer {
             <div class="marginTop8">
                 <input type="checkbox" id="${id}" ${checked ? 'checked' : ''} 
                     onchange="EnemiesAttributesRenderer.updateCheckboxAttribute('${type}', '${id}', this.checked)">
-                <label for="${id}" class="labelText">${label}</label>
+                <label for="${id}" class="checkBoxText">${label}</label>
             </div>
         `;
     }
@@ -269,12 +272,12 @@ class EnemiesAttributesRenderer {
         const canBeStomped = !!attributes.canBeStomped;
         const stunDuration = attributes.stunDuration ?? 0;
         return `
-            <div class="marginTop8">
+            <div class="subSection">
                 <input type="checkbox" id="canBeStomped" ${canBeStomped ? 'checked' : ''}
                     onchange="EnemiesAttributesRenderer.onCanBeStompedChanged('${type}', this.checked)">
-                <label for="canBeStomped" class="labelText">Can be stomped</label>
+                <label for="canBeStomped" class="checkBoxText">Can be stomped</label>
             </div>
-            <div id="stunWrapper_${type}" class="marginTop8" style="display: ${canBeStomped ? 'block' : 'none'};">
+            <div class="marginTop4" id="stunWrapper_${type}" style="display: ${canBeStomped ? 'block' : 'none'};">
                 <label for="stunDuration" class="labelText">Stun enemy for (seconds):</label>
                 <input type="number" id="stunDuration" class="textInput" value="${stunDuration}" min="0" max="60" step="0.25"
                     onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'stunDuration', this.value)">
@@ -302,22 +305,17 @@ class EnemiesAttributesRenderer {
      * Switch visible tab in the enemy details panel
      */
     static switchTab(tab) {
-        const move = document.getElementById('movementContent');
-        const other = document.getElementById('otherContent');
-        const tabMoveBtn = document.getElementById('tab_movement');
-        const tabOtherBtn = document.getElementById('tab_other');
-        if (!move || !other || !tabMoveBtn || !tabOtherBtn) return;
-        if (tab === 'movement') {
-            move.style.display = 'block';
-            other.style.display = 'none';
-            tabMoveBtn.classList.add('active');
-            tabOtherBtn.classList.remove('active');
-        } else {
-            move.style.display = 'none';
-            other.style.display = 'block';
-            tabMoveBtn.classList.remove('active');
-            tabOtherBtn.classList.add('active');
-        }
+        const tabs = {
+            movement: { content: document.getElementById('movementContent'), button: document.getElementById('tab_movement') },
+            other: { content: document.getElementById('otherContent'), button: document.getElementById('tab_other') },
+            ai: { content: document.getElementById('aiContent'), button: document.getElementById('tab_ai') },
+        };
+        if (Object.values(tabs).some(t => !t.content || !t.button)) return;
+        Object.entries(tabs).forEach(([key, t]) => {
+            const isActive = key === tab;
+            t.content.style.display = isActive ? 'block' : 'none';
+            t.button.classList.toggle('active', isActive);
+        });
     }
 
     /**
