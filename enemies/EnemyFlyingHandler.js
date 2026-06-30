@@ -46,8 +46,11 @@ class EnemyFlyingHandler {
         if (enemy.isActive) {
             this.updateFlying(enemy);
         } else {
-            enemy.xspeed = 0;
-            enemy.yspeed = 0;
+            // Bleed off momentum smoothly (like releasing a key) instead of stopping dead.
+            enemy.xspeed *= enemy.air_friction;
+            enemy.yspeed *= enemy.air_friction;
+            if (Math.abs(enemy.xspeed) < 0.5) enemy.xspeed = 0;
+            if (Math.abs(enemy.yspeed) < 0.5) enemy.yspeed = 0;
         }
         if (enemy.collidesWithWalls) {
             CharacterCollision.checkFloorAndTileCollision(enemy, false);

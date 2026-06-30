@@ -1,15 +1,20 @@
-/**
- * Ghost-type flyer: phases through walls and homes in on the player. It only wakes up while the
- * player is looking away and freezes again the moment the player looks at it.
- */
-class Enemy6 extends Enemy3 {
+class Enemy6 extends Enemy {
 
     constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
-        super(x, y, tileSize, type, tilemapHandler, extraAttributes);
-        this.flyingBehaviour = this.flyingBehaviours.followPlayer;
-        this.collidesWithWalls = false; // phases through walls
-        this.activationConfig = { type: "playerLookingOppositeDirection" };
-        this.inactivationConfig = { type: "playerLookingSameDirection" };
+        const hitBoxOffset = -tileSize / 6;
+        super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
+        // Flying enemy: hovers and moves freely according to its flying behaviour.
+        this.flying = true;
+        this.falling = false;
+        this.canBeStomped = true;
+        this.flyingBehaviour = this.flyingBehaviours.moveHorizontally;
         EnemyFlyingHandler.resetFlyingState(this);
+    }
+
+    draw(spriteCanvas) {
+        super.draw(spriteCanvas);
+        if (Game.playMode === Game.PLAY_MODE) {
+            EnemyFlyingHandler.stepFlying(this);
+        }
     }
 }

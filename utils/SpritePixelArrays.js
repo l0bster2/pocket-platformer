@@ -2767,12 +2767,12 @@ class SpritePixelArrays {
       ]
     };
 
-    this.FROG_IDLE = {
-      name: ObjectTypes.FROG,
+    this.ENEMY_3_IDLE = {
+      name: ObjectTypes.ENEMY_3,
       maxHeight: 16,
       multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
-      descriptiveName: "Frog idle",
+      descriptiveName: "Enemy 3 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -2790,11 +2790,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.FROG_WALK = {
-      name: ObjectTypes.FROG,
+    this.ENEMY_3_WALK = {
+      name: ObjectTypes.ENEMY_3,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Frog walk",
+      descriptiveName: "Enemy 3 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -2825,11 +2825,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.FROG_JUMP = {
-      name: ObjectTypes.FROG,
+    this.ENEMY_3_JUMP = {
+      name: ObjectTypes.ENEMY_3,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Frog jump",
+      descriptiveName: "Enemy 3 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -2847,12 +2847,12 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ZOMBIE_IDLE = {
-      name: ObjectTypes.ZOMBIE,
+    this.ENEMY_4_IDLE = {
+      name: ObjectTypes.ENEMY_4,
       maxHeight: 16,
       multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
-      descriptiveName: "Zombie idle",
+      descriptiveName: "Enemy 4 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -2870,11 +2870,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ZOMBIE_WALK = {
-      name: ObjectTypes.ZOMBIE,
+    this.ENEMY_4_WALK = {
+      name: ObjectTypes.ENEMY_4,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Zombie walk",
+      descriptiveName: "Enemy 4 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -2905,11 +2905,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ZOMBIE_JUMP = {
-      name: ObjectTypes.ZOMBIE,
+    this.ENEMY_4_JUMP = {
+      name: ObjectTypes.ENEMY_4,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Zombie jump",
+      descriptiveName: "Enemy 4 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -2927,12 +2927,12 @@ class SpritePixelArrays {
       ]
     };
 
-    this.HAMMER_BRO_IDLE = {
-      name: ObjectTypes.HAMMER_BRO,
+    this.ENEMY_5_IDLE = {
+      name: ObjectTypes.ENEMY_5,
       maxHeight: 16,
       multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
-      descriptiveName: "Hammer Bro idle",
+      descriptiveName: "Enemy 5 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -2950,11 +2950,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.HAMMER_BRO_WALK = {
-      name: ObjectTypes.HAMMER_BRO,
+    this.ENEMY_5_WALK = {
+      name: ObjectTypes.ENEMY_5,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Hammer Bro walk",
+      descriptiveName: "Enemy 5 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -2985,11 +2985,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.HAMMER_BRO_JUMP = {
-      name: ObjectTypes.HAMMER_BRO,
+    this.ENEMY_5_JUMP = {
+      name: ObjectTypes.ENEMY_5,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Hammer Bro jump",
+      descriptiveName: "Enemy 5 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3007,12 +3007,12 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_3_IDLE = {
-      name: ObjectTypes.ENEMY_3,
+    this.ENEMY_6_IDLE = {
+      name: ObjectTypes.ENEMY_6,
       maxHeight: 16,
       multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
-      descriptiveName: "Enemy 3 idle",
+      descriptiveName: "Enemy 6 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3030,11 +3030,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_3_WALK = {
-      name: ObjectTypes.ENEMY_3,
+    this.ENEMY_6_WALK = {
+      name: ObjectTypes.ENEMY_6,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Enemy 3 walk",
+      descriptiveName: "Enemy 6 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3065,12 +3065,12 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_4_IDLE = {
-      name: ObjectTypes.ENEMY_4,
+    this.ENEMY_7_IDLE = {
+      name: ObjectTypes.ENEMY_7,
       maxHeight: 16,
       multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
-      descriptiveName: "Enemy 4 idle",
+      descriptiveName: "Enemy 7 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3088,11 +3088,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_4_WALK = {
-      name: ObjectTypes.ENEMY_4,
+    this.ENEMY_7_WALK = {
+      name: ObjectTypes.ENEMY_7,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Enemy 4 walk",
+      descriptiveName: "Enemy 7 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3123,12 +3123,12 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_5_IDLE = {
-      name: ObjectTypes.ENEMY_5,
+    this.ENEMY_8_IDLE = {
+      name: ObjectTypes.ENEMY_8,
       maxHeight: 16,
       multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
-      descriptiveName: "Enemy 5 idle",
+      descriptiveName: "Enemy 8 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3146,11 +3146,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_5_WALK = {
-      name: ObjectTypes.ENEMY_5,
+    this.ENEMY_8_WALK = {
+      name: ObjectTypes.ENEMY_8,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Enemy 5 walk",
+      descriptiveName: "Enemy 8 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3181,12 +3181,12 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_6_IDLE = {
-      name: ObjectTypes.ENEMY_6,
+    this.ENEMY_9_IDLE = {
+      name: ObjectTypes.ENEMY_9,
       maxHeight: 16,
       multipleSprites: true,
       type: this.SPRITE_TYPES.enemies,
-      descriptiveName: "Enemy 6 idle",
+      descriptiveName: "Enemy 9 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3204,11 +3204,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_6_WALK = {
-      name: ObjectTypes.ENEMY_6,
+    this.ENEMY_9_WALK = {
+      name: ObjectTypes.ENEMY_9,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Enemy 6 walk",
+      descriptiveName: "Enemy 9 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3242,11 +3242,11 @@ class SpritePixelArrays {
     // Jump sprites for the flying enemies. They aren't used while flying, but make sure a
     // "jump" animation exists (and shows up in the draw section) if the enemy type is switched
     // to walking.
-    this.ENEMY_3_JUMP = {
-      name: ObjectTypes.ENEMY_3,
+    this.ENEMY_6_JUMP = {
+      name: ObjectTypes.ENEMY_6,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Enemy 3 jump",
+      descriptiveName: "Enemy 6 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3264,11 +3264,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_4_JUMP = {
-      name: ObjectTypes.ENEMY_4,
+    this.ENEMY_7_JUMP = {
+      name: ObjectTypes.ENEMY_7,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Enemy 4 jump",
+      descriptiveName: "Enemy 7 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3286,11 +3286,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_5_JUMP = {
-      name: ObjectTypes.ENEMY_5,
+    this.ENEMY_8_JUMP = {
+      name: ObjectTypes.ENEMY_8,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Enemy 5 jump",
+      descriptiveName: "Enemy 8 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:
@@ -3308,11 +3308,11 @@ class SpritePixelArrays {
       ]
     };
 
-    this.ENEMY_6_JUMP = {
-      name: ObjectTypes.ENEMY_6,
+    this.ENEMY_9_JUMP = {
+      name: ObjectTypes.ENEMY_9,
       maxHeight: 16,
       multipleSprites: true,
-      descriptiveName: "Enemy 6 jump",
+      descriptiveName: "Enemy 9 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite:

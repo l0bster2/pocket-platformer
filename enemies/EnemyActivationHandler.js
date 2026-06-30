@@ -142,6 +142,9 @@ class EnemyActivationHandler {
     static isPlayerLookingAtEnemy(enemy) {
         if (!PlayMode.player) return false;
 
+        // While wall-jumping the player is pushing off a wall, not looking at the enemy.
+        if (PlayMode.player.wallJumping) return false;
+
         const directionToEnemy = enemy.x >= PlayMode.player.x
             ? AnimationHelper.facingDirections.right
             : AnimationHelper.facingDirections.left;

@@ -306,7 +306,14 @@ class Enemy extends InteractiveLevelObject {
 
         // Only execute enemy logic if active
         if (!this.isActive) {
-            // Render the idle sprite while inactive (speed was already cleared on deactivation).
+            // Bleed off horizontal momentum with friction so the enemy glides to a halt the same
+            // way the player does when the arrow key is released, instead of stopping abruptly.
+            if (!this.flying && !this.fixedSpeed) {
+                this.xspeed *= this.friction;
+                if (Math.abs(this.xspeed) < 0.5) {
+                    this.xspeed = 0;
+                }
+            }
             EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
             return;
         }
@@ -350,8 +357,8 @@ class Enemy extends InteractiveLevelObject {
             // Check if should deactivate
             if (EnemyActivationHandler.shouldDeactivate(this, this.inactivationConfig)) {
                 this.isActive = false;
-                // Drop any leftover walking momentum so the enemy stops in place.
-                this.xspeed = 0;
+                // Leftover walking momentum is bled off with friction in draw() so the enemy
+                // decelerates to a stop instead of halting instantly.
                 this.bonusSpeedX = 0;
                 EnemyActivationHandler.resetTimers(this);
             }

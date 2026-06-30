@@ -1,20 +1,27 @@
+/**
+ * Stays put and hops straight up every couple of seconds. Always active by default.
+ */
 class Enemy3 extends Enemy {
 
     constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
         const hitBoxOffset = -tileSize / 6;
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
-        // Flying enemy: hovers and moves freely according to its flying behaviour.
-        this.flying = true;
-        this.falling = false;
         this.canBeStomped = true;
-        this.flyingBehaviour = this.flyingBehaviours.moveHorizontally;
-        EnemyFlyingHandler.resetFlyingState(this);
+        this.walkDirection = this.walkDirections.none;
+        this.movementBehaviour = this.movementBehaviours.standStill;
+        // Hops in place from time to time.
+        this.jumpIntervalEnabled = true;
+        this.jumpInterval = 2;
     }
 
     draw(spriteCanvas) {
         super.draw(spriteCanvas);
         if (Game.playMode === Game.PLAY_MODE) {
-            EnemyFlyingHandler.stepFlying(this);
+            this.isActive && super.walkHandler();
+            this.forcedJumpSpeed !== 0 && EnemyJumpHandler.performJump(this, this.forcedJumpSpeed, this.maxJumpFrames + this.extraTrampolineJumpFrames);
+            super.fallHandler();
+            super.correctMaxYSpeed();
+            CharacterCollision.checkFloorAndTileCollision(this, false);
         }
     }
 }

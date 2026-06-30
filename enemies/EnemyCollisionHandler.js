@@ -12,12 +12,20 @@ class EnemyCollisionHandler {
             if (enemy.interativeObjects.includes(levelObject.type)) {
                 if (levelObject.colissionFunction(enemy, levelObject)) {
                     if (levelObject.type === ObjectTypes.WATER) {
+                        // Enemies drown on contact: skip the swim physics and kill it below.
                         touchingWater = true;
+                    } else {
+                        levelObject.collisionEvent(enemy);
                     }
-                    levelObject.collisionEvent(enemy);
                 }
             }
         });
+
+        // Enemies die the moment they touch water.
+        if (touchingWater) {
+            enemy.death();
+            return;
+        }
 
         if (enemy.swimming && !touchingWater) {
             enemy.swimming = false;

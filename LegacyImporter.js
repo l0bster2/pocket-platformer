@@ -66,6 +66,7 @@ function legacyImporter(fileContent) {
     }
 
     WorldDataHandler.levels = JSON.parse(worldDataPart);
+    WorldDataHandler.ensureLevelDataIntegrity();
 
     var spriteDataPart = fileContent.substring(
         fileContent.lastIndexOf(spriteDataCommentStart) + spriteDataCommentStart.length,

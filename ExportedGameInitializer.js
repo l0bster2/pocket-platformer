@@ -1,6 +1,7 @@
 class ExportedGameInitializer {
     static initializeExportedGame(allData) {
         WorldDataHandler.levels = [...allData.levels];
+        WorldDataHandler.ensureLevelDataIntegrity();
         WorldDataHandler.gamesName = allData.gamesName;
         WorldDataHandler.endingMessage = allData.endingMessage;
         WorldDataHandler.effects = allData.effects;

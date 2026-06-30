@@ -94,6 +94,19 @@ class WorldDataHandler {
         return demoLevel;
     }
 
+    /**
+     * Older / hand-made imports may be missing some per-level arrays (enemies were added later).
+     * Ensure every level has them so the editor can add objects without hitting an undefined array.
+     */
+    static ensureLevelDataIntegrity() {
+        (this.levels || []).forEach(level => {
+            level.levelObjects = level.levelObjects || [];
+            level.deko = level.deko || [];
+            level.paths = level.paths || [];
+            level.enemies = level.enemies || [];
+        });
+    }
+
     static exampleLevel(withDefaultImage = false) {
         let exampleLevelTileData = this.createEmptyLevel().tileData;
         for (var i = 1; i < 6; i++) {

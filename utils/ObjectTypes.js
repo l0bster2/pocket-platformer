@@ -195,18 +195,6 @@ class ObjectTypes {
     return 'enemy_2';
   }
 
-  static get FROG() {
-    return 'frog';
-  }
-
-  static get ZOMBIE() {
-    return 'zombie';
-  }
-
-  static get HAMMER_BRO() {
-    return 'hammer_bro';
-  }
-
   static get ENEMY_3() {
     return 'enemy_3';
   }
@@ -221,6 +209,18 @@ class ObjectTypes {
 
   static get ENEMY_6() {
     return 'enemy_6';
+  }
+
+  static get ENEMY_7() {
+    return 'enemy_7';
+  }
+
+  static get ENEMY_8() {
+    return 'enemy_8';
+  }
+
+  static get ENEMY_9() {
+    return 'enemy_9';
   }
 
   static get SPECIAL_BLOCK_VALUES() {
@@ -277,13 +277,13 @@ class ObjectTypes {
       [this.COLLECTIBLE]: Collectible,
       [this.ENEMY_1]: Enemy1,
       [this.ENEMY_2]: Enemy2,
-      [this.FROG]: Frog,
-      [this.ZOMBIE]: Zombie,
-      [this.HAMMER_BRO]: HammerBro,
       [this.ENEMY_3]: Enemy3,
       [this.ENEMY_4]: Enemy4,
       [this.ENEMY_5]: Enemy5,
       [this.ENEMY_6]: Enemy6,
+      [this.ENEMY_7]: Enemy7,
+      [this.ENEMY_8]: Enemy8,
+      [this.ENEMY_9]: Enemy9,
     };
   }
 }
