@@ -329,6 +329,7 @@ class EnemiesAttributesRenderer {
             { value: 'canSeePlayer', text: 'Can see player' },
             { value: 'playerApproxSameX', text: 'Player approx same X' },
             { value: 'playerApproxSameY', text: 'Player approx same Y' },
+            { value: 'playerLookingOppositeDirection', text: 'Player looking in opposite direction' },
         ];
 
         return options.map(opt => 
@@ -347,6 +348,7 @@ class EnemiesAttributesRenderer {
             { value: 'notSeeingPlayer', text: 'Not seeing player' },
             { value: 'playerNotApproxSameX', text: 'Player not approx same X' },
             { value: 'playerNotApproxSameY', text: 'Player not approx same Y' },
+            { value: 'playerLookingSameDirection', text: 'Player looking in same direction' },
         ];
 
         return options.map(opt => 

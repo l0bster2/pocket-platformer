@@ -64,6 +64,11 @@
  * 'playerApproxSameY' 
  *   - value: tile buffer (default 1)
  *   - Activates when player Y position is within buffer
+ * 
+ * 'playerLookingOppositeDirection'
+ *   - No value needed
+ *   - Activates when the player is facing away from the enemy
+ *     (e.g. player is left of the enemy and facing left)
  */
 
 /**
@@ -92,4 +97,9 @@
  * 'playerNotApproxSameY'
  *   - value: tile buffer (default 1)
  *   - Becomes inactive when player Y is outside buffer
+ * 
+ * 'playerLookingSameDirection'
+ *   - No value needed
+ *   - Becomes inactive when the player is facing towards the enemy
+ *     (e.g. player is left of the enemy and facing right)
  */

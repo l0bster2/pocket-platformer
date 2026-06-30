@@ -34,6 +34,9 @@ class EnemyActivationHandler {
             case 'playerApproxSameY':
                 return this.isPlayerApproximatelySameY(enemy, value);
 
+            case 'playerLookingOppositeDirection':
+                return !this.isPlayerLookingAtEnemy(enemy);
+
             default:
                 return true;
         }
@@ -70,6 +73,9 @@ class EnemyActivationHandler {
 
             case 'playerNotApproxSameY':
                 return !this.isPlayerApproximatelySameY(enemy, value);
+
+            case 'playerLookingSameDirection':
+                return this.isPlayerLookingAtEnemy(enemy);
 
             default:
                 return false;
@@ -125,6 +131,22 @@ class EnemyActivationHandler {
         const dy = Math.abs(PlayMode.player.y - enemy.y);
 
         return dy <= buffer;
+    }
+
+    /**
+     * Check if the player is facing towards the enemy (looking at it).
+     * The player "looks at" the enemy when their facing direction matches the
+     * horizontal direction from the player to the enemy.
+     * @private
+     */
+    static isPlayerLookingAtEnemy(enemy) {
+        if (!PlayMode.player) return false;
+
+        const directionToEnemy = enemy.x >= PlayMode.player.x
+            ? AnimationHelper.facingDirections.right
+            : AnimationHelper.facingDirections.left;
+
+        return PlayMode.player.facingDirection === directionToEnemy;
     }
 
     /**
