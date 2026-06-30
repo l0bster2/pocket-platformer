@@ -111,7 +111,7 @@ class EnemyActivationHandler {
      * Check if player is approximately on same X axis as enemy (within buffer)
      * @private
      */
-    static isPlayerApproximatelySameX(enemy, bufferTiles = 1) {
+    static isPlayerApproximatelySameX(enemy, bufferTiles = 0.5) {
         if (!PlayMode.player) return false;
 
         const buffer = bufferTiles * enemy.tileSize;
@@ -124,7 +124,7 @@ class EnemyActivationHandler {
      * Check if player is approximately on same Y axis as enemy (within buffer)
      * @private
      */
-    static isPlayerApproximatelySameY(enemy, bufferTiles = 1) {
+    static isPlayerApproximatelySameY(enemy, bufferTiles = 0.5) {
         if (!PlayMode.player) return false;
 
         const buffer = bufferTiles * enemy.tileSize;

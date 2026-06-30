@@ -83,11 +83,46 @@ class EnemyMovementHandler {
     }
 
     /**
+     * React to a gap ahead (one foot over an empty tile, the other on ground) according to the
+     * enemy's configured gapBehaviour: turn around, jump across, or keep walking (fall off).
+     * Only acts on the leading foot so the enemy doesn't jitter while straddling the edge.
+     * @param {Enemy} enemy - The enemy to update
+     */
+    static handleGap(enemy) {
+        if (enemy.gapBehaviour === enemy.gapBehaviours.continueWalking) return;
+        if (enemy.falling || enemy.jumping) return;
+        if (enemy.walkDirection === enemy.walkDirections.none) return;
+
+        const tmh = tileMapHandler;
+        const footRow = tmh.getTileValueForPosition(enemy.y + enemy.height + 1);
+        if (footRow < 0 || footRow >= tmh.levelHeight) return;
+
+        const leftCol = tmh.getTileValueForPosition(enemy.x);
+        const rightCol = tmh.getTileValueForPosition(enemy.x + enemy.width);
+        const leftEmpty = tmh.tileMap[footRow][leftCol] === 0;
+        const rightEmpty = tmh.tileMap[footRow][rightCol] === 0;
+
+        // Only a gap when exactly one foot is over an empty tile.
+        if (leftEmpty === rightEmpty) return;
+
+        const movingRightIntoGap = enemy.walkDirection === enemy.walkDirections.right && rightEmpty;
+        const movingLeftIntoGap = enemy.walkDirection === enemy.walkDirections.left && leftEmpty;
+        if (!movingRightIntoGap && !movingLeftIntoGap) return;
+
+        if (enemy.gapBehaviour === enemy.gapBehaviours.changeDirection) {
+            enemy.walkDirection = movingRightIntoGap ? enemy.walkDirections.left : enemy.walkDirections.right;
+        } else if (enemy.gapBehaviour === enemy.gapBehaviours.jump) {
+            EnemyJumpHandler.initiateJump(enemy);
+        }
+    }
+
+    /**
      * Execute walk handler logic
      * @param {Enemy} enemy - The enemy to update
      */
     static updateWalking(enemy) {
         this.updateWalkDirection(enemy);
+        this.handleGap(enemy);
         enemy.walking = false;
         const newMaxSpeed = enemy.currentMaxSpeed;
 

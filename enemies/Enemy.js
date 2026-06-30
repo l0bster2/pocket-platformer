@@ -95,6 +95,19 @@ class Enemy extends InteractiveLevelObject {
         this.patrolDuration = 2.5; // seconds before a patrolling enemy reverses direction
         this.randomDuration = 3;   // seconds before a random-moving enemy picks a new direction
         this.movementTimer = 0;    // frame counter for patrol/random behaviours
+        // What the enemy does when one foot is over a gap (an empty tile) and the other isn't.
+        this.gapBehaviours = {
+            changeDirection: "changeDirection",
+            jump: "jump",
+            continueWalking: "continueWalking",
+        }
+        this.gapBehaviour = this.gapBehaviours.changeDirection;
+        // What the enemy does when it walks into a wall.
+        this.wallBehaviours = {
+            changeDirection: "changeDirection",
+            continueWalking: "continueWalking",
+        }
+        this.wallBehaviour = this.wallBehaviours.changeDirection;
         this.interativeObjects = [
             ObjectTypes.SPIKE,
             ObjectTypes.TRAMPOLINE,
@@ -107,6 +120,8 @@ class Enemy extends InteractiveLevelObject {
         this.jumping = false;
         this.jumpTimer = 0;
         this.jumpIntervalFrames = 120; // Jump every 2 seconds at 60 FPS
+        this.jumpIntervalEnabled = false; // when true, the enemy jumps every jumpInterval seconds
+        this.jumpInterval = 2; // seconds between interval jumps
         
         // enemy attributes
         this.lives = 1;
@@ -169,9 +184,15 @@ class Enemy extends InteractiveLevelObject {
                 break;
             case AnimationHelper.facingDirections.left:
                 this.horizontalHit();
+                if (this.wallBehaviour === this.wallBehaviours.changeDirection) {
+                    this.walkDirection = this.walkDirections.right;
+                }
                 break;
             case AnimationHelper.facingDirections.right:
                 this.horizontalHit();
+                if (this.wallBehaviour === this.wallBehaviours.changeDirection) {
+                    this.walkDirection = this.walkDirections.left;
+                }
         }
     }
 
@@ -256,7 +277,9 @@ class Enemy extends InteractiveLevelObject {
 
         this.checkHazardCollisions();
         this.checkPlayerCollision();
-        EnemyJumpHandler.updateJump(this, this.jumpIntervalFrames);
+        // updateJump still runs every frame so in-progress jumps (including gap jumps and
+        // trampoline launches) finish; the interval jump itself only starts when enabled.
+        EnemyJumpHandler.updateJump(this, Math.round(this.jumpInterval * 60));
         
         // Update animation
         EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
@@ -336,6 +359,10 @@ class Enemy extends InteractiveLevelObject {
             movementBehaviour: this.movementBehaviour,
             patrolDuration: this.patrolDuration,
             randomDuration: this.randomDuration,
+            gapBehaviour: this.gapBehaviour,
+            wallBehaviour: this.wallBehaviour,
+            jumpIntervalEnabled: this.jumpIntervalEnabled,
+            jumpInterval: this.jumpInterval,
             activationConfig: this.activationConfig,
             inactivationConfig: this.inactivationConfig,
         };
@@ -356,6 +383,10 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.air_friction !== undefined) this.air_friction = attributes.air_friction;
         if (attributes.patrolDuration !== undefined) this.patrolDuration = attributes.patrolDuration;
         if (attributes.randomDuration !== undefined) this.randomDuration = attributes.randomDuration;
+        if (attributes.gapBehaviour !== undefined) this.gapBehaviour = attributes.gapBehaviour;
+        if (attributes.wallBehaviour !== undefined) this.wallBehaviour = attributes.wallBehaviour;
+        if (attributes.jumpIntervalEnabled !== undefined) this.jumpIntervalEnabled = attributes.jumpIntervalEnabled;
+        if (attributes.jumpInterval !== undefined) this.jumpInterval = attributes.jumpInterval;
         if (attributes.movementBehaviour !== undefined) {
             this.movementBehaviour = attributes.movementBehaviour;
             // "Starts moving" modes define the initial direction; set it now so editing the

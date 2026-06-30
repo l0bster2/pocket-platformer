@@ -77,6 +77,11 @@ class EnemyJumpHandler {
             return;
         }
 
+        // Interval jumping is opt-in per enemy type.
+        if (!enemy.jumpIntervalEnabled) {
+            return;
+        }
+
         // Only tick the interval timer when grounded and able to jump
         enemy.jumpTimer++;
         if (enemy.jumpTimer >= jumpIntervalFrames) {

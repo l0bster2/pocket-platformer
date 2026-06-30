@@ -7,19 +7,6 @@ class Enemy1 extends Enemy {
         this.canBeStomped = true;
     }
 
-    hitWall(direction) {
-        super.hitWall(direction);
-
-        switch (direction) {
-            case AnimationHelper.facingDirections.left:
-                this.walkDirection = this.walkDirections.right;
-                break;
-            case AnimationHelper.facingDirections.right:
-                this.walkDirection = this.walkDirections.left;
-                break;
-        }
-    }
-
     draw(spriteCanvas) {
         super.draw(spriteCanvas);
         if (Game.playMode === Game.PLAY_MODE) {

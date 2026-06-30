@@ -102,8 +102,8 @@ class EnemiesAttributesRenderer {
         }
 
         // Render with tab navigation: sprite on top, then tabs for Movement / Other
-        const activationNeedsValue = ['afterSeconds', 'playerInDistance', 'playerApproxSameX', 'playerApproxSameY'].includes(attributes.activationConfig?.type);
-        const inactivationNeedsValue = ['afterSeconds', 'playerFurtherThanDistance', 'playerNotApproxSameX', 'playerNotApproxSameY'].includes(attributes.inactivationConfig?.type);
+        const activationNeedsValue = ['afterSeconds', 'playerInDistance'].includes(attributes.activationConfig?.type);
+        const inactivationNeedsValue = ['afterSeconds', 'playerFurtherThanDistance'].includes(attributes.inactivationConfig?.type);
 
         panel.innerHTML = `
             <div class="enemyDetailsContent">
@@ -147,29 +147,36 @@ class EnemiesAttributesRenderer {
                     <div id="aiContent" style="display:none;">
                         <div class="detailsSection marginBottom16">
                             <div class="detailsContent marginTop8">
-                                <div class="marginTop8">
-                                    <label class="labelText">Activate when:</label>
-                                    <select id="activationSelect_${type}" class="textInput" onchange="EnemiesAttributesRenderer.onActivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
-                                        ${this.createActivationOptions(attributes.activationConfig)}
-                                    </select>
-                                    <input type="number" id="activationValue_${type}" class="textInput marginTop4" placeholder="Value (if needed)" 
-                                        value="${attributes.activationConfig?.value ?? ''}" 
-                                        style="display: ${activationNeedsValue ? 'block' : 'none'};"
-                                        onchange="EnemiesAttributesRenderer.updateActivationConfig('${type}')">
-                                </div>
+                                <div class="marginTop8" style="display: flex; gap: 24px;">
+                                    <div style="flex: 1;">
+                                        <label class="labelText">Activate when:</label>
+                                        <select id="activationSelect_${type}" class="textInput" onchange="EnemiesAttributesRenderer.onActivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
+                                            ${this.createActivationOptions(attributes.activationConfig)}
+                                        </select>
+                                        <input type="number" id="activationValue_${type}" class="textInput marginTop4" placeholder="Value (if needed)" 
+                                            value="${attributes.activationConfig?.value ?? ''}" 
+                                            style="display: ${activationNeedsValue ? 'block' : 'none'};"
+                                            onchange="EnemiesAttributesRenderer.updateActivationConfig('${type}')">
+                                    </div>
 
-                                <div class="marginTop8">
-                                    <label class="labelText">Deactivate when:</label>
-                                    <select id="inactivationSelect_${type}" class="textInput" onchange="EnemiesAttributesRenderer.onInactivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
-                                        ${this.createInactivationOptions(attributes.inactivationConfig)}
-                                    </select>
-                                    <input type="number" id="inactivationValue_${type}" class="textInput marginTop4" placeholder="Value (if needed)" 
-                                        value="${attributes.inactivationConfig?.value ?? ''}" 
-                                        style="display: ${inactivationNeedsValue ? 'block' : 'none'};"
-                                        onchange="EnemiesAttributesRenderer.updateInactivationConfig('${type}')">
+                                    <div style="flex: 1;">
+                                        <label class="labelText">Deactivate when:</label>
+                                        <select id="inactivationSelect_${type}" class="textInput" onchange="EnemiesAttributesRenderer.onInactivationChanged('${type}')" style="width: 100%; margin-top: 4px;">
+                                            ${this.createInactivationOptions(attributes.inactivationConfig)}
+                                        </select>
+                                        <input type="number" id="inactivationValue_${type}" class="textInput marginTop4" placeholder="Value (if needed)" 
+                                            value="${attributes.inactivationConfig?.value ?? ''}" 
+                                            style="display: ${inactivationNeedsValue ? 'block' : 'none'};"
+                                            onchange="EnemiesAttributesRenderer.updateInactivationConfig('${type}')">
+                                    </div>
                                 </div>
 
                                 ${this.createMovementBehaviourSection(attributes, type)}
+                                <div class="marginTop12" style="display: flex; gap: 24px;">
+                                    ${this.createGapBehaviourSection(attributes, type)}
+                                    ${this.createWallBehaviourSection(attributes, type)}
+                                </div>
+                                ${this.createJumpIntervalSection(attributes, type)}
                             </div>
                         </div>
                     </div>
@@ -329,8 +336,8 @@ class EnemiesAttributesRenderer {
             { value: 'afterSeconds', text: 'After X seconds' },
             { value: 'playerInDistance', text: 'Player in distance' },
             { value: 'canSeePlayer', text: 'Can see player' },
-            { value: 'playerApproxSameX', text: 'Player approx same X' },
-            { value: 'playerApproxSameY', text: 'Player approx same Y' },
+            { value: 'playerApproxSameX', text: 'Player same X' },
+            { value: 'playerApproxSameY', text: 'Player same Y' },
             { value: 'playerLookingOppositeDirection', text: 'Player looking in opposite direction' },
         ];
 
@@ -348,8 +355,8 @@ class EnemiesAttributesRenderer {
             { value: 'afterSeconds', text: 'After X seconds inactive' },
             { value: 'playerFurtherThanDistance', text: 'Player further than distance' },
             { value: 'notSeeingPlayer', text: 'Not seeing player' },
-            { value: 'playerNotApproxSameX', text: 'Player not approx same X' },
-            { value: 'playerNotApproxSameY', text: 'Player not approx same Y' },
+            { value: 'playerNotApproxSameX', text: 'Player not same X' },
+            { value: 'playerNotApproxSameY', text: 'Player not same Y' },
             { value: 'playerLookingSameDirection', text: 'Player looking in same direction' },
         ];
 
@@ -366,22 +373,25 @@ class EnemiesAttributesRenderer {
         const patrolDuration = attributes.patrolDuration ?? 2.5;
         const randomDuration = attributes.randomDuration ?? 3;
         return `
-            <div class="subSection marginTop16">
-                <label class="labelText">Movement behaviour:</label>
-                <select id="movementBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
-                    onchange="EnemiesAttributesRenderer.onMovementBehaviourChanged('${type}')">
-                    ${this.createMovementBehaviourOptions(behaviour)}
-                </select>
-                <div id="patrolDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'patrol' ? 'block' : 'none'};">
-                    <label for="patrolDurationInput_${type}" class="labelText">Move each direction for (seconds):</label>
-                    <input type="number" id="patrolDurationInput_${type}" class="textInput" value="${patrolDuration}" min="0.25" max="60" step="0.25"
-                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'patrolDuration', this.value)">
+            <div class="subSection marginTop16" style="display: flex; gap: 24px;">
+                <div style="flex: 1;">
+                    <label class="labelText">Movement behaviour:</label>
+                    <select id="movementBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
+                        onchange="EnemiesAttributesRenderer.onMovementBehaviourChanged('${type}')">
+                        ${this.createMovementBehaviourOptions(behaviour)}
+                    </select>
+                    <div id="patrolDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'patrol' ? 'block' : 'none'};">
+                        <label for="patrolDurationInput_${type}" class="labelText">Move each direction for (seconds):</label>
+                        <input type="number" id="patrolDurationInput_${type}" class="textInput" value="${patrolDuration}" min="0.25" max="60" step="0.25"
+                            onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'patrolDuration', this.value)">
+                    </div>
+                    <div id="randomDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'random' ? 'block' : 'none'};">
+                        <label for="randomDurationInput_${type}" class="labelText">Change direction every (seconds):</label>
+                        <input type="number" id="randomDurationInput_${type}" class="textInput" value="${randomDuration}" min="0.25" max="60" step="0.25"
+                            onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'randomDuration', this.value)">
+                    </div>
                 </div>
-                <div id="randomDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'random' ? 'block' : 'none'};">
-                    <label for="randomDurationInput_${type}" class="labelText">Change direction every (seconds):</label>
-                    <input type="number" id="randomDurationInput_${type}" class="textInput" value="${randomDuration}" min="0.25" max="60" step="0.25"
-                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'randomDuration', this.value)">
-                </div>
+                <div style="flex: 1;"></div>
             </div>
         `;
     }
@@ -403,6 +413,67 @@ class EnemiesAttributesRenderer {
         return options.map(opt => 
             `<option value="${opt.value}" ${current === opt.value ? 'selected' : ''}>${opt.text}</option>`
         ).join('');
+    }
+
+    /**
+     * Create the gap behaviour subsection (what the enemy does at a ledge / gap)
+     */
+    static createGapBehaviourSection(attributes, type) {
+        const behaviour = attributes.gapBehaviour ?? 'changeDirection';
+        const options = [
+            { value: 'changeDirection', text: 'Change direction' },
+            { value: 'jump', text: 'Jump' },
+            { value: 'continueWalking', text: 'Continue walking' },
+        ];
+        return `
+            <div style="flex: 1;">
+                <label class="labelText">Gap collision:</label>
+                <select id="gapBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
+                    onchange="EnemiesAttributesRenderer.updateSelectAttribute('${type}', 'gapBehaviour', this.value)">
+                    ${options.map(opt => `<option value="${opt.value}" ${behaviour === opt.value ? 'selected' : ''}>${opt.text}</option>`).join('')}
+                </select>
+            </div>
+        `;
+    }
+
+    /**
+     * Create the wall behaviour subsection (what the enemy does when it hits a wall)
+     */
+    static createWallBehaviourSection(attributes, type) {
+        const behaviour = attributes.wallBehaviour ?? 'changeDirection';
+        const options = [
+            { value: 'changeDirection', text: 'Change direction' },
+            { value: 'continueWalking', text: 'Continue walking' },
+        ];
+        return `
+            <div style="flex: 1;">
+                <label class="labelText">Wall collision:</label>
+                <select id="wallBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
+                    onchange="EnemiesAttributesRenderer.updateSelectAttribute('${type}', 'wallBehaviour', this.value)">
+                    ${options.map(opt => `<option value="${opt.value}" ${behaviour === opt.value ? 'selected' : ''}>${opt.text}</option>`).join('')}
+                </select>
+            </div>
+        `;
+    }
+
+    /**
+     * Create the "jump every X seconds" subsection (checkbox + conditional interval input)
+     */
+    static createJumpIntervalSection(attributes, type) {
+        const enabled = !!attributes.jumpIntervalEnabled;
+        const interval = attributes.jumpInterval ?? 2;
+        return `
+            <div class="subSection marginTop16">
+                <input type="checkbox" id="jumpIntervalEnabled_${type}" ${enabled ? 'checked' : ''}
+                    onchange="EnemiesAttributesRenderer.onJumpIntervalEnabledChanged('${type}', this.checked)">
+                <label for="jumpIntervalEnabled_${type}" class="checkBoxText">Jump every X seconds</label>
+                <div id="jumpIntervalWrapper_${type}" class="marginTop4" style="display: ${enabled ? 'block' : 'none'};">
+                    <label for="jumpIntervalInput_${type}" class="labelText">Jump every (seconds):</label>
+                    <input type="number" id="jumpIntervalInput_${type}" class="textInput" value="${interval}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'jumpInterval', this.value)">
+                </div>
+            </div>
+        `;
     }
 
     /**
@@ -477,7 +548,7 @@ class EnemiesAttributesRenderer {
         const selected = select.value;
 
         // Show/hide value input based on selection
-        const needsValue = ['afterSeconds', 'playerInDistance', 'playerApproxSameX', 'playerApproxSameY'].includes(selected);
+        const needsValue = ['afterSeconds', 'playerInDistance'].includes(selected);
         valueInput.style.display = needsValue ? 'block' : 'none';
 
         this.updateActivationConfig(type);
@@ -507,7 +578,7 @@ class EnemiesAttributesRenderer {
         const selected = select.value;
 
         // Show/hide value input based on selection
-        const needsValue = ['afterSeconds', 'playerFurtherThanDistance', 'playerNotApproxSameX', 'playerNotApproxSameY'].includes(selected);
+        const needsValue = ['afterSeconds', 'playerFurtherThanDistance'].includes(selected);
         valueInput.style.display = needsValue ? 'block' : 'none';
 
         this.updateInactivationConfig(type);
@@ -541,6 +612,23 @@ class EnemiesAttributesRenderer {
         const randomWrapper = panel?.querySelector(`#randomDurationWrapper_${type}`);
         if (patrolWrapper) patrolWrapper.style.display = behaviour === 'patrol' ? 'block' : 'none';
         if (randomWrapper) randomWrapper.style.display = behaviour === 'random' ? 'block' : 'none';
+    }
+
+    /**
+     * Update a string attribute from a dropdown for a type
+     */
+    static updateSelectAttribute(type, attributeName, value) {
+        EnemyTypeAttributesHandler.setAttribute(type, attributeName, value);
+    }
+
+    /**
+     * Handle the "Jump every X seconds" checkbox: store it and toggle the interval input.
+     */
+    static onJumpIntervalEnabledChanged(type, checked) {
+        EnemyTypeAttributesHandler.setAttribute(type, 'jumpIntervalEnabled', checked);
+        const panel = document.getElementById("enemyDetailsPanel");
+        const wrapper = panel?.querySelector(`#jumpIntervalWrapper_${type}`);
+        if (wrapper) wrapper.style.display = checked ? 'block' : 'none';
     }
 
     /**

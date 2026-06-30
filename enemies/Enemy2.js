@@ -17,19 +17,6 @@ class Enemy2 extends Enemy {
         this.inactivationConfig = { type: "playerFurtherThanDistance", value: 7 };
     }
 
-    hitWall(direction) {
-        super.hitWall(direction);
-
-        switch (direction) {
-            case AnimationHelper.facingDirections.left:
-                this.walkDirection = this.walkDirections.right;
-                break;
-            case AnimationHelper.facingDirections.right:
-                this.walkDirection = this.walkDirections.left;
-                break;
-        }
-    }
-
     draw(spriteCanvas) {
         super.draw(spriteCanvas);
         if (Game.playMode === Game.PLAY_MODE) {
