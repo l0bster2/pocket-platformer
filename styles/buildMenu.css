@@ -486,6 +486,18 @@ input:checked+.switchSlider:before {
     padding: 12px;
 }
 
+/* Enemy editor: make section labels (e.g. "Activate when", "Movement behaviour") bold */
+#enemyDetailsPanel .labelText {
+    font-weight: bold;
+}
+
+/* Enemy editor: small helper labels for the conditional number inputs */
+#enemyDetailsPanel .enemySubLabel {
+    color: grey;
+    font-style: oblique;
+    font-size: 10px;
+}
+
 .tabPaginationIcon {
     position: absolute;
     padding: 8px 8px 8px;

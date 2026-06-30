@@ -287,7 +287,7 @@ class EnemiesAttributesRenderer {
                 <label for="canBeStomped" class="checkBoxText">Can be stomped</label>
             </div>
             <div class="marginTop4" id="stunWrapper_${type}" style="display: ${canBeStomped ? 'block' : 'none'};">
-                <label for="stunDuration" class="labelText">Stun enemy for (seconds):</label>
+                <label for="stunDuration" class="enemySubLabel">Stun enemy for (seconds):</label>
                 <input type="number" id="stunDuration" class="textInput" value="${stunDuration}" min="0" max="60" step="0.25"
                     onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'stunDuration', this.value)">
             </div>
@@ -373,25 +373,27 @@ class EnemiesAttributesRenderer {
         const patrolDuration = attributes.patrolDuration ?? 2.5;
         const randomDuration = attributes.randomDuration ?? 3;
         return `
-            <div class="subSection marginTop16" style="display: flex; gap: 24px;">
-                <div style="flex: 1;">
-                    <label class="labelText">Movement behaviour:</label>
-                    <select id="movementBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
-                        onchange="EnemiesAttributesRenderer.onMovementBehaviourChanged('${type}')">
-                        ${this.createMovementBehaviourOptions(behaviour)}
-                    </select>
-                    <div id="patrolDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'patrol' ? 'block' : 'none'};">
-                        <label for="patrolDurationInput_${type}" class="labelText">Move each direction for (seconds):</label>
-                        <input type="number" id="patrolDurationInput_${type}" class="textInput" value="${patrolDuration}" min="0.25" max="60" step="0.25"
-                            onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'patrolDuration', this.value)">
+            <div class="subSection marginTop16">
+                <div style="display: flex; gap: 24px;">
+                    <div style="flex: 1;">
+                        <label class="labelText">Movement behaviour:</label>
+                        <select id="movementBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
+                            onchange="EnemiesAttributesRenderer.onMovementBehaviourChanged('${type}')">
+                            ${this.createMovementBehaviourOptions(behaviour)}
+                        </select>
                     </div>
-                    <div id="randomDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'random' ? 'block' : 'none'};">
-                        <label for="randomDurationInput_${type}" class="labelText">Change direction every (seconds):</label>
-                        <input type="number" id="randomDurationInput_${type}" class="textInput" value="${randomDuration}" min="0.25" max="60" step="0.25"
-                            onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'randomDuration', this.value)">
-                    </div>
+                    <div style="flex: 1;"></div>
                 </div>
-                <div style="flex: 1;"></div>
+                <div id="patrolDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'patrol' ? 'block' : 'none'};">
+                    <label for="patrolDurationInput_${type}" class="enemySubLabel">Move each direction for (seconds):</label>
+                    <input type="number" id="patrolDurationInput_${type}" class="textInput" value="${patrolDuration}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'patrolDuration', this.value)">
+                </div>
+                <div id="randomDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'random' ? 'block' : 'none'};">
+                    <label for="randomDurationInput_${type}" class="enemySubLabel">Change direction every (seconds):</label>
+                    <input type="number" id="randomDurationInput_${type}" class="textInput" value="${randomDuration}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'randomDuration', this.value)">
+                </div>
             </div>
         `;
     }
@@ -468,7 +470,7 @@ class EnemiesAttributesRenderer {
                     onchange="EnemiesAttributesRenderer.onJumpIntervalEnabledChanged('${type}', this.checked)">
                 <label for="jumpIntervalEnabled_${type}" class="checkBoxText">Jump every X seconds</label>
                 <div id="jumpIntervalWrapper_${type}" class="marginTop4" style="display: ${enabled ? 'block' : 'none'};">
-                    <label for="jumpIntervalInput_${type}" class="labelText">Jump every (seconds):</label>
+                    <label for="jumpIntervalInput_${type}" class="enemySubLabel">Jump every (seconds):</label>
                     <input type="number" id="jumpIntervalInput_${type}" class="textInput" value="${interval}" min="0.25" max="60" step="0.25"
                         onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'jumpInterval', this.value)">
                 </div>
