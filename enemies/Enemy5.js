@@ -1,0 +1,11 @@
+/**
+ * Flying bat that drifts diagonally, bouncing off walls like a classic screen-saver.
+ */
+class Enemy5 extends Enemy3 {
+
+    constructor(x, y, tileSize, type, tilemapHandler, extraAttributes = {}) {
+        super(x, y, tileSize, type, tilemapHandler, extraAttributes);
+        this.flyingBehaviour = this.flyingBehaviours.diagonal;
+        EnemyFlyingHandler.resetFlyingState(this);
+    }
+}

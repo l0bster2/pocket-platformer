@@ -108,8 +108,37 @@ class Enemy extends InteractiveLevelObject {
             continueWalking: "continueWalking",
         }
         this.wallBehaviour = this.wallBehaviours.changeDirection;
-        // Flying enemies ignore gravity, gaps and jumping; they hover and move horizontally.
+        // Flying enemies ignore gravity, gaps and jumping; they hover and move freely.
         this.flying = false;
+        // Flying movement behaviour decides how a flying enemy steers each frame
+        // (see EnemyFlyingHandler.updateFlying).
+        this.flyingBehaviours = {
+            moveHorizontally: "moveHorizontally",
+            moveVertically: "moveVertically",
+            followPlayer: "followPlayer",
+            followPlayerPathfinding: "followPlayerPathfinding",
+            alignPlayerHorizontally: "alignPlayerHorizontally",
+            alignPlayerVertically: "alignPlayerVertically",
+            horizontalPatrol: "horizontalPatrol",
+            verticalPatrol: "verticalPatrol",
+            diagonal: "diagonal",
+            standStill: "standStill",
+            random: "random",
+        }
+        this.flyingBehaviour = this.flyingBehaviours.moveHorizontally;
+        this.flyingHorizontalDuration = 2; // seconds before a left/right flyer reverses
+        this.flyingVerticalDuration = 2;   // seconds before an up/down flyer reverses
+        this.flyingRandomDuration = 2;     // seconds before a random flyer picks a new heading
+        // Whether the flying enemy collides with tiles/walls. Ghost-type flyers set this false
+        // to phase through walls (they are still clamped to the level bounds).
+        this.collidesWithWalls = true;
+        // Runtime flying state (not persisted): current heading in degrees and frame timers.
+        this.flyAngle = 180;        // 0 = right, 90 = down, 180 = left, 270 = up
+        this.flyTimer = 0;          // frame counter for timed reversal / random behaviours
+        this.flyRecomputeTimer = 0; // throttles player-tracking / pathfinding recomputation
+        this.flyHasLineOfSight = false; // cached line-of-sight result for pathfinding behaviour
+        this.flyPath = null;        // cached pathfinding waypoints
+        this.flyPathIndex = 0;
         this.interativeObjects = [
             ObjectTypes.SPIKE,
             ObjectTypes.TRAMPOLINE,
@@ -177,6 +206,11 @@ class Enemy extends InteractiveLevelObject {
     }
 
     hitWall(direction) {
+        if (this.flying) {
+            // Flying enemies bounce off walls by reversing their heading instead of landing.
+            EnemyFlyingHandler.handleWallCollision(this, direction);
+            return;
+        }
         switch (direction) {
             case AnimationHelper.facingDirections.bottom:
                 this.hitBottom();
@@ -364,6 +398,11 @@ class Enemy extends InteractiveLevelObject {
             gapBehaviour: this.gapBehaviour,
             wallBehaviour: this.wallBehaviour,
             flying: this.flying,
+            flyingBehaviour: this.flyingBehaviour,
+            flyingHorizontalDuration: this.flyingHorizontalDuration,
+            flyingVerticalDuration: this.flyingVerticalDuration,
+            flyingRandomDuration: this.flyingRandomDuration,
+            collidesWithWalls: this.collidesWithWalls,
             jumpIntervalEnabled: this.jumpIntervalEnabled,
             jumpInterval: this.jumpInterval,
             activationConfig: this.activationConfig,
@@ -388,7 +427,18 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.randomDuration !== undefined) this.randomDuration = attributes.randomDuration;
         if (attributes.gapBehaviour !== undefined) this.gapBehaviour = attributes.gapBehaviour;
         if (attributes.wallBehaviour !== undefined) this.wallBehaviour = attributes.wallBehaviour;
-        if (attributes.flying !== undefined) this.flying = attributes.flying;
+        if (attributes.flying !== undefined) {
+            this.flying = attributes.flying;
+            if (this.flying) EnemyFlyingHandler.resetFlyingState(this);
+        }
+        if (attributes.flyingHorizontalDuration !== undefined) this.flyingHorizontalDuration = attributes.flyingHorizontalDuration;
+        if (attributes.flyingVerticalDuration !== undefined) this.flyingVerticalDuration = attributes.flyingVerticalDuration;
+        if (attributes.flyingRandomDuration !== undefined) this.flyingRandomDuration = attributes.flyingRandomDuration;
+        if (attributes.collidesWithWalls !== undefined) this.collidesWithWalls = attributes.collidesWithWalls;
+        if (attributes.flyingBehaviour !== undefined) {
+            this.flyingBehaviour = attributes.flyingBehaviour;
+            if (this.flying) EnemyFlyingHandler.resetFlyingState(this);
+        }
         if (attributes.jumpIntervalEnabled !== undefined) this.jumpIntervalEnabled = attributes.jumpIntervalEnabled;
         if (attributes.jumpInterval !== undefined) this.jumpInterval = attributes.jumpInterval;
         if (attributes.movementBehaviour !== undefined) {

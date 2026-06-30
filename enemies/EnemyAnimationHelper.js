@@ -12,6 +12,10 @@ class EnemyAnimationHelper {
         if (!enemy.isActive) {
             // Inactive or stunned enemies always show their idle pose.
             enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'idle');
+        } else if (enemy.flying) {
+            // Flying enemies never jump or fall, so they only have idle/moving poses.
+            const moving = enemy.xspeed !== 0 || enemy.yspeed !== 0;
+            enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, moving ? 'walk' : 'idle');
         } else if (enemy.jumping || (enemy.falling && enemy.yspeed > 0)) {
             enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'jump');
         } else if (enemy.walking) {

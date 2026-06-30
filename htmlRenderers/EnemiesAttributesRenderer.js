@@ -182,13 +182,23 @@ class EnemiesAttributesRenderer {
                                     </div>
                                 </div>
 
-                                ${isFlying ? '' : this.createMovementBehaviourSection(attributes, type)}
-                                <div class="marginTop12" style="display: flex; gap: 24px;">
-                                    ${isFlying ? '' : this.createGapBehaviourSection(attributes, type)}
-                                    ${this.createWallBehaviourSection(attributes, type)}
-                                    ${isFlying ? '<div style="flex: 1;"></div>' : ''}
-                                </div>
-                                ${isFlying ? '' : this.createJumpIntervalSection(attributes, type)}
+                                ${isFlying ? `
+                                    ${this.createFlyingBehaviourSection(attributes, type)}
+                                    <div class="marginTop12" style="display: flex; gap: 24px;">
+                                        ${this.createFlyingWallBehaviourSection(attributes, type)}
+                                        <div style="flex: 1;">
+                                            <label class="labelText" style="visibility: hidden;">.</label>
+                                            ${this.createCheckboxInput('collidesWithWalls', 'Collides with walls', attributes.collidesWithWalls, type)}
+                                        </div>
+                                    </div>
+                                ` : `
+                                    ${this.createMovementBehaviourSection(attributes, type)}
+                                    <div class="marginTop12" style="display: flex; gap: 24px;">
+                                        ${this.createGapBehaviourSection(attributes, type)}
+                                        ${this.createWallBehaviourSection(attributes, type)}
+                                    </div>
+                                    ${this.createJumpIntervalSection(attributes, type)}
+                                `}
                             </div>
                         </div>
                     </div>
@@ -430,6 +440,69 @@ class EnemiesAttributesRenderer {
     }
 
     /**
+     * Create the flying movement behaviour subsection (dropdown + conditional duration inputs).
+     * Only shown for flying enemies; the options differ from the walking movement behaviours.
+     */
+    static createFlyingBehaviourSection(attributes, type) {
+        const behaviour = attributes.flyingBehaviour ?? 'moveHorizontally';
+        const horizontalDuration = attributes.flyingHorizontalDuration ?? 2;
+        const verticalDuration = attributes.flyingVerticalDuration ?? 2;
+        const randomDuration = attributes.flyingRandomDuration ?? 2;
+        return `
+            <div class="subSection marginTop16">
+                <div style="display: flex; gap: 24px;">
+                    <div style="flex: 1;">
+                        <label class="labelText">Movement behaviour:</label>
+                        <select id="flyingBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
+                            onchange="EnemiesAttributesRenderer.onFlyingBehaviourChanged('${type}')">
+                            ${this.createFlyingBehaviourOptions(behaviour)}
+                        </select>
+                    </div>
+                    <div style="flex: 1;"></div>
+                </div>
+                <div id="flyingHorizontalDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'horizontalPatrol' ? 'block' : 'none'};">
+                    <label for="flyingHorizontalDurationInput_${type}" class="enemySubLabel">Move each direction for (seconds):</label>
+                    <input type="number" id="flyingHorizontalDurationInput_${type}" class="textInput" value="${horizontalDuration}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'flyingHorizontalDuration', this.value)">
+                </div>
+                <div id="flyingVerticalDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'verticalPatrol' ? 'block' : 'none'};">
+                    <label for="flyingVerticalDurationInput_${type}" class="enemySubLabel">Move each direction for (seconds):</label>
+                    <input type="number" id="flyingVerticalDurationInput_${type}" class="textInput" value="${verticalDuration}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'flyingVerticalDuration', this.value)">
+                </div>
+                <div id="flyingRandomDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'random' ? 'block' : 'none'};">
+                    <label for="flyingRandomDurationInput_${type}" class="enemySubLabel">Change direction every (seconds):</label>
+                    <input type="number" id="flyingRandomDurationInput_${type}" class="textInput" value="${randomDuration}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'flyingRandomDuration', this.value)">
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Create flying movement behaviour dropdown options.
+     */
+    static createFlyingBehaviourOptions(current) {
+        const options = [
+            { value: 'moveHorizontally', text: 'Moves horizontally' },
+            { value: 'moveVertically', text: 'Moves vertically' },
+            { value: 'followPlayer', text: 'Flies towards player' },
+            { value: 'followPlayerPathfinding', text: 'Flies towards player (pathfinding)' },
+            { value: 'alignPlayerHorizontally', text: 'Aligns with player (X axis)' },
+            { value: 'alignPlayerVertically', text: 'Aligns with player (Y axis)' },
+            { value: 'horizontalPatrol', text: 'Moves left and right' },
+            { value: 'verticalPatrol', text: 'Moves up and down' },
+            { value: 'diagonal', text: 'Moves diagonally' },
+            { value: 'standStill', text: 'Stands still' },
+            { value: 'random', text: 'Moves randomly' },
+        ];
+
+        return options.map(opt =>
+            `<option value="${opt.value}" ${current === opt.value ? 'selected' : ''}>${opt.text}</option>`
+        ).join('');
+    }
+
+    /**
      * Create the gap behaviour subsection (what the enemy does at a ledge / gap)
      */
     static createGapBehaviourSection(attributes, type) {
@@ -458,6 +531,27 @@ class EnemiesAttributesRenderer {
         const options = [
             { value: 'changeDirection', text: 'Change direction' },
             { value: 'continueWalking', text: 'Continue walking' },
+        ];
+        return `
+            <div style="flex: 1;">
+                <label class="labelText">Wall collision:</label>
+                <select id="wallBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
+                    onchange="EnemiesAttributesRenderer.updateSelectAttribute('${type}', 'wallBehaviour', this.value)">
+                    ${options.map(opt => `<option value="${opt.value}" ${behaviour === opt.value ? 'selected' : ''}>${opt.text}</option>`).join('')}
+                </select>
+            </div>
+        `;
+    }
+
+    /**
+     * Wall behaviour subsection for flying enemies. Same underlying attribute as walking enemies
+     * (wallBehaviour) but labelled "Continue flying" instead of "Continue walking".
+     */
+    static createFlyingWallBehaviourSection(attributes, type) {
+        const behaviour = attributes.wallBehaviour ?? 'changeDirection';
+        const options = [
+            { value: 'changeDirection', text: 'Change direction' },
+            { value: 'continueWalking', text: 'Continue flying' },
         ];
         return `
             <div style="flex: 1;">
@@ -635,6 +729,25 @@ class EnemiesAttributesRenderer {
         const patrolWrapper = panel?.querySelector(`#patrolDurationWrapper_${type}`);
         const randomWrapper = panel?.querySelector(`#randomDurationWrapper_${type}`);
         if (patrolWrapper) patrolWrapper.style.display = behaviour === 'patrol' ? 'block' : 'none';
+        if (randomWrapper) randomWrapper.style.display = behaviour === 'random' ? 'block' : 'none';
+    }
+
+    /**
+     * Handle flying movement behaviour change: store the value and toggle the duration inputs
+     * that only apply to the timed/random flying behaviours.
+     */
+    static onFlyingBehaviourChanged(type) {
+        const select = document.getElementById("flyingBehaviourSelect_" + type);
+        if (!select) return;
+        const behaviour = select.value;
+        EnemyTypeAttributesHandler.setAttribute(type, "flyingBehaviour", behaviour);
+
+        const panel = document.getElementById("enemyDetailsPanel");
+        const horizontalWrapper = panel?.querySelector(`#flyingHorizontalDurationWrapper_${type}`);
+        const verticalWrapper = panel?.querySelector(`#flyingVerticalDurationWrapper_${type}`);
+        const randomWrapper = panel?.querySelector(`#flyingRandomDurationWrapper_${type}`);
+        if (horizontalWrapper) horizontalWrapper.style.display = behaviour === 'horizontalPatrol' ? 'block' : 'none';
+        if (verticalWrapper) verticalWrapper.style.display = behaviour === 'verticalPatrol' ? 'block' : 'none';
         if (randomWrapper) randomWrapper.style.display = behaviour === 'random' ? 'block' : 'none';
     }
 
