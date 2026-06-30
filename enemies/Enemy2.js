@@ -4,6 +4,7 @@ class Enemy2 extends Enemy {
         const hitBoxOffset = -tileSize / 6;
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
         this.walkDirection = this.walkDirections.right;
+        this.movementBehaviour = this.movementBehaviours.startMovingRight;
         this.speed = 1;
 
         // Distinct default attributes for Enemy 2 (per-type defaults)

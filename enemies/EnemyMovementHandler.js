@@ -3,10 +3,91 @@
  */
 class EnemyMovementHandler {
     /**
+     * Decide the enemy's walkDirection for this frame based on its configured movement
+     * behaviour. "Starts moving" modes are left untouched (their direction is set on spawn and
+     * flipped by wall collisions); the other modes actively steer the enemy each frame.
+     * @param {Enemy} enemy - The enemy to update
+     */
+    static updateWalkDirection(enemy) {
+        const behaviours = enemy.movementBehaviours;
+        const directions = enemy.walkDirections;
+
+        switch (enemy.movementBehaviour) {
+            case behaviours.towardsPlayer: {
+                const towards = this.getDirectionTowardsPlayer(enemy);
+                if (towards) enemy.walkDirection = towards;
+                break;
+            }
+            case behaviours.awayFromPlayer: {
+                const towards = this.getDirectionTowardsPlayer(enemy);
+                if (towards) {
+                    enemy.walkDirection = towards === directions.left ? directions.right : directions.left;
+                }
+                break;
+            }
+            case behaviours.patrol:
+                this.updateTimedReversal(enemy, enemy.patrolDuration);
+                break;
+            case behaviours.random:
+                this.updateRandomDirection(enemy, enemy.randomDuration);
+                break;
+            case behaviours.standStill:
+                enemy.walkDirection = directions.none;
+                break;
+            // startMovingLeft / startMovingRight: direction is set on spawn and reversed by
+            // wall collisions, so nothing to do here.
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Horizontal direction from the enemy towards the player, or null if no player exists.
+     * @private
+     */
+    static getDirectionTowardsPlayer(enemy) {
+        if (!PlayMode.player) return null;
+        return PlayMode.player.x < enemy.x ? enemy.walkDirections.left : enemy.walkDirections.right;
+    }
+
+    /**
+     * Patrol: walk in one direction for `durationSeconds`, then flip and repeat.
+     * @private
+     */
+    static updateTimedReversal(enemy, durationSeconds) {
+        if (enemy.walkDirection === enemy.walkDirections.none) {
+            enemy.walkDirection = enemy.walkDirections.left;
+        }
+        enemy.movementTimer++;
+        if (enemy.movementTimer >= durationSeconds * 60) {
+            enemy.movementTimer = 0;
+            enemy.walkDirection = enemy.walkDirection === enemy.walkDirections.left
+                ? enemy.walkDirections.right
+                : enemy.walkDirections.left;
+        }
+    }
+
+    /**
+     * Random: every `durationSeconds` pick a new random left/right direction.
+     * @private
+     */
+    static updateRandomDirection(enemy, durationSeconds) {
+        if (enemy.walkDirection === enemy.walkDirections.none) {
+            enemy.walkDirection = Math.random() < 0.5 ? enemy.walkDirections.left : enemy.walkDirections.right;
+        }
+        enemy.movementTimer++;
+        if (enemy.movementTimer >= durationSeconds * 60) {
+            enemy.movementTimer = 0;
+            enemy.walkDirection = Math.random() < 0.5 ? enemy.walkDirections.left : enemy.walkDirections.right;
+        }
+    }
+
+    /**
      * Execute walk handler logic
      * @param {Enemy} enemy - The enemy to update
      */
     static updateWalking(enemy) {
+        this.updateWalkDirection(enemy);
         enemy.walking = false;
         const newMaxSpeed = enemy.currentMaxSpeed;
 

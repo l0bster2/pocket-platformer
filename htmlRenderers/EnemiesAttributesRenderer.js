@@ -168,6 +168,8 @@ class EnemiesAttributesRenderer {
                                         style="display: ${inactivationNeedsValue ? 'block' : 'none'};"
                                         onchange="EnemiesAttributesRenderer.updateInactivationConfig('${type}')">
                                 </div>
+
+                                ${this.createMovementBehaviourSection(attributes, type)}
                             </div>
                         </div>
                     </div>
@@ -357,6 +359,53 @@ class EnemiesAttributesRenderer {
     }
 
     /**
+     * Create the movement behaviour subsection (dropdown + conditional duration inputs)
+     */
+    static createMovementBehaviourSection(attributes, type) {
+        const behaviour = attributes.movementBehaviour ?? 'startMovingLeft';
+        const patrolDuration = attributes.patrolDuration ?? 2.5;
+        const randomDuration = attributes.randomDuration ?? 3;
+        return `
+            <div class="subSection marginTop16">
+                <label class="labelText">Movement behaviour:</label>
+                <select id="movementBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
+                    onchange="EnemiesAttributesRenderer.onMovementBehaviourChanged('${type}')">
+                    ${this.createMovementBehaviourOptions(behaviour)}
+                </select>
+                <div id="patrolDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'patrol' ? 'block' : 'none'};">
+                    <label for="patrolDurationInput_${type}" class="labelText">Move each direction for (seconds):</label>
+                    <input type="number" id="patrolDurationInput_${type}" class="textInput" value="${patrolDuration}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'patrolDuration', this.value)">
+                </div>
+                <div id="randomDurationWrapper_${type}" class="marginTop4" style="display: ${behaviour === 'random' ? 'block' : 'none'};">
+                    <label for="randomDurationInput_${type}" class="labelText">Change direction every (seconds):</label>
+                    <input type="number" id="randomDurationInput_${type}" class="textInput" value="${randomDuration}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'randomDuration', this.value)">
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Create movement behaviour dropdown options
+     */
+    static createMovementBehaviourOptions(current) {
+        const options = [
+            { value: 'startMovingLeft', text: 'Starts moving left' },
+            { value: 'startMovingRight', text: 'Starts moving right' },
+            { value: 'towardsPlayer', text: "Always moves in player's direction" },
+            { value: 'patrol', text: 'Moves left and right' },
+            { value: 'random', text: 'Moves randomly' },
+            { value: 'awayFromPlayer', text: 'Moves away from player' },
+            { value: 'standStill', text: 'Stands still' },
+        ];
+
+        return options.map(opt => 
+            `<option value="${opt.value}" ${current === opt.value ? 'selected' : ''}>${opt.text}</option>`
+        ).join('');
+    }
+
+    /**
      * Update number attribute for a type
      */
     static updateNumberAttribute(type, attributeName, value) {
@@ -476,6 +525,22 @@ class EnemiesAttributesRenderer {
 
         const config = value !== undefined ? { type: inactivationType, value } : { type: inactivationType };
         EnemyTypeAttributesHandler.setAttribute(type, "inactivationConfig", config);
+    }
+
+    /**
+     * Handle movement behaviour dropdown change: store the value and toggle the duration inputs.
+     */
+    static onMovementBehaviourChanged(type) {
+        const select = document.getElementById("movementBehaviourSelect_" + type);
+        if (!select) return;
+        const behaviour = select.value;
+        EnemyTypeAttributesHandler.setAttribute(type, "movementBehaviour", behaviour);
+
+        const panel = document.getElementById("enemyDetailsPanel");
+        const patrolWrapper = panel?.querySelector(`#patrolDurationWrapper_${type}`);
+        const randomWrapper = panel?.querySelector(`#randomDurationWrapper_${type}`);
+        if (patrolWrapper) patrolWrapper.style.display = behaviour === 'patrol' ? 'block' : 'none';
+        if (randomWrapper) randomWrapper.style.display = behaviour === 'random' ? 'block' : 'none';
     }
 
     /**

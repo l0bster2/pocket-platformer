@@ -80,6 +80,21 @@ class Enemy extends InteractiveLevelObject {
             right: "right",
             none: "none",
         }
+        // Movement behaviour decides how walkDirection is chosen each frame (see
+        // EnemyMovementHandler.updateWalkDirection).
+        this.movementBehaviours = {
+            startMovingLeft: "startMovingLeft",
+            startMovingRight: "startMovingRight",
+            towardsPlayer: "towardsPlayer",
+            patrol: "patrol",
+            random: "random",
+            awayFromPlayer: "awayFromPlayer",
+            standStill: "standStill",
+        }
+        this.movementBehaviour = this.movementBehaviours.startMovingLeft;
+        this.patrolDuration = 2.5; // seconds before a patrolling enemy reverses direction
+        this.randomDuration = 3;   // seconds before a random-moving enemy picks a new direction
+        this.movementTimer = 0;    // frame counter for patrol/random behaviours
         this.interativeObjects = [
             ObjectTypes.SPIKE,
             ObjectTypes.TRAMPOLINE,
@@ -318,6 +333,9 @@ class Enemy extends InteractiveLevelObject {
             air_acceleration: this.air_acceleration,
             groundFriction: this.groundFriction,
             air_friction: this.air_friction,
+            movementBehaviour: this.movementBehaviour,
+            patrolDuration: this.patrolDuration,
+            randomDuration: this.randomDuration,
             activationConfig: this.activationConfig,
             inactivationConfig: this.inactivationConfig,
         };
@@ -336,6 +354,19 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.air_acceleration !== undefined) this.air_acceleration = attributes.air_acceleration;
         if (attributes.groundFriction !== undefined) this.groundFriction = attributes.groundFriction;
         if (attributes.air_friction !== undefined) this.air_friction = attributes.air_friction;
+        if (attributes.patrolDuration !== undefined) this.patrolDuration = attributes.patrolDuration;
+        if (attributes.randomDuration !== undefined) this.randomDuration = attributes.randomDuration;
+        if (attributes.movementBehaviour !== undefined) {
+            this.movementBehaviour = attributes.movementBehaviour;
+            // "Starts moving" modes define the initial direction; set it now so editing the
+            // attribute (or spawning the enemy) immediately reflects the chosen start direction.
+            if (this.movementBehaviour === this.movementBehaviours.startMovingLeft) {
+                this.walkDirection = this.walkDirections.left;
+            } else if (this.movementBehaviour === this.movementBehaviours.startMovingRight) {
+                this.walkDirection = this.walkDirections.right;
+            }
+            this.movementTimer = 0;
+        }
         if (attributes.activationConfig !== undefined) this.activationConfig = attributes.activationConfig;
         if (attributes.inactivationConfig !== undefined) this.inactivationConfig = attributes.inactivationConfig;
     }
