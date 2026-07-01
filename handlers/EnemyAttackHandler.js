@@ -21,6 +21,7 @@ class EnemyAttackHandler {
         this.currentType = null;
         this.currentPhaseId = null;
         this.editingBulletId = null;
+        this.expandedPhases = null;
         this.anglePickerMoveHandler = null;
         this.anglePickerUpHandler = null;
     }
@@ -31,10 +32,10 @@ class EnemyAttackHandler {
         return {
             id: TilemapHelpers.makeid(5),
             bullets: [],
-            startDelay: 0,   // seconds before the first shot of the phase
             interval: 1,     // seconds between shots
+            startDelay: 0,   // seconds before the first shot of the phase
+            infiniteAmmo: true,
             ammo: 3,         // shots before a reload is needed
-            infiniteAmmo: false,
             reloadTime: 2,   // seconds to reload once the ammo is spent
         };
     }
@@ -60,67 +61,85 @@ class EnemyAttackHandler {
      * Render the whole Attack tab content (all phases + "add phase" button).
      */
     static renderPhases(type) {
+        // On (re)selecting a type, default the first phase to open. Keep the tracked open/closed
+        // state across in-place re-renders of the same type.
+        if (this.currentType !== type || !this.expandedPhases) {
+            this.expandedPhases = new Set();
+            const firstPhase = this.getPhases(type)[0];
+            if (firstPhase) this.expandedPhases.add(firstPhase.id);
+        }
         this.currentType = type;
         const phases = this.getPhases(type);
         const phasesHtml = phases.map((phase, index) => this.renderPhase(type, phase, index)).join('');
         return `
             <div id="attackPhasesWrapper">${phasesHtml}</div>
-            <button type="button" class="levelNavigationButton buttonWithIconAndText marginTop12"
-                onclick="EnemyAttackHandler.addPhase('${type}')">
-                <img src="images/icons/plus.svg" class="iconInButtonWithText" alt="add phase" width="12" height="12"> Add phase
-            </button>
+            <div class="subSection">
+                <button type="button" class="levelNavigationButton buttonWithIconAndText fullWidth"
+                    onclick="EnemyAttackHandler.addPhase('${type}')">
+                    <img src="images/icons/plus.svg" class="iconInButtonWithText" alt="add phase" width="12" height="12"> Add phase
+                </button>
+            </div>
         `;
     }
 
+    static onPhaseToggle(phaseId, isOpen) {
+        if (!this.expandedPhases) this.expandedPhases = new Set();
+        if (isOpen) this.expandedPhases.add(phaseId);
+        else this.expandedPhases.delete(phaseId);
+    }
+
     /**
-     * Render a single phase (summary header + editable details + bullet list).
+     * Render a single phase as a collapsible details/summary element.
      */
     static renderPhase(type, phase, index) {
         const canDelete = index > 0; // Phase 1 can never be removed.
+        const isOpen = this.expandedPhases && this.expandedPhases.has(phase.id);
         return `
-            <div class="attackPhase marginBottom16">
-                <div class="attackPhaseHeader">
+            <details class="attackPhase" ${isOpen ? 'open' : ''}
+                ontoggle="EnemyAttackHandler.onPhaseToggle('${phase.id}', this.open)">
+                <summary class="attackPhaseSummary">
                     <span class="attackPhaseTitle">Phase ${index + 1}</span>
                     ${canDelete ? `<img src="images/icons/delete.svg" alt="delete phase" width="16" height="16"
                         class="singleActionIcon hovereableRedSvg"
-                        onclick="EnemyAttackHandler.removePhase('${type}', '${phase.id}')">` : ''}
-                </div>
+                        onclick="event.preventDefault(); event.stopPropagation(); EnemyAttackHandler.removePhase('${type}', '${phase.id}')">` : ''}
+                </summary>
                 <div class="attackPhaseBody marginTop8">
-                    <div class="marginTop8">
-                        <label class="enemySubLabel">Start delay (seconds):</label>
-                        <input type="number" class="textInput" min="0" max="60" step="0.25" value="${phase.startDelay}"
-                            onchange="EnemyAttackHandler.updatePhaseAttribute('${type}', '${phase.id}', 'startDelay', this.value)">
-                    </div>
-                    <div class="marginTop8">
-                        <label class="enemySubLabel">Shoot interval (seconds):</label>
-                        <input type="number" class="textInput" min="0.1" max="60" step="0.1" value="${phase.interval}"
-                            onchange="EnemyAttackHandler.updatePhaseAttribute('${type}', '${phase.id}', 'interval', this.value)">
-                    </div>
-                    <div class="marginTop8">
-                        <input type="checkbox" id="infiniteAmmo_${phase.id}" ${phase.infiniteAmmo ? 'checked' : ''}
-                            onchange="EnemyAttackHandler.onInfiniteAmmoChanged('${type}', '${phase.id}', this.checked)">
-                        <label for="infiniteAmmo_${phase.id}" class="checkBoxText">Infinite ammo</label>
-                    </div>
-                    <div class="marginTop8" id="ammoWrapper_${phase.id}" style="display: ${phase.infiniteAmmo ? 'none' : 'block'};">
-                        <label class="enemySubLabel">Ammo (shots before reload):</label>
-                        <input type="number" class="textInput" min="1" max="999" step="1" value="${phase.ammo}"
-                            onchange="EnemyAttackHandler.updatePhaseAttribute('${type}', '${phase.id}', 'ammo', this.value)">
-                    </div>
-                    <div class="marginTop8" id="reloadWrapper_${phase.id}" style="display: ${phase.infiniteAmmo ? 'none' : 'block'};">
-                        <label class="enemySubLabel">Reload time (seconds):</label>
-                        <input type="number" class="textInput" min="0" max="60" step="0.25" value="${phase.reloadTime}"
-                            onchange="EnemyAttackHandler.updatePhaseAttribute('${type}', '${phase.id}', 'reloadTime', this.value)">
-                    </div>
-                    <div class="attackBulletsSection marginTop12">
-                        <div class="labelText">Bullets:</div>
+                    <div class="attackBulletsSection">
                         ${this.renderBulletList(type, phase)}
                         <button type="button" class="levelNavigationButton buttonWithIconAndText marginTop8"
                             onclick="EnemyAttackHandler.openBulletModal('${type}', '${phase.id}')">
                             <img src="images/icons/plus.svg" class="iconInButtonWithText" alt="add bullet" width="12" height="12"> Add bullet
                         </button>
                     </div>
+                    <div class="subSection">
+                        <div>
+                            <label class="enemySubLabel">Shoot interval (seconds):</label>
+                            <input type="number" class="textInput" min="0.1" max="60" step="0.1" value="${phase.interval}"
+                                onchange="EnemyAttackHandler.updatePhaseAttribute('${type}', '${phase.id}', 'interval', this.value)">
+                        </div>
+                        <div class="marginTop8">
+                            <label class="enemySubLabel">Start delay (seconds):</label>
+                            <input type="number" class="textInput" min="0" max="60" step="0.25" value="${phase.startDelay}"
+                                onchange="EnemyAttackHandler.updatePhaseAttribute('${type}', '${phase.id}', 'startDelay', this.value)">
+                        </div>
+                        <div class="marginTop8">
+                            <input type="checkbox" id="infiniteAmmo_${phase.id}" ${phase.infiniteAmmo ? 'checked' : ''}
+                                onchange="EnemyAttackHandler.onInfiniteAmmoChanged('${type}', '${phase.id}', this.checked)">
+                            <label for="infiniteAmmo_${phase.id}" class="checkBoxText">Infinite ammo</label>
+                        </div>
+                        <div class="marginTop8" id="ammoWrapper_${phase.id}" style="display: ${phase.infiniteAmmo ? 'none' : 'block'};">
+                            <label class="enemySubLabel">Ammo (shots before reload):</label>
+                            <input type="number" class="textInput" min="1" max="999" step="1" value="${phase.ammo}"
+                                onchange="EnemyAttackHandler.updatePhaseAttribute('${type}', '${phase.id}', 'ammo', this.value)">
+                        </div>
+                        <div class="marginTop8" id="reloadWrapper_${phase.id}" style="display: ${phase.infiniteAmmo ? 'none' : 'block'};">
+                            <label class="enemySubLabel">Reload time (seconds):</label>
+                            <input type="number" class="textInput" min="0" max="60" step="0.25" value="${phase.reloadTime}"
+                                onchange="EnemyAttackHandler.updatePhaseAttribute('${type}', '${phase.id}', 'reloadTime', this.value)">
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </details>
         `;
     }
 
@@ -228,6 +247,8 @@ class EnemyAttackHandler {
         ModalHandler.showModal('bulletModal');
         this.updateGravityRowVisibility();
         this.initAnglePicker(bullet?.angle ?? 0);
+        const selectedSprite = document.getElementById("bulletSprite");
+        if (selectedSprite) this.drawBulletSpritePreview(selectedSprite.value);
     }
 
     static renderBulletForm(bullet) {
@@ -242,29 +263,33 @@ class EnemyAttackHandler {
 
         return `
             <div class="marginTop8">
+                <label for="bulletSprite" class="labelText">Sprite:</label>
+                <div class="bulletSpriteRow">
+                    <select id="bulletSprite" name="bulletSprite" class="textInput bulletSpriteSelect"
+                        onchange="EnemyAttackHandler.drawBulletSpritePreview(this.value)">
+                        ${bulletSprites.map(sprite =>
+                            `<option value="${sprite.descriptiveName}" ${sprite.descriptiveName === spriteName ? 'selected' : ''}>${sprite.descriptiveName}</option>`
+                        ).join('')}
+                    </select>
+                    <canvas id="bulletSpritePreviewCanvas" class="bulletSpritePreview" width="40" height="40"></canvas>
+                </div>
+            </div>
+            <div class="playerAttributeWrapper marginTop12 bulletSpeedWrapper">
+                <label for="bulletSpeed" class="bulletSliderLabel">Speed:</label>
+                <input class="playerAttrSlider bulletSpeedSlider" type="range" min="0.5" max="10" step="0.05" value="${speed}" id="bulletSpeed" name="bulletSpeed"
+                    oninput="EnemyAttackHandler.updateSliderValue('bulletSpeed')">
+                <span id="bulletSpeedValue" class="playerAttrSliderValue">${speed}</span>
+            </div>
+            <div class="marginTop12">
                 <input type="checkbox" id="bulletAffectedByGravity" name="bulletAffectedByGravity" ${affectedByGravity ? 'checked' : ''}
                     onchange="EnemyAttackHandler.updateGravityRowVisibility()">
                 <label for="bulletAffectedByGravity" class="checkBoxText">Affected by gravity</label>
             </div>
             <div class="playerAttributeWrapper marginTop8" id="bulletGravityRow">
-                <label for="bulletGravity" style="display:block; margin-bottom:6px;">Gravity:</label>
+                <label for="bulletGravity" class="bulletSliderLabel">Gravity:</label>
                 <input class="playerAttrSlider" type="range" min="0" max="2" step="0.01" value="${gravity}" id="bulletGravity" name="bulletGravity"
                     oninput="EnemyAttackHandler.updateSliderValue('bulletGravity')">
                 <span id="bulletGravityValue" class="playerAttrSliderValue">${gravity}</span>
-            </div>
-            <div class="playerAttributeWrapper marginTop8">
-                <label for="bulletSpeed" style="display:block; margin-bottom:6px;">Speed:</label>
-                <input class="playerAttrSlider" type="range" min="0.5" max="10" step="0.05" value="${speed}" id="bulletSpeed" name="bulletSpeed"
-                    oninput="EnemyAttackHandler.updateSliderValue('bulletSpeed')">
-                <span id="bulletSpeedValue" class="playerAttrSliderValue">${speed}</span>
-            </div>
-            <div class="marginTop8">
-                <label for="bulletSprite" class="labelText">Sprite:</label>
-                <select id="bulletSprite" name="bulletSprite" class="textInput" style="width:100%; margin-top:4px;">
-                    ${bulletSprites.map(sprite =>
-                        `<option value="${sprite.descriptiveName}" ${sprite.descriptiveName === spriteName ? 'selected' : ''}>${sprite.descriptiveName}</option>`
-                    ).join('')}
-                </select>
             </div>
             <div class="marginTop12">
                 <input type="checkbox" id="bulletCollidesWithWalls" name="bulletCollidesWithWalls" ${collidesWithWalls ? 'checked' : ''}>
@@ -274,20 +299,48 @@ class EnemyAttackHandler {
                 <input type="checkbox" id="bulletShootInPlayerDirection" name="bulletShootInPlayerDirection" ${shootInPlayerDirection ? 'checked' : ''}>
                 <label for="bulletShootInPlayerDirection" class="checkBoxText">Shoot in player direction</label>
             </div>
-            <div class="marginTop12">
+            <div class="subSection">
                 <label class="labelText">Angle:</label>
-                <div class="anglePickerWrapper">
+                <div class="angleSection">
                     <div id="anglePickerCircle" class="anglePickerCircle">
                         <div id="anglePickerHand" class="anglePickerHand"></div>
                         <div class="anglePickerCenter"></div>
                     </div>
-                    <div>
-                        <input type="number" id="bulletAngle" name="bulletAngle" class="textInput" min="0" max="359" step="1" value="${angle}"
-                            onchange="EnemyAttackHandler.onAngleInputChanged(this.value)"> °
+                    <div class="angleValueWrapper">
+                        <input type="number" id="bulletAngle" name="bulletAngle" class="textInput angleInput" min="0" max="359" step="1" value="${angle}"
+                            onchange="EnemyAttackHandler.onAngleInputChanged(this.value)">
+                        <span class="angleUnit">°</span>
                     </div>
                 </div>
             </div>
         `;
+    }
+
+    /**
+     * Draw the currently selected bullet sprite into the small preview canvas next to the dropdown.
+     */
+    static drawBulletSpritePreview(descriptiveName) {
+        const canvas = document.getElementById("bulletSpritePreviewCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const sprite = SpritePixelArrays.getSpritesByDescrpitiveName(descriptiveName)[0];
+        if (!sprite || !sprite.animation || sprite.animation.length === 0) return;
+
+        const frame = sprite.animation[0].sprite;
+        const pixelSize = canvas.width / frame.length;
+        frame.forEach((row, y) => {
+            row.forEach((colorHex, x) => {
+                if (colorHex !== "transp") {
+                    const r = parseInt(colorHex.substring(0, 2), 16);
+                    const g = parseInt(colorHex.substring(2, 4), 16);
+                    const b = parseInt(colorHex.substring(4, 6), 16);
+                    ctx.fillStyle = `rgb(${r},${g},${b})`;
+                    ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+                }
+            });
+        });
     }
 
     static updateSliderValue(id) {

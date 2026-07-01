@@ -498,30 +498,87 @@ input:checked+.switchSlider:before {
     font-size: 10px;
 }
 
-/* Enemy editor: attack phases */
+/* Enemy editor: attack phases (collapsible details/summary) */
 .attackPhase {
-    border: 1px solid lightgrey;
-    border-radius: 6px;
-    padding: 8px;
+    margin-bottom: 16px;
 }
 
-.attackPhaseHeader {
+.attackPhaseSummary {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    list-style: none;
+}
+
+.attackPhaseSummary::-webkit-details-marker {
+    display: none;
+}
+
+.attackPhase[open] > .attackPhaseSummary::before {
+    transform: rotate(90deg);
 }
 
 .attackPhaseTitle {
-    text-transform: uppercase;
+    flex: 1;
 }
 
-/* Vanilla angle picker used in the add/edit bullet modal */
-.anglePickerWrapper {
+/* Wider modal for the bullet editor */
+#bulletModal {
+    width: 560px;
+    margin-left: -280px;
+}
+
+/* Bullet sprite dropdown + preview */
+.bulletSpriteRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.bulletSpriteSelect {
+    width: 160px;
+    flex-shrink: 0;
+}
+
+.bulletSpritePreview {
+    border: 1px solid #ccc;
+    image-rendering: pixelated;
+}
+
+.bulletSliderLabel {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.bulletSpeedSlider {
+    width: 160px;
+}
+
+
+/* Angle selector (picker circle + value input) in the bullet modal */
+.angleSection {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-top: 8px;
+}
+
+.angleValueWrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.angleInput {
+    width: 70px;
+}
+
+.angleUnit {
+    font-weight: bold;
 }
 
 .anglePickerCircle {

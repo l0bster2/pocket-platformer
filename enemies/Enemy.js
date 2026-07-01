@@ -168,10 +168,10 @@ class Enemy extends InteractiveLevelObject {
         this.attackPhases = [{
             id: this.makeid(5),
             bullets: [],
-            startDelay: 0,
             interval: 1,
+            startDelay: 0,
+            infiniteAmmo: true,
             ammo: 3,
-            infiniteAmmo: false,
             reloadTime: 2,
         }];
         
