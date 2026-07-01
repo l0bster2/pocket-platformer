@@ -55,6 +55,10 @@ class ObjectTypes {
     return 'canonBall';
   }
 
+  static get BULLET() {
+    return 'bullet';
+  }
+
   static get LASER_CANON() {
     return 'laserCanon';
   }
@@ -249,6 +253,7 @@ class ObjectTypes {
       [this.STOMPER]: Stomper,
       [this.CANON]: Canon,
       [this.CANON_BALL]: CanonBall,
+      [this.BULLET]: Bullet,
       [this.LASER_CANON]: LaserCanon,
       [this.LASER]: Laser,
       [this.BARREL_CANNON]: BarrelCannon,

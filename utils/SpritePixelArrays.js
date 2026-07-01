@@ -83,6 +83,7 @@ class SpritePixelArrays {
       ObjectTypes.CANON_BALL,
       ObjectTypes.ROCKET,
       ObjectTypes.ROTATING_FIREBALL_CENTER,
+      ObjectTypes.BULLET,
     ]
 
     this.customType = "custom";
@@ -1103,6 +1104,67 @@ class SpritePixelArrays {
             ['transp', 'transp', 'transp', 'transp', 'AAAAAA', 'AAAAAA', 'transp', 'transp'],
             ['transp', 'transp', 'transp', 'transp', 'transp', 'AAAAAA', 'transp', 'transp'],
             ['transp', 'transp', 'transp', 'transp', 'transp', 'transp', 'transp', 'transp'],
+          ]
+      }
+      ]
+    };
+
+    this.BULLET_SPRITE = {
+      name: ObjectTypes.BULLET,
+      descriptiveName: "Bullet",
+      description: "A projectile. Travels in a straight line (or arcs, if affected by gravity). " +
+        "Sprite can be overridden with any other bullet sprite. Points to the right by default.",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "AAAAAA", "AAAAAA", "transp", "transp", "transp"],
+            ["transp", "AAAAAA", "CCCCCC", "EEEEEE", "EEEEEE", "FFFFFF", "FFFFFF", "transp"],
+            ["transp", "AAAAAA", "CCCCCC", "EEEEEE", "EEEEEE", "FFFFFF", "FFFFFF", "transp"],
+            ["transp", "transp", "transp", "AAAAAA", "AAAAAA", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.BULLET_SPRITE_2 = {
+      name: "bullet2",
+      descriptiveName: "Bullet 2",
+      description: "An alternative bullet sprite (fireball). Use it to override the default bullet sprite.",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "FF8E1C", "FF8E1C", "FF8E1C", "transp", "transp", "transp"],
+            ["transp", "FF8E1C", "FFFF8E", "FFFF8E", "FF8E1C", "FF1C1C", "transp", "transp"],
+            ["transp", "FF8E1C", "FFFF8E", "FFFFFF", "FFFF8E", "FF1C1C", "FF1C1C", "transp"],
+            ["transp", "FF8E1C", "FFFF8E", "FFFFFF", "FFFF8E", "FF1C1C", "FF1C1C", "transp"],
+            ["transp", "FF8E1C", "FFFF8E", "FFFF8E", "FF8E1C", "FF1C1C", "transp", "transp"],
+            ["transp", "transp", "FF8E1C", "FF8E1C", "FF8E1C", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.BULLET_SPRITE_3 = {
+      name: "bullet3",
+      descriptiveName: "Bullet 3",
+      description: "An alternative bullet sprite (dart). Use it to override the default bullet sprite.",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "AA00AA", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "AA00AA", "CC00CC", "transp"],
+            ["DD00DD", "DD00DD", "DD00DD", "DD00DD", "DD00DD", "CC00CC", "CC00CC", "transp"],
+            ["DD00DD", "DD00DD", "DD00DD", "DD00DD", "DD00DD", "CC00CC", "CC00CC", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "AA00AA", "CC00CC", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "AA00AA", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
       }
       ]

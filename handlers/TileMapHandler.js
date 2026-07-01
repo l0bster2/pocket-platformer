@@ -292,6 +292,7 @@ class TileMapHandler {
         for (var i = this.levelObjects.length; i >= 0; i--) {
             const laserObject = this.levelObjects[i]?.type === ObjectTypes.LASER;
             if (this.levelObjects[i]?.type === ObjectTypes.CANON_BALL || this.levelObjects[i]?.type === ObjectTypes.ROCKET
+                || this.levelObjects[i]?.type === ObjectTypes.BULLET
                 || laserObject) {
                 !laserObject && SFXHandler.createSFX(this.levelObjects[i].x, this.levelObjects[i].y, 1)
                 this.levelObjects.splice(i, 1);

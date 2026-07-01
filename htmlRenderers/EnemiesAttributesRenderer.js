@@ -125,9 +125,18 @@ class EnemiesAttributesRenderer {
 
                 <!-- Tab Navigation (styled like Build tools tabs) -->
                 <div id="enemyTabWrapper" class="marginTop8">
-                    <button id="tab_movement" class="levelNavigationButton tabButton active" onclick="EnemiesAttributesRenderer.switchTab('movement')">Movement</button>
-                    <button id="tab_other" class="levelNavigationButton tabButton" onclick="EnemiesAttributesRenderer.switchTab('other')">Live</button>
-                    <button id="tab_ai" class="levelNavigationButton tabButton" onclick="EnemiesAttributesRenderer.switchTab('ai')">Enemy AI</button>
+                    <button id="tab_movement" class="levelNavigationButton tabButton buttonWithIconAndText active" onclick="EnemiesAttributesRenderer.switchTab('movement')">
+                        <img src="images/icons/attributes.svg" class="iconInButtonWithText" alt="attributes" width="16" height="16"> Attributes
+                    </button>
+                    <button id="tab_other" class="levelNavigationButton tabButton buttonWithIconAndText" onclick="EnemiesAttributesRenderer.switchTab('other')">
+                        <img src="images/icons/heart.svg" class="iconInButtonWithText" alt="live" width="16" height="16"> Live
+                    </button>
+                    <button id="tab_ai" class="levelNavigationButton tabButton buttonWithIconAndText" onclick="EnemiesAttributesRenderer.switchTab('ai')">
+                        <img src="images/icons/movement.svg" class="iconInButtonWithText" alt="movement" width="16" height="16"> Movement
+                    </button>
+                    <button id="tab_attack" class="levelNavigationButton tabButton buttonWithIconAndText" onclick="EnemiesAttributesRenderer.switchTab('attack')">
+                        <img src="images/icons/attack.svg" class="iconInButtonWithText" alt="attack" width="16" height="16"> Attack
+                    </button>
                 </div>
 
                 <div id="enemyTabContent">
@@ -194,10 +203,9 @@ class EnemiesAttributesRenderer {
 
                                 ${isFlying ? `
                                     ${this.createFlyingBehaviourSection(attributes, type)}
-                                    <div class="marginTop12" style="display: flex; gap: 24px;">
+                                    <div class="marginTop12" style="display: flex; gap: 24px; align-items: center;">
                                         ${this.createFlyingWallBehaviourSection(attributes, type)}
                                         <div style="flex: 1;">
-                                            <label class="labelText" style="visibility: hidden;">.</label>
                                             ${this.createCheckboxInput('collidesWithWalls', 'Collides with walls', attributes.collidesWithWalls, type)}
                                         </div>
                                     </div>
@@ -209,6 +217,13 @@ class EnemiesAttributesRenderer {
                                     </div>
                                     ${this.createJumpIntervalSection(attributes, type)}
                                 `}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="attackContent" style="display:none;">
+                        <div class="detailsSection marginBottom16">
+                            <div class="detailsContent marginTop8">
                             </div>
                         </div>
                     </div>
@@ -350,6 +365,7 @@ class EnemiesAttributesRenderer {
             movement: { content: document.getElementById('movementContent'), button: document.getElementById('tab_movement') },
             other: { content: document.getElementById('otherContent'), button: document.getElementById('tab_other') },
             ai: { content: document.getElementById('aiContent'), button: document.getElementById('tab_ai') },
+            attack: { content: document.getElementById('attackContent'), button: document.getElementById('tab_attack') },
         };
         if (Object.values(tabs).some(t => !t.content || !t.button)) return;
         // Remember the tab so it's preserved when re-opening the editor or switching enemies.
@@ -464,7 +480,7 @@ class EnemiesAttributesRenderer {
             <div class="subSection marginTop16">
                 <div style="display: flex; gap: 24px;">
                     <div style="flex: 1;">
-                        <label class="labelText">Movement behaviour:</label>
+                        <label class="labelText">Behaviour:</label>
                         <select id="flyingBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
                             onchange="EnemiesAttributesRenderer.onFlyingBehaviourChanged('${type}')">
                             ${this.createFlyingBehaviourOptions(behaviour)}
@@ -526,7 +542,7 @@ class EnemiesAttributesRenderer {
         ];
         return `
             <div style="flex: 1;">
-                <label class="labelText">Gap collision:</label>
+                <label class="labelText">Gap:</label>
                 <select id="gapBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
                     onchange="EnemiesAttributesRenderer.updateSelectAttribute('${type}', 'gapBehaviour', this.value)">
                     ${options.map(opt => `<option value="${opt.value}" ${behaviour === opt.value ? 'selected' : ''}>${opt.text}</option>`).join('')}
@@ -546,7 +562,7 @@ class EnemiesAttributesRenderer {
         ];
         return `
             <div style="flex: 1;">
-                <label class="labelText">Wall collision:</label>
+                <label class="labelText">Wall:</label>
                 <select id="wallBehaviourSelect_${type}" class="textInput" style="width: 100%; margin-top: 4px;"
                     onchange="EnemiesAttributesRenderer.updateSelectAttribute('${type}', 'wallBehaviour', this.value)">
                     ${options.map(opt => `<option value="${opt.value}" ${behaviour === opt.value ? 'selected' : ''}>${opt.text}</option>`).join('')}
