@@ -80,6 +80,9 @@ class Enemy extends InteractiveLevelObject {
             right: "right",
             none: "none",
         }
+        // Start facing left so timed behaviours (patrol/random) move on the very first frame
+        // instead of waiting until the first direction change.
+        this.walkDirection = this.walkDirections.left;
         // Movement behaviour decides how walkDirection is chosen each frame (see
         // EnemyMovementHandler.updateWalkDirection).
         this.movementBehaviours = {

@@ -90,6 +90,22 @@ class EnemiesAttributesRenderer {
     }
 
     /**
+     * Sync the enemy editor to a type selected elsewhere (e.g. picking an enemy in the build
+     * tools palette). Remembers it as the last selected type and, if the editor is currently
+     * open, updates the dropdown and details in place.
+     */
+    static syncSelectedEnemyType(type) {
+        const allTypes = EnemyTypeAttributesHandler.getAllEnemyTypes();
+        if (!allTypes.includes(type)) return;
+        this.lastSelectedType = type;
+        const dropdown = document.getElementById("enemySelectDropdown");
+        if (dropdown && dropdown.value !== type) {
+            dropdown.value = type;
+            this.onEnemyTypeSelected();
+        }
+    }
+
+    /**
      * Render detailed editor for a specific enemy type
      */
     static renderEnemyTypeDetails(type) {

@@ -193,6 +193,11 @@ class TabNavigation {
       size: SpritePixelArrays.movingPlatformSprites.includes(selectedSprite.name) ? 3 : 1
     });
     DrawSectionHandler.changeSelectedSprite({ target: { value: selectedSprite.descriptiveName } }, true);
+    // Keep the enemy editor in sync: selecting an enemy in the build palette should pre-select
+    // that same enemy type in the enemy view dropdown.
+    if (selectedSprite.type === SpritePixelArrays.SPRITE_TYPES.enemies && typeof EnemiesAttributesRenderer !== 'undefined') {
+      EnemiesAttributesRenderer.syncSelectedEnemyType(selectedSprite.name);
+    }
   }
 
   static markSelectedSprite(index, yPos) {
