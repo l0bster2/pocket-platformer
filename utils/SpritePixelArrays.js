@@ -86,6 +86,13 @@ class SpritePixelArrays {
       ObjectTypes.BULLET,
     ]
 
+    // Sprites selectable for enemy bullets in the Attack tab (default + overrides).
+    this.bulletSprites = [
+      ObjectTypes.BULLET,
+      "bullet2",
+      "bullet3",
+    ]
+
     this.customType = "custom";
 
     this.TILE_1 = {
@@ -3481,6 +3488,12 @@ class SpritePixelArrays {
 
   static getSpritesByDescrpitiveName(descriptiveName) {
     return this.allSprites.filter(sprite => sprite.descriptiveName === descriptiveName);
+  }
+
+  static getBulletSprites() {
+    return this.bulletSprites
+      .map(name => this.getSpritesByName(name)[0])
+      .filter(Boolean);
   }
 
   static getCanvasSpriteYPosition(spriteObjectIndex) {

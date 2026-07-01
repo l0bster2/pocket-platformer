@@ -223,7 +223,8 @@ class EnemiesAttributesRenderer {
 
                     <div id="attackContent" style="display:none;">
                         <div class="detailsSection marginBottom16">
-                            <div class="detailsContent marginTop8">
+                            <div id="attackTabInner" class="detailsContent marginTop8">
+                                ${EnemyAttackHandler.renderPhases(type)}
                             </div>
                         </div>
                     </div>

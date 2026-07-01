@@ -498,6 +498,78 @@ input:checked+.switchSlider:before {
     font-size: 10px;
 }
 
+/* Enemy editor: attack phases */
+.attackPhase {
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.attackPhaseHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.attackPhaseTitle {
+    text-transform: uppercase;
+}
+
+/* Vanilla angle picker used in the add/edit bullet modal */
+.anglePickerWrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.anglePickerCircle {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid lightgrey;
+    background: #f4f4f4;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.anglePickerHand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 34px;
+    height: 2px;
+    background: #2b8a3e;
+    transform-origin: 0 50%;
+    transform: rotate(0deg);
+    pointer-events: none;
+}
+
+.anglePickerHand::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2b8a3e;
+}
+
+.anglePickerCenter {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    border-radius: 50%;
+    background: #333;
+    pointer-events: none;
+}
+
 .tabPaginationIcon {
     position: absolute;
     padding: 8px 8px 8px;

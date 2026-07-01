@@ -163,6 +163,17 @@ class Enemy extends InteractiveLevelObject {
         // to true; specific enemy types (e.g. the ghost) opt out in their own constructor.
         this.killedBySpikes = true;
         this.killedByBullets = true;
+        // Attack configuration: shooting is split into "phases", each with its own bullets, timing
+        // and ammo. There is always at least one phase. Edited via the enemy editor's Attack tab.
+        this.attackPhases = [{
+            id: this.makeid(5),
+            bullets: [],
+            startDelay: 0,
+            interval: 1,
+            ammo: 3,
+            infiniteAmmo: false,
+            reloadTime: 2,
+        }];
         
         // movement attributes (editable)
         this.maxSpeed = 2;
@@ -401,6 +412,7 @@ class Enemy extends InteractiveLevelObject {
             stunDuration: this.stunDuration,
             killedBySpikes: this.killedBySpikes,
             killedByBullets: this.killedByBullets,
+            attackPhases: this.attackPhases,
             maxSpeed: this.maxSpeed,
             groundAcceleration: this.groundAcceleration,
             air_acceleration: this.air_acceleration,
@@ -434,6 +446,7 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.stunDuration !== undefined) this.stunDuration = attributes.stunDuration;
         if (attributes.killedBySpikes !== undefined) this.killedBySpikes = attributes.killedBySpikes;
         if (attributes.killedByBullets !== undefined) this.killedByBullets = attributes.killedByBullets;
+        if (attributes.attackPhases !== undefined) this.attackPhases = attributes.attackPhases;
         if (attributes.maxSpeed !== undefined) this.maxSpeed = attributes.maxSpeed;
         if (attributes.groundAcceleration !== undefined) this.groundAcceleration = attributes.groundAcceleration;
         if (attributes.air_acceleration !== undefined) this.air_acceleration = attributes.air_acceleration;
