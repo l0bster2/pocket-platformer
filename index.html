@@ -807,7 +807,7 @@
             <div class="headerWrapper">
                 <div class="tooltipHeading" id="bulletModalHeading">Add bullet</div>
             </div>
-            <form class="marginTop16" id="bulletForm" onsubmit="EnemyAttackHandler.submitBullet(event);">
+            <form class="marginTop16" id="bulletForm" onsubmit="EnemyAttackRenderer.submitBullet(event);">
                 <div id="bulletModalForm"></div>
                 <div class="subSection">
                     <button class="levelNavigationButton halfWidth" type="submit">Ok</button>
@@ -960,6 +960,7 @@
         <script src="enemies/EnemyActivationHandler.js"></script>
         <script src="handlers/EnemyTypeAttributesHandler.js"></script>
         <script src="handlers/EnemyAttackHandler.js"></script>
+        <script src="handlers/EnemyAttackRenderer.js"></script>
         <script src="SpriteSheetCreator.js"></script>
         <script src="utils/ObjectTypes.js"></script>
         <script src="ImportExport.js"></script>
@@ -1087,7 +1088,7 @@
             TooltipHandler.staticConstructor();
             LayerHandler.staticConstructor();
             ModalHandler.staticConstructor();
-            EnemyAttackHandler.staticConstructor();
+            EnemyAttackRenderer.staticConstructor();
             LevelSizeHandler.staticConstructor(tileMapHandler);
             PlayerAttributesHandler.staticConstructor(player);
             CustomSpriteHandler.staticConstructor();

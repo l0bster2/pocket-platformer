@@ -554,7 +554,9 @@ input:checked+.switchSlider:before {
     margin-bottom: 6px;
 }
 
-.bulletSpeedSlider {
+.bulletSpeedSlider,
+.bulletGravitySlider,
+.bulletRandomAngleSlider {
     width: 160px;
 }
 

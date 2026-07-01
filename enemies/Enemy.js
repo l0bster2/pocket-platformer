@@ -329,6 +329,8 @@ class Enemy extends InteractiveLevelObject {
                     this.xspeed = 0;
                 }
             }
+            // Reset attack timers so the start delay is honoured again on the next activation.
+            EnemyAttackHandler.resetState(this);
             this.checkPlayerCollision();
             EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
             return;
@@ -336,6 +338,8 @@ class Enemy extends InteractiveLevelObject {
 
         this.checkHazardCollisions();
         this.checkPlayerCollision();
+        // Spawn bullets according to this enemy type's configured attack phases.
+        EnemyAttackHandler.updateAttack(this);
         // updateJump still runs every frame so in-progress jumps (including gap jumps and
         // trampoline launches) finish; the interval jump itself only starts when enabled.
         EnemyJumpHandler.updateJump(this, Math.round(this.jumpInterval * 60));
