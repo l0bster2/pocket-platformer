@@ -29,9 +29,10 @@ class Enemy5 extends Enemy {
                 randomAngleOffset: 10,
                 affectedByGravity: true,
                 gravity: 0.2,
-                speed: 3,
-                collidesWithWalls: true,
-                shootInPlayerDirection: false,
+                speed: 5.6,
+                collidesWithWalls: false,
+                shootInPlayerDirection: true,
+                shootDirectlyAtPlayer: false,
                 spriteDescriptiveName: "Bullet",
             }],
         }];

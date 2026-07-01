@@ -418,6 +418,8 @@ class Enemy extends InteractiveLevelObject {
             killedByBullets: this.killedByBullets,
             attackPhases: this.attackPhases,
             maxSpeed: this.maxSpeed,
+            jumpSpeed: this.jumpSpeed,
+            maxJumpFrames: this.maxJumpFrames,
             groundAcceleration: this.groundAcceleration,
             air_acceleration: this.air_acceleration,
             groundFriction: this.groundFriction,
@@ -452,6 +454,8 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.killedByBullets !== undefined) this.killedByBullets = attributes.killedByBullets;
         if (attributes.attackPhases !== undefined) this.attackPhases = attributes.attackPhases;
         if (attributes.maxSpeed !== undefined) this.maxSpeed = attributes.maxSpeed;
+        if (attributes.jumpSpeed !== undefined) this.jumpSpeed = attributes.jumpSpeed;
+        if (attributes.maxJumpFrames !== undefined) this.maxJumpFrames = attributes.maxJumpFrames;
         if (attributes.groundAcceleration !== undefined) this.groundAcceleration = attributes.groundAcceleration;
         if (attributes.air_acceleration !== undefined) this.air_acceleration = attributes.air_acceleration;
         if (attributes.groundFriction !== undefined) this.groundFriction = attributes.groundFriction;

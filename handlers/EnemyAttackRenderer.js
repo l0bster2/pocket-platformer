@@ -248,6 +248,7 @@ class EnemyAttackRenderer {
         ModalHandler.showModal('bulletModal');
         this.updateGravityRowVisibility();
         this.initAnglePicker(bullet?.angle ?? 0);
+        this.updateAngleControlsVisibility();
         const selectedSprite = document.getElementById("bulletSprite");
         if (selectedSprite) this.drawBulletSpritePreview(selectedSprite.value);
     }
@@ -260,6 +261,7 @@ class EnemyAttackRenderer {
         const angle = bullet?.angle ?? 0;
         const randomAngleOffset = bullet?.randomAngleOffset ?? 0;
         const shootInPlayerDirection = bullet?.shootInPlayerDirection ?? false;
+        const shootDirectlyAtPlayer = bullet?.shootDirectlyAtPlayer ?? false;
         const spriteName = bullet?.spriteDescriptiveName ?? null;
         const bulletSprites = SpritePixelArrays.getBulletSprites();
 
@@ -297,21 +299,28 @@ class EnemyAttackRenderer {
                 <input type="checkbox" id="bulletCollidesWithWalls" name="bulletCollidesWithWalls" ${collidesWithWalls ? 'checked' : ''}>
                 <label for="bulletCollidesWithWalls" class="checkBoxText">Collides with walls</label>
             </div>
-            <div class="marginTop8">
-                <input type="checkbox" id="bulletShootInPlayerDirection" name="bulletShootInPlayerDirection" ${shootInPlayerDirection ? 'checked' : ''}>
-                <label for="bulletShootInPlayerDirection" class="checkBoxText">Shoot in player direction</label>
-            </div>
             <div class="subSection">
-                <label class="labelText">Angle:</label>
-                <div class="angleSection">
-                    <div id="anglePickerCircle" class="anglePickerCircle">
-                        <div id="anglePickerHand" class="anglePickerHand"></div>
-                        <div class="anglePickerCenter"></div>
+                <div>
+                    <input type="checkbox" id="bulletShootDirectlyAtPlayer" name="bulletShootDirectlyAtPlayer" ${shootDirectlyAtPlayer ? 'checked' : ''}
+                        onchange="EnemyAttackRenderer.updateAngleControlsVisibility()">
+                    <label for="bulletShootDirectlyAtPlayer" class="checkBoxText">Shoot directly at player</label>
+                </div>
+                <div id="bulletAngleControls">
+                    <div class="marginTop8">
+                        <input type="checkbox" id="bulletShootInPlayerDirection" name="bulletShootInPlayerDirection" ${shootInPlayerDirection ? 'checked' : ''}>
+                        <label for="bulletShootInPlayerDirection" class="checkBoxText">Shoot in player direction</label>
                     </div>
-                    <div class="angleValueWrapper">
-                        <input type="number" id="bulletAngle" name="bulletAngle" class="textInput angleInput" min="0" max="359" step="1" value="${angle}"
-                            onchange="EnemyAttackRenderer.onAngleInputChanged(this.value)">
-                        <span class="angleUnit">°</span>
+                    <label class="labelText marginTop8" style="display:block;">Angle:</label>
+                    <div class="angleSection">
+                        <div id="anglePickerCircle" class="anglePickerCircle">
+                            <div id="anglePickerHand" class="anglePickerHand"></div>
+                            <div class="anglePickerCenter"></div>
+                        </div>
+                        <div class="angleValueWrapper">
+                            <input type="number" id="bulletAngle" name="bulletAngle" class="textInput angleInput" min="0" max="359" step="1" value="${angle}"
+                                onchange="EnemyAttackRenderer.onAngleInputChanged(this.value)">
+                            <span class="angleUnit">°</span>
+                        </div>
                     </div>
                 </div>
                 <div class="playerAttributeWrapper marginTop12">
@@ -367,6 +376,14 @@ class EnemyAttackRenderer {
         }
     }
 
+    static updateAngleControlsVisibility() {
+        const checkbox = document.getElementById("bulletShootDirectlyAtPlayer");
+        const controls = document.getElementById("bulletAngleControls");
+        if (checkbox && controls) {
+            controls.style.display = checkbox.checked ? 'none' : 'block';
+        }
+    }
+
     static submitBullet(e) {
         e.preventDefault();
         const elements = e.target.elements;
@@ -380,6 +397,7 @@ class EnemyAttackRenderer {
             angle: this.normalizeDegrees(parseInt(elements.bulletAngle.value, 10)),
             randomAngleOffset: parseInt(elements.bulletRandomAngleOffset.value, 10) || 0,
             shootInPlayerDirection: elements.bulletShootInPlayerDirection.checked,
+            shootDirectlyAtPlayer: elements.bulletShootDirectlyAtPlayer.checked,
         };
 
         const phases = this.getPhases(this.currentType);

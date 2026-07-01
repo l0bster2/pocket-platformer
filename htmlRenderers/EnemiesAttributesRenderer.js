@@ -148,6 +148,7 @@ class EnemiesAttributesRenderer {
                                 ${this.createSliderInput('air_acceleration', 'Air Acceleration', attributes.air_acceleration, 0.01, 1, 0.01, type)}
                                 ${this.createSliderInput('groundFriction', 'Ground Friction', attributes.groundFriction, 0, 1, 0.01, type)}
                                 ${this.createSliderInput('air_friction', 'Air Friction', attributes.air_friction, 0, 1, 0.01, type)}
+                                ${this.createJumpHeightSlider(attributes, type)}
                             </div>
                         </div>
                     </div>
@@ -306,6 +307,49 @@ class EnemiesAttributesRenderer {
                 <span id="${id}Value" class="playerAttrSliderValue">${value}</span>
             </div>
         `;
+    }
+
+    /**
+     * Map the enemy's stored jumpSpeed/maxJumpFrames back to a 1-10 slider value
+     * using the same lookup table the player uses.
+     */
+    static mapEnemyJumpToSliderValue(attributes) {
+        const jumpSpeed = attributes.jumpSpeed ?? 0.44;
+        const maxJumpFrames = attributes.maxJumpFrames ?? 18;
+        const match = jumpSpeedMapValues.find(v => v.jumpSpeed === jumpSpeed && v.maxJumpFrames === maxJumpFrames)
+            || jumpSpeedMapValues.find(v => v.jumpSpeed === jumpSpeed)
+            || jumpSpeedMapValues[2];
+        return match.sliderValue;
+    }
+
+    /**
+     * Create the jump height slider (1-10), mirroring the player's "jump height" control.
+     */
+    static createJumpHeightSlider(attributes, type) {
+        const sliderValue = this.mapEnemyJumpToSliderValue(attributes);
+        return `
+            <div class="playerAttributeWrapper">
+                <label for="enemyJumpHeight" style="display:block; margin-bottom:6px;">Jump Height:</label>
+                <input class="playerAttrSlider enemyAttrSlider" type="range" min="1" max="10" value="${sliderValue}" step="1" id="enemyJumpHeight"
+                    oninput="EnemiesAttributesRenderer.updateEnemyJumpHeight('${type}', this.value)">
+                <span id="enemyJumpHeightValue" class="playerAttrSliderValue">${sliderValue}</span>
+            </div>
+        `;
+    }
+
+    /**
+     * Update jump height: maps the 1-10 slider value to jumpSpeed + maxJumpFrames.
+     */
+    static updateEnemyJumpHeight(type, sliderValue) {
+        const value = parseInt(sliderValue, 10);
+        const mapped = jumpSpeedMapValues.find(v => v.sliderValue === value) || jumpSpeedMapValues[2];
+        EnemyTypeAttributesHandler.setAttribute(type, 'jumpSpeed', mapped.jumpSpeed);
+        EnemyTypeAttributesHandler.setAttribute(type, 'maxJumpFrames', mapped.maxJumpFrames);
+        const panel = document.getElementById("enemyDetailsPanel");
+        const displayEl = panel
+            ? panel.querySelector('#enemyJumpHeightValue')
+            : document.getElementById('enemyJumpHeightValue');
+        if (displayEl) displayEl.innerHTML = value;
     }
 
     /**

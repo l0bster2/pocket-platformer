@@ -92,12 +92,22 @@ class EnemyAttackHandler {
         if (typeof tileMapHandler === 'undefined' || !tileMapHandler) return;
         const tileSize = enemy.tileSize;
 
-        // Determine the base direction: either the configured angle or straight at the player.
+        // Determine the base direction.
         let baseAngle = bulletConfig.angle ?? 0;
-        if (bulletConfig.shootInPlayerDirection && PlayMode.player) {
-            const dx = (PlayMode.player.x + PlayMode.player.width / 2) - (enemy.x + enemy.width / 2);
-            const dy = (PlayMode.player.y + PlayMode.player.height / 2) - (enemy.y + enemy.height / 2);
-            baseAngle = Math.atan2(dy, dx) * 180 / Math.PI;
+        if (PlayMode.player) {
+            const enemyCenterX = enemy.x + enemy.width / 2;
+            const enemyCenterY = enemy.y + enemy.height / 2;
+            const playerCenterX = PlayMode.player.x + PlayMode.player.width / 2;
+            const playerCenterY = PlayMode.player.y + PlayMode.player.height / 2;
+
+            if (bulletConfig.shootDirectlyAtPlayer) {
+                // Aim the bullet straight at the player.
+                baseAngle = Math.atan2(playerCenterY - enemyCenterY, playerCenterX - enemyCenterX) * 180 / Math.PI;
+            } else if (bulletConfig.shootInPlayerDirection && playerCenterX > enemyCenterX) {
+                // The configured angle assumes the player is to the left; mirror it
+                // horizontally when the player is on the enemy's right side.
+                baseAngle = ((180 - baseAngle) % 360 + 360) % 360;
+            }
         }
 
         // Apply a random spread centered on the base angle (offset = total spread width in degrees).
