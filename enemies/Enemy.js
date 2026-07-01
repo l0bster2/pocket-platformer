@@ -177,6 +177,12 @@ class Enemy extends InteractiveLevelObject {
             ammo: 3,
             reloadTime: 2,
         }];
+        // How the enemy advances from one attack phase to the next (only relevant with 2+ phases):
+        // 'intervals' = after firing N volleys, 'seconds' = after N seconds, 'hits' = after being
+        // hit N times. phaseHitsTaken counts hits at runtime (used by the 'hits' mode).
+        this.phaseChangeMode = 'intervals';
+        this.phaseChangeValue = 1;
+        this.phaseHitsTaken = 0;
         
         // movement attributes (editable)
         this.maxSpeed = 2;
@@ -420,6 +426,8 @@ class Enemy extends InteractiveLevelObject {
             killedBySpikes: this.killedBySpikes,
             killedByBullets: this.killedByBullets,
             attackPhases: this.attackPhases,
+            phaseChangeMode: this.phaseChangeMode,
+            phaseChangeValue: this.phaseChangeValue,
             maxSpeed: this.maxSpeed,
             jumpSpeed: this.jumpSpeed,
             maxJumpFrames: this.maxJumpFrames,
@@ -456,6 +464,8 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.killedBySpikes !== undefined) this.killedBySpikes = attributes.killedBySpikes;
         if (attributes.killedByBullets !== undefined) this.killedByBullets = attributes.killedByBullets;
         if (attributes.attackPhases !== undefined) this.attackPhases = attributes.attackPhases;
+        if (attributes.phaseChangeMode !== undefined) this.phaseChangeMode = attributes.phaseChangeMode;
+        if (attributes.phaseChangeValue !== undefined) this.phaseChangeValue = attributes.phaseChangeValue;
         if (attributes.maxSpeed !== undefined) this.maxSpeed = attributes.maxSpeed;
         if (attributes.jumpSpeed !== undefined) this.jumpSpeed = attributes.jumpSpeed;
         if (attributes.maxJumpFrames !== undefined) this.maxJumpFrames = attributes.maxJumpFrames;

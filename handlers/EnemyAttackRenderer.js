@@ -12,6 +12,8 @@
  *       ]
  *     }
  *   ]
+ *   phaseChangeMode: 'intervals' | 'seconds' | 'hits'  (how the enemy advances between phases)
+ *   phaseChangeValue: number                            (the amount for the chosen mode)
  *
  * There is always at least one phase ("Phase 1"). The actual runtime shooting is handled by
  * EnemyAttackHandler; this class only builds and persists the configuration UI.
@@ -79,8 +81,60 @@ class EnemyAttackRenderer {
                     onclick="EnemyAttackRenderer.addPhase('${type}')">
                     <img src="images/icons/plus.svg" class="iconInButtonWithText" alt="add phase" width="12" height="12"> Add phase
                 </button>
+                ${this.renderPhaseChangeControl(type)}
             </div>
         `;
+    }
+
+    /**
+     * Render the "Change phase after" dropdown + value input shown beneath the Add phase button.
+     * The unit (intervals / seconds / hits) decides how the enemy advances between phases.
+     */
+    static renderPhaseChangeControl(type) {
+        const attributes = EnemyTypeAttributesHandler.getAttributes(type);
+        const mode = attributes.phaseChangeMode || 'intervals';
+        const value = attributes.phaseChangeValue ?? 1;
+        const isSeconds = mode === 'seconds';
+        return `
+            <div class="marginTop12">
+                <label class="enemySubLabel">Change phase after:</label>
+                <div class="phaseChangeRow marginTop4">
+                    <input type="number" id="phaseChangeValue_${type}" class="textInput phaseChangeValueInput"
+                        min="${isSeconds ? '0.25' : '1'}" step="${isSeconds ? '0.25' : '1'}" value="${value}"
+                        onchange="EnemyAttackRenderer.updatePhaseChangeValue('${type}', this.value)">
+                    <select id="phaseChangeMode_${type}" class="textInput phaseChangeModeSelect"
+                        onchange="EnemyAttackRenderer.onPhaseChangeModeChanged('${type}', this.value)">
+                        <option value="intervals" ${mode === 'intervals' ? 'selected' : ''}>intervals</option>
+                        <option value="seconds" ${mode === 'seconds' ? 'selected' : ''}>seconds</option>
+                        <option value="hits" ${mode === 'hits' ? 'selected' : ''}>times hit</option>
+                    </select>
+                </div>
+            </div>
+        `;
+    }
+
+    static onPhaseChangeModeChanged(type, mode) {
+        EnemyTypeAttributesHandler.setAttribute(type, 'phaseChangeMode', mode);
+        const input = document.getElementById(`phaseChangeValue_${type}`);
+        if (!input) return;
+        if (mode === 'seconds') {
+            input.step = '0.25';
+            input.min = '0.25';
+        } else {
+            input.step = '1';
+            input.min = '1';
+            // Whole-number units: round any fractional seconds value down to a sensible integer.
+            const rounded = Math.max(1, Math.round(parseFloat(input.value) || 1));
+            input.value = rounded;
+            EnemyTypeAttributesHandler.setAttribute(type, 'phaseChangeValue', rounded);
+        }
+    }
+
+    static updatePhaseChangeValue(type, value) {
+        const mode = EnemyTypeAttributesHandler.getAttributes(type).phaseChangeMode || 'intervals';
+        let num = parseFloat(value);
+        if (isNaN(num)) num = mode === 'seconds' ? 0.25 : 1;
+        EnemyTypeAttributesHandler.setAttribute(type, 'phaseChangeValue', num);
     }
 
     static onPhaseToggle(phaseId, isOpen) {

@@ -3399,6 +3399,87 @@ class SpritePixelArrays {
       ]
     };
 
+    // Enemy 10: a flying "spread shooter" orb that fires in all directions.
+    this.ENEMY_10_IDLE = {
+      name: ObjectTypes.ENEMY_10,
+      maxHeight: 16,
+      multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies,
+      descriptiveName: "Enemy 10 idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "C0392B", "transp", "transp", "C0392B", "transp", "transp"],
+            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
+            ["C0392B", "E67E22", "FFFFFF", "000000", "000000", "FFFFFF", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "F39C12", "F39C12", "F39C12", "F39C12", "E67E22", "C0392B"],
+            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
+            ["transp", "transp", "C0392B", "transp", "transp", "C0392B", "transp", "transp"]
+          ]
+      }
+      ]
+    };
+
+    this.ENEMY_10_WALK = {
+      name: ObjectTypes.ENEMY_10,
+      maxHeight: 16,
+      multipleSprites: true,
+      descriptiveName: "Enemy 10 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "C0392B", "transp", "transp", "C0392B", "transp", "transp"],
+            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
+            ["C0392B", "E67E22", "FFFFFF", "000000", "000000", "FFFFFF", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "F39C12", "F39C12", "F39C12", "F39C12", "E67E22", "C0392B"],
+            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
+            ["transp", "transp", "C0392B", "transp", "transp", "C0392B", "transp", "transp"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "C0392B", "C0392B", "transp", "transp", "transp"],
+            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
+            ["C0392B", "E67E22", "FFFFFF", "000000", "000000", "FFFFFF", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "F39C12", "F39C12", "F39C12", "F39C12", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
+            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
+            ["transp", "transp", "transp", "C0392B", "C0392B", "transp", "transp", "transp"]
+          ]
+      }
+      ]
+    };
+
+    this.ENEMY_10_JUMP = {
+      name: ObjectTypes.ENEMY_10,
+      maxHeight: 16,
+      multipleSprites: true,
+      descriptiveName: "Enemy 10 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "C0392B", "transp", "transp", "C0392B", "transp", "transp"],
+            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
+            ["C0392B", "E67E22", "FFFFFF", "000000", "000000", "FFFFFF", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
+            ["C0392B", "E67E22", "F39C12", "F39C12", "F39C12", "F39C12", "E67E22", "C0392B"],
+            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
+            ["transp", "transp", "C0392B", "transp", "transp", "C0392B", "transp", "transp"]
+          ]
+      }
+      ]
+    };
+
     this.allSprites = [];
 
     this.fillAllSprites = () => {

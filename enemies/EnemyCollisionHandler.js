@@ -91,6 +91,7 @@ class EnemyCollisionHandler {
         player.currentDashFrame = 0;
 
         enemy.lives -= 1;
+        enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
         if (enemy.lives <= 0) {
             enemy.death();
         } else {

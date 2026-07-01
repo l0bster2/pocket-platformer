@@ -525,6 +525,22 @@ input:checked+.switchSlider:before {
     flex: 1;
 }
 
+/* "Change phase after" control beneath the Add phase button */
+.phaseChangeRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.phaseChangeValueInput {
+    width: 80px;
+    flex-shrink: 0;
+}
+
+.phaseChangeModeSelect {
+    flex: 1;
+}
+
 /* Wider modal for the bullet editor */
 #bulletModal {
     width: 560px;

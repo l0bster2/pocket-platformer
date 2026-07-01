@@ -132,6 +132,7 @@ class Bullet extends InteractiveLevelObject {
                 const enemy = enemies[i];
                 if (enemy.killedByBullets && Collision.objectsColliding(this, enemy)) {
                     enemy.lives -= 1;
+                    enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
                     if (enemy.lives <= 0) {
                         enemy.death();
                     }

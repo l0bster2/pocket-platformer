@@ -2,13 +2,19 @@
  * Runtime attack logic for enemies. Reads the `attackPhases` configuration (built in the enemy
  * editor by EnemyAttackRenderer) and actually spawns bullets while the enemy is active.
  *
- * Each phase runs independently and concurrently. A phase:
+ * Phases run SEQUENTIALLY: only the current phase shoots. A phase:
  *   1. waits `startDelay` seconds before its interval loop begins,
  *   2. fires a volley (all of its bullets) every `interval` seconds,
  *   3. when ammo is finite, reloads for `reloadTime` seconds after `ammo` volleys.
  *
- * Per-enemy runtime state lives on `enemy.attackState` (keyed by phase id) and is reset whenever
- * the enemy is inactive, so the start delay is honoured again on the next activation.
+ * With 2+ phases the enemy advances to the next phase (wrapping back to the first) according to
+ * its `phaseChangeMode` / `phaseChangeValue`:
+ *   'intervals' — after firing that many volleys in the current phase,
+ *   'seconds'   — after that many seconds in the current phase,
+ *   'hits'      — after being hit that many times while in the current phase.
+ *
+ * Per-enemy runtime state lives on `enemy.attackState` and is reset whenever the enemy is
+ * inactive, so the start delay is honoured again on the next activation.
  */
 class EnemyAttackHandler {
 
@@ -18,10 +24,22 @@ class EnemyAttackHandler {
         enemy.attackState = null;
     }
 
-    static getPhaseState(enemy, phase) {
-        if (!enemy.attackState) enemy.attackState = {};
-        if (!enemy.attackState[phase.id]) {
-            enemy.attackState[phase.id] = {
+    static ensureState(enemy) {
+        if (!enemy.attackState) {
+            enemy.attackState = {
+                currentPhaseIndex: 0,
+                phaseElapsedFrames: 0,
+                phaseVolleys: 0,
+                hitsBaseline: enemy.phaseHitsTaken || 0,
+                phases: {},
+            };
+        }
+        return enemy.attackState;
+    }
+
+    static getPhaseState(state, phase) {
+        if (!state.phases[phase.id]) {
+            state.phases[phase.id] = {
                 delayElapsed: false,
                 delayTimer: 0,
                 intervalTimer: 0,
@@ -30,7 +48,7 @@ class EnemyAttackHandler {
                 reloadTimer: 0,
             };
         }
-        return enemy.attackState[phase.id];
+        return state.phases[phase.id];
     }
 
     /**
@@ -39,12 +57,56 @@ class EnemyAttackHandler {
     static updateAttack(enemy) {
         const phases = enemy.attackPhases;
         if (!Array.isArray(phases) || phases.length === 0) return;
-        phases.forEach(phase => this.updatePhase(enemy, phase));
+        const state = this.ensureState(enemy);
+
+        if (state.currentPhaseIndex >= phases.length) state.currentPhaseIndex = 0;
+        const phase = phases[state.currentPhaseIndex];
+
+        const firedVolley = this.updatePhase(enemy, phase, this.getPhaseState(state, phase));
+        if (firedVolley) state.phaseVolleys++;
+        state.phaseElapsedFrames++;
+
+        // Only ever switch phases when there is more than one to switch between.
+        if (phases.length > 1 && this.shouldAdvancePhase(enemy, state)) {
+            this.advancePhase(enemy, state, phases);
+        }
     }
 
-    static updatePhase(enemy, phase) {
-        if (!phase.bullets || phase.bullets.length === 0) return;
-        const state = this.getPhaseState(enemy, phase);
+    /**
+     * Decide whether the current phase's switch condition has been met.
+     */
+    static shouldAdvancePhase(enemy, state) {
+        const mode = enemy.phaseChangeMode || 'intervals';
+        const value = enemy.phaseChangeValue ?? 1;
+        switch (mode) {
+            case 'seconds':
+                return state.phaseElapsedFrames >= value * this.FPS;
+            case 'hits':
+                return (enemy.phaseHitsTaken || 0) - state.hitsBaseline >= value;
+            case 'intervals':
+            default:
+                return state.phaseVolleys >= value;
+        }
+    }
+
+    /**
+     * Move to the next phase (wrapping around) and reset the per-phase / progress counters so the
+     * new phase starts fresh (honouring its own start delay again).
+     */
+    static advancePhase(enemy, state, phases) {
+        const leavingPhase = phases[state.currentPhaseIndex];
+        delete state.phases[leavingPhase.id];
+        state.currentPhaseIndex = (state.currentPhaseIndex + 1) % phases.length;
+        state.phaseElapsedFrames = 0;
+        state.phaseVolleys = 0;
+        state.hitsBaseline = enemy.phaseHitsTaken || 0;
+    }
+
+    /**
+     * Advance a single phase by one frame. Returns true on the frame it fires a volley.
+     */
+    static updatePhase(enemy, phase, state) {
+        if (!phase.bullets || phase.bullets.length === 0) return false;
 
         // Initial start delay before the phase's interval loop starts.
         if (!state.delayElapsed) {
@@ -53,7 +115,7 @@ class EnemyAttackHandler {
                 state.delayElapsed = true;
                 state.intervalTimer = 0;
             }
-            return;
+            return false;
         }
 
         // Reloading pause after the ammo is spent (only when ammo is finite).
@@ -65,7 +127,7 @@ class EnemyAttackHandler {
                 state.shotsFired = 0;
                 state.intervalTimer = 0;
             }
-            return;
+            return false;
         }
 
         // Interval countdown between volleys.
@@ -81,7 +143,9 @@ class EnemyAttackHandler {
                     state.reloadTimer = 0;
                 }
             }
+            return true;
         }
+        return false;
     }
 
     static fireVolley(enemy, phase) {
