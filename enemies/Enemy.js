@@ -159,6 +159,10 @@ class Enemy extends InteractiveLevelObject {
         this.canBeStomped = false;
         this.killsPlayer = true;
         this.stunDuration = 0; // seconds an enemy stays inactive after surviving a stomp (0 = no stun)
+        // Whether the enemy is destroyed when it touches a spike / a player's bullet. Both default
+        // to true; specific enemy types (e.g. the ghost) opt out in their own constructor.
+        this.killedBySpikes = true;
+        this.killedByBullets = true;
         
         // movement attributes (editable)
         this.maxSpeed = 2;
@@ -395,6 +399,8 @@ class Enemy extends InteractiveLevelObject {
             canBeStomped: this.canBeStomped,
             killsPlayer: this.killsPlayer,
             stunDuration: this.stunDuration,
+            killedBySpikes: this.killedBySpikes,
+            killedByBullets: this.killedByBullets,
             maxSpeed: this.maxSpeed,
             groundAcceleration: this.groundAcceleration,
             air_acceleration: this.air_acceleration,
@@ -426,6 +432,8 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.canBeStomped !== undefined) this.canBeStomped = attributes.canBeStomped;
         if (attributes.killsPlayer !== undefined) this.killsPlayer = attributes.killsPlayer;
         if (attributes.stunDuration !== undefined) this.stunDuration = attributes.stunDuration;
+        if (attributes.killedBySpikes !== undefined) this.killedBySpikes = attributes.killedBySpikes;
+        if (attributes.killedByBullets !== undefined) this.killedByBullets = attributes.killedByBullets;
         if (attributes.maxSpeed !== undefined) this.maxSpeed = attributes.maxSpeed;
         if (attributes.groundAcceleration !== undefined) this.groundAcceleration = attributes.groundAcceleration;
         if (attributes.air_acceleration !== undefined) this.air_acceleration = attributes.air_acceleration;

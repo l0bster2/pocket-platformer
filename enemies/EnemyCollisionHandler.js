@@ -9,14 +9,24 @@ class EnemyCollisionHandler {
     static checkHazardCollisions(enemy) {
         let touchingWater = false;
         tileMapHandler.levelObjects.forEach(levelObject => {
-            if (enemy.interativeObjects.includes(levelObject.type)) {
-                if (levelObject.colissionFunction(enemy, levelObject)) {
-                    if (levelObject.type === ObjectTypes.WATER) {
-                        // Enemies drown on contact: skip the swim physics and kill it below.
-                        touchingWater = true;
-                    } else {
-                        levelObject.collisionEvent(enemy);
-                    }
+            if (!enemy.interativeObjects.includes(levelObject.type)) {
+                return;
+            }
+            // Spikes only kill the enemy if it's flagged as killable by spikes.
+            if (levelObject.type === ObjectTypes.SPIKE && !enemy.killedBySpikes) {
+                return;
+            }
+            // Flying enemies ignore moving platforms and trampolines entirely (they hover freely).
+            if (enemy.flying &&
+                (levelObject.type === ObjectTypes.MOVING_PLATFORM || levelObject.type === ObjectTypes.TRAMPOLINE)) {
+                return;
+            }
+            if (levelObject.colissionFunction(enemy, levelObject)) {
+                if (levelObject.type === ObjectTypes.WATER) {
+                    // Enemies drown on contact: skip the swim physics and kill it below.
+                    touchingWater = true;
+                } else {
+                    levelObject.collisionEvent(enemy);
                 }
             }
         });

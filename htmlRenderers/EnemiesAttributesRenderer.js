@@ -23,13 +23,17 @@ class EnemiesAttributesRenderer {
             return;
         }
 
+        // Re-open the enemy that was viewed last (falling back to the first one). The last opened
+        // tab is preserved separately in renderEnemyTypeDetails/switchTab.
+        const selectedType = allTypes.includes(this.lastSelectedType) ? this.lastSelectedType : allTypes[0];
+
         contentDiv.innerHTML = `
             <div class="enemyEditorWrapper">
                 <div class="marginTop8 marginBottom16">
                     <label for="enemySelectDropdown">Select enemy type:</label>
                     <select id="enemySelectDropdown" class="textInput" onchange="EnemiesAttributesRenderer.onEnemyTypeSelected()" style="width: 100%; margin-top: 4px;">
                         ${allTypes.map((type) =>
-                            `<option value="${type}">${this.getEnemyTypeDisplayName(type)}</option>`
+                            `<option value="${type}" ${type === selectedType ? 'selected' : ''}>${this.getEnemyTypeDisplayName(type)}</option>`
                         ).join('')}
                     </select>
                 </div>
@@ -38,7 +42,7 @@ class EnemiesAttributesRenderer {
             </div>
         `;
 
-        // Show details for first enemy type
+        // Show details for the (last) selected enemy type
         this.onEnemyTypeSelected();
     }
 
@@ -92,6 +96,10 @@ class EnemiesAttributesRenderer {
         const panel = document.getElementById("enemyDetailsPanel");
         if (!panel) return;
 
+        // Remember which enemy is being viewed so the next time the editor is opened via the
+        // header navigation it re-opens this same enemy.
+        this.lastSelectedType = type;
+
         const attributes = EnemyTypeAttributesHandler.getAttributes(type);
         const instance = this.getInstanceForType(type);
 
@@ -141,6 +149,8 @@ class EnemiesAttributesRenderer {
                                 ${this.createNumberInput('lives', 'Health', attributes.lives, 1, 100, 1, type)}
                                 ${this.createStompSection(attributes, type)}
                                 ${this.createCheckboxInput('killsPlayer', 'Kills player on touch', attributes.killsPlayer, type)}
+                                ${this.createCheckboxInput('killedBySpikes', 'Killed by spikes', attributes.killedBySpikes, type)}
+                                ${this.createCheckboxInput('killedByBullets', "Can be killed by player's bullets", attributes.killedByBullets, type)}
                             </div>
                         </div>
                     </div>
@@ -207,7 +217,7 @@ class EnemiesAttributesRenderer {
         `;
 
         // Ensure activation inputs reflect current selection
-        this.switchTab('movement');
+        this.switchTab(this.lastSelectedTab || 'movement');
         this.onActivationChanged(type);
         this.onInactivationChanged(type);
     }
@@ -342,6 +352,8 @@ class EnemiesAttributesRenderer {
             ai: { content: document.getElementById('aiContent'), button: document.getElementById('tab_ai') },
         };
         if (Object.values(tabs).some(t => !t.content || !t.button)) return;
+        // Remember the tab so it's preserved when re-opening the editor or switching enemies.
+        this.lastSelectedTab = tab;
         Object.entries(tabs).forEach(([key, t]) => {
             const isActive = key === tab;
             t.content.style.display = isActive ? 'block' : 'none';
