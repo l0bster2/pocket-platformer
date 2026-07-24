@@ -2900,14 +2900,14 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "FF0000", "6B8E5A", "FF0000", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["6B8E5A", "6B8E5A", "4A4A6A", "4A4A6A", "4A4A6A", "4A4A6A", "6B8E5A", "6B8E5A"],
-            ["transp", "transp", "4A4A6A", "4A4A6A", "4A4A6A", "4A4A6A", "transp", "transp"],
-            ["transp", "transp", "3E5436", "3E5436", "3E5436", "3E5436", "transp", "transp"],
-            ["transp", "transp", "3E5436", "3E5436", "transp", "3E5436", "3E5436", "transp"]
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "71E300", "71E300", "71E300", "71E300", "transp", "transp"],
+            ["71E300", "71E300", "AA0000", "71E300", "AA0000", "71E300", "71E300", "71E300"],
+            ["transp", "71E300", "AA0000", "71E300", "AA0000", "71E300", "71E300", "transp"],
+            ["transp", "003900", "71E300", "1C1C1C", "71E300", "71E300", "71E300", "transp"],
+            ["003900", "transp", "71E300", "71E300", "71E300", "71E300", "transp", "71E300"],
+            ["transp", "transp", "AA5500", "AA5500", "AA5500", "AA5500", "transp", "transp"],
+            ["transp", "transp", "71E300", "transp", "transp", "003900", "transp", "transp"]
           ]
       }
       ]
@@ -2922,27 +2922,27 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "FF0000", "6B8E5A", "FF0000", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["6B8E5A", "6B8E5A", "4A4A6A", "4A4A6A", "4A4A6A", "4A4A6A", "6B8E5A", "6B8E5A"],
-            ["transp", "transp", "4A4A6A", "4A4A6A", "4A4A6A", "4A4A6A", "transp", "transp"],
-            ["transp", "transp", "3E5436", "3E5436", "3E5436", "3E5436", "transp", "transp"],
-            ["transp", "3E5436", "3E5436", "transp", "transp", "3E5436", "3E5436", "transp"]
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "71E300", "71E300", "71E300", "71E300", "transp", "transp"],
+            ["71E300", "71E300", "AA0000", "71E300", "AA0000", "71E300", "71E300", "71E300"],
+            ["transp", "71E300", "AA0000", "71E300", "AA0000", "71E300", "71E300", "transp"],
+            ["transp", "transp", "71E300", "1C1C1C", "71E300", "71E300", "transp", "transp"],
+            ["transp", "transp", "71E300", "71E300", "71E300", "71E300", "transp", "transp"],
+            ["transp", "transp", "AA5500", "AA5500", "71E300", "AA5500", "transp", "transp"],
+            ["transp", "transp", "003900", "transp", "transp", "71E300", "transp", "transp"]
           ]
       },
       {
         sprite:
           [
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "FF0000", "6B8E5A", "FF0000", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["6B8E5A", "6B8E5A", "4A4A6A", "4A4A6A", "4A4A6A", "4A4A6A", "6B8E5A", "6B8E5A"],
-            ["transp", "transp", "4A4A6A", "4A4A6A", "4A4A6A", "4A4A6A", "transp", "transp"],
-            ["transp", "transp", "3E5436", "3E5436", "3E5436", "3E5436", "transp", "transp"],
-            ["transp", "3E5436", "3E5436", "transp", "transp", "3E5436", "3E5436", "transp"]
+            ["transp", "transp", "71E300", "71E300", "71E300", "71E300", "transp", "transp"],
+            ["71E300", "71E300", "AA0000", "71E300", "AA0000", "71E300", "71E300", "71E300"],
+            ["transp", "71E300", "AA0000", "71E300", "AA0000", "71E300", "71E300", "transp"],
+            ["transp", "transp", "71E300", "71E300", "71E300", "71E300", "transp", "transp"],
+            ["transp", "transp", "71E300", "1C1C1C", "71E300", "71E300", "transp", "transp"],
+            ["transp", "003900", "71E300", "71E300", "71E300", "71E300", "71E300", "transp"],
+            ["transp", "003900", "AA5500", "AA5500", "AA5500", "AA5500", "71E300", "transp"],
+            ["transp", "transp", "transp", "71E300", "003900", "transp", "transp", "transp"]
           ]
       }
       ]
@@ -2957,14 +2957,14 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "transp", "transp"],
-            ["transp", "transp", "FF0000", "6B8E5A", "FF0000", "6B8E5A", "transp", "transp"],
-            ["6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A", "6B8E5A"],
-            ["6B8E5A", "transp", "4A4A6A", "4A4A6A", "4A4A6A", "4A4A6A", "transp", "6B8E5A"],
-            ["transp", "transp", "4A4A6A", "4A4A6A", "4A4A6A", "4A4A6A", "transp", "transp"],
-            ["transp", "transp", "3E5436", "3E5436", "3E5436", "3E5436", "transp", "transp"],
-            ["transp", "transp", "3E5436", "transp", "transp", "3E5436", "transp", "transp"]
+            ["transp", "transp", "71E300", "71E300", "71E300", "71E300", "transp", "transp"],
+            ["71E300", "71E300", "AA0000", "71E300", "AA0000", "71E300", "71E300", "71E300"],
+            ["transp", "71E300", "AA0000", "71E300", "AA0000", "71E300", "71E300", "transp"],
+            ["003900", "transp", "71E300", "1C1C1C", "71E300", "71E300", "transp", "transp"],
+            ["transp", "003900", "71E300", "71E300", "71E300", "71E300", "71E300", "transp"],
+            ["transp", "transp", "AA5500", "AA5500", "AA5500", "AA5500", "transp", "71E300"],
+            ["transp", "71E300", "71E300", "transp", "transp", "003900", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "003900", "transp"]
           ]
       }
       ]
@@ -2980,14 +2980,14 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "transp", "transp"],
-            ["transp", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "transp"],
-            ["transp", "E0C088", "000000", "E0C088", "E0C088", "000000", "E0C088", "transp"],
-            ["transp", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "transp"],
-            ["2E8B57", "2E8B57", "FFFFFF", "2E8B57", "2E8B57", "FFFFFF", "2E8B57", "2E8B57"],
-            ["2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57"],
-            ["transp", "1C5536", "1C5536", "transp", "transp", "1C5536", "1C5536", "transp"],
-            ["1C5536", "1C5536", "1C5536", "transp", "1C5536", "1C5536", "1C5536", "transp"]
+            ["transp", "E30071", "E30071", "E30071", "E30071", "E30071", "E30071", "transp"],
+            ["E30071", "000000", "000000", "000000", "000000", "E30071", "transp", "transp"],
+            ["E30071", "FFFFFF", "000000", "FFFFFF", "000000", "E30071", "transp", "transp"],
+            ["E30071", "000000", "000000", "000000", "000000", "E30071", "710039", "transp"],
+            ["transp", "E30071", "E30071", "E30071", "E30071", "710039", "710039", "710039"],
+            ["C6C6C6", "710039", "710039", "710039", "710039", "710039", "710039", "FFFFFF"],
+            ["transp", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "transp"],
+            ["transp", "E30071", "E30071", "transp", "transp", "710039", "710039", "transp"]
           ]
       }
       ]
@@ -3002,27 +3002,27 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "transp", "transp"],
-            ["transp", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "transp"],
-            ["transp", "E0C088", "000000", "E0C088", "E0C088", "000000", "E0C088", "transp"],
-            ["transp", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "transp"],
-            ["2E8B57", "2E8B57", "FFFFFF", "2E8B57", "2E8B57", "FFFFFF", "2E8B57", "2E8B57"],
-            ["2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57"],
-            ["transp", "1C5536", "1C5536", "transp", "transp", "1C5536", "1C5536", "transp"],
-            ["transp", "1C5536", "1C5536", "1C5536", "transp", "1C5536", "1C5536", "1C5536"]
+            ["transp", "E30071", "E30071", "E30071", "E30071", "E30071", "E30071", "transp"],
+            ["E30071", "000000", "000000", "000000", "E30071", "E30071", "transp", "transp"],
+            ["E30071", "000000", "FFFFFF", "000000", "E30071", "E30071", "transp", "transp"],
+            ["E30071", "000000", "000000", "000000", "E30071", "E30071", "transp", "transp"],
+            ["transp", "E30071", "E30071", "E30071", "E30071", "710039", "transp", "transp"],
+            ["transp", "710039", "710039", "710039", "FFFFFF", "FFFF55", "transp", "transp"],
+            ["transp", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "710039", "transp", "transp"],
+            ["transp", "transp", "E30071", "E30071", "710039", "710039", "transp", "transp"]
           ]
       },
       {
         sprite:
           [
-            ["transp", "transp", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "transp", "transp"],
-            ["transp", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "transp"],
-            ["transp", "E0C088", "000000", "E0C088", "E0C088", "000000", "E0C088", "transp"],
-            ["transp", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "transp"],
-            ["2E8B57", "2E8B57", "FFFFFF", "2E8B57", "2E8B57", "FFFFFF", "2E8B57", "2E8B57"],
-            ["2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57"],
-            ["1C5536", "1C5536", "1C5536", "transp", "1C5536", "1C5536", "1C5536", "transp"],
-            ["transp", "1C5536", "1C5536", "transp", "transp", "1C5536", "1C5536", "transp"]
+            ["transp", "E30071", "E30071", "E30071", "E30071", "E30071", "E30071", "transp"],
+            ["E30071", "000000", "000000", "000000", "000000", "E30071", "transp", "transp"],
+            ["E30071", "FFFFFF", "000000", "FFFFFF", "000000", "E30071", "transp", "transp"],
+            ["E30071", "000000", "000000", "000000", "000000", "E30071", "710039", "transp"],
+            ["transp", "E30071", "E30071", "E30071", "E30071", "710039", "710039", "710039"],
+            ["C6C6C6", "710039", "710039", "710039", "710039", "710039", "710039", "FFFFFF"],
+            ["transp", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "transp", "transp"],
+            ["710039", "710039", "transp", "transp", "transp", "E30071", "E30071", "transp"]
           ]
       }
       ]
@@ -3037,14 +3037,14 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "transp", "transp"],
-            ["transp", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "9AA0A8", "transp"],
-            ["transp", "E0C088", "000000", "E0C088", "E0C088", "000000", "E0C088", "transp"],
-            ["2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57"],
-            ["2E8B57", "2E8B57", "FFFFFF", "2E8B57", "2E8B57", "FFFFFF", "2E8B57", "2E8B57"],
-            ["2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57", "2E8B57"],
-            ["1C5536", "1C5536", "transp", "transp", "transp", "transp", "1C5536", "1C5536"],
-            ["1C5536", "transp", "transp", "transp", "transp", "transp", "transp", "1C5536"]
+            ["transp", "E30071", "E30071", "E30071", "E30071", "E30071", "E30071", "transp"],
+            ["E30071", "000000", "000000", "000000", "000000", "E30071", "transp", "transp"],
+            ["E30071", "FFFFFF", "000000", "FFFFFF", "000000", "E30071", "transp", "transp"],
+            ["E30071", "000000", "000000", "000000", "000000", "E30071", "710039", "transp"],
+            ["C6C6C6", "E30071", "E30071", "E30071", "E30071", "710039", "710039", "FFFFFF"],
+            ["transp", "710039", "710039", "710039", "710039", "710039", "710039", "transp"],
+            ["transp", "transp", "FFFF55", "FFFF55", "FFFF55", "FFFF55", "transp", "transp"],
+            ["E30071", "E30071", "transp", "transp", "transp", "transp", "710039", "710039"]
           ]
       }
       ]
@@ -3060,13 +3060,13 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["AA0000", "AA0000", "transp", "transp", "transp", "transp", "AA0000", "AA0000"],
+            ["802B2B", "AA0000", "AA0000", "transp", "transp", "AA0000", "AA0000", "802B2B"],
+            ["802B2B", "802B2B", "AA0000", "AA0000", "AA0000", "AA0000", "802B2B", "802B2B"],
+            ["transp", "802B2B", "FFFFFF", "AA0000", "FFFFFF", "AA0000", "802B2B", "transp"],
+            ["transp", "transp", "AA0000", "AA0000", "AA0000", "AA0000", "transp", "transp"],
+            ["transp", "transp", "transp", "802B2B", "transp", "802B2B", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["C81E1E", "transp", "transp", "8B0000", "8B0000", "transp", "transp", "C81E1E"],
-            ["C81E1E", "C81E1E", "8B0000", "8B0000", "8B0000", "8B0000", "C81E1E", "C81E1E"],
-            ["transp", "8B0000", "FFFFFF", "000000", "000000", "FFFFFF", "8B0000", "transp"],
-            ["transp", "8B0000", "8B0000", "8B0000", "8B0000", "8B0000", "8B0000", "transp"],
-            ["transp", "transp", "8B0000", "8B0000", "8B0000", "8B0000", "transp", "transp"],
-            ["transp", "transp", "transp", "8B0000", "8B0000", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3082,26 +3082,26 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["C81E1E", "transp", "transp", "transp", "transp", "transp", "transp", "C81E1E"],
-            ["C81E1E", "C81E1E", "transp", "8B0000", "8B0000", "transp", "C81E1E", "C81E1E"],
-            ["transp", "C81E1E", "8B0000", "8B0000", "8B0000", "8B0000", "C81E1E", "transp"],
-            ["transp", "8B0000", "FFFFFF", "000000", "000000", "FFFFFF", "8B0000", "transp"],
-            ["transp", "8B0000", "8B0000", "8B0000", "8B0000", "8B0000", "8B0000", "transp"],
-            ["transp", "transp", "8B0000", "8B0000", "8B0000", "8B0000", "transp", "transp"],
-            ["transp", "transp", "transp", "8B0000", "8B0000", "transp", "transp", "transp"],
+            ["AA0000", "AA0000", "transp", "transp", "transp", "transp", "AA0000", "AA0000"],
+            ["802B2B", "AA0000", "AA0000", "transp", "transp", "AA0000", "AA0000", "802B2B"],
+            ["802B2B", "802B2B", "AA0000", "AA0000", "AA0000", "AA0000", "802B2B", "802B2B"],
+            ["transp", "802B2B", "FFFFFF", "AA0000", "FFFFFF", "AA0000", "802B2B", "transp"],
+            ["transp", "transp", "AA0000", "AA0000", "AA0000", "AA0000", "transp", "transp"],
+            ["transp", "transp", "transp", "802B2B", "transp", "802B2B", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       },
       {
         sprite:
           [
-            ["transp", "transp", "transp", "8B0000", "8B0000", "transp", "transp", "transp"],
-            ["transp", "transp", "8B0000", "8B0000", "8B0000", "8B0000", "transp", "transp"],
-            ["transp", "8B0000", "FFFFFF", "000000", "000000", "FFFFFF", "8B0000", "transp"],
-            ["transp", "8B0000", "8B0000", "8B0000", "8B0000", "8B0000", "8B0000", "transp"],
-            ["C81E1E", "transp", "8B0000", "8B0000", "8B0000", "8B0000", "transp", "C81E1E"],
-            ["C81E1E", "C81E1E", "transp", "8B0000", "8B0000", "transp", "C81E1E", "C81E1E"],
-            ["transp", "C81E1E", "transp", "transp", "transp", "transp", "C81E1E", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "AA0000", "AA0000", "AA0000", "AA0000", "transp", "transp"],
+            ["AA0000", "AA0000", "FFFFFF", "AA0000", "FFFFFF", "AA0000", "AA0000", "AA0000"],
+            ["802B2B", "802B2B", "AA0000", "AA0000", "AA0000", "AA0000", "802B2B", "802B2B"],
+            ["802B2B", "802B2B", "transp", "transp", "transp", "transp", "802B2B", "802B2B"],
+            ["802B2B", "transp", "transp", "transp", "transp", "transp", "transp", "802B2B"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3118,13 +3118,13 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["007100", "007100", "transp", "transp", "transp", "transp", "007100", "007100"],
+            ["55802B", "007100", "007100", "transp", "transp", "007100", "007100", "55802B"],
+            ["55802B", "55802B", "007100", "007100", "007100", "007100", "55802B", "55802B"],
+            ["transp", "55802B", "FFFFFF", "007100", "FFFFFF", "007100", "55802B", "transp"],
+            ["transp", "transp", "007100", "007100", "007100", "007100", "transp", "transp"],
+            ["transp", "transp", "transp", "55802B", "transp", "55802B", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["1FC79E", "transp", "transp", "0E7C66", "0E7C66", "transp", "transp", "1FC79E"],
-            ["1FC79E", "1FC79E", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "1FC79E", "1FC79E"],
-            ["transp", "0E7C66", "FFFFFF", "000000", "000000", "FFFFFF", "0E7C66", "transp"],
-            ["transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp"],
-            ["transp", "transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp", "transp"],
-            ["transp", "transp", "transp", "0E7C66", "0E7C66", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3140,26 +3140,26 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["1FC79E", "transp", "transp", "transp", "transp", "transp", "transp", "1FC79E"],
-            ["1FC79E", "1FC79E", "transp", "0E7C66", "0E7C66", "transp", "1FC79E", "1FC79E"],
-            ["transp", "1FC79E", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "1FC79E", "transp"],
-            ["transp", "0E7C66", "FFFFFF", "000000", "000000", "FFFFFF", "0E7C66", "transp"],
-            ["transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp"],
-            ["transp", "transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp", "transp"],
-            ["transp", "transp", "transp", "0E7C66", "0E7C66", "transp", "transp", "transp"],
+            ["007100", "007100", "transp", "transp", "transp", "transp", "007100", "007100"],
+            ["55802B", "007100", "007100", "transp", "transp", "007100", "007100", "55802B"],
+            ["55802B", "55802B", "007100", "007100", "007100", "007100", "55802B", "55802B"],
+            ["transp", "55802B", "FFFFFF", "007100", "FFFFFF", "007100", "55802B", "transp"],
+            ["transp", "transp", "007100", "007100", "007100", "007100", "transp", "transp"],
+            ["transp", "transp", "transp", "55802B", "transp", "55802B", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       },
       {
         sprite:
           [
-            ["transp", "transp", "transp", "0E7C66", "0E7C66", "transp", "transp", "transp"],
-            ["transp", "transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp", "transp"],
-            ["transp", "0E7C66", "FFFFFF", "000000", "000000", "FFFFFF", "0E7C66", "transp"],
-            ["transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp"],
-            ["1FC79E", "transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp", "1FC79E"],
-            ["1FC79E", "1FC79E", "transp", "0E7C66", "0E7C66", "transp", "1FC79E", "1FC79E"],
-            ["transp", "1FC79E", "transp", "transp", "transp", "transp", "1FC79E", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "007100", "007100", "007100", "007100", "transp", "transp"],
+            ["007100", "007100", "FFFFFF", "007100", "FFFFFF", "007100", "007100", "007100"],
+            ["55802B", "55802B", "007100", "007100", "007100", "007100", "55802B", "55802B"],
+            ["55802B", "55802B", "transp", "transp", "transp", "transp", "55802B", "55802B"],
+            ["55802B", "transp", "transp", "transp", "transp", "transp", "transp", "55802B"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3176,13 +3176,13 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["5500AA", "5500AA", "transp", "transp", "transp", "transp", "5500AA", "5500AA"],
+            ["552B80", "5500AA", "5500AA", "transp", "transp", "5500AA", "5500AA", "552B80"],
+            ["552B80", "552B80", "5500AA", "5500AA", "5500AA", "5500AA", "552B80", "552B80"],
+            ["transp", "552B80", "FFFFFF", "5500AA", "FFFFFF", "5500AA", "552B80", "transp"],
+            ["transp", "transp", "5500AA", "5500AA", "5500AA", "5500AA", "transp", "transp"],
+            ["transp", "transp", "transp", "552B80", "transp", "552B80", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["9B59D0", "transp", "transp", "5A2E8B", "5A2E8B", "transp", "transp", "9B59D0"],
-            ["9B59D0", "9B59D0", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "9B59D0", "9B59D0"],
-            ["transp", "5A2E8B", "FFFFFF", "000000", "000000", "FFFFFF", "5A2E8B", "transp"],
-            ["transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp"],
-            ["transp", "transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp", "transp"],
-            ["transp", "transp", "transp", "5A2E8B", "5A2E8B", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3198,26 +3198,26 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["9B59D0", "transp", "transp", "transp", "transp", "transp", "transp", "9B59D0"],
-            ["9B59D0", "9B59D0", "transp", "5A2E8B", "5A2E8B", "transp", "9B59D0", "9B59D0"],
-            ["transp", "9B59D0", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "9B59D0", "transp"],
-            ["transp", "5A2E8B", "FFFFFF", "000000", "000000", "FFFFFF", "5A2E8B", "transp"],
-            ["transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp"],
-            ["transp", "transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp", "transp"],
-            ["transp", "transp", "transp", "5A2E8B", "5A2E8B", "transp", "transp", "transp"],
+            ["5500AA", "5500AA", "transp", "transp", "transp", "transp", "5500AA", "5500AA"],
+            ["552B80", "5500AA", "5500AA", "transp", "transp", "5500AA", "5500AA", "552B80"],
+            ["552B80", "552B80", "5500AA", "5500AA", "5500AA", "5500AA", "552B80", "552B80"],
+            ["transp", "552B80", "FFFFFF", "5500AA", "FFFFFF", "5500AA", "552B80", "transp"],
+            ["transp", "transp", "5500AA", "5500AA", "5500AA", "5500AA", "transp", "transp"],
+            ["transp", "transp", "transp", "552B80", "transp", "552B80", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       },
       {
         sprite:
           [
-            ["transp", "transp", "transp", "5A2E8B", "5A2E8B", "transp", "transp", "transp"],
-            ["transp", "transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp", "transp"],
-            ["transp", "5A2E8B", "FFFFFF", "000000", "000000", "FFFFFF", "5A2E8B", "transp"],
-            ["transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp"],
-            ["9B59D0", "transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp", "9B59D0"],
-            ["9B59D0", "9B59D0", "transp", "5A2E8B", "5A2E8B", "transp", "9B59D0", "9B59D0"],
-            ["transp", "9B59D0", "transp", "transp", "transp", "transp", "9B59D0", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "5500AA", "5500AA", "5500AA", "5500AA", "transp", "transp"],
+            ["5500AA", "5500AA", "FFFFFF", "5500AA", "FFFFFF", "5500AA", "5500AA", "5500AA"],
+            ["552B80", "552B80", "5500AA", "5500AA", "5500AA", "5500AA", "552B80", "552B80"],
+            ["552B80", "552B80", "transp", "transp", "transp", "transp", "552B80", "552B80"],
+            ["552B80", "transp", "transp", "transp", "transp", "transp", "transp", "552B80"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3234,14 +3234,27 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["transp", "FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "transp", "transp", "transp"],
+            ["FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["000000", "FFFFFF", "000000", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp", "transp"],
+            ["transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
             ["transp", "transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
-            ["transp", "B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0", "transp"],
-            ["B8B8D0", "E6E6F2", "000000", "E6E6F2", "E6E6F2", "000000", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "000000", "E6E6F2", "E6E6F2", "000000", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["transp", "B8B8D0", "transp", "B8B8D0", "transp", "B8B8D0", "transp", "B8B8D0"]
+            ["transp", "transp", "transp", "transp", "transp", "B8B8D0", "B8B8D0", "transp"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "transp", "transp", "transp"],
+            ["FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["000000", "FFFFFF", "000000", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp", "transp"],
+            ["transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp", "transp"],
+            ["B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp", "transp", "transp"]
           ]
       }
       ]
@@ -3256,27 +3269,27 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["transp", "FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "transp", "transp", "transp"],
+            ["FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["000000", "B8B8D0", "000000", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "B8B8D0", "B8B8D0"],
+            ["transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp"],
             ["transp", "transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
-            ["transp", "B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0", "transp"],
-            ["B8B8D0", "E6E6F2", "000000", "E6E6F2", "E6E6F2", "000000", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "000000", "E6E6F2", "E6E6F2", "000000", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "transp", "B8B8D0", "transp", "B8B8D0", "transp", "B8B8D0", "transp"]
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       },
       {
         sprite:
           [
+            ["transp", "FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "transp", "transp", "transp"],
+            ["FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["000000", "FFFFFF", "000000", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp", "transp"],
+            ["transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
             ["transp", "transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
-            ["transp", "B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0", "transp"],
-            ["B8B8D0", "E6E6F2", "000000", "E6E6F2", "E6E6F2", "000000", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "000000", "E6E6F2", "E6E6F2", "000000", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["transp", "B8B8D0", "transp", "B8B8D0", "transp", "B8B8D0", "transp", "B8B8D0"]
+            ["transp", "transp", "transp", "transp", "transp", "B8B8D0", "B8B8D0", "transp"]
           ]
       }
       ]
@@ -3294,13 +3307,13 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["AA0000", "AA0000", "transp", "transp", "transp", "transp", "AA0000", "AA0000"],
+            ["802B2B", "AA0000", "AA0000", "transp", "transp", "AA0000", "AA0000", "802B2B"],
+            ["802B2B", "802B2B", "AA0000", "AA0000", "AA0000", "AA0000", "802B2B", "802B2B"],
+            ["transp", "802B2B", "FFFFFF", "AA0000", "FFFFFF", "AA0000", "802B2B", "transp"],
+            ["transp", "transp", "AA0000", "AA0000", "AA0000", "AA0000", "transp", "transp"],
+            ["transp", "transp", "transp", "AA0000", "transp", "AA0000", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["C81E1E", "transp", "transp", "8B0000", "8B0000", "transp", "transp", "C81E1E"],
-            ["C81E1E", "C81E1E", "8B0000", "8B0000", "8B0000", "8B0000", "C81E1E", "C81E1E"],
-            ["transp", "8B0000", "FFFFFF", "000000", "000000", "FFFFFF", "8B0000", "transp"],
-            ["transp", "8B0000", "8B0000", "8B0000", "8B0000", "8B0000", "8B0000", "transp"],
-            ["transp", "transp", "8B0000", "8B0000", "8B0000", "8B0000", "transp", "transp"],
-            ["transp", "transp", "transp", "8B0000", "8B0000", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3316,13 +3329,13 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["007100", "007100", "transp", "transp", "transp", "transp", "007100", "007100"],
+            ["55802B", "007100", "007100", "transp", "transp", "007100", "007100", "55802B"],
+            ["55802B", "55802B", "007100", "007100", "007100", "007100", "55802B", "55802B"],
+            ["transp", "55802B", "FFFFFF", "007100", "FFFFFF", "007100", "55802B", "transp"],
+            ["transp", "transp", "007100", "007100", "007100", "007100", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["1FC79E", "transp", "transp", "0E7C66", "0E7C66", "transp", "transp", "1FC79E"],
-            ["1FC79E", "1FC79E", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "1FC79E", "1FC79E"],
-            ["transp", "0E7C66", "FFFFFF", "000000", "000000", "FFFFFF", "0E7C66", "transp"],
-            ["transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp"],
-            ["transp", "transp", "0E7C66", "0E7C66", "0E7C66", "0E7C66", "transp", "transp"],
-            ["transp", "transp", "transp", "0E7C66", "0E7C66", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3338,13 +3351,13 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["5500AA", "5500AA", "transp", "transp", "transp", "transp", "5500AA", "5500AA"],
+            ["552B80", "5500AA", "5500AA", "transp", "transp", "5500AA", "5500AA", "552B80"],
+            ["552B80", "552B80", "5500AA", "5500AA", "5500AA", "5500AA", "552B80", "552B80"],
+            ["transp", "552B80", "FFFFFF", "5500AA", "FFFFFF", "5500AA", "552B80", "transp"],
+            ["transp", "transp", "5500AA", "5500AA", "5500AA", "5500AA", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["9B59D0", "transp", "transp", "5A2E8B", "5A2E8B", "transp", "transp", "9B59D0"],
-            ["9B59D0", "9B59D0", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "9B59D0", "9B59D0"],
-            ["transp", "5A2E8B", "FFFFFF", "000000", "000000", "FFFFFF", "5A2E8B", "transp"],
-            ["transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp"],
-            ["transp", "transp", "5A2E8B", "5A2E8B", "5A2E8B", "5A2E8B", "transp", "transp"],
-            ["transp", "transp", "transp", "5A2E8B", "5A2E8B", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
           ]
       }
@@ -3360,14 +3373,14 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
+            ["transp", "FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "transp", "transp", "transp"],
+            ["FFFFFF", "FFFFFF", "FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["000000", "FFFFFF", "000000", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
+            ["FFFFFF", "B8B8D0", "B8B8D0", "717171", "B8B8D0", "transp", "transp", "transp"],
+            ["transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
             ["transp", "transp", "B8B8D0", "B8B8D0", "B8B8D0", "B8B8D0", "transp", "transp"],
-            ["transp", "B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0", "transp"],
-            ["B8B8D0", "E6E6F2", "000000", "E6E6F2", "E6E6F2", "000000", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "000000", "E6E6F2", "E6E6F2", "000000", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["B8B8D0", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "E6E6F2", "B8B8D0"],
-            ["transp", "B8B8D0", "transp", "B8B8D0", "transp", "B8B8D0", "transp", "B8B8D0"]
+            ["transp", "transp", "transp", "transp", "transp", "B8B8D0", "B8B8D0", "transp"]
           ]
       }
       ]
@@ -3384,14 +3397,27 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "C0392B", "transp", "transp", "C0392B", "transp", "transp"],
-            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
-            ["C0392B", "E67E22", "FFFFFF", "000000", "000000", "FFFFFF", "E67E22", "C0392B"],
-            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
-            ["C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B"],
-            ["C0392B", "E67E22", "F39C12", "F39C12", "F39C12", "F39C12", "E67E22", "C0392B"],
-            ["transp", "C0392B", "E67E22", "E67E22", "E67E22", "E67E22", "C0392B", "transp"],
-            ["transp", "transp", "C0392B", "transp", "transp", "C0392B", "transp", "transp"]
+            ["555555", "transp", "555555", "transp", "transp", "C6C6C6", "C6C6C6", "transp"],
+            ["transp", "555555", "E3E300", "555555", "E3E300", "FFFFFF", "C6C6C6", "E3E3E3"],
+            ["transp", "FF1C1C", "E3E300", "FF1C1C", "E3E300", "C6C6C6", "FFFFFF", "C6C6C6"],
+            ["transp", "E3E300", "E3E300", "E3E300", "E3E300", "FFFFFF", "C6C6C6", "transp"],
+            ["transp", "transp", "555555", "FFAA55", "FFAA55", "transp", "transp", "transp"],
+            ["transp", "555555", "E3E300", "555555", "FFAA55", "C6C6C6", "transp", "transp"],
+            ["transp", "E3E300", "555555", "E3E300", "E3E300", "FFFFFF", "C6C6C6", "transp"],
+            ["FFFFFF", "555555", "E3E300", "555555", "FFAA55", "transp", "transp", "transp"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["555555", "transp", "555555", "transp", "transp", "C6C6C6", "C6C6C6", "transp"],
+            ["transp", "555555", "E3E300", "555555", "E3E300", "FFFFFF", "C6C6C6", "E3E3E3"],
+            ["transp", "FF1C1C", "E3E300", "FF1C1C", "E3E300", "C6C6C6", "FFFFFF", "C6C6C6"],
+            ["transp", "E3E300", "E3E300", "E3E300", "E3E300", "FFFFFF", "C6C6C6", "transp"],
+            ["transp", "transp", "555555", "FFAA55", "FFAA55", "transp", "transp", "transp"],
+            ["FFFFFF", "555555", "E3E300", "555555", "FFAA55", "C6C6C6", "C6C6C6", "transp"],
+            ["transp", "E3E300", "555555", "E3E300", "E3E300", "FFFFFF", "transp", "transp"]
           ]
       }
       ]
@@ -3465,16 +3491,17 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "2a6632", "2a6632", "2a6632", "2a6632", "2a6632", "transp", "transp"],
-            ["ff4444", "2a6632", "44aa44", "88cc88", "88cc88", "44aa44", "2a6632", "transp"],
-            ["transp", "44aa44", "88cc88", "ff0000", "88cc88", "88cc88", "44aa44", "2a6632"],
-            ["transp", "44aa44", "88cc88", "88cc88", "88cc88", "88cc88", "44aa44", "2a6632"],
-            ["transp", "2a6632", "44aa44", "44aa44", "44aa44", "44aa44", "2a6632", "transp"],
-            ["transp", "transp", "transp", "2a6632", "2a6632", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp", "transp"],
+            ["FFFFFF", "00AA00", "FFFFFF", "00AA00", "00AA00", "007100", "007100", "transp"],
+            ["00AA00", "00AA00", "00AA00", "transp", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "E30000", "transp", "00AA00", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp", "007100"],
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "transp", "00AA00", "007100"],
+            ["transp", "transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp"]
           ]
-      }]
+      }
+      ]
     };
 
     this.ENEMY_11_WALK = {
@@ -3487,28 +3514,29 @@ class SpritePixelArrays {
         sprite:
           [
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "2a6632", "2a6632", "2a6632", "2a6632", "2a6632", "transp", "transp"],
-            ["ff4444", "2a6632", "44aa44", "88cc88", "88cc88", "44aa44", "2a6632", "transp"],
-            ["transp", "44aa44", "88cc88", "ff0000", "88cc88", "88cc88", "44aa44", "2a6632"],
-            ["transp", "44aa44", "88cc88", "88cc88", "88cc88", "88cc88", "44aa44", "2a6632"],
-            ["transp", "2a6632", "44aa44", "44aa44", "44aa44", "44aa44", "2a6632", "transp"],
-            ["transp", "2a6632", "2a6632", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp", "transp"],
+            ["FFFFFF", "00AA00", "FFFFFF", "00AA00", "00AA00", "007100", "007100", "transp"],
+            ["00AA00", "00AA00", "00AA00", "transp", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "E30000", "transp", "00AA00", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "transp", "00AA00", "00AA00", "00AA00", "007100", "transp", "007100"],
+            ["transp", "transp", "00AA00", "00AA00", "007100", "transp", "007100", "007100"],
+            ["transp", "transp", "00AA00", "00AA00", "00AA00", "00AA00", "00AA00", "transp"]
           ]
       },
       {
         sprite:
           [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "2a6632", "2a6632", "2a6632", "2a6632", "2a6632", "transp", "transp"],
-            ["ff4444", "2a6632", "44aa44", "88cc88", "88cc88", "44aa44", "2a6632", "transp"],
-            ["transp", "44aa44", "88cc88", "ff0000", "88cc88", "88cc88", "44aa44", "2a6632"],
-            ["transp", "44aa44", "88cc88", "88cc88", "88cc88", "88cc88", "44aa44", "2a6632"],
-            ["transp", "2a6632", "44aa44", "44aa44", "44aa44", "44aa44", "2a6632", "transp"],
-            ["transp", "transp", "transp", "transp", "2a6632", "2a6632", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp", "transp"],
+            ["FFFFFF", "00AA00", "FFFFFF", "00AA00", "00AA00", "007100", "007100", "transp"],
+            ["00AA00", "00AA00", "00AA00", "transp", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "E30000", "transp", "00AA00", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp", "007100"],
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "transp", "00AA00", "007100"],
+            ["transp", "transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp"]
           ]
-      }]
+      }
+      ]
     };
 
     this.ENEMY_11_JUMP = {
@@ -3520,16 +3548,17 @@ class SpritePixelArrays {
       animation: [{
         sprite:
           [
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-            ["transp", "2a6632", "2a6632", "2a6632", "2a6632", "2a6632", "transp", "transp"],
-            ["ff4444", "2a6632", "44aa44", "88cc88", "88cc88", "44aa44", "2a6632", "transp"],
-            ["transp", "44aa44", "88cc88", "ff0000", "88cc88", "88cc88", "44aa44", "2a6632"],
-            ["transp", "44aa44", "88cc88", "88cc88", "88cc88", "88cc88", "44aa44", "2a6632"],
-            ["transp", "2a6632", "44aa44", "44aa44", "44aa44", "44aa44", "2a6632", "transp"],
-            ["transp", "transp", "transp", "2a6632", "2a6632", "transp", "transp", "transp"],
-            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp", "transp"],
+            ["FFFFFF", "00AA00", "FFFFFF", "00AA00", "00AA00", "007100", "007100", "transp"],
+            ["00AA00", "00AA00", "00AA00", "transp", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "E30000", "transp", "00AA00", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp"],
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp", "007100"],
+            ["transp", "00AA00", "00AA00", "00AA00", "00AA00", "transp", "00AA00", "007100"],
+            ["transp", "transp", "00AA00", "00AA00", "00AA00", "00AA00", "007100", "transp"]
           ]
-      }]
+      }
+      ]
     };
 
     this.allSprites = [];
