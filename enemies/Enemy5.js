@@ -25,7 +25,7 @@ class Enemy5 extends Enemy {
             reloadTime: 2,
             bullets: [{
                 id: this.makeid(5),
-                angle: 220,
+                angle: 244,
                 randomAngleOffset: 10,
                 affectedByGravity: true,
                 gravity: 0.2,

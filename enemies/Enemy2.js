@@ -8,8 +8,8 @@ class Enemy2 extends Enemy {
         this.speed = 1;
 
         // Distinct default attributes for Enemy 2 (per-type defaults)
-        this.maxSpeed = 3;
-        this.currentMaxSpeed = 3;
+        this.maxSpeed = 2.6;
+        this.currentMaxSpeed = 2.6;
         this.canBeStomped = false;
         // Always active (base defaults: alwaysActive / neverInactive).
     }
