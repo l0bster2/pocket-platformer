@@ -177,6 +177,7 @@ class EnemiesAttributesRenderer {
                                 ${this.createCheckboxInput('killsPlayer', 'Kills player on touch', attributes.killsPlayer, type)}
                                 ${this.createCheckboxInput('killedBySpikes', 'Killed by spikes', attributes.killedBySpikes, type)}
                                 ${this.createCheckboxInput('killedByBullets', "Can be killed by player's bullets", attributes.killedByBullets, type)}
+                                ${this.createDeathAnimationSection(attributes, type)}
                             </div>
                         </div>
                     </div>
@@ -712,6 +713,24 @@ class EnemiesAttributesRenderer {
      */
     static updateCheckboxAttribute(type, attributeName, checked) {
         EnemyTypeAttributesHandler.setAttribute(type, attributeName, checked);
+    }
+
+    static createDeathAnimationSection(attributes, type) {
+        const deathAnim = attributes.deathAnimation || 'none';
+        return `
+            <div class="marginTop8">
+                <label class="labelText">Death animation:</label>
+                <select class="textInput" style="width: 100%; margin-top: 4px;"
+                    onchange="EnemiesAttributesRenderer.updateDeathAnimation('${type}', this.value)">
+                    <option value="none" ${deathAnim === 'none' ? 'selected' : ''}>None</option>
+                    <option value="upwardsAndRotate" ${deathAnim === 'upwardsAndRotate' ? 'selected' : ''}>Upwards &amp; Rotate</option>
+                </select>
+            </div>
+        `;
+    }
+
+    static updateDeathAnimation(type, value) {
+        EnemyTypeAttributesHandler.setAttribute(type, 'deathAnimation', value);
     }
 
     /**

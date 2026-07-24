@@ -93,10 +93,12 @@ class EnemyCollisionHandler {
         enemy.lives -= 1;
         enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
         if (enemy.lives <= 0) {
+            SoundHandler.pickup.stopAndPlay();
             enemy.death();
         } else {
+            enemy.hurtFrames = 30;
+            SoundHandler.hit.stopAndPlay();
             AnimationHelper.setSquishValues(enemy, (enemy.width + enemy.widthOffset) * 1.2, (enemy.height + enemy.heightOffset) * 0.6);
-            SFXHandler.createSFX(enemy.x, enemy.y, 1);
 
             // If configured, a surviving enemy is stunned: it goes inactive for stunDuration
             // seconds and then reactivates. This reuses the activation system's "after seconds"

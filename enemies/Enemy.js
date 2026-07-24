@@ -166,6 +166,8 @@ class Enemy extends InteractiveLevelObject {
         // to true; specific enemy types (e.g. the ghost) opt out in their own constructor.
         this.killedBySpikes = true;
         this.killedByBullets = true;
+        // How the enemy looks when it dies (gameplay logic applied separately when value is used).
+        this.deathAnimation = 'none';
         // Attack configuration: shooting is split into "phases", each with its own bullets, timing
         // and ammo. There is always at least one phase. Edited via the enemy editor's Attack tab.
         this.attackPhases = [{
@@ -211,6 +213,9 @@ class Enemy extends InteractiveLevelObject {
         // survived stomp. Reuses the "after seconds" reactivation logic without touching the
         // saved activation config.
         this.stunReactivationConfig = null;
+        // Runtime hurt-flash counter. Counts down from a set value each frame; alpha is reduced
+        // while > 0 to give visual feedback that the enemy was damaged.
+        this.hurtFrames = 0;
         
         this.resetObject();
     }
@@ -328,6 +333,12 @@ class Enemy extends InteractiveLevelObject {
         // Update activation state
         this.updateActivationState();
 
+        // Hurt flash: tick down once per frame and reduce alpha while active.
+        if (this.hurtFrames > 0) {
+            this.hurtFrames--;
+            Display.ctx.globalAlpha = this.hurtFrames % 6 < 3 ? 0.3 : 1;
+        }
+
         // Only execute enemy logic if active
         if (!this.isActive) {
             // Bleed off horizontal momentum with friction so the enemy glides to a halt the same
@@ -342,6 +353,7 @@ class Enemy extends InteractiveLevelObject {
             EnemyAttackHandler.resetState(this);
             this.checkPlayerCollision();
             EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
+            Display.ctx.globalAlpha = 1;
             return;
         }
 
@@ -355,6 +367,7 @@ class Enemy extends InteractiveLevelObject {
         
         // Update animation
         EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
+        Display.ctx.globalAlpha = 1;
     }
 
     /**
@@ -450,6 +463,7 @@ class Enemy extends InteractiveLevelObject {
             jumpInterval: this.jumpInterval,
             activationConfig: this.activationConfig,
             inactivationConfig: this.inactivationConfig,
+            deathAnimation: this.deathAnimation,
         };
     }
 
@@ -504,6 +518,7 @@ class Enemy extends InteractiveLevelObject {
         }
         if (attributes.activationConfig !== undefined) this.activationConfig = attributes.activationConfig;
         if (attributes.inactivationConfig !== undefined) this.inactivationConfig = attributes.inactivationConfig;
+        if (attributes.deathAnimation !== undefined) this.deathAnimation = attributes.deathAnimation;
     }
 
 }

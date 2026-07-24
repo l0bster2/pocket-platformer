@@ -5,6 +5,7 @@ class Enemy1 extends Enemy {
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
         this.walkDirection = this.walkDirections.left;
         this.canBeStomped = true;
+        this.gapBehaviour = this.gapBehaviours.continueWalking;
     }
 
     draw(spriteCanvas) {

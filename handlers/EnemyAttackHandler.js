@@ -171,6 +171,11 @@ class EnemyAttackHandler {
                 // The configured angle assumes the player is to the left; mirror it
                 // horizontally when the player is on the enemy's right side.
                 baseAngle = ((180 - baseAngle) % 360 + 360) % 360;
+            } else if (bulletConfig.shootInWalkDirection && enemy.walkDirections &&
+                       enemy.walkDirection === enemy.walkDirections.right) {
+                // The stored angle uses the left-walking direction as its base (matching the UI's
+                // left-hemisphere constraint); mirror it when the enemy is walking right.
+                baseAngle = ((180 - baseAngle) % 360 + 360) % 360;
             }
         }
 

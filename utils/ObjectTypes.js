@@ -231,6 +231,10 @@ class ObjectTypes {
     return 'enemy_10';
   }
 
+  static get ENEMY_11() {
+    return 'enemy_11';
+  }
+
   static get SPECIAL_BLOCK_VALUES() {
     return {
       canon: 14,
@@ -294,6 +298,7 @@ class ObjectTypes {
       [this.ENEMY_8]: Enemy8,
       [this.ENEMY_9]: Enemy9,
       [this.ENEMY_10]: Enemy10,
+      [this.ENEMY_11]: Enemy11,
     };
   }
 }

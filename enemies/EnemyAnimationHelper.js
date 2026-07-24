@@ -75,7 +75,7 @@ class EnemyAnimationHelper {
         const canvasYSpritePos = currentSprite.canvasYPos;
         
         Display.drawImage(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
-            enemy.tileSize, enemy.tileSize, enemy.x, enemy.y, enemy.tileSize, enemy.tileSize);
+            enemy.tileSize, enemy.tileSize, Math.round(enemy.x), Math.round(enemy.y), enemy.tileSize, enemy.tileSize);
     }
 
     /**

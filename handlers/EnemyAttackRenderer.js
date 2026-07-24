@@ -302,7 +302,7 @@ class EnemyAttackRenderer {
         ModalHandler.showModal('bulletModal');
         this.updateGravityRowVisibility();
         this.initAnglePicker(bullet?.angle ?? 0);
-        this.updateAngleControlsVisibility();
+        this.onDirectionModeChanged();
         const selectedSprite = document.getElementById("bulletSprite");
         if (selectedSprite) this.drawBulletSpritePreview(selectedSprite.value);
     }
@@ -316,6 +316,11 @@ class EnemyAttackRenderer {
         const randomAngleOffset = bullet?.randomAngleOffset ?? 0;
         const shootInPlayerDirection = bullet?.shootInPlayerDirection ?? false;
         const shootDirectlyAtPlayer = bullet?.shootDirectlyAtPlayer ?? false;
+        const shootInWalkDirection = bullet?.shootInWalkDirection ?? false;
+        let directionMode = 'fixed';
+        if (shootDirectlyAtPlayer) directionMode = 'towardsPlayer';
+        else if (shootInPlayerDirection) directionMode = 'playerDirection';
+        else if (shootInWalkDirection) directionMode = 'walkDirection';
         const spriteName = bullet?.spriteDescriptiveName ?? null;
         const bulletSprites = SpritePixelArrays.getBulletSprites();
 
@@ -355,15 +360,16 @@ class EnemyAttackRenderer {
             </div>
             <div class="subSection">
                 <div>
-                    <input type="checkbox" id="bulletShootDirectlyAtPlayer" name="bulletShootDirectlyAtPlayer" ${shootDirectlyAtPlayer ? 'checked' : ''}
-                        onchange="EnemyAttackRenderer.updateAngleControlsVisibility()">
-                    <label for="bulletShootDirectlyAtPlayer" class="checkBoxText">Shoot directly at player</label>
+                    <label class="labelText">Direction:</label>
+                    <select id="bulletDirectionMode" name="bulletDirectionMode" class="textInput" style="width: auto; margin-top: 4px;"
+                        onchange="EnemyAttackRenderer.onDirectionModeChanged()">
+                        <option value="fixed" ${directionMode === 'fixed' ? 'selected' : ''}>Fixed angle</option>
+                        <option value="towardsPlayer" ${directionMode === 'towardsPlayer' ? 'selected' : ''}>Towards player</option>
+                        <option value="playerDirection" ${directionMode === 'playerDirection' ? 'selected' : ''}>Player direction (mirrors)</option>
+                        <option value="walkDirection" ${directionMode === 'walkDirection' ? 'selected' : ''}>Walk direction (mirrors)</option>
+                    </select>
                 </div>
                 <div id="bulletAngleControls">
-                    <div class="marginTop8">
-                        <input type="checkbox" id="bulletShootInPlayerDirection" name="bulletShootInPlayerDirection" ${shootInPlayerDirection ? 'checked' : ''}>
-                        <label for="bulletShootInPlayerDirection" class="checkBoxText">Shoot in player direction</label>
-                    </div>
                     <label class="labelText marginTop8" style="display:block;">Angle:</label>
                     <div class="angleSection">
                         <div id="anglePickerCircle" class="anglePickerCircle">
@@ -430,11 +436,30 @@ class EnemyAttackRenderer {
         }
     }
 
-    static updateAngleControlsVisibility() {
-        const checkbox = document.getElementById("bulletShootDirectlyAtPlayer");
+    static isDirectionalMode() {
+        const select = document.getElementById("bulletDirectionMode");
+        return !!select && (select.value === 'playerDirection' || select.value === 'walkDirection');
+    }
+
+    static clampToLeftHemisphere(degrees) {
+        // Valid range is 90–270 (pointing generally left).
+        if (degrees >= 90 && degrees <= 270) return degrees;
+        return degrees < 90 ? 90 : 270;
+    }
+
+    static onDirectionModeChanged() {
+        const select = document.getElementById("bulletDirectionMode");
         const controls = document.getElementById("bulletAngleControls");
-        if (checkbox && controls) {
-            controls.style.display = checkbox.checked ? 'none' : 'block';
+        if (!select || !controls) return;
+        // "Towards player" aims directly at the player — no configured angle is needed.
+        controls.style.display = select.value === 'towardsPlayer' ? 'none' : 'block';
+        // When a mirroring mode is active, clamp the current angle to the left hemisphere.
+        if (this.isDirectionalMode()) {
+            const input = document.getElementById("bulletAngle");
+            if (input) {
+                const clamped = this.clampToLeftHemisphere(this.normalizeDegrees(parseInt(input.value, 10) || 0));
+                this.setAngle(clamped);
+            }
         }
     }
 
@@ -448,10 +473,11 @@ class EnemyAttackRenderer {
             speed: parseFloat(elements.bulletSpeed.value),
             spriteDescriptiveName: elements.bulletSprite.value,
             collidesWithWalls: elements.bulletCollidesWithWalls.checked,
-            angle: this.normalizeDegrees(parseInt(elements.bulletAngle.value, 10)),
+            angle: this.normalizeDegrees(parseInt(elements.bulletAngle?.value ?? '0', 10)),
             randomAngleOffset: parseInt(elements.bulletRandomAngleOffset.value, 10) || 0,
-            shootInPlayerDirection: elements.bulletShootInPlayerDirection.checked,
-            shootDirectlyAtPlayer: elements.bulletShootDirectlyAtPlayer.checked,
+            shootDirectlyAtPlayer: elements.bulletDirectionMode.value === 'towardsPlayer',
+            shootInPlayerDirection: elements.bulletDirectionMode.value === 'playerDirection',
+            shootInWalkDirection: elements.bulletDirectionMode.value === 'walkDirection',
         };
 
         const phases = this.getPhases(this.currentType);
@@ -490,8 +516,9 @@ class EnemyAttackRenderer {
             const rect = circle.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
-            const degrees = Math.atan2(event.clientY - centerY, event.clientX - centerX) * 180 / Math.PI;
-            this.setAngle(this.normalizeDegrees(degrees));
+            let degrees = this.normalizeDegrees(Math.atan2(event.clientY - centerY, event.clientX - centerX) * 180 / Math.PI);
+            if (this.isDirectionalMode()) degrees = this.clampToLeftHemisphere(degrees);
+            this.setAngle(degrees);
         };
 
         // Clean up any listeners left over from a previous modal open.
@@ -526,6 +553,8 @@ class EnemyAttackRenderer {
     }
 
     static onAngleInputChanged(value) {
-        this.setAngle(this.normalizeDegrees(parseInt(value, 10)));
+        let degrees = this.normalizeDegrees(parseInt(value, 10) || 0);
+        if (this.isDirectionalMode()) degrees = this.clampToLeftHemisphere(degrees);
+        this.setAngle(degrees);
     }
 }

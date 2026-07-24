@@ -3454,6 +3454,84 @@ class SpritePixelArrays {
       ]
     };
 
+    this.ENEMY_11_IDLE = {
+      name: ObjectTypes.ENEMY_11,
+      maxHeight: 16,
+      multipleSprites: true,
+      descriptiveName: "Enemy 11 idle",
+      type: this.SPRITE_TYPES.enemies,
+      squishAble: true,
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "2a6632", "2a6632", "2a6632", "2a6632", "2a6632", "transp", "transp"],
+            ["ff4444", "2a6632", "44aa44", "88cc88", "88cc88", "44aa44", "2a6632", "transp"],
+            ["transp", "44aa44", "88cc88", "ff0000", "88cc88", "88cc88", "44aa44", "2a6632"],
+            ["transp", "44aa44", "88cc88", "88cc88", "88cc88", "88cc88", "44aa44", "2a6632"],
+            ["transp", "2a6632", "44aa44", "44aa44", "44aa44", "44aa44", "2a6632", "transp"],
+            ["transp", "transp", "transp", "2a6632", "2a6632", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+          ]
+      }]
+    };
+
+    this.ENEMY_11_WALK = {
+      name: ObjectTypes.ENEMY_11,
+      maxHeight: 16,
+      multipleSprites: true,
+      descriptiveName: "Enemy 11 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "2a6632", "2a6632", "2a6632", "2a6632", "2a6632", "transp", "transp"],
+            ["ff4444", "2a6632", "44aa44", "88cc88", "88cc88", "44aa44", "2a6632", "transp"],
+            ["transp", "44aa44", "88cc88", "ff0000", "88cc88", "88cc88", "44aa44", "2a6632"],
+            ["transp", "44aa44", "88cc88", "88cc88", "88cc88", "88cc88", "44aa44", "2a6632"],
+            ["transp", "2a6632", "44aa44", "44aa44", "44aa44", "44aa44", "2a6632", "transp"],
+            ["transp", "2a6632", "2a6632", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "2a6632", "2a6632", "2a6632", "2a6632", "2a6632", "transp", "transp"],
+            ["ff4444", "2a6632", "44aa44", "88cc88", "88cc88", "44aa44", "2a6632", "transp"],
+            ["transp", "44aa44", "88cc88", "ff0000", "88cc88", "88cc88", "44aa44", "2a6632"],
+            ["transp", "44aa44", "88cc88", "88cc88", "88cc88", "88cc88", "44aa44", "2a6632"],
+            ["transp", "2a6632", "44aa44", "44aa44", "44aa44", "44aa44", "2a6632", "transp"],
+            ["transp", "transp", "transp", "transp", "2a6632", "2a6632", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+          ]
+      }]
+    };
+
+    this.ENEMY_11_JUMP = {
+      name: ObjectTypes.ENEMY_11,
+      maxHeight: 16,
+      multipleSprites: true,
+      descriptiveName: "Enemy 11 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "2a6632", "2a6632", "2a6632", "2a6632", "2a6632", "transp", "transp"],
+            ["ff4444", "2a6632", "44aa44", "88cc88", "88cc88", "44aa44", "2a6632", "transp"],
+            ["transp", "44aa44", "88cc88", "ff0000", "88cc88", "88cc88", "44aa44", "2a6632"],
+            ["transp", "44aa44", "88cc88", "88cc88", "88cc88", "88cc88", "44aa44", "2a6632"],
+            ["transp", "2a6632", "44aa44", "44aa44", "44aa44", "44aa44", "2a6632", "transp"],
+            ["transp", "transp", "transp", "2a6632", "2a6632", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+          ]
+      }]
+    };
+
     this.allSprites = [];
 
     this.fillAllSprites = () => {
