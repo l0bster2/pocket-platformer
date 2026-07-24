@@ -22,6 +22,9 @@ class EnemyJumpHandler {
         if (enemy.jumpframes >= maxFrames) {
             enemy.jumping = false;
             enemy.jumpframes = 0;
+            // Clear trampoline launch so the enemy doesn't get re-launched on the next frame.
+            // (Matches the player's JumpHandler behaviour.)
+            enemy.forcedJumpSpeed = 0;
         }
     }
 

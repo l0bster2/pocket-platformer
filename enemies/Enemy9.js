@@ -8,6 +8,7 @@ class Enemy9 extends Enemy6 {
         super(x, y, tileSize, type, tilemapHandler, extraAttributes);
         this.flyingBehaviour = this.flyingBehaviours.followPlayer;
         this.collidesWithWalls = false; // phases through walls
+        this.canBeStomped = false;
         // The ghost is indestructible: neither spikes nor the player's bullets can kill it.
         this.killedBySpikes = false;
         this.killedByBullets = false;

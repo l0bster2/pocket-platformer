@@ -14,14 +14,20 @@ class EnemyMovementHandler {
 
         switch (enemy.movementBehaviour) {
             case behaviours.towardsPlayer: {
-                const towards = this.getDirectionTowardsPlayer(enemy);
-                if (towards) enemy.walkDirection = towards;
+                // Only steer while grounded so mid-air direction is preserved during jumps.
+                if (!enemy.jumping && !enemy.falling) {
+                    const towards = this.getDirectionTowardsPlayer(enemy);
+                    if (towards) enemy.walkDirection = towards;
+                }
                 break;
             }
             case behaviours.awayFromPlayer: {
-                const towards = this.getDirectionTowardsPlayer(enemy);
-                if (towards) {
-                    enemy.walkDirection = towards === directions.left ? directions.right : directions.left;
+                // Only steer while grounded so mid-air direction is preserved during jumps.
+                if (!enemy.jumping && !enemy.falling) {
+                    const towards = this.getDirectionTowardsPlayer(enemy);
+                    if (towards) {
+                        enemy.walkDirection = towards === directions.left ? directions.right : directions.left;
+                    }
                 }
                 break;
             }
