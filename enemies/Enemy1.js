@@ -6,6 +6,7 @@ class Enemy1 extends Enemy {
         this.walkDirection = this.walkDirections.left;
         this.canBeStomped = true;
         this.gapBehaviour = this.gapBehaviours.continueWalking;
+        this.deathAnimation = 'upwardsAndRotate';
     }
 
     draw(spriteCanvas) {
@@ -17,6 +18,5 @@ class Enemy1 extends Enemy {
             super.correctMaxYSpeed();
             CharacterCollision.checkFloorAndTileCollision(this, false);
         }
-
     }
 }

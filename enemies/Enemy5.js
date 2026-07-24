@@ -37,6 +37,7 @@ class Enemy5 extends Enemy {
                 spriteDescriptiveName: "Bullet",
             }],
         }];
+        this.deathAnimation = 'upwardsAndRotate';
     }
 
     draw(spriteCanvas) {

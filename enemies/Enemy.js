@@ -326,7 +326,13 @@ class Enemy extends InteractiveLevelObject {
     }
 
     death() {
-        this.deleteEnemyFromLevel(tileMapHandler, true);
+        if (this.deathAnimation === 'upwardsAndRotate') {
+            SFXHandler.createSFX(this.x, this.y, 1);
+            DeadEnemyHandler.add(this);
+        } else {
+            SFXHandler.createSFX(this.x, this.y, 1);
+        }
+        this.deleteEnemyFromLevel(tileMapHandler, false);
     }
 
     draw(spriteCanvas) {

@@ -12,6 +12,7 @@ class Enemy2 extends Enemy {
         this.currentMaxSpeed = 2.6;
         this.canBeStomped = false;
         // Always active (base defaults: alwaysActive / neverInactive).
+        this.deathAnimation = 'upwardsAndRotate';
     }
 
     draw(spriteCanvas) {

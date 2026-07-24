@@ -101,4 +101,21 @@ class EnemyAnimationHelper {
         });
         return lengths;
     }
+
+    /**
+     * Render the enemy's current sprite frame with an arbitrary rotation.
+     * Used for death animations where normal game logic no longer applies.
+     */
+    static renderWithRotation(enemy, spriteCanvas, radians) {
+        const currentSprite = enemy.spriteObject[enemy.currentSpriteIndex];
+        if (!currentSprite) return;
+        const animationLength = currentSprite.animation ? currentSprite.animation.length : 1;
+        const directionOffset = enemy.facingDirection === AnimationHelper.facingDirections.right
+            ? animationLength : 0;
+        const canvasXSpritePos = directionOffset * enemy.tileSize; // always use frame 0
+        const canvasYSpritePos = currentSprite.canvasYPos;
+        Display.drawImageWithRotation(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
+            enemy.tileSize, enemy.tileSize, Math.round(enemy.x), Math.round(enemy.y),
+            enemy.tileSize, enemy.tileSize, radians);
+    }
 }

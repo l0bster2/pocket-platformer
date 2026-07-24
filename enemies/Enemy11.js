@@ -39,6 +39,7 @@ class Enemy11 extends Enemy {
                 },
             ],
         }];
+        this.deathAnimation = 'upwardsAndRotate';
     }
 
     draw(spriteCanvas) {

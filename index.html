@@ -954,6 +954,8 @@
         <script src="enemies/Enemy9.js"></script>
         <script src="enemies/Enemy10.js"></script>
         <script src="enemies/Enemy11.js"></script>
+        <script src="enemies/DeadEnemy.js"></script>
+        <script src="enemies/DeadEnemyHandler.js"></script>
         <script src="enemies/EnemyJumpHandler.js"></script>
         <script src="enemies/EnemyMovementHandler.js"></script>
         <script src="enemies/EnemyFlyingHandler.js"></script>
@@ -1071,6 +1073,7 @@
             CharacterCollision.staticConstructor(tileMapHandler);
             PlayMode.staticConstructor(player, tileMapHandler);
             SFXHandler.staticConstructor(tileMapHandler.tileSize, spriteCanvas);
+            DeadEnemyHandler.staticConstructor();
             GameStatistics.staticConstructor();
             PauseHandler.staticConstructor();
             EffectsRenderer.staticConstructor(tileMapHandler);
@@ -1152,6 +1155,7 @@
                     else {
                         PlayMode.runPlayLogic();
                         SFXHandler.updateSfxAnimations();
+                        DeadEnemyHandler.update(spriteCanvas);
                         player.draw();
                         //foreground objects
                         tileMapHandler.displayObjects(tileMapHandler.layers[5]);

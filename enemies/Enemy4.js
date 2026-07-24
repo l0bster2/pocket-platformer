@@ -18,6 +18,7 @@ class Enemy4 extends Enemy {
         this.groundFriction = 0.92;
         this.activationConfig = { type: "playerInDistance", value: 7 };
         this.inactivationConfig = { type: "playerFurtherThanDistance", value: 10 };
+        this.deathAnimation = 'upwardsAndRotate';
     }
 
     draw(spriteCanvas) {
