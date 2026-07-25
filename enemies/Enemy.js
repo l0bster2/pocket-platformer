@@ -339,46 +339,50 @@ class Enemy extends InteractiveLevelObject {
         // Update activation state
         this.updateActivationState();
 
-        // Hurt flash: tick down once per frame and reduce alpha while active.
-        if (this.hurtFrames > 0) {
-            this.hurtFrames--;
-            Display.ctx.globalAlpha = this.hurtFrames % 6 < 3 ? 0.3 : 1;
-        }
-
-        // Only execute enemy logic if active
-        if (!this.isActive) {
-            // Bleed off momentum with friction so the enemy glides to a halt instead of
-            // stopping abruptly. Flying enemies apply air_friction to both axes; walking enemies
-            // use ground friction on xspeed and bonusSpeedX.
-            if (!this.fixedSpeed) {
-                const f = this.flying ? this.air_friction : this.friction;
-                this.xspeed *= f;
-                if (Math.abs(this.xspeed) < 0.5) this.xspeed = 0;
-                if (this.flying) {
-                    this.yspeed *= f;
-                    if (Math.abs(this.yspeed) < 0.5) this.yspeed = 0;
-                }
-                this.bonusSpeedX *= f;
-                if (Math.abs(this.bonusSpeedX) < 0.3) this.bonusSpeedX = 0;
+        if (Game.playMode === Game.PLAY_MODE) {
+            // Hurt flash: tick down once per frame and reduce alpha while active.
+            if (this.hurtFrames > 0) {
+                this.hurtFrames--;
+                Display.ctx.globalAlpha = this.hurtFrames % 6 < 3 ? 0.3 : 1;
             }
-            // Reset attack timers so the start delay is honoured again on the next activation.
-            EnemyAttackHandler.resetState(this);
-            this.checkPlayerCollision();
-            EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
-            Display.ctx.globalAlpha = 1;
-            return;
+
+            if (!this.isActive) {
+                // Bleed off momentum with friction so the enemy glides to a halt instead of
+                // stopping abruptly. Flying enemies apply air_friction to both axes; walking
+                // enemies use ground friction on xspeed and bonusSpeedX.
+                if (!this.fixedSpeed) {
+                    const f = this.flying ? this.air_friction : this.friction;
+                    this.xspeed *= f;
+                    if (Math.abs(this.xspeed) < 0.5) this.xspeed = 0;
+                    if (this.flying) {
+                        this.yspeed *= f;
+                        if (Math.abs(this.yspeed) < 0.5) this.yspeed = 0;
+                    }
+                    this.bonusSpeedX *= f;
+                    if (Math.abs(this.bonusSpeedX) < 0.3) this.bonusSpeedX = 0;
+                }
+                // Reset attack timers so the start delay is honoured again on the next activation.
+                EnemyAttackHandler.resetState(this);
+                // Walking enemies must keep falling even while inactive so they land on platforms.
+                if (!this.flying) {
+                    this.fallHandler();
+                    this.correctMaxYSpeed();
+                    CharacterCollision.checkFloorAndTileCollision(this, false);
+                }
+                this.checkPlayerCollision();
+            } else {
+                this.checkHazardCollisions();
+                this.checkPlayerCollision();
+                // Spawn bullets according to this enemy type's configured attack phases.
+                EnemyAttackHandler.updateAttack(this);
+                // updateJump still runs every frame so in-progress jumps (including gap jumps and
+                // trampoline launches) finish; the interval jump itself only starts when enabled.
+                EnemyJumpHandler.updateJump(this, Math.round(this.jumpInterval * 60));
+                this.physicsStep();
+            }
         }
 
-        this.checkHazardCollisions();
-        this.checkPlayerCollision();
-        // Spawn bullets according to this enemy type's configured attack phases.
-        EnemyAttackHandler.updateAttack(this);
-        // updateJump still runs every frame so in-progress jumps (including gap jumps and
-        // trampoline launches) finish; the interval jump itself only starts when enabled.
-        EnemyJumpHandler.updateJump(this, Math.round(this.jumpInterval * 60));
-        this.physicsStep();
-
-        // Update animation
+        // Animation runs in both build and play mode so enemies display correctly in the editor.
         EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
         Display.ctx.globalAlpha = 1;
     }
