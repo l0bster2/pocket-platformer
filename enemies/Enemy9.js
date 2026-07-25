@@ -14,6 +14,8 @@ class Enemy9 extends Enemy6 {
         this.killedByBullets = false;
         this.activationConfig = { type: "playerLookingOppositeDirection" };
         this.inactivationConfig = { type: "playerLookingSameDirection" };
+        // High air friction so the deceleration-on-inactivation slide-out is clearly visible.
+        this.air_friction = 0.97;
         EnemyFlyingHandler.resetFlyingState(this);
     }
 }

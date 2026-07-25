@@ -12,10 +12,11 @@ class Enemy4 extends Enemy {
         // Chases the player and hops across gaps instead of turning back.
         this.movementBehaviour = this.movementBehaviours.towardsPlayer;
         this.gapBehaviour = this.gapBehaviours.jump;
-        this.maxSpeed = 3.2;
-        this.currentMaxSpeed = 3.2;
+        this.groundAcceleration = 0.12;
+        this.maxSpeed = 3.5;
+        this.currentMaxSpeed = 3.5;
         // High slipperiness: keeps its momentum and slides around.
-        this.groundFriction = 0.92;
+        this.groundFriction = 0.97;
         this.activationConfig = { type: "playerInDistance", value: 7 };
         this.inactivationConfig = { type: "playerFurtherThanDistance", value: 10 };
         this.deathAnimation = 'upwardsAndRotate';

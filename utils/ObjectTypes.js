@@ -235,6 +235,34 @@ class ObjectTypes {
     return 'enemy_11';
   }
 
+  static get ENEMY_12() {
+    return 'enemy_12';
+  }
+
+  static get ENEMY_13() {
+    return 'enemy_13';
+  }
+
+  static get ENEMY_14() {
+    return 'enemy_14';
+  }
+
+  static get ENEMY_15() {
+    return 'enemy_15';
+  }
+
+  static get ENEMY_16() {
+    return 'enemy_16';
+  }
+
+  static get ENEMY_17() {
+    return 'enemy_17';
+  }
+
+  static get ENEMY_18() {
+    return 'enemy_18';
+  }
+
   static get SPECIAL_BLOCK_VALUES() {
     return {
       canon: 14,
@@ -299,6 +327,13 @@ class ObjectTypes {
       [this.ENEMY_9]: Enemy9,
       [this.ENEMY_10]: Enemy10,
       [this.ENEMY_11]: Enemy11,
+      [this.ENEMY_12]: Enemy12,
+      [this.ENEMY_13]: Enemy13,
+      [this.ENEMY_14]: Enemy14,
+      [this.ENEMY_15]: Enemy15,
+      [this.ENEMY_16]: Enemy16,
+      [this.ENEMY_17]: Enemy17,
+      [this.ENEMY_18]: Enemy18,
     };
   }
 }

@@ -347,13 +347,19 @@ class Enemy extends InteractiveLevelObject {
 
         // Only execute enemy logic if active
         if (!this.isActive) {
-            // Bleed off horizontal momentum with friction so the enemy glides to a halt the same
-            // way the player does when the arrow key is released, instead of stopping abruptly.
-            if (!this.flying && !this.fixedSpeed) {
-                this.xspeed *= this.friction;
-                if (Math.abs(this.xspeed) < 0.5) {
-                    this.xspeed = 0;
+            // Bleed off momentum with friction so the enemy glides to a halt instead of
+            // stopping abruptly. Flying enemies apply air_friction to both axes; walking enemies
+            // use ground friction on xspeed and bonusSpeedX.
+            if (!this.fixedSpeed) {
+                const f = this.flying ? this.air_friction : this.friction;
+                this.xspeed *= f;
+                if (Math.abs(this.xspeed) < 0.5) this.xspeed = 0;
+                if (this.flying) {
+                    this.yspeed *= f;
+                    if (Math.abs(this.yspeed) < 0.5) this.yspeed = 0;
                 }
+                this.bonusSpeedX *= f;
+                if (Math.abs(this.bonusSpeedX) < 0.3) this.bonusSpeedX = 0;
             }
             // Reset attack timers so the start delay is honoured again on the next activation.
             EnemyAttackHandler.resetState(this);
@@ -405,9 +411,8 @@ class Enemy extends InteractiveLevelObject {
             // Check if should deactivate
             if (EnemyActivationHandler.shouldDeactivate(this, this.inactivationConfig)) {
                 this.isActive = false;
-                // Leftover walking momentum is bled off with friction in draw() so the enemy
-                // decelerates to a stop instead of halting instantly.
-                this.bonusSpeedX = 0;
+                // Leftover momentum is bled off with friction each frame in draw(), so
+                // the enemy glides to a halt instead of stopping abruptly.
                 EnemyActivationHandler.resetTimers(this);
             }
         } else {

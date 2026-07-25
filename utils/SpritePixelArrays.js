@@ -3561,6 +3561,398 @@ class SpritePixelArrays {
       ]
     };
 
+    this.ENEMY_12_IDLE = {
+      name: ObjectTypes.ENEMY_12, maxHeight: 16, multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      descriptiveName: "Enemy 12 idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000"]
+      ]}]
+    };
+    this.ENEMY_12_WALK = {
+      name: ObjectTypes.ENEMY_12, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 12 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000"]
+      ]},{ sprite: [
+        ["AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000"],
+        ["AA0000","FF7777","FF5555","FF5555","FF5555","FF5555","FF7777","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF7777","FF5555","FF5555","FF5555","FF5555","FF7777","AA0000"],
+        ["AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000"]
+      ]}]
+    };
+    this.ENEMY_12_JUMP = {
+      name: ObjectTypes.ENEMY_12, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 12 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","FF5555","FF5555","FF5555","FF5555","FF5555","FF5555","AA0000"],
+        ["AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000","AA0000"]
+      ]}]
+    };
+
+    this.ENEMY_13_IDLE = {
+      name: ObjectTypes.ENEMY_13, maxHeight: 16, multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      descriptiveName: "Enemy 13 idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA"]
+      ]}]
+    };
+    this.ENEMY_13_WALK = {
+      name: ObjectTypes.ENEMY_13, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 13 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA"]
+      ]},{ sprite: [
+        ["0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA"],
+        ["0000AA","7777FF","5555FF","5555FF","5555FF","5555FF","7777FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","7777FF","5555FF","5555FF","5555FF","5555FF","7777FF","0000AA"],
+        ["0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA"]
+      ]}]
+    };
+    this.ENEMY_13_JUMP = {
+      name: ObjectTypes.ENEMY_13, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 13 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","5555FF","5555FF","5555FF","5555FF","5555FF","5555FF","0000AA"],
+        ["0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA","0000AA"]
+      ]}]
+    };
+
+    this.ENEMY_14_IDLE = {
+      name: ObjectTypes.ENEMY_14, maxHeight: 16, multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      descriptiveName: "Enemy 14 idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00"]
+      ]}]
+    };
+    this.ENEMY_14_WALK = {
+      name: ObjectTypes.ENEMY_14, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 14 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00"]
+      ]},{ sprite: [
+        ["AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00"],
+        ["AAAA00","FFFF77","FFFF55","FFFF55","FFFF55","FFFF55","FFFF77","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF77","FFFF55","FFFF55","FFFF55","FFFF55","FFFF77","AAAA00"],
+        ["AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00"]
+      ]}]
+    };
+    this.ENEMY_14_JUMP = {
+      name: ObjectTypes.ENEMY_14, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 14 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","FFFF55","AAAA00"],
+        ["AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00","AAAA00"]
+      ]}]
+    };
+
+    this.ENEMY_15_IDLE = {
+      name: ObjectTypes.ENEMY_15, maxHeight: 16, multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      descriptiveName: "Enemy 15 idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA"]
+      ]}]
+    };
+    this.ENEMY_15_WALK = {
+      name: ObjectTypes.ENEMY_15, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 15 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA"]
+      ]},{ sprite: [
+        ["7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA"],
+        ["7700AA","DD77FF","CC55FF","CC55FF","CC55FF","CC55FF","DD77FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","DD77FF","CC55FF","CC55FF","CC55FF","CC55FF","DD77FF","7700AA"],
+        ["7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA"]
+      ]}]
+    };
+    this.ENEMY_15_JUMP = {
+      name: ObjectTypes.ENEMY_15, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 15 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","CC55FF","7700AA"],
+        ["7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA","7700AA"]
+      ]}]
+    };
+
+    this.ENEMY_16_IDLE = {
+      name: ObjectTypes.ENEMY_16, maxHeight: 16, multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      descriptiveName: "Enemy 16 idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA"]
+      ]}]
+    };
+    this.ENEMY_16_WALK = {
+      name: ObjectTypes.ENEMY_16, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 16 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA"]
+      ]},{ sprite: [
+        ["00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA"],
+        ["00AAAA","77FFFF","55FFFF","55FFFF","55FFFF","55FFFF","77FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","77FFFF","55FFFF","55FFFF","55FFFF","55FFFF","77FFFF","00AAAA"],
+        ["00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA"]
+      ]}]
+    };
+    this.ENEMY_16_JUMP = {
+      name: ObjectTypes.ENEMY_16, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 16 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","55FFFF","00AAAA"],
+        ["00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA","00AAAA"]
+      ]}]
+    };
+
+    this.ENEMY_17_IDLE = {
+      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      descriptiveName: "Enemy 17 idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500"]
+      ]}]
+    };
+    this.ENEMY_17_WALK = {
+      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 17 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500"]
+      ]},{ sprite: [
+        ["AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500"],
+        ["AA5500","FFCC77","FFAA55","FFAA55","FFAA55","FFAA55","FFCC77","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFCC77","FFAA55","FFAA55","FFAA55","FFAA55","FFCC77","AA5500"],
+        ["AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500"]
+      ]}]
+    };
+    this.ENEMY_17_JUMP = {
+      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 17 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","FFAA55","AA5500"],
+        ["AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500","AA5500"]
+      ]}]
+    };
+
+    this.ENEMY_18_IDLE = {
+      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      descriptiveName: "Enemy 18 idle",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077"]
+      ]}]
+    };
+    this.ENEMY_18_WALK = {
+      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 18 walk",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077"]
+      ]},{ sprite: [
+        ["AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077"],
+        ["AA0077","FF77DD","FF55CC","FF55CC","FF55CC","FF55CC","FF77DD","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF77DD","FF55CC","FF55CC","FF55CC","FF55CC","FF77DD","AA0077"],
+        ["AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077"]
+      ]}]
+    };
+    this.ENEMY_18_JUMP = {
+      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
+      descriptiveName: "Enemy 18 jump",
+      directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
+      animation: [{ sprite: [
+        ["AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","FF55CC","AA0077"],
+        ["AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077","AA0077"]
+      ]}]
+    };
+
     this.allSprites = [];
 
     this.fillAllSprites = () => {
