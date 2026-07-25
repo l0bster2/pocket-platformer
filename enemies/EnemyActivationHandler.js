@@ -9,6 +9,9 @@ class EnemyActivationHandler {
      * @returns {boolean} - Whether the enemy should be active
      */
     static shouldActivate(enemy, activationConfig) {
+        if (Game.playMode !== Game.PLAY_MODE) return false;
+        if (!this.isEnemyInViewport(enemy)) return false;
+
         if (!activationConfig) return true;
 
         const { type, value } = activationConfig;
@@ -150,6 +153,21 @@ class EnemyActivationHandler {
             : AnimationHelper.facingDirections.left;
 
         return PlayMode.player.facingDirection === directionToEnemy;
+    }
+
+    /**
+     * Check if the enemy overlaps the current camera viewport.
+     * @private
+     */
+    static isEnemyInViewport(enemy) {
+        if (!Camera || !Camera.viewport) return true;
+        const vp = Camera.viewport;
+        return (
+            enemy.x + enemy.width  > vp.left &&
+            enemy.x                < vp.left + vp.width &&
+            enemy.y + enemy.height > vp.top &&
+            enemy.y                < vp.top + vp.height
+        );
     }
 
     /**

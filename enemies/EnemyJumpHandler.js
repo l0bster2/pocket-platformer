@@ -93,4 +93,17 @@ class EnemyJumpHandler {
             enemy.jumpTimer = 0;
         }
     }
+
+    /**
+     * Apply a 1–10 jump-level to an enemy using the same jumpSpeedMapValues table
+     * that the player and the enemy-attributes UI use. Prevents constructors from
+     * accidentally storing a raw slider index instead of the real physics values.
+     * @param {Enemy} enemy
+     * @param {number} level - integer 1–10
+     */
+    static applyJumpLevel(enemy, level) {
+        const mapped = jumpSpeedMapValues.find(v => v.sliderValue === level) || jumpSpeedMapValues[2];
+        enemy.jumpSpeed = mapped.jumpSpeed;
+        enemy.maxJumpFrames = mapped.maxJumpFrames;
+    }
 }

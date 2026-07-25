@@ -14,7 +14,7 @@ class Enemy5 extends Enemy {
         // Jumps every couple of seconds while patrolling.
         this.jumpIntervalEnabled = true;
         this.jumpInterval = 2;
-        this.jumpSpeed = 1;
+        EnemyJumpHandler.applyJumpLevel(this, 1);
         // Default attack: lob a gravity-affected bullet down-left (244°) with a slight random
         // spread, three shots then a short reload.
         this.attackPhases = [{

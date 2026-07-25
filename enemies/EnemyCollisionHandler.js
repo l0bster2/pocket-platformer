@@ -68,7 +68,7 @@ class EnemyCollisionHandler {
         const playerAboveEnemy = player.bottom_left_pos.y < stompThreshold
             || player.prev_bottom_y <= stompThreshold;
 
-        if (enemy.canBeStomped && playerFalling && playerAboveEnemy) {
+        if (enemy.canBeStomped && (playerFalling || player.current_tile === 5) && playerAboveEnemy) {
             this.getStomped(enemy, player);
         } else if (enemy.killsPlayer) {
             PlayMode.playerDeath();

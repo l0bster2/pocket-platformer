@@ -216,6 +216,7 @@ class CharacterCollision {
 
         obj.bonusSpeedX && !obj.onMovingPlatform && obj.slowDownBonusSpeedX();
         obj.bonusSpeedY && !obj.onMovingPlatform && obj.slowDownBonusSpeedY();
+        obj.current_tile = current_tile;
 
         switch (current_tile) {
             case 0:
