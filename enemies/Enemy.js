@@ -376,10 +376,22 @@ class Enemy extends InteractiveLevelObject {
         // updateJump still runs every frame so in-progress jumps (including gap jumps and
         // trampoline launches) finish; the interval jump itself only starts when enabled.
         EnemyJumpHandler.updateJump(this, Math.round(this.jumpInterval * 60));
-        
+        this.physicsStep();
+
         // Update animation
         EnemyAnimationHelper.updateAnimation(this, spriteCanvas);
         Display.ctx.globalAlpha = 1;
+    }
+
+    physicsStep() {
+        if (this.flying) {
+            EnemyFlyingHandler.stepFlying(this);
+        } else {
+            this.isActive && this.walkHandler();
+            this.fallHandler();
+            this.correctMaxYSpeed();
+            CharacterCollision.checkFloorAndTileCollision(this, false);
+        }
     }
 
     /**

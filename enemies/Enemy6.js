@@ -11,10 +11,4 @@ class Enemy6 extends Enemy {
         EnemyFlyingHandler.resetFlyingState(this);
     }
 
-    draw(spriteCanvas) {
-        super.draw(spriteCanvas);
-        if (Game.playMode === Game.PLAY_MODE) {
-            EnemyFlyingHandler.stepFlying(this);
-        }
-    }
 }
