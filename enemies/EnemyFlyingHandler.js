@@ -226,13 +226,18 @@ class EnemyFlyingHandler {
             enemy.yspeed = 0;
             return;
         }
+        const accel = enemy.air_acceleration;
         if (horizontal) {
             const dx = player.x - enemy.x;
-            enemy.xspeed = Math.abs(dx) <= speed ? dx : Math.sign(dx) * speed;
+            const target = Math.sign(dx) * Math.min(Math.abs(dx), speed);
+            const diff = target - enemy.xspeed;
+            enemy.xspeed += Math.abs(diff) <= accel ? diff : Math.sign(diff) * accel;
             enemy.yspeed = 0;
         } else {
             const dy = player.y - enemy.y;
-            enemy.yspeed = Math.abs(dy) <= speed ? dy : Math.sign(dy) * speed;
+            const target = Math.sign(dy) * Math.min(Math.abs(dy), speed);
+            const diff = target - enemy.yspeed;
+            enemy.yspeed += Math.abs(diff) <= accel ? diff : Math.sign(diff) * accel;
             enemy.xspeed = 0;
         }
     }
