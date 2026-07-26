@@ -73,9 +73,22 @@ class EnemyAnimationHelper {
 
         const canvasXSpritePos = (frameIndex + directionOffset) * enemy.tileSize;
         const canvasYSpritePos = currentSprite.canvasYPos;
-        
-        Display.drawImage(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
-            enemy.tileSize, enemy.tileSize, Math.round(enemy.x), Math.round(enemy.y), enemy.tileSize, enemy.tileSize);
+
+        // Teleport animation: invisible at scale 0; scaled + rotated while transitioning
+        if (enemy.teleportScale === 0) return;
+
+        if (enemy.teleportScale !== undefined && enemy.teleportScale !== 1) {
+            const scaledSize = Math.round(enemy.tileSize * enemy.teleportScale);
+            const offset = Math.round((enemy.tileSize - scaledSize) / 2);
+            Display.drawImageWithRotation(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
+                enemy.tileSize, enemy.tileSize,
+                Math.round(enemy.x) + offset, Math.round(enemy.y) + offset,
+                scaledSize, scaledSize,
+                enemy.teleportRotation);
+        } else {
+            Display.drawImage(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
+                enemy.tileSize, enemy.tileSize, Math.round(enemy.x), Math.round(enemy.y), enemy.tileSize, enemy.tileSize);
+        }
     }
 
     /**

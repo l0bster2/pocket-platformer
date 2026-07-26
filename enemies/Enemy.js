@@ -156,6 +156,16 @@ class Enemy extends InteractiveLevelObject {
         this.jumpIntervalFrames = 120; // Jump every 2 seconds at 60 FPS
         this.jumpIntervalEnabled = false; // when true, the enemy jumps every jumpInterval seconds
         this.jumpInterval = 2; // seconds between interval jumps
+
+        // teleporting
+        this.teleportEnabled = false;   // when true, enemy teleports every teleportInterval seconds
+        this.teleportInterval = 3;      // seconds between teleports
+        this.teleportMaxDistance = 5;   // max distance in tiles for each teleport
+        this.teleportTimer = 0;
+        this.teleportPhase = null;      // null | 'disappearing' | 'reappearing'
+        this.teleportAnimFrame = 0;
+        this.teleportScale = 1;
+        this.teleportRotation = 0;
         
         // enemy attributes
         this.lives = 1;
@@ -390,6 +400,8 @@ class Enemy extends InteractiveLevelObject {
                 this.checkPlayerCollision();
                 // Spawn bullets according to this enemy type's configured attack phases.
                 EnemyAttackHandler.updateAttack(this);
+                // Teleport to a random nearby position on a timer.
+                EnemyTeleportHandler.updateTeleport(this);
                 // updateJump still runs every frame so in-progress jumps (including gap jumps and
                 // trampoline launches) finish; the interval jump itself only starts when enabled.
                 EnemyJumpHandler.updateJump(this, Math.round(this.jumpInterval * 60));
@@ -503,6 +515,9 @@ class Enemy extends InteractiveLevelObject {
             collidesWithWalls: this.collidesWithWalls,
             jumpIntervalEnabled: this.jumpIntervalEnabled,
             jumpInterval: this.jumpInterval,
+            teleportEnabled: this.teleportEnabled,
+            teleportInterval: this.teleportInterval,
+            teleportMaxDistance: this.teleportMaxDistance,
             activationConfig: this.activationConfig,
             inactivationConfig: this.inactivationConfig,
             deathAnimation: this.deathAnimation,
@@ -547,6 +562,9 @@ class Enemy extends InteractiveLevelObject {
         }
         if (attributes.jumpIntervalEnabled !== undefined) this.jumpIntervalEnabled = attributes.jumpIntervalEnabled;
         if (attributes.jumpInterval !== undefined) this.jumpInterval = attributes.jumpInterval;
+        if (attributes.teleportEnabled !== undefined) this.teleportEnabled = attributes.teleportEnabled;
+        if (attributes.teleportInterval !== undefined) this.teleportInterval = attributes.teleportInterval;
+        if (attributes.teleportMaxDistance !== undefined) this.teleportMaxDistance = attributes.teleportMaxDistance;
         if (attributes.movementBehaviour !== undefined) {
             this.movementBehaviour = attributes.movementBehaviour;
             // "Starts moving" modes define the initial direction; set it now so editing the

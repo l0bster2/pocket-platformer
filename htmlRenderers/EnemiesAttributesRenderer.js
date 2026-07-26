@@ -235,6 +235,7 @@ class EnemiesAttributesRenderer {
                                     </div>
                                     ${this.createJumpIntervalSection(attributes, type)}
                                 `}
+                                ${this.createTeleportSection(attributes, type)}
                             </div>
                         </div>
                     </div>
@@ -873,6 +874,41 @@ class EnemiesAttributesRenderer {
         EnemyTypeAttributesHandler.setAttribute(type, 'jumpIntervalEnabled', checked);
         const panel = document.getElementById("enemyDetailsPanel");
         const wrapper = panel?.querySelector(`#jumpIntervalWrapper_${type}`);
+        if (wrapper) wrapper.style.display = checked ? 'block' : 'none';
+    }
+
+    /**
+     * Create the "teleport every X seconds" subsection (checkbox + conditional inputs).
+     * Shown for both flying and walking enemies.
+     */
+    static createTeleportSection(attributes, type) {
+        const enabled     = !!attributes.teleportEnabled;
+        const interval    = attributes.teleportInterval    ?? 3;
+        const maxDistance = attributes.teleportMaxDistance ?? 5;
+        return `
+            <div class="subSection marginTop16">
+                <input type="checkbox" id="teleportEnabled_${type}" ${enabled ? 'checked' : ''}
+                    onchange="EnemiesAttributesRenderer.onTeleportEnabledChanged('${type}', this.checked)">
+                <label for="teleportEnabled_${type}" class="checkBoxText">Teleport every X seconds</label>
+                <div id="teleportWrapper_${type}" class="marginTop4" style="display: ${enabled ? 'block' : 'none'};">
+                    <label for="teleportIntervalInput_${type}" class="enemySubLabel">Teleport every (seconds):</label>
+                    <input type="number" id="teleportIntervalInput_${type}" class="textInput" value="${interval}" min="0.25" max="60" step="0.25"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'teleportInterval', this.value)">
+                    <label for="teleportMaxDistanceInput_${type}" class="enemySubLabel marginTop4">Max distance (tiles):</label>
+                    <input type="number" id="teleportMaxDistanceInput_${type}" class="textInput" value="${maxDistance}" min="1" max="50" step="1"
+                        onchange="EnemiesAttributesRenderer.updateNumberAttribute('${type}', 'teleportMaxDistance', this.value)">
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Handle the "Teleport every X seconds" checkbox: store it and toggle the inputs.
+     */
+    static onTeleportEnabledChanged(type, checked) {
+        EnemyTypeAttributesHandler.setAttribute(type, 'teleportEnabled', checked);
+        const panel = document.getElementById("enemyDetailsPanel");
+        const wrapper = panel?.querySelector(`#teleportWrapper_${type}`);
         if (wrapper) wrapper.style.display = checked ? 'block' : 'none';
     }
 
