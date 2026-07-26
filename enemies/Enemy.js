@@ -280,8 +280,23 @@ class Enemy extends InteractiveLevelObject {
 
     hitTop() {
         EnemyMovementHandler.handleTopCollision(this);
+        this.checkIfSwitchWasHit();
+
         if (this.onMovingPlatform) {
             //PlayMode.thisDeath();
+        }
+    }
+
+    checkIfSwitchWasHit() {
+        const switchValue = ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch;
+        if (this.top_left === switchValue || this.top_right === switchValue) {
+            const xPos = this.top_left === switchValue ? this.left : this.right;
+            const switchBlock = tileMapHandler.levelObjects.find(levelObject =>
+                levelObject.initialX === xPos &&
+                levelObject.initialY === this.top &&
+                levelObject.type === ObjectTypes.RED_BLUE_BLOCK_SWITCH
+            );
+            switchBlock && switchBlock.switchWasHit(AnimationHelper.facingDirections.top);
         }
     }
 
