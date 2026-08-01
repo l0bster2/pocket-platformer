@@ -67,7 +67,7 @@ class EnemyJumpHandler {
         }
 
         // Continue an in-progress forced (trampoline) jump, never start an interval jump during it
-        if (enemy.forcedJumpSpeed !== 0 && enemy.jumping) {
+        if (enemy.forcedJumpSpeed !== 0) {
             this.performJump(enemy, enemy.forcedJumpSpeed, enemy.maxJumpFrames + Math.round(enemy.maxJumpFrames / 6));
             return;
         }

@@ -49,7 +49,7 @@ class EnemyCollisionHandler {
      * @param {Enemy} enemy - The enemy to check
      */
     static checkPlayerCollision(enemy) {
-        if (Game.playMode !== Game.PLAY_MODE) {
+        if (Game.playMode !== Game.PLAY_MODE || enemy.dead) {
             return;
         }
         const player = tileMapHandler.player;

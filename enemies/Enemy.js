@@ -169,6 +169,7 @@ class Enemy extends InteractiveLevelObject {
         
         // enemy attributes
         this.lives = 1;
+        this.dead = false;
         this.canBeStomped = false;
         this.killsPlayer = true;
         this.stunDuration = 0; // seconds an enemy stays inactive after surviving a stomp (0 = no stun)
@@ -231,6 +232,7 @@ class Enemy extends InteractiveLevelObject {
     }
 
     resetObject() {
+        this.dead = false;
         this.x = this.initialX * this.tileSize;
         this.y = this.initialY * this.tileSize;
         this.resetSpeed();
@@ -351,12 +353,16 @@ class Enemy extends InteractiveLevelObject {
     }
 
     death() {
+        if (this.dead) {
+            return;
+        }
         if (this.deathAnimation === 'upwardsAndRotate') {
             SFXHandler.createSFX(this.x, this.y, 1);
             DeadEnemyHandler.add(this);
         } else {
             SFXHandler.createSFX(this.x, this.y, 1);
         }
+        this.dead = true;
         this.deleteEnemyFromLevel(tileMapHandler, false);
     }
 

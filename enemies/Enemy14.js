@@ -12,7 +12,7 @@ class Enemy14 extends Enemy {
         this.flying = true;
         EnemyFlyingHandler.resetFlyingState(this);
         this.flyingBehaviour = 'standStill';
-        this.canBeStomped = false;
+        this.canBeStomped = true;
         this.deathAnimation = 'upwardsAndRotate';
 
         // Teleport every 4 seconds, up to 8 tiles away
