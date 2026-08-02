@@ -11,31 +11,16 @@ class Enemy extends InteractiveLevelObject {
 
         // physics
         this.speed = 0
-        this.forcedJumpSpeed = 0;
         this.fixedSpeed = false;
         this.jumpSpeed = 0.44;
 
         // gravity
         this.gravity = 0.5
-        this.currentGravity = this.gravity
-
         this.maxFallSpeed = tileSize / 1.5
-        this.currentMaxFallSpeed = this.maxFallSpeed
 
         // jump system
-        this.jumpframes = 0
         this.maxJumpFrames = 18
-        this.jumpPressedToTheMax = true
         this.extraTrampolineJumpFrames = 3;
-
-        // states
-        this.falling = true
-        this.swimming = false
-        this.onIce = false
-
-        // moving platform
-        this.movingPlatformKey = null
-        this.onMovingPlatform = false
 
         // previous frame
         this.prev_bottom = 0
@@ -97,7 +82,6 @@ class Enemy extends InteractiveLevelObject {
         this.movementBehaviour = this.movementBehaviours.startMovingLeft;
         this.patrolDuration = 2.5; // seconds before a patrolling enemy reverses direction
         this.randomDuration = 3;   // seconds before a random-moving enemy picks a new direction
-        this.movementTimer = 0;    // frame counter for patrol/random behaviours
         // What the enemy does when one foot is over a gap (an empty tile) and the other isn't.
         this.gapBehaviours = {
             changeDirection: "changeDirection",
@@ -135,15 +119,9 @@ class Enemy extends InteractiveLevelObject {
         // Whether the flying enemy collides with tiles/walls. Ghost-type flyers set this false
         // to phase through walls (they are still clamped to the level bounds).
         this.collidesWithWalls = true;
-        // Runtime flying state (not persisted): current heading in degrees and frame timers.
-        this.flyAngle = 180;        // 0 = right, 90 = down, 180 = left, 270 = up
-        this.flyTimer = 0;          // frame counter for timed reversal / random behaviours
-        this.flyRecomputeTimer = 0; // throttles player-tracking / pathfinding recomputation
-        this.flyHasLineOfSight = false; // cached line-of-sight result for pathfinding behaviour
-        this.flyPath = null;        // cached pathfinding waypoints
-        this.flyPathIndex = 0;
         this.interativeObjects = [
             ObjectTypes.SPIKE,
+            ObjectTypes.STOMPER,
             ObjectTypes.TRAMPOLINE,
             ObjectTypes.PORTAL,
             ObjectTypes.MOVING_PLATFORM,
@@ -151,8 +129,6 @@ class Enemy extends InteractiveLevelObject {
         ];
         
         // jumping
-        this.jumping = false;
-        this.jumpTimer = 0;
         this.jumpIntervalFrames = 120; // Jump every 2 seconds at 60 FPS
         this.jumpIntervalEnabled = false; // when true, the enemy jumps every jumpInterval seconds
         this.jumpInterval = 2; // seconds between interval jumps
@@ -161,15 +137,8 @@ class Enemy extends InteractiveLevelObject {
         this.teleportEnabled = false;   // when true, enemy teleports every teleportInterval seconds
         this.teleportInterval = 3;      // seconds between teleports
         this.teleportMaxDistance = 5;   // max distance in tiles for each teleport
-        this.teleportTimer = 0;
-        this.teleportPhase = null;      // null | 'disappearing' | 'reappearing'
-        this.teleportAnimFrame = 0;
-        this.teleportScale = 1;
-        this.teleportRotation = 0;
         
         // enemy attributes
-        this.lives = 1;
-        this.dead = false;
         this.canBeStomped = false;
         this.killsPlayer = true;
         this.stunDuration = 0; // seconds an enemy stays inactive after surviving a stomp (0 = no stun)
@@ -195,16 +164,13 @@ class Enemy extends InteractiveLevelObject {
         // hit N times. phaseHitsTaken counts hits at runtime (used by the 'hits' mode).
         this.phaseChangeMode = 'intervals';
         this.phaseChangeValue = 1;
-        this.phaseHitsTaken = 0;
         
         // movement attributes (editable)
         this.maxSpeed = 2;
-        this.currentMaxSpeed = 2;
         this.groundAcceleration = 0.6;
         this.air_acceleration = 0.6;
         this.groundFriction = 0.65;
         this.air_friction = 0.75;
-        this.friction = this.air_friction;
         
         // animation
         this.currentAnimationIndex = 0;
@@ -214,28 +180,66 @@ class Enemy extends InteractiveLevelObject {
         this.currentSpriteIndex = idleSpriteIndex >= 0 ? idleSpriteIndex : 0; // Index within spriteObject array
         this.facingDirection = AnimationHelper.facingDirections.left;
         
-        // activation system
-        this.isActive = false; // Enemy starts inactive, activation config decides when it turns on
+        // activation config
         this.activationConfig = { type: "alwaysActive" }; // activates immediately by default
         this.inactivationConfig = { type: "neverInactive" }; // never deactivates by default
-        this.activationTimer = 0;
-        this.inactivationTimer = 0;
-        // Temporary, gameplay-only activation override used when the enemy is stunned after a
-        // survived stomp. Reuses the "after seconds" reactivation logic without touching the
-        // saved activation config.
-        this.stunReactivationConfig = null;
-        // Runtime hurt-flash counter. Counts down from a set value each frame; alpha is reduced
-        // while > 0 to give visual feedback that the enemy was damaged.
-        this.hurtFrames = 0;
         
         this.resetObject();
     }
 
     resetObject() {
+        // position
         this.dead = false;
         this.x = this.initialX * this.tileSize;
         this.y = this.initialY * this.tileSize;
         this.resetSpeed();
+
+        // lives reset to base default (subclasses and setEditableAttributes override after)
+        this.lives = 1;
+
+        // physics runtime
+        this.forcedJumpSpeed = 0;
+        this.currentGravity = this.gravity;
+        this.currentMaxFallSpeed = this.maxFallSpeed;
+        this.currentMaxSpeed = this.maxSpeed;
+        this.friction = this.air_friction;
+
+        // movement runtime
+        this.falling = true;
+        this.swimming = false;
+        this.onIce = false;
+        this.movingPlatformKey = null;
+        this.onMovingPlatform = false;
+        this.movementTimer = 0;
+
+        // jump runtime
+        this.jumping = false;
+        this.jumpframes = 0;
+        this.jumpPressedToTheMax = true;
+        this.jumpTimer = 0;
+
+        // teleport runtime
+        this.teleportTimer = 0;
+        this.teleportPhase = null;
+        this.teleportAnimFrame = 0;
+        this.teleportScale = 1;
+        this.teleportRotation = 0;
+
+        // flying runtime (also reset by EnemyFlyingHandler.resetFlyingState for flying enemies)
+        this.flyAngle = 180;
+        this.flyTimer = 0;
+        this.flyRecomputeTimer = 0;
+        this.flyHasLineOfSight = false;
+        this.flyPath = null;
+        this.flyPathIndex = 0;
+
+        // activation/combat runtime
+        this.isActive = false;
+        this.activationTimer = 0;
+        this.inactivationTimer = 0;
+        this.stunReactivationConfig = null;
+        this.hurtFrames = 0;
+        this.phaseHitsTaken = 0;
     }
 
     resetSpeed() {
@@ -353,6 +357,8 @@ class Enemy extends InteractiveLevelObject {
     }
 
     death() {
+        SoundHandler.enemyDead.stopAndPlay();
+
         if (this.dead) {
             return;
         }

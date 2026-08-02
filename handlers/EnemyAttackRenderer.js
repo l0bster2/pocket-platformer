@@ -96,7 +96,7 @@ class EnemyAttackRenderer {
         const value = attributes.phaseChangeValue ?? 1;
         const isSeconds = mode === 'seconds';
         return `
-            <div class="marginTop12">
+            <div class="marginTop12 subSection">
                 <label class="enemySubLabel">Change phase after:</label>
                 <div class="phaseChangeRow marginTop4">
                     <input type="number" id="phaseChangeValue_${type}" class="textInput phaseChangeValueInput"

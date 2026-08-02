@@ -24,11 +24,17 @@ class EnemyAnimationHelper {
             enemy.currentSpriteIndex = this.findSpriteIndexByName(enemy, 'idle');
         }
 
-        // Update facing direction based on horizontal movement (keep last direction when idle)
+        // Update facing direction: follow movement, or face the player when standing still.
         if (enemy.xspeed > 0) {
             enemy.facingDirection = AnimationHelper.facingDirections.right;
         } else if (enemy.xspeed < 0) {
             enemy.facingDirection = AnimationHelper.facingDirections.left;
+        } else if (PlayMode.player) {
+            const enemyCenterX = enemy.x + (enemy.width || 0) / 2;
+            const playerCenterX = PlayMode.player.x + (PlayMode.player.width || 0) / 2;
+            enemy.facingDirection = playerCenterX >= enemyCenterX
+                ? AnimationHelper.facingDirections.right
+                : AnimationHelper.facingDirections.left;
         }
 
         // Get animation length for current sprite (update dynamically in case it changes)

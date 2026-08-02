@@ -83,7 +83,7 @@ class EnemyCollisionHandler {
     static getStomped(enemy, player) {
         // small forced jump for the player, similar to a normal jump
         player.setStretchAnimation();
-        player.forcedJumpSpeed = player.jumpSpeed;
+        player.forcedJumpSpeed = player.jumpSpeed * player.maxJumpFrames / (player.maxJumpFrames + player.extraTrampolineJumpFrames);
         player.jumpframes = 0;
         player.fixedSpeed = false;
         player.temporaryDoubleJump = false;
@@ -93,11 +93,10 @@ class EnemyCollisionHandler {
         enemy.lives -= 1;
         enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
         if (enemy.lives <= 0) {
-            SoundHandler.pickup.stopAndPlay();
             enemy.death();
         } else {
             enemy.hurtFrames = 30;
-            SoundHandler.hit.stopAndPlay();
+            SoundHandler.enemyHit.stopAndPlay();
             AnimationHelper.setSquishValues(enemy, (enemy.width + enemy.widthOffset) * 1.2, (enemy.height + enemy.heightOffset) * 0.6);
 
             // If configured, a surviving enemy is stunned: it goes inactive for stunDuration

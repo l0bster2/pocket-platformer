@@ -10,6 +10,7 @@ class Enemy5 extends Enemy {
         this.canBeStomped = true;
         // Walks back and forth, switching direction every 2 seconds.
         this.movementBehaviour = this.movementBehaviours.patrol;
+        this.gapBehaviour = this.gapBehaviours.continueWalking;
         this.patrolDuration = 2;
         // Jumps every couple of seconds while patrolling.
         this.jumpIntervalEnabled = true;
@@ -34,7 +35,7 @@ class Enemy5 extends Enemy {
                 collidesWithWalls: false,
                 shootInPlayerDirection: true,
                 shootDirectlyAtPlayer: false,
-                spriteDescriptiveName: "Bullet",
+                spriteDescriptiveName: "Bullet 2",
             }],
         }];
         this.deathAnimation = 'upwardsAndRotate';

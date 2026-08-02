@@ -69,8 +69,9 @@ class Bullet extends InteractiveLevelObject {
             }
             this.checkCharacterCollisions();
         }
-        // Rotate the sprite so it points along its current travel direction (gravity arcs included).
-        super.drawWithRotation(spriteCanvas, Math.atan2(this.yspeed, this.xspeed));
+        // Rotate the sprite so it points along its current travel direction.
+        // The bullet sprites face left by default, so offset by π to flip them to face right.
+        super.drawWithRotation(spriteCanvas, Math.atan2(this.yspeed, this.xspeed) + Math.PI);
     }
 
     updatePosition() {

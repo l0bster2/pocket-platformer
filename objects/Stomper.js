@@ -18,8 +18,13 @@ class Stomper extends InteractiveLevelObject {
         this.handleFacingDirection();
     }
 
-    collisionEvent() {
-        PlayMode.playerDeath();
+    collisionEvent(obj) {
+        if(obj.type === "player") {
+            PlayMode.playerDeath();
+        }
+        else {
+            obj.death();
+        }
     }
 
     turnObject() {

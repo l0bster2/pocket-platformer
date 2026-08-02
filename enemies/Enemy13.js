@@ -29,7 +29,7 @@ class Enemy13 extends Enemy {
                 collidesWithWalls: true,
                 shootInPlayerDirection: true,
                 shootDirectlyAtPlayer: true,
-                spriteDescriptiveName: "Bullet 3",
+                spriteDescriptiveName: "Bullet",
             }],
         }];
     }

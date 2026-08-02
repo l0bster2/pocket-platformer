@@ -15,6 +15,8 @@ class SoundHandler {
     this.barrelDefault = Base64Sounds.barrelBase64;
     this.jumpResetDefault = Base64Sounds.jumpResetBase64;
     this.powerUpDefault = Base64Sounds.powerUpBase64;
+    this.enemyHitDefault = Base64Sounds.enemyHitBase64;
+    this.enemyDeadDefault = Base64Sounds.enemyDeadBase64;
     this.silence = Base64Sounds.silence;
     this.songDefault = "";
 
@@ -33,6 +35,8 @@ class SoundHandler {
       { key: "barrel", descriptiveName: "barrel", value: this.barrelDefault, type: "sound" },
       { key: "powerUp", descriptiveName: "powerUp", value: this.powerUpDefault, type: "sound" },
       { key: "jumpReset", descriptiveName: "jump reset", value: this.jumpResetDefault, type: "sound" },
+      { key: "enemyHit", descriptiveName: "enemy hit", value: this.enemyHitDefault, type: "sound" },
+      { key: "enemyDead", descriptiveName: "enemy dead", value: this.enemyDeadDefault, type: "sound" },
       { key: "custom1", descriptiveName: "custom 1", value: this.silence, type: "sound" },
       { key: "custom2", descriptiveName: "custom 2", value: this.silence, type: "sound" },
       { key: "custom3", descriptiveName: "custom 3", value: this.silence, type: "sound" },
