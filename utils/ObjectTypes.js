@@ -263,6 +263,16 @@ class ObjectTypes {
     return 'enemy_18';
   }
 
+  static get WEAPON_PISTOL()      { return 'weapon_pistol'; }
+  static get WEAPON_LASER_GUN()   { return 'weapon_laser_gun'; }
+  static get WEAPON_SHOTGUN()     { return 'weapon_shotgun'; }
+  static get WEAPON_UZI()         { return 'weapon_uzi'; }
+  static get WEAPON_MACHINE_GUN() { return 'weapon_machine_gun'; }
+  static get WEAPON_BOW()         { return 'weapon_bow'; }
+  static get WEAPON_SNIPER()      { return 'weapon_sniper'; }
+  static get WEAPON_SPEAR()       { return 'weapon_spear'; }
+  static get WEAPON_SWORD()       { return 'weapon_sword'; }
+
   static get SPECIAL_BLOCK_VALUES() {
     return {
       canon: 14,
@@ -334,6 +344,15 @@ class ObjectTypes {
       [this.ENEMY_16]: Enemy16,
       [this.ENEMY_17]: Enemy17,
       [this.ENEMY_18]: Enemy18,
+      [this.WEAPON_PISTOL]:      Pistol,
+      [this.WEAPON_LASER_GUN]:   LaserGun,
+      [this.WEAPON_SHOTGUN]:     Shotgun,
+      [this.WEAPON_UZI]:         Uzi,
+      [this.WEAPON_MACHINE_GUN]: MachineGun,
+      [this.WEAPON_BOW]:         Bow,
+      [this.WEAPON_SNIPER]:      Sniper,
+      [this.WEAPON_SPEAR]:       Spear,
+      [this.WEAPON_SWORD]:       Sword,
     };
   }
 }

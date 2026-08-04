@@ -38,7 +38,7 @@ class Enemy14 extends Enemy {
                 collidesWithWalls: true,
                 shootInPlayerDirection: true,
                 shootDirectlyAtPlayer: true,
-                spriteDescriptiveName: "Bullet",
+                spriteDescriptiveName: "Bullet 3",
             }],
         }];
     }

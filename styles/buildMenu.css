@@ -436,6 +436,10 @@ input:checked+.switchSlider:before {
     border-radius: 0;
 }
 
+.buildTabButton {
+    padding: 8px;
+}
+
 .tabButton.active,
 .colorTabButton.active {
     border-bottom: none;

@@ -16,10 +16,13 @@ function changeView(value) {
         document.getElementById("gameView").style.display = "none";
         document.getElementById("imageView").style.display = "none";
         document.getElementById("enemyView").style.display = "none";
+        document.getElementById("weaponView").style.display = "none";
         document.getElementById("soundView").style.display = "flex";
         document.getElementById("gameViewCheckmark").style.display = "none";
         document.getElementById("imageViewCheckmark").style.display = "none";
         document.getElementById("soundViewCheckmark").style.display = "block";
+        document.getElementById("enemyViewCheckmark").style.display = "none";
+        document.getElementById("weaponViewCheckmark").style.display = "none";
         SoundHandlerRenderer.createSoundOverview();
     }
     else if (value === "game") {
@@ -27,10 +30,12 @@ function changeView(value) {
         document.getElementById("soundView").style.display = "none";
         document.getElementById("imageView").style.display = "none";
         document.getElementById("enemyView").style.display = "none";
+        document.getElementById("weaponView").style.display = "none";
         document.getElementById("gameViewCheckmark").style.display = "block";
         document.getElementById("imageViewCheckmark").style.display = "none";
         document.getElementById("soundViewCheckmark").style.display = "none";
         document.getElementById("enemyViewCheckmark").style.display = "none";
+        document.getElementById("weaponViewCheckmark").style.display = "none";
         SoundHandler.checkSongOnLevelReset(tileMapHandler.currentLevel);
         ImageHandler.setBackgroundImage();
     }
@@ -39,32 +44,38 @@ function changeView(value) {
         document.getElementById("gameView").style.display = "none";
         document.getElementById("soundView").style.display = "none";
         document.getElementById("imageView").style.display = "none";
+        document.getElementById("weaponView").style.display = "none";
         document.getElementById("enemyViewCheckmark").style.display = "block";
         document.getElementById("gameViewCheckmark").style.display = "none";
         document.getElementById("imageViewCheckmark").style.display = "none";
         document.getElementById("soundViewCheckmark").style.display = "none";
+        document.getElementById("weaponViewCheckmark").style.display = "none";
         EnemiesAttributesRenderer.createEnemyOverview();
     }
-    else if (value === "game") {
-        document.getElementById("gameView").style.display = "block";
+    else if (value === "weapons") {
+        document.getElementById("weaponView").style.display = "block";
+        document.getElementById("enemyView").style.display = "none";
+        document.getElementById("gameView").style.display = "none";
         document.getElementById("soundView").style.display = "none";
         document.getElementById("imageView").style.display = "none";
-        document.getElementById("enemyView").style.display = "none";
-        document.getElementById("gameViewCheckmark").style.display = "block";
+        document.getElementById("weaponViewCheckmark").style.display = "block";
+        document.getElementById("enemyViewCheckmark").style.display = "none";
+        document.getElementById("gameViewCheckmark").style.display = "none";
         document.getElementById("imageViewCheckmark").style.display = "none";
         document.getElementById("soundViewCheckmark").style.display = "none";
-        document.getElementById("enemyViewCheckmark").style.display = "none";
-        SoundHandler.checkSongOnLevelReset(tileMapHandler.currentLevel);
-        ImageHandler.setBackgroundImage();
+        WeaponAttributesRenderer.createWeaponOverview();
     }
     else {
         document.getElementById("gameView").style.display = "none";
         document.getElementById("imageView").style.display = "flex";
         document.getElementById("soundView").style.display = "none";
+        document.getElementById("enemyView").style.display = "none";
+        document.getElementById("weaponView").style.display = "none";
         document.getElementById("gameViewCheckmark").style.display = "none";
         document.getElementById("imageViewCheckmark").style.display = "block";
         document.getElementById("soundViewCheckmark").style.display = "none";
         document.getElementById("enemyViewCheckmark").style.display = "none";
+        document.getElementById("weaponViewCheckmark").style.display = "none";
         ImageHandlerRenderer.createImageOverview();
         ImageHandler.showFirstPreviewImage();
     }

@@ -24,6 +24,7 @@ class WorldDataHandler {
         this.textColor = 'ffffff';
         this.effects = [];
         this.enemyTypeAttributes = {};
+        this.pickedUpWeaponTypes = new Set();
         this.resetFontParameters();
     }
 
@@ -80,6 +81,7 @@ class WorldDataHandler {
             deko: [],
             paths: [],
             enemies: [],
+            weapons: [],
             backgroundColor: "transp",
             zoomFactor: 1,
             song: null,
@@ -91,6 +93,7 @@ class WorldDataHandler {
     static createDemoLevel() {
         const demoLevel = MathHelpers.getRandomItemFromArray(allDemoLevels);
         demoLevel.enemies = [];
+        demoLevel.weapons = [];
         return demoLevel;
     }
 
@@ -104,6 +107,7 @@ class WorldDataHandler {
             level.deko = level.deko || [];
             level.paths = level.paths || [];
             level.enemies = level.enemies || [];
+            level.weapons = level.weapons || [];
         });
     }
 
@@ -127,6 +131,7 @@ class WorldDataHandler {
             deko: [],
             paths: [],
             enemies: [],
+            weapons: [],
             backgroundColor: "transp",
             zoomFactor: 1,
             song: null,

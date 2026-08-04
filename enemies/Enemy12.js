@@ -40,7 +40,7 @@ class Enemy12 extends Enemy {
                 collidesWithWalls: false,
                 shootInPlayerDirection: false,
                 shootDirectlyAtPlayer: false,
-                spriteDescriptiveName: "Bullet",
+                spriteDescriptiveName: "Bullet 2",
             }],
         }];
     }

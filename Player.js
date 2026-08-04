@@ -205,12 +205,18 @@ class Player {
         this.resetTemporaryAttributes();
     }
 
+    get activeWeapon() {
+        return this.weapons[this.activeWeaponIndex];
+    }
+
     setAbilities() {
         this.jumpChecked = true;
         this.wallJumpChecked = true;
         this.doubleJumpChecked = false;
         this.dashChecked = false;
         this.runChecked = false;
+        this.weapons = [];
+        this.activeWeaponIndex = 0;
         this.setInitialPowerUps();
     }
 

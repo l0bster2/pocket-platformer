@@ -11,6 +11,10 @@ class Controller {
         this.ctrlPressed = false;
         this.shiftPressed = false;
         this.shiftReleased = true;
+        this.attackPressed = false;
+        this.attackReleased = true;
+        this.switchWeapon = false;
+        this.switchWeaponReleased = true;
         this.alternativeActionButton = false;
         this.alternativeActionButtonReleased = true;
         this.enter = false;
@@ -84,29 +88,16 @@ class Controller {
 
     static addMobileControls() {
         if (!WorldDataHandler.insideTool) {
-            this.mobileArrows = document.getElementById("mobileArrows");
-            this.getMobileControlsPositions();
-
-            window.addEventListener("resize", () => {
-                this.getMobileControlsPositions();
-            })
-            window.addEventListener('orientationchange', () => {
-                this.getMobileControlsPositions();
-            });
-            this.mobileArrows.addEventListener("touchstart", (e) => {
-                this.handleMobileArrowInput(e);
-            });
-            this.mobileArrows.addEventListener("touchmove", (e) => {
-                this.handleMobileArrowInput(e);
-            });
-            this.mobileArrows.addEventListener("touchend", (e) => {
-                this.handleMobileArrowTouchEnd(e);
-            });
-
             [{ elementName: "selectMobileControls", variableNames: ["pause"] },
             { elementName: "startMobileControls", variableNames: ["enter"] },
+            { elementName: "upArrowMobileControls", variableNames: ["up"] },
+            { elementName: "downArrowMobileControls", variableNames: ["down"] },
+            { elementName: "leftArrowMobileControls", variableNames: ["left"] },
+            { elementName: "rightArrowMobileControls", variableNames: ["right"] },
             { elementName: "jumpMobileControls", variableNames: ["jump", "confirm"] },
             { elementName: "alternativeMobileControls", variableNames: ["alternativeActionButton"] },
+            { elementName: "attackMobileControls", variableNames: ["attackPressed"] },
+            { elementName: "switchWeaponMobileControls", variableNames: ["switchWeapon"] },
             ].forEach(control => {
                 const element = document.getElementById(control.elementName);
                 element.addEventListener("touchstart", (e) => {
@@ -125,7 +116,7 @@ class Controller {
                 });
                 element.addEventListener("touchcancel", (e) => {
                     e.preventDefault();
-                    this[control.variableName] = false;
+                    control.variableNames.forEach(variable => this[variable] = false);
                 });
             });
         }
@@ -139,7 +130,9 @@ class Controller {
                 const primaryButtonPressed = myGamepad.buttons[0].pressed;
                 this.jump = primaryButtonPressed;
                 this.confirm = primaryButtonPressed;
-                this.alternativeActionButton = myGamepad.buttons[1].pressed || myGamepad.buttons[2].pressed;
+                this.attackPressed = myGamepad.buttons[1].pressed || myGamepad.buttons[7].pressed;
+                this.alternativeActionButton = myGamepad.buttons[2].pressed;
+                this.switchWeapon = myGamepad.buttons[5].pressed;
                 const enterAndPause = myGamepad.buttons[9].pressed || myGamepad.buttons[8].pressed;
                 this.enter = enterAndPause;
                 this.pause = enterAndPause;
@@ -172,19 +165,20 @@ class Controller {
        That way, the function can be reused for key-down and up
     */
     static handleKeyPresses(pressed, e) {
-        const key = e.key;
+        const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
         switch (key) {
             case "Enter": this.enter = pressed; break;
             case "Right": case "ArrowRight": this.right = pressed; e.preventDefault(); break;
             case "d": this.right = pressed; break;
             case "Left": case "ArrowLeft": this.left = pressed; e.preventDefault(); break;
             case "a": this.left = pressed; break;
-            case "Up": case "ArrowUp": case "w": this.up = pressed; this.jump = pressed; break;
+            case "Up": case "ArrowUp": case "w": this.up = pressed; break;
             case "z": case "j": case "c": this.jump = pressed; this.confirm = pressed; break;
             case "x": case "k": this.alternativeActionButton = pressed; break;
-            case "Down": case "ArrowDown": this.down = pressed; break;
+            case "e": this.switchWeapon = pressed; break;
+            case "Down": case "ArrowDown": case "s": this.down = pressed; break;
             case "Control": this.ctrlPressed = pressed; break;
-            case "Shift": this.shiftPressed = pressed; break;
+            case "Shift": this.shiftPressed = pressed; this.attackPressed = pressed; break;
             case "Escape": case "p": this.pause = pressed;
         }
     }

@@ -60,6 +60,10 @@ class Bullet extends InteractiveLevelObject {
     draw(spriteCanvas) {
         if (Game.playMode === Game.PLAY_MODE) {
             this.updatePosition();
+            if (this.lifeSpan !== undefined && --this.lifeSpan <= 0) {
+                this.deleteObjectFromLevel(this.tileMapHandler, false);
+                return;
+            }
             if (this.handleWallCollision()) {
                 return;
             }
@@ -131,11 +135,13 @@ class Bullet extends InteractiveLevelObject {
             const enemies = this.tileMapHandler.enemies || [];
             for (let i = 0; i < enemies.length; i++) {
                 const enemy = enemies[i];
-                if (enemy.killedByBullets && Collision.objectsColliding(this, enemy)) {
-                    enemy.lives -= 1;
-                    enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
-                    if (enemy.lives <= 0) {
-                        enemy.death();
+                if (Collision.objectsColliding(this, enemy)) {
+                    if (enemy.killedByBullets) {
+                        enemy.lives -= 1;
+                        enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
+                        if (enemy.lives <= 0) {
+                            enemy.death();
+                        }
                     }
                     this.deleteObjectFromLevel(this.tileMapHandler);
                     return;

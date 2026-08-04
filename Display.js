@@ -82,6 +82,19 @@ class Display {
         this.ctx.globalAlpha = 1;
     }
 
+    // Same as drawImageWithRotation but mirrored horizontally around the sprite center
+    static drawImageFlippedX(img, sx, sy, sw, sh, dx, dy, dw, dh, radians = 0) {
+        const halfW = dw / 2;
+        const halfH = dh / 2;
+        this.ctx.translate(dx + halfW, dy + halfH);
+        this.ctx.scale(-1, 1);
+        this.ctx.rotate(radians);
+        this.ctx.drawImage(img, Math.round(sx), Math.round(sy), sw, sh, -halfW, -halfH, dw, dh);
+        this.ctx.rotate(-radians);
+        this.ctx.scale(-1, 1);
+        this.ctx.translate(-dx - halfW, -dy - halfH);
+    }
+
     //same function as drawPixelArray, but with an 0.5 offset, to fix subpixels while zooming (mostly for avatars)
     static drawPixelArrayWithOffset(pixelArray, x, y, pixelArrayUnitSize, pixelArrayUnitAmountHeight, pixelArrayUnitAmountWidth, ctx = this.ctx) {
         if (!pixelArray) return;

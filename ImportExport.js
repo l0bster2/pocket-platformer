@@ -135,6 +135,7 @@ function exportGame() {
   allData.animationType = TransitionAnimationHandler.animationType;
   allData.playerObject = createPlayerAttributesSectionForAllData();
   allData.enemyTypeAttributes = WorldDataHandler.enemyTypeAttributes;
+  allData.weaponTypeAttributes = WorldDataHandler.weaponTypeAttributes;
   allData.sounds = getCustomSounds();
   allData.images = ImageHandler.images;
   allData.sprites = createChangedSpitesObject();
@@ -183,15 +184,59 @@ function createHtmlDocoumentWithCanvas() {
         }
         #mobileControls {
           display: flex;
-          position: relative;
-          padding: 50px 20px 0; 
+          align-items: flex-start;
+          padding: 20px 20px 12px;
           background-color: black;
         }
         #mobileArrowControls {
-          position: relative; 
-          flex: 1; 
-          margin: auto;
+          flex: 1;
+          display: flex;
+          justify-content: center;
         }
+        #mobileDpad {
+          display: grid;
+          grid-template-areas: '. up .' 'left . right' '. down .';
+          grid-template-columns: repeat(3, 44px);
+          grid-template-rows: repeat(3, 44px);
+        }
+        .dpadBtn {
+          width: 44px; height: 44px;
+          background: rgba(255,255,255,0.15);
+          border: 2px solid rgba(255,255,255,0.35);
+          border-radius: 8px;
+          color: white;
+          font-size: 18px;
+          padding: 0;
+          -webkit-tap-highlight-color: transparent;
+          user-select: none;
+        }
+        #upArrowMobileControls    { grid-area: up; }
+        #leftArrowMobileControls  { grid-area: left; }
+        #rightArrowMobileControls { grid-area: right; }
+        #downArrowMobileControls  { grid-area: down; }
+        #mobileCenter {
+          flex: 0 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 0 12px;
+          align-self: center;
+        }
+        #mobileButtonControls {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+        }
+        #mobileButtonCross {
+          display: grid;
+          grid-template-areas: '. top .' 'left . right' '. bottom .';
+          grid-template-columns: repeat(3, 44px);
+          grid-template-rows: repeat(3, 44px);
+        }
+        #switchWeaponMobileControls { grid-area: top;    width: 44px; height: 44px; }
+        #alternativeMobileControls  { grid-area: left;   width: 44px; height: 44px; }
+        #attackMobileControls       { grid-area: right;  width: 44px; height: 44px; }
+        #jumpMobileControls         { grid-area: bottom; width: 44px; height: 44px; }
         @media (min-width: 768px) {
           body {
             background-image: none;
@@ -274,16 +319,23 @@ function createHtmlDocoumentWithCanvas() {
     {
       innerHTML: `
         <div id="mobileArrowControls">
-          <img draggable='false' src="${Base64Images.mobileArrows}" id="mobileArrows"/>
+          <div id="mobileDpad">
+            <button class="dpadBtn" id="upArrowMobileControls">&#9650;</button>
+            <button class="dpadBtn" id="leftArrowMobileControls">&#9664;</button>
+            <button class="dpadBtn" id="rightArrowMobileControls">&#9654;</button>
+            <button class="dpadBtn" id="downArrowMobileControls">&#9660;</button>
+          </div>
+        </div>
+        <div id="mobileCenter">
+          <img draggable='false' src="${Base64Images.mobileControlStart}" id="selectMobileControls"/>
+          <img draggable='false' src="${Base64Images.mobileControlStart}" id="startMobileControls"/>
         </div>
         <div id="mobileButtonControls">
-          <div id="mobileStartSelect">
-            <img draggable='false' src="${Base64Images.mobileControlStart}" id="selectMobileControls" style="margin-right: 8px"/>
-            <img draggable='false' src="${Base64Images.mobileControlStart}" id="startMobileControls"/>
-          </div>
-          <div>
-            <img draggable='false' src="${Base64Images.mobileControlA}" id="jumpMobileControls"style="margin-right: 8px" />
+          <div id="mobileButtonCross">
+            <img draggable='false' src="${Base64Images.mobileControlA}" id="switchWeaponMobileControls"/>
             <img draggable='false' src="${Base64Images.mobileControlB}" id="alternativeMobileControls"/>
+            <img draggable='false' src="${Base64Images.mobileControlB}" id="attackMobileControls"/>
+            <img draggable='false' src="${Base64Images.mobileControlA}" id="jumpMobileControls"/>
           </div>
         </div>`
     });
@@ -326,7 +378,8 @@ function bundleAllScripts() {
   var scriptTexts = '';
   const unNeededScripts = ['EmptyGame', 'demoLevels', 'htmlgame', 'ImportExport', 'LegacyImporter', 'WorldColorHandler', 'DrawHelpers', 'BuildMode', 'CustomSpritesElementsRenderer',
     'LevelNavigationHandler', 'TabNavigation', 'TabPagination', 'DrawSectionHandler', 'helpers', 'ObjectsTooltipElementsRenderer', 'HeaderNavigationHandler',
-    'huebee.min', 'ProTipHandler', 'TooltipHandler', 'LevelSizeHandler', 'EffectHtmlRenderer', 'SoundHandlerRenderer', 'PathBuildHandler', 'FileSaver', 'Base64Images'];
+    'huebee.min', 'ProTipHandler', 'TooltipHandler', 'LevelSizeHandler', 'EffectHtmlRenderer', 'SoundHandlerRenderer', 'PathBuildHandler', 'FileSaver', 'Base64Images',
+    'WeaponInventoryRenderer'];
 
   const scripts = document.getElementsByTagName("script");
   for (var i = 0; i < scripts.length; i++) {

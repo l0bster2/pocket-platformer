@@ -40,6 +40,7 @@ class ExportedGameInitializer {
             player[key] = value;
         }
         WorldDataHandler.enemyTypeAttributes = allData.enemyTypeAttributes || {};
+        WorldDataHandler.weaponTypeAttributes = allData.weaponTypeAttributes || {};
         for (const [key, value] of Object.entries(allData.sprites)) {
             if (key !== "TELEPORT" && key !== "TELEPORT2" && key !== "SFX4") {
                 SpritePixelArrays[key] = value;

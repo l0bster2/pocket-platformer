@@ -81,6 +81,12 @@
                                 style="display: none;" id="enemyViewCheckmark">
                         </div>
                     </li>
+                    <li class="dropdown-nav-item" onClick="changeView('weapons')">
+                        <div>Weapons
+                            <img src="images/icons/checkmark.svg" alt="right" width="12" height="12"
+                                style="display: none;" id="weaponViewCheckmark">
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -95,25 +101,29 @@
                 <h2 class="sectionHeading">BUILD TOOLS</h2>
                 <div id="buildMenu" class="sectionContent">
                     <div id="tabWrapper">
-                        <button class="levelNavigationButton tabButton active"
+                        <button class="levelNavigationButton tabButton buildTabButton active"
                             onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.tile)">
                             <img src="images/icons/tile.svg" alt="tile" width="16" height="16">
                         </button>
-                        <button class="levelNavigationButton tabButton"
+                        <button class="levelNavigationButton tabButton buildTabButton"
                             onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.object)">
                             <img src="images/icons/objects.svg" alt="object" width="16" height="16">
                         </button>
-                        <button class="levelNavigationButton tabButton"
+                        <button class="levelNavigationButton tabButton buildTabButton"
                             onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.deko)">
                             <img src="images/icons/deko.svg" alt="deko" width="16" height="16">
                         </button>
-                        <button class="levelNavigationButton tabButton"
+                        <button class="levelNavigationButton tabButton buildTabButton"
                             onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.enemies)">
-                            <img src="images/icons/skull.svg" alt="deko" width="16" height="16">
+                            <img src="images/icons/skull.svg" alt="enemies" width="16" height="16">
                         </button>
-                        <button class="levelNavigationButton tabButton"
+                        <button class="levelNavigationButton tabButton buildTabButton"
+                            onclick="TabNavigation.changeTab(event, SpritePixelArrays.SPRITE_TYPES.weapons)">
+                            <img src="images/icons/attack.svg" alt="weapons" width="16" height="16">
+                        </button>
+                        <button class="levelNavigationButton tabButton buildTabButton"
                             onclick="TabNavigation.changeTab(event, SpritePixelArrays.customType)">
-                            <img src="images/icons/plus.svg" alt="custom" width="16" height="16" style="width: 55%;">
+                            <img src="images/icons/plus.svg" alt="custom" width="16" height="16" style="width: 80%;">
                         </button>
                     </div>
                     <div id="tabContent">
@@ -410,6 +420,12 @@
                                 </div>
                             </details>
                         </div>
+                        <div class="subSection">
+                            <details ontoggle="if(this.open) WeaponInventoryRenderer.render()">
+                                <summary>Weapon inventory</summary>
+                                <div id="weaponInventoryList" class="marginTop8"></div>
+                            </details>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -448,6 +464,19 @@
                 <h2 class="sectionHeading">Enemy Attributes</h2>
                 <div class="sectionContent">
                     <div id="enemiesContent"></div>
+                    <div class="textAsLink marginTop16" onClick="changeView('game')">
+                        <img alt="back" width="14" height="14" class="blue-filter" src="images/icons/left.svg"
+                            class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Back to
+                            game-screen</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section" style="display: none;" id="weaponView">
+            <div class="soundSection">
+                <h2 class="sectionHeading">Weapon Attributes</h2>
+                <div class="sectionContent">
+                    <div id="weaponsContent"></div>
                     <div class="textAsLink marginTop16" onClick="changeView('game')">
                         <img alt="back" width="14" height="14" class="blue-filter" src="images/icons/left.svg"
                             class="iconInButtonWithText"><span style="margin-left: 8px; vertical-align: top;">Back to
@@ -972,6 +1001,21 @@
         <script src="enemies/EnemyActivationHandler.js"></script>
         <script src="handlers/EnemyTypeAttributesHandler.js"></script>
         <script src="handlers/EnemyAttackHandler.js"></script>
+        <script src="handlers/WeaponTypeAttributesHandler.js"></script>
+        <script src="weapons/Weapon.js"></script>
+        <script src="weapons/GunWeapon.js"></script>
+        <script src="weapons/MeleeWeapon.js"></script>
+        <script src="weapons/Pistol.js"></script>
+        <script src="weapons/LaserGun.js"></script>
+        <script src="weapons/Shotgun.js"></script>
+        <script src="weapons/Uzi.js"></script>
+        <script src="weapons/MachineGun.js"></script>
+        <script src="weapons/Bow.js"></script>
+        <script src="weapons/Sniper.js"></script>
+        <script src="weapons/Spear.js"></script>
+        <script src="weapons/Sword.js"></script>
+        <script src="handlers/WeaponHandler.js"></script>
+        <script src="handlers/WeaponInventoryRenderer.js"></script>
         <script src="handlers/EnemyAttackRenderer.js"></script>
         <script src="SpriteSheetCreator.js"></script>
         <script src="utils/ObjectTypes.js"></script>
@@ -1023,6 +1067,7 @@
         <script src="htmlRenderers/EventsTooltipRenderer.js"></script>
         <script src="htmlRenderers/ImageHandlerRenderer.js"></script>
         <script src="htmlRenderers/EnemiesAttributesRenderer.js"></script>
+        <script src="htmlRenderers/WeaponAttributesRenderer.js"></script>
         <link rel="stylesheet" type="text/css" href="styles/gameScreen.css">
         <link rel="stylesheet" type="text/css" href="styles/buildMenu.css">
         <link rel="stylesheet" type="text/css" href="styles/drawSection.css">
@@ -1102,6 +1147,7 @@
             LayerHandler.staticConstructor();
             ModalHandler.staticConstructor();
             EnemyAttackRenderer.staticConstructor();
+            WeaponAttributesRenderer.staticConstructor();
             LevelSizeHandler.staticConstructor(tileMapHandler);
             PlayerAttributesHandler.staticConstructor(player);
             CustomSpriteHandler.staticConstructor();
@@ -1165,6 +1211,7 @@
                         SFXHandler.updateSfxAnimations();
                         DeadEnemyHandler.update(spriteCanvas);
                         player.draw();
+                        WeaponHandler.drawActiveWeapon(player);
                         //foreground objects
                         tileMapHandler.displayObjects(tileMapHandler.layers[5]);
                         // event triggers

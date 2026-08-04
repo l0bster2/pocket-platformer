@@ -15,7 +15,24 @@ class CharacterCollision {
 
     static checkCollisionsWithWorld(obj, cornerCorrection = false) {
         this.checkHazardsCollision(obj);
+        this.checkWeaponPickups(obj);
         this.checkFloorAndTileCollision(obj, cornerCorrection);
+    }
+
+    static checkWeaponPickups(player) {
+        if (!player.weapons) return;
+        for (let i = this.tileMapHandler.weapons.length - 1; i >= 0; i--) {
+            const weapon = this.tileMapHandler.weapons[i];
+            if (!Collision.objectsColliding(player, weapon)) continue;
+            const alreadyHeld = player.weapons.some(w => w.type === weapon.type);
+            if (alreadyHeld) continue;
+            player.weapons.push(weapon);
+            this.tileMapHandler.weapons.splice(i, 1);
+            const soundKey = weapon.pickupSound || 'pickup';
+            if (SoundHandler[soundKey]) SoundHandler[soundKey].stopAndPlay();
+            WorldDataHandler.pickedUpWeaponTypes = new Set(player.weapons.map(w => w.type));
+            if (typeof WeaponInventoryRenderer !== 'undefined') WeaponInventoryRenderer.render();
+        }
     }
 
     static checkFloorAndTileCollision(obj, cornerCorrection = false) {

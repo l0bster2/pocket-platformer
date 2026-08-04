@@ -53,6 +53,11 @@ class TileMapHandler {
         this.levelObjects = this.createInitialObjects(WorldDataHandler.levels[levelIndex].levelObjects);
         this.deko = this.createInitialDeko(WorldDataHandler.levels[levelIndex].deko);
         this.enemies = this.createInitialObjects(WorldDataHandler.levels[levelIndex].enemies);
+        this.weapons = this.createInitialObjects(
+            (WorldDataHandler.levels[levelIndex].weapons || []).filter(w =>
+                !this.player.weapons.some(pw => pw.type === w.type)
+            )
+        );
         this.paths = this.createInitialPaths(WorldDataHandler.levels[levelIndex].paths);
         this.effects = EffectsHandler.getCurrentLevelEffects(this.currentLevel);
         this.currentGeneralFrameCounter = 0;
@@ -129,6 +134,9 @@ class TileMapHandler {
                 y, this.tileSize, type, this, extraAttributes);
             if (typeof Enemy !== "undefined" && createdObject instanceof Enemy) {
                 EnemyTypeAttributesHandler.applyToInstance(createdObject);
+            }
+            if (typeof Weapon !== "undefined" && createdObject instanceof Weapon) {
+                WeaponTypeAttributesHandler.applyToInstance(createdObject);
             }
             levelObjects.push(createdObject);
         });
@@ -227,6 +235,8 @@ class TileMapHandler {
         }
         // enemies
         this.displayObjects(this.enemies);
+        // weapons in level (not yet picked up)
+        this.displayObjects(this.weapons);
         // projectiles
         this.displayObjects(this.layers[4]);
     }

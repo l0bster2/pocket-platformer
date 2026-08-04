@@ -249,6 +249,14 @@ class BuildMode {
                 EnemyTypeAttributesHandler.applyToInstance(newEnemy);
                 enemies.push(newEnemy);
             }
+            //weapons
+            else if (this.currentSelectedObject.type === SpritePixelArrays.SPRITE_TYPES.weapons) {
+                WorldDataHandler.levels[this.tileMapHandler.currentLevel].weapons.push({ x: tilePosX, y: tilePosY, type: this.currentSelectedObject.name });
+                const newWeapon = new ObjectTypes.objectToClass[this.currentSelectedObject.name]
+                    (tilePosX, tilePosY, tileMapHandler.tileSize, this.currentSelectedObject.name, this.tileMapHandler, {});
+                WeaponTypeAttributesHandler.applyToInstance(newWeapon);
+                this.tileMapHandler.weapons.push(newWeapon);
+            }
             //objects
             else {
                 if (this.currentSelectedObject.name === ObjectTypes.PATH_POINT) {
@@ -320,6 +328,7 @@ class BuildMode {
         const objectsHoveringOver = allObjectsAtCurrentTile.filter(o =>
             (o.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.object ||
                 o.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.enemies ||
+                o.spriteObject[0].type === SpritePixelArrays.SPRITE_TYPES.weapons ||
                 SpritePixelArrays.sometimesPassableBlocks.includes(o.type)) &&
             o.type !== ObjectTypes.PATH_POINT && !SpritePixelArrays.backgroundSprites.includes(o.type) && !SpritePixelArrays.foregroundSprites.includes(o.type));
         const pathsHoveringOver = allObjectsAtCurrentTile.filter(o => o.type === ObjectTypes.PATH_POINT);
@@ -329,7 +338,8 @@ class BuildMode {
 
         //Objects
         if ((this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.object ||
-            this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.enemies)
+            this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.enemies ||
+            this.currentSelectedObject?.type === SpritePixelArrays.SPRITE_TYPES.weapons)
             && !SpritePixelArrays.backgroundSprites.includes(this.currentSelectedObject?.name)) {
             //Moving platform
             if (SpritePixelArrays.movingPlatformSprites.includes(this.currentSelectedObject?.name)) {
@@ -475,7 +485,7 @@ class BuildMode {
                 }
             });
         });
-        ["levelObjects", "deko", "enemies"].forEach(levelObjectsArr => {
+        ["levelObjects", "deko", "enemies", "weapons"].forEach(levelObjectsArr => {
             loop1:
             for (var i = 0; i < this.tileMapHandler[levelObjectsArr].length; i++) {
                 const levelObject = this.tileMapHandler[levelObjectsArr][i];
@@ -556,6 +566,7 @@ class BuildMode {
                 this.removeFromData("levelObjects", tilePosX, tilePosY);
                 this.removeFromData("deko", tilePosX, tilePosY);
                 this.removeFromData("enemies", tilePosX, tilePosY);
+                this.removeFromData("weapons", tilePosX, tilePosY);
                 LayerHandler.objectLayer && PathBuildHandler.removePathFromData(tilePosX, tilePosY, this.objectsDeletedInOneGo);
             })
         }
