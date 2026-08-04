@@ -1,7 +1,7 @@
 class MachineGun extends GunWeapon {
     constructor(x, y, tileSize, type, tileMapHandler, extraAttributes = {}) {
         super(x, y, tileSize, type, tileMapHandler, extraAttributes);
-        this.bulletLifeSpan = 55;
+        this.bulletLifeSpan = 200;
         this.bulletsAtOnce = 1;
         this.interval = 0.08;
         this.ammo = false;

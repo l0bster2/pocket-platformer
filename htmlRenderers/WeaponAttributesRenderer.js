@@ -2,7 +2,6 @@ class WeaponAttributesRenderer {
 
     static staticConstructor() {
         this.lastSelectedType = null;
-        this.lastSelectedTab = 'general';
     }
 
     static createWeaponOverview() {
@@ -75,49 +74,12 @@ class WeaponAttributesRenderer {
         const temp = WeaponTypeAttributesHandler.createTempInstance(type);
         const category = temp?.getCategory?.() ?? 'gun';
         const displayName = temp?.getDisplayName?.() ?? this.getWeaponDisplayName(type);
-        const attackTabLabel = category === 'gun' ? 'Attack' : 'Melee';
+        const sounds = (typeof SoundHandler !== 'undefined' && SoundHandler.sounds)
+            ? SoundHandler.sounds.filter(s => s.type === 'sound') : [];
+        const currentSound = attributes.pickupSound || 'pickup';
 
         panel.innerHTML = `
-            <div id="weaponTabWrapper" class="marginTop8">
-                <button id="weaponTab_general" class="levelNavigationButton tabButton buttonWithIconAndText"
-                    onclick="WeaponAttributesRenderer.switchTab('general')">General</button>
-                <button id="weaponTab_attack" class="levelNavigationButton tabButton buttonWithIconAndText"
-                    onclick="WeaponAttributesRenderer.switchTab('attack')">${attackTabLabel}</button>
-            </div>
-            <div id="weaponTabContent">
-                <div id="weaponTabContent_general">
-                    ${this.renderGeneralTab(type, attributes, displayName)}
-                </div>
-                <div id="weaponTabContent_attack" style="display:none;">
-                    ${category === 'gun' ? this.renderGunAttributes(type, attributes) : this.renderMeleeAttributes(type, attributes)}
-                </div>
-            </div>
-        `;
-
-        this.switchTab(this.lastSelectedTab || 'general');
-    }
-
-    static switchTab(tab) {
-        this.lastSelectedTab = tab;
-        ['general', 'attack'].forEach(t => {
-            const content = document.getElementById('weaponTabContent_' + t);
-            const button = document.getElementById('weaponTab_' + t);
-            if (content) content.style.display = t === tab ? '' : 'none';
-            if (button) button.classList.toggle('active', t === tab);
-        });
-    }
-
-    static renderGeneralTab(type, attrs, displayName) {
-        const sounds = (typeof SoundHandler !== 'undefined' && SoundHandler.sounds)
-            ? SoundHandler.sounds.filter(s => s.type === 'sound')
-            : [];
-        const currentSound = attrs.pickupSound || 'pickup';
-        return `
             <div class="detailsContent marginTop8">
-                <div class="playerAttributeWrapper marginTop8">
-                    <label class="leftLabel">Name:</label>
-                    <span style="flex:1;">${displayName}</span>
-                </div>
                 <div class="playerAttributeWrapper marginTop8">
                     <label class="leftLabel">Pickup sound:</label>
                     <select class="textInput" style="flex:1;"
@@ -126,6 +88,7 @@ class WeaponAttributesRenderer {
                     </select>
                 </div>
             </div>
+            ${category === 'gun' ? this.renderGunAttributes(type, attributes) : this.renderMeleeAttributes(type, attributes)}
         `;
     }
 
@@ -135,11 +98,9 @@ class WeaponAttributesRenderer {
                 ${this.createSliderInput('bulletLifeSpan', 'Bullet Lifespan (frames)', attrs.bulletLifeSpan, 10, 300, 5, type)}
                 ${this.createSliderInput('bulletsAtOnce', 'Bullets Per Shot', attrs.bulletsAtOnce, 1, 10, 1, type)}
                 ${this.createSliderInput('interval', 'Shoot Interval (s)', attrs.interval, 0.05, 5, 0.05, type)}
-                ${this.createAmmoSection(type, attrs)}
                 ${this.createSliderInput('speed', 'Bullet Speed', attrs.speed, 1, 20, 0.5, type)}
+                ${this.createSliderInput('deceleration', 'Bullet Deceleration', attrs.deceleration ?? 0, 0, 0.1, 0.005, type)}
                 ${this.createSliderInput('randomOffset', 'Random Offset (deg)', attrs.randomOffset, 0, 180, 5, type)}
-                ${this.createCheckboxInput('affectedByGravity', 'Affected by gravity', attrs.affectedByGravity, type)}
-                ${attrs.affectedByGravity ? this.createSliderInput('gravity', 'Gravity', attrs.gravity, 0, 2, 0.05, type) : ''}
                 <div class="playerAttributeWrapper marginTop8">
                     <label class="leftLabel">Directions:</label>
                     <select class="textInput" style="flex:1;"
@@ -149,6 +110,10 @@ class WeaponAttributesRenderer {
                         <option value="8" ${attrs.directionAmount === 8 ? 'selected' : ''}>8 (all)</option>
                     </select>
                 </div>
+                ${this.createCheckboxInput('affectedByGravity', 'Affected by gravity', attrs.affectedByGravity, type)}
+                ${attrs.affectedByGravity ? this.createSliderInput('gravity', 'Gravity', attrs.gravity, 0, 2, 0.05, type) : ''}
+                ${this.createCheckboxInput('collidesWithWalls', 'Collides with walls', attrs.collidesWithWalls !== false, type)}
+                ${this.createAmmoSection(type, attrs)}
             </div>
         `;
     }

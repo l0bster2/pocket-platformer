@@ -321,6 +321,7 @@ class EnemyAttackRenderer {
         if (shootDirectlyAtPlayer) directionMode = 'towardsPlayer';
         else if (shootInPlayerDirection) directionMode = 'playerDirection';
         else if (shootInWalkDirection) directionMode = 'walkDirection';
+        const deceleration = bullet?.deceleration ?? 0;
         const spriteName = bullet?.spriteDescriptiveName ?? null;
         const bulletSprites = SpritePixelArrays.getBulletSprites();
 
@@ -342,6 +343,12 @@ class EnemyAttackRenderer {
                 <input class="playerAttrSlider bulletSpeedSlider" type="range" min="0.5" max="10" step="0.05" value="${speed}" id="bulletSpeed" name="bulletSpeed"
                     oninput="EnemyAttackRenderer.updateSliderValue('bulletSpeed')">
                 <span id="bulletSpeedValue" class="playerAttrSliderValue">${speed}</span>
+            </div>
+            <div class="playerAttributeWrapper marginTop8">
+                <label for="bulletDeceleration" class="bulletSliderLabel">Deceleration:</label>
+                <input class="playerAttrSlider" type="range" min="0" max="0.1" step="0.005" value="${deceleration}" id="bulletDeceleration" name="bulletDeceleration"
+                    oninput="EnemyAttackRenderer.updateSliderValue('bulletDeceleration')">
+                <span id="bulletDecelerationValue" class="playerAttrSliderValue">${deceleration}</span>
             </div>
             <div class="marginTop12">
                 <input type="checkbox" id="bulletAffectedByGravity" name="bulletAffectedByGravity" ${affectedByGravity ? 'checked' : ''}
@@ -475,6 +482,7 @@ class EnemyAttackRenderer {
             collidesWithWalls: elements.bulletCollidesWithWalls.checked,
             angle: this.normalizeDegrees(parseInt(elements.bulletAngle?.value ?? '0', 10)),
             randomAngleOffset: parseInt(elements.bulletRandomAngleOffset.value, 10) || 0,
+            deceleration: parseFloat(elements.bulletDeceleration?.value ?? 0) || 0,
             shootDirectlyAtPlayer: elements.bulletDirectionMode.value === 'towardsPlayer',
             shootInPlayerDirection: elements.bulletDirectionMode.value === 'playerDirection',
             shootInWalkDirection: elements.bulletDirectionMode.value === 'walkDirection',

@@ -40,6 +40,13 @@ class WeaponTypeAttributesHandler {
         tileMapHandler.weapons
             .filter(w => w.type === type)
             .forEach(w => w.setEditableAttributes(attributes));
+        // Also update the weapon if the player is currently holding it
+        const player = tileMapHandler.player;
+        if (player && player.weapons) {
+            player.weapons
+                .filter(w => w.type === type)
+                .forEach(w => w.setEditableAttributes(attributes));
+        }
     }
 
     static applyToInstance(weapon) {

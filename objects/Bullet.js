@@ -31,6 +31,7 @@ class Bullet extends InteractiveLevelObject {
         this.collidesWithWalls = extraAttributes.collidesWithWalls ?? true;
         this.affectedByGravity = extraAttributes.affectedByGravity ?? false;
         this.gravity = extraAttributes.gravity ?? 0.2;
+        this.deceleration = extraAttributes.deceleration ?? 0;
 
         // Allow overriding the default bullet sprite with any sprite by its descriptiveName.
         const spriteDescriptiveName = extraAttributes.spriteDescriptiveName;
@@ -44,8 +45,11 @@ class Bullet extends InteractiveLevelObject {
 
         // Seed the live velocity from the initial angle + speed. Gravity later bends this vector.
         const radians = MathHelpers.getRadians(this.angle);
-        this.xspeed = Math.cos(radians) * this.speed;
-        this.yspeed = Math.sin(radians) * this.speed;
+        this.firedX = Math.cos(radians) * this.speed;
+        this.firedY = Math.sin(radians) * this.speed;
+        this.gravityY = 0; // gravity accumulates separately so deceleration never fights it
+        this.xspeed = this.firedX;
+        this.yspeed = this.firedY;
     }
 
     /**
@@ -60,6 +64,10 @@ class Bullet extends InteractiveLevelObject {
     draw(spriteCanvas) {
         if (Game.playMode === Game.PLAY_MODE) {
             this.updatePosition();
+            if (this.deceleration && Math.hypot(this.firedX, this.firedY) < 0.05) {
+                this.deleteObjectFromLevel(this.tileMapHandler, false);
+                return;
+            }
             if (this.lifeSpan !== undefined && --this.lifeSpan <= 0) {
                 this.deleteObjectFromLevel(this.tileMapHandler, false);
                 return;
@@ -80,8 +88,14 @@ class Bullet extends InteractiveLevelObject {
 
     updatePosition() {
         if (this.affectedByGravity) {
-            this.yspeed += this.gravity;
+            this.gravityY += this.gravity;
         }
+        if (this.deceleration) {
+            this.firedX *= (1 - this.deceleration);
+            this.firedY *= (1 - this.deceleration);
+        }
+        this.xspeed = this.firedX;
+        this.yspeed = this.firedY + this.gravityY;
         this.x += this.xspeed;
         this.y += this.yspeed;
     }

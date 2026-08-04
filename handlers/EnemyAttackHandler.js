@@ -195,6 +195,7 @@ class EnemyAttackHandler {
             affectedByGravity: bulletConfig.affectedByGravity ?? false,
             gravity: bulletConfig.gravity ?? 0.2,
             spriteDescriptiveName: bulletConfig.spriteDescriptiveName,
+            deceleration: bulletConfig.deceleration ?? 0,
         });
         tileMapHandler.levelObjects.push(bullet);
     }

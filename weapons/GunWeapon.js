@@ -28,7 +28,7 @@ class GunWeapon extends Weapon {
         const ts = player.tileSize;
         const { dx, dy } = this._getAimDirection(player);
         const spawnTileX = (player.x + dx * ts) / ts;
-        const spawnTileY = (player.y + dy * ts) / ts;
+        const spawnTileY = (player.y + player.height / 2 - ts / 2 + dy * ts) / ts;
         for (let i = 0; i < this.bulletsAtOnce; i++) {
             const spread = this.bulletsAtOnce > 1
                 ? (i / (this.bulletsAtOnce - 1) - 0.5) * this.randomOffset
@@ -46,9 +46,10 @@ class GunWeapon extends Weapon {
                     angle,
                     affectedByGravity: this.affectedByGravity,
                     gravity: this.gravity,
-                    collidesWithWalls: true,
+                    collidesWithWalls: this.collidesWithWalls !== false,
                     spriteDescriptiveName: this.bulletSprite,
                     lifeSpan: this.bulletLifeSpan,
+                    deceleration: this.deceleration ?? 0,
                 }
             );
             this.tileMapHandler.levelObjects.push(bullet);
@@ -81,6 +82,8 @@ class GunWeapon extends Weapon {
             directionAmount: this.directionAmount,
             bulletSprite: this.bulletSprite,
             speed: this.speed,
+            deceleration: this.deceleration ?? 0,
+            collidesWithWalls: this.collidesWithWalls !== false,
             pickupSound: this.pickupSound,
         };
     }
@@ -97,6 +100,8 @@ class GunWeapon extends Weapon {
         if (attrs.directionAmount !== undefined) this.directionAmount = attrs.directionAmount;
         if (attrs.bulletSprite !== undefined) this.bulletSprite = attrs.bulletSprite;
         if (attrs.speed !== undefined) this.speed = attrs.speed;
+        if (attrs.deceleration !== undefined) this.deceleration = attrs.deceleration;
+        if ('collidesWithWalls' in attrs) this.collidesWithWalls = attrs.collidesWithWalls;
         if (attrs.pickupSound !== undefined) this.pickupSound = attrs.pickupSound;
         // Reset runtime state so new ammo settings take effect
         this.intervalTimer = undefined;

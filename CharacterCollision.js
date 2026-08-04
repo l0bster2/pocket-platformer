@@ -27,6 +27,7 @@ class CharacterCollision {
             const alreadyHeld = player.weapons.some(w => w.type === weapon.type);
             if (alreadyHeld) continue;
             player.weapons.push(weapon);
+            player.activeWeaponIndex = player.weapons.length - 1;
             this.tileMapHandler.weapons.splice(i, 1);
             const soundKey = weapon.pickupSound || 'pickup';
             if (SoundHandler[soundKey]) SoundHandler[soundKey].stopAndPlay();

@@ -18,14 +18,14 @@ class Weapon extends LevelObject {
         const { dx, dy } = this._getAimDirection(player);
         const ts = player.tileSize;
         const x = Math.round(player.x + dx * ts);
-        const y = Math.round(player.y + dy * ts);
+        const y = Math.round(player.y + player.height / 2 - ts / 2 + dy * ts);
         const facingLeft = player.facingDirection === AnimationHelper.facingDirections.left;
         const mirror = dx < 0 || (dx === 0 && facingLeft);
         if (mirror) {
             Display.drawImageFlippedX(
                 player.spriteCanvas,
                 this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
-                x, y, ts, ts, Math.atan2(-dy, -dx)
+                x, y, ts, ts, Math.atan2(dy, -dx)
             );
         } else {
             Display.drawImageWithRotation(
