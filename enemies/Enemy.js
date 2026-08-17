@@ -70,48 +70,21 @@ class Enemy extends InteractiveLevelObject {
         this.walkDirection = this.walkDirections.left;
         // Movement behaviour decides how walkDirection is chosen each frame (see
         // EnemyMovementHandler.updateWalkDirection).
-        this.movementBehaviours = {
-            startMovingLeft: "startMovingLeft",
-            startMovingRight: "startMovingRight",
-            towardsPlayer: "towardsPlayer",
-            patrol: "patrol",
-            random: "random",
-            awayFromPlayer: "awayFromPlayer",
-            standStill: "standStill",
-        }
+        this.movementBehaviours = EnemyConfigurations.movementBehaviours;
         this.movementBehaviour = this.movementBehaviours.startMovingLeft;
         this.patrolDuration = 2.5; // seconds before a patrolling enemy reverses direction
         this.randomDuration = 3;   // seconds before a random-moving enemy picks a new direction
         // What the enemy does when one foot is over a gap (an empty tile) and the other isn't.
-        this.gapBehaviours = {
-            changeDirection: "changeDirection",
-            jump: "jump",
-            continueWalking: "continueWalking",
-        }
+        this.gapBehaviours = EnemyConfigurations.gapBehaviours;
         this.gapBehaviour = this.gapBehaviours.changeDirection;
         // What the enemy does when it walks into a wall.
-        this.wallBehaviours = {
-            changeDirection: "changeDirection",
-            continueWalking: "continueWalking",
-        }
+        this.wallBehaviours = EnemyConfigurations.wallBehaviours;
         this.wallBehaviour = this.wallBehaviours.changeDirection;
         // Flying enemies ignore gravity, gaps and jumping; they hover and move freely.
         this.flying = false;
         // Flying movement behaviour decides how a flying enemy steers each frame
         // (see EnemyFlyingHandler.updateFlying).
-        this.flyingBehaviours = {
-            moveHorizontally: "moveHorizontally",
-            moveVertically: "moveVertically",
-            followPlayer: "followPlayer",
-            followPlayerPathfinding: "followPlayerPathfinding",
-            alignPlayerHorizontally: "alignPlayerHorizontally",
-            alignPlayerVertically: "alignPlayerVertically",
-            horizontalPatrol: "horizontalPatrol",
-            verticalPatrol: "verticalPatrol",
-            diagonal: "diagonal",
-            standStill: "standStill",
-            random: "random",
-        }
+        this.flyingBehaviours = EnemyConfigurations.flyingBehaviours;
         this.flyingBehaviour = this.flyingBehaviours.moveHorizontally;
         this.flyingHorizontalDuration = 2; // seconds before a left/right flyer reverses
         this.flyingVerticalDuration = 2;   // seconds before an up/down flyer reverses
@@ -119,14 +92,7 @@ class Enemy extends InteractiveLevelObject {
         // Whether the flying enemy collides with tiles/walls. Ghost-type flyers set this false
         // to phase through walls (they are still clamped to the level bounds).
         this.collidesWithWalls = true;
-        this.interativeObjects = [
-            ObjectTypes.SPIKE,
-            ObjectTypes.STOMPER,
-            ObjectTypes.TRAMPOLINE,
-            ObjectTypes.PORTAL,
-            ObjectTypes.MOVING_PLATFORM,
-            ObjectTypes.WATER
-        ];
+        this.interativeObjects = EnemyConfigurations.interativeObjects;
         
         // jumping
         this.jumpIntervalFrames = 120; // Jump every 2 seconds at 60 FPS

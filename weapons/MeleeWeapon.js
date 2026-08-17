@@ -55,19 +55,21 @@ class MeleeWeapon extends Weapon {
         const ts = player.tileSize;
         const x = Math.round(player.x + player.width / 2 - ts / 2);
         const y = Math.round(player.y + player.height / 2 - ts * 0.85);
-        if (facingRight) {
-            Display.drawImageWithRotation(
-                player.spriteCanvas,
-                this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
-                x, y, ts, ts, Math.PI / 2
-            );
-        } else {
-            Display.drawImageFlippedX(
-                player.spriteCanvas,
-                this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
-                x, y, ts, ts, Math.PI / 2
-            );
-        }
+        this.checkFrameAndDraw((canvasXSpritePos) => {
+            if (facingRight) {
+                Display.drawImageWithRotation(
+                    player.spriteCanvas,
+                    canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                    x, y, ts, ts, Math.PI / 2
+                );
+            } else {
+                Display.drawImageFlippedX(
+                    player.spriteCanvas,
+                    canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                    x, y, ts, ts, Math.PI / 2
+                );
+            }
+        });
     }
 
     _drawPiercing(player) {
@@ -81,19 +83,21 @@ class MeleeWeapon extends Weapon {
         const cy = player.y + player.height / 2;
         const wx = Math.round(cx + dx * reach * extend - ts / 2);
         const wy = Math.round(cy + dy * reach * extend - ts / 2);
-        if (dx < 0) {
-            Display.drawImageFlippedX(
-                player.spriteCanvas,
-                this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
-                wx, wy, ts, ts, Math.atan2(dy, -dx)
-            );
-        } else {
-            Display.drawImageWithRotation(
-                player.spriteCanvas,
-                this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
-                wx, wy, ts, ts, Math.atan2(dy, dx)
-            );
-        }
+        this.checkFrameAndDraw((canvasXSpritePos) => {
+            if (dx < 0) {
+                Display.drawImageFlippedX(
+                    player.spriteCanvas,
+                    canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                    wx, wy, ts, ts, Math.atan2(dy, -dx)
+                );
+            } else {
+                Display.drawImageWithRotation(
+                    player.spriteCanvas,
+                    canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                    wx, wy, ts, ts, Math.atan2(dy, dx)
+                );
+            }
+        });
     }
 
     _drawSlicing(player) {
@@ -107,12 +111,14 @@ class MeleeWeapon extends Weapon {
         this._drawSliceArc(cx, cy, reach, startAngle, currentAngle);
         const wx = Math.round(cx + Math.cos(currentAngle) * reach);
         const wy = Math.round(cy + Math.sin(currentAngle) * reach);
-        Display.drawImageWithRotation(
-            player.spriteCanvas,
-            this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
-            wx - ts / 2, wy - ts / 2, ts, ts,
-            currentAngle
-        );
+        this.checkFrameAndDraw((canvasXSpritePos) => {
+            Display.drawImageWithRotation(
+                player.spriteCanvas,
+                canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                wx - ts / 2, wy - ts / 2, ts, ts,
+                currentAngle
+            );
+        });
     }
 
     // White pixel trail along the swept arc, brightest at the tip

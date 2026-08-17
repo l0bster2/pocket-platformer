@@ -21,19 +21,21 @@ class Weapon extends LevelObject {
         const y = Math.round(player.y + player.height / 2 - ts / 2 + dy * ts);
         const facingLeft = player.facingDirection === AnimationHelper.facingDirections.left;
         const mirror = dx < 0 || (dx === 0 && facingLeft);
-        if (mirror) {
-            Display.drawImageFlippedX(
-                player.spriteCanvas,
-                this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
-                x, y, ts, ts, Math.atan2(dy, -dx)
-            );
-        } else {
-            Display.drawImageWithRotation(
-                player.spriteCanvas,
-                this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
-                x, y, ts, ts, Math.atan2(dy, dx)
-            );
-        }
+        this.checkFrameAndDraw((canvasXSpritePos) => {
+            if (mirror) {
+                Display.drawImageFlippedX(
+                    player.spriteCanvas,
+                    canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                    x, y, ts, ts, Math.atan2(dy, -dx)
+                );
+            } else {
+                Display.drawImageWithRotation(
+                    player.spriteCanvas,
+                    canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                    x, y, ts, ts, Math.atan2(dy, dx)
+                );
+            }
+        });
     }
 
     // Returns a unit direction vector based on player facing + controller + directionAmount.
