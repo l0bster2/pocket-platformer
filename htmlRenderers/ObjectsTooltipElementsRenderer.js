@@ -323,7 +323,39 @@ class ObjectsTooltipElementsRenderer {
         const checkboxWrapper = this.createCheckbox(changeableAttribute,
             "Collectibles needed for opening",
             currentObject);
-        finishFlagWrapper.append(firstButtonWrapper, secondButtonWrapper, checkboxWrapper);
+
+        const enemiesAttribute = currentObject.spriteObject[0].changeableAttributes[1];
+        const enemiesCheckboxWrapper = this.createCheckbox(enemiesAttribute,
+            "Defeating enemies needed for opening",
+            currentObject);
+
+        const enemiesCountWrapper = document.createElement("div");
+        enemiesCountWrapper.className = "subSection";
+        enemiesCountWrapper.style.display = currentObject.enemiesNeeded ? "block" : "none";
+        const enemiesCountLabel = document.createElement("label");
+        enemiesCountLabel.className = "checkBoxText";
+        enemiesCountLabel.innerHTML = "Enemies to defeat:";
+        const enemiesCountInput = document.createElement("input");
+        enemiesCountInput.type = "number";
+        enemiesCountInput.min = "1";
+        enemiesCountInput.className = "textInput";
+        enemiesCountInput.style.marginLeft = "8px";
+        enemiesCountInput.value = currentObject.enemiesToDefeat || 1;
+        enemiesCountInput.onchange = (event) => {
+            currentObject.addChangeableAttribute("enemiesToDefeat", parseInt(event.target.value) || 1);
+        };
+        enemiesCountWrapper.append(enemiesCountLabel, enemiesCountInput);
+
+        const enemiesCheckbox = enemiesCheckboxWrapper.querySelector("input");
+        enemiesCheckbox.addEventListener("change", (event) => {
+            enemiesCountWrapper.style.display = event.target.checked ? "block" : "none";
+            if (event.target.checked) {
+                currentObject.addChangeableAttribute("enemiesToDefeat", parseInt(enemiesCountInput.value) || 1);
+            }
+        });
+
+        finishFlagWrapper.append(firstButtonWrapper, secondButtonWrapper, checkboxWrapper,
+            enemiesCheckboxWrapper, enemiesCountWrapper);
         const transitionFallbackFn = (value) => {
             const customValue = value === "Custom";
             document.getElementById("transitionAttributes").style.display = customValue ? "block" : "none";

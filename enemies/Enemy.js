@@ -372,6 +372,19 @@ class Enemy extends InteractiveLevelObject {
         }
         this.dead = true;
         this.deleteEnemyFromLevel(tileMapHandler, false);
+        this.checkIfRequiredEnemiesDefeated();
+    }
+
+    checkIfRequiredEnemiesDefeated() {
+        const finishFlags = tileMapHandler.filterObjectsByTypes(ObjectTypes.FINISH_FLAG);
+        const initialEnemyCount = WorldDataHandler.levels[tileMapHandler.currentLevel].enemies.length;
+        const defeatedEnemies = initialEnemyCount - tileMapHandler.enemies.length;
+        const justReachedRequirement = finishFlags.some(finishFlag =>
+            finishFlag.enemiesNeeded && defeatedEnemies === (parseInt(finishFlag.enemiesToDefeat) || 0)
+        );
+        if (justReachedRequirement) {
+            SoundHandler.allCoinsCollected.stopAndPlay();
+        }
     }
 
     draw(spriteCanvas) {

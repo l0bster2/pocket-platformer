@@ -53,6 +53,8 @@ class SpritePixelArrays {
       movementDirection: "movementDirection",
       rotationSpeed: "rotationSpeed",
       collectiblesNeeded: "collectiblesNeeded",
+      enemiesNeeded: "enemiesNeeded",
+      enemiesToDefeat: "enemiesToDefeat",
       laserDuration: "laserDuration",
       pauseDuration: "pauseDuration",
       collidesWithWalls: "collidesWithWalls",
@@ -449,6 +451,8 @@ class SpritePixelArrays {
       descriptiveName: "Finish flag",
       changeableAttributes: [
         { name: this.changeableAttributeTypes.collectiblesNeeded, defaultValue: false },
+        { name: this.changeableAttributeTypes.enemiesNeeded, defaultValue: false },
+        { name: this.changeableAttributeTypes.enemiesToDefeat, defaultValue: 1 },
       ],
       description: "The goal of a level. If you touch it, by default you continue to the next level. If you want to specify a custom exit to a different level, click on a set finish flag again. <br/>" +
         "<span class='textAsLink' onclick=\"DrawSectionHandler.changeSelectedSprite({ target: { value:  'Finish flag closed'} }, true)\">Closed finish flag sprite</span>",
