@@ -332,9 +332,9 @@ function createHtmlDocoumentWithCanvas() {
         </div>
         <div id="mobileButtonControls">
           <div id="mobileButtonCross">
-            <img draggable='false' src="${Base64Images.mobileControlA}" id="switchWeaponMobileControls"/>
+            <img draggable='false' src="${Base64Images.mobileControlY}" id="switchWeaponMobileControls"/>
             <img draggable='false' src="${Base64Images.mobileControlB}" id="alternativeMobileControls"/>
-            <img draggable='false' src="${Base64Images.mobileControlB}" id="attackMobileControls"/>
+            <img draggable='false' src="${Base64Images.mobileControlX}" id="attackMobileControls"/>
             <img draggable='false' src="${Base64Images.mobileControlA}" id="jumpMobileControls"/>
           </div>
         </div>`

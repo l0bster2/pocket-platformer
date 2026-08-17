@@ -4,8 +4,11 @@ class Enemy16 extends Enemy {
         const hitBoxOffset = -tileSize / 6;
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
         this.walkDirection = this.walkDirections.left;
-        this.canBeStomped = true;
-        this.gapBehaviour = this.gapBehaviours.continueWalking;
+        this.canBeStomped = false;
+        // Flying, stationary
+        this.flying = true;
+        EnemyFlyingHandler.resetFlyingState(this);
+        this.flyingBehaviour = 'standStill';
         this.deathAnimation = 'upwardsAndRotate';
         this.shootSound = 'gun4';
     }

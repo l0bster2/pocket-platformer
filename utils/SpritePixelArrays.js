@@ -3899,14 +3899,14 @@ class SpritePixelArrays {
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite: [
-          ["00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA"]
+          ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"],
+          ["transp", "transp", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "transp", "transp"],
+          ["transp", "FFFFFF", "FF1C1C", "FFFFFF", "FFFFFF", "FF1C1C", "FFFFFF", "transp"],
+          ["FFFFFF", "FF1C1C", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "FF1C1C", "FFFFFF"],
+          ["FFFFFF", "FF1C1C", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "FF1C1C", "FFFFFF"],
+          ["transp", "FFFFFF", "FF1C1C", "FFFFFF", "FFFFFF", "FF1C1C", "FFFFFF", "transp"],
+          ["transp", "transp", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "transp", "transp"],
+          ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"]
         ]
       }]
     };
@@ -3916,25 +3916,14 @@ class SpritePixelArrays {
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite: [
-          ["00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA"]
-        ]
-      }, {
-        sprite: [
-          ["00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA"],
-          ["00AAAA", "77FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "77FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "77FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "77FFFF", "00AAAA"],
-          ["00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA"]
+          ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"],
+          ["transp", "transp", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "transp", "transp"],
+          ["transp", "FFFFFF", "FF1C1C", "FFFFFF", "FFFFFF", "FF1C1C", "FFFFFF", "transp"],
+          ["FFFFFF", "FF1C1C", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "FF1C1C", "FFFFFF"],
+          ["FFFFFF", "FF1C1C", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "FF1C1C", "FFFFFF"],
+          ["transp", "FFFFFF", "FF1C1C", "FFFFFF", "FFFFFF", "FF1C1C", "FFFFFF", "transp"],
+          ["transp", "transp", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "transp", "transp"],
+          ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"]
         ]
       }]
     };
@@ -3944,14 +3933,14 @@ class SpritePixelArrays {
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
         sprite: [
-          ["00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "55FFFF", "00AAAA"],
-          ["00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA", "00AAAA"]
+          ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"],
+          ["transp", "transp", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "transp", "transp"],
+          ["transp", "FFFFFF", "FF1C1C", "FFFFFF", "FFFFFF", "FF1C1C", "FFFFFF", "transp"],
+          ["FFFFFF", "FF1C1C", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "FF1C1C", "FFFFFF"],
+          ["FFFFFF", "FF1C1C", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "FF1C1C", "FFFFFF"],
+          ["transp", "FFFFFF", "FF1C1C", "FFFFFF", "FFFFFF", "FF1C1C", "FFFFFF", "transp"],
+          ["transp", "transp", "FFFFFF", "FF1C1C", "FF1C1C", "FFFFFF", "transp", "transp"],
+          ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"]
         ]
       }]
     };
