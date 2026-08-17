@@ -269,7 +269,6 @@ class ObjectTypes {
   static get WEAPON_UZI()         { return 'weapon_uzi'; }
   static get WEAPON_MACHINE_GUN() { return 'weapon_machine_gun'; }
   static get WEAPON_BOW()         { return 'weapon_bow'; }
-  static get WEAPON_SNIPER()      { return 'weapon_sniper'; }
   static get WEAPON_SPEAR()       { return 'weapon_spear'; }
   static get WEAPON_SWORD()       { return 'weapon_sword'; }
 
@@ -350,7 +349,6 @@ class ObjectTypes {
       [this.WEAPON_UZI]:         Uzi,
       [this.WEAPON_MACHINE_GUN]: MachineGun,
       [this.WEAPON_BOW]:         Bow,
-      [this.WEAPON_SNIPER]:      Sniper,
       [this.WEAPON_SPEAR]:       Spear,
       [this.WEAPON_SWORD]:       Sword,
     };

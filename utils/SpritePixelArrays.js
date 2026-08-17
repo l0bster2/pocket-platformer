@@ -4119,14 +4119,14 @@ class SpritePixelArrays {
       type: this.SPRITE_TYPES.weapons,
       animation: [{
         sprite: [
-          ['a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d'],
-          ['a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d'],
-          ['a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d'],
-          ['a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d'],
-          ['a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d'],
-          ['a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d'],
-          ['a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d'],
-          ['a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d', 'a0522d'],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6"],
+          ["8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "C6C6C6", "8E8E8E", "C6C6C6", "8E8E8E"],
+          ["FF8E1C", "FF8E1C", "FFFFFF", "transp", "C6C6C6", "8E8E8E", "C6C6C6", "8E8E8E"],
+          ["E37100", "E37100", "E37100", "transp", "transp", "transp", "transp", "transp"],
+          ["E37100", "E37100", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
         ]
       }]
     };
@@ -4178,23 +4178,6 @@ class SpritePixelArrays {
           ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
           ["transp", "C6C6C6", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
           ["transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"]
-        ]
-      }]
-    };
-
-    this.WEAPON_SNIPER_SPRITE = {
-      name: ObjectTypes.WEAPON_SNIPER, descriptiveName: 'Sniper',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ['4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380'],
-          ['4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380'],
-          ['4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380'],
-          ['4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380'],
-          ['4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380'],
-          ['4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380'],
-          ['4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380'],
-          ['4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380', '4a6380'],
         ]
       }]
     };

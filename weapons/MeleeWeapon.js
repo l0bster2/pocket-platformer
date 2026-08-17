@@ -32,7 +32,14 @@ class MeleeWeapon extends Weapon {
         return             { startAngle: -Math.PI / 2, sweepAngle: -Math.PI };     // left:  top → left → bottom
     }
 
-    // Only render while actively attacking
+    // Draw idle weapon behind player (before player sprite); only when not attacking
+    drawBehindPlayer(player) {
+        this._ensureRuntimeState();
+        if (this.attackTimer > 0 && this.attackDir) return;
+        this._drawIdle(player);
+    }
+
+    // Only render active attack in front of player
     drawOnPlayer(player) {
         this._ensureRuntimeState();
         if (this.attackTimer <= 0 || !this.attackDir) return;
@@ -40,6 +47,26 @@ class MeleeWeapon extends Weapon {
             this._drawPiercing(player);
         } else {
             this._drawSlicing(player);
+        }
+    }
+
+    _drawIdle(player) {
+        const facingRight = player.facingDirection === AnimationHelper.facingDirections.right;
+        const ts = player.tileSize;
+        const x = Math.round(player.x + player.width / 2 - ts / 2);
+        const y = Math.round(player.y + player.height / 2 - ts * 0.85);
+        if (facingRight) {
+            Display.drawImageWithRotation(
+                player.spriteCanvas,
+                this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                x, y, ts, ts, Math.PI / 2
+            );
+        } else {
+            Display.drawImageFlippedX(
+                player.spriteCanvas,
+                this.canvasXSpritePos, this.canvasYSpritePos, ts, ts,
+                x, y, ts, ts, Math.PI / 2
+            );
         }
     }
 
@@ -77,6 +104,7 @@ class MeleeWeapon extends Weapon {
         const reach = this.reachTiles * ts;
         const cx = player.x + player.width / 2;
         const cy = player.y + player.height / 2;
+        this._drawSliceArc(cx, cy, reach, startAngle, currentAngle);
         const wx = Math.round(cx + Math.cos(currentAngle) * reach);
         const wy = Math.round(cy + Math.sin(currentAngle) * reach);
         Display.drawImageWithRotation(
@@ -85,6 +113,20 @@ class MeleeWeapon extends Weapon {
             wx - ts / 2, wy - ts / 2, ts, ts,
             currentAngle
         );
+    }
+
+    // White pixel trail along the swept arc, brightest at the tip
+    _drawSliceArc(cx, cy, reach, startAngle, currentAngle) {
+        const steps = 8;
+        const tipSize = Math.max(3, reach / 5);
+        for (let i = 0; i <= steps; i++) {
+            const t = i / steps;
+            const angle = startAngle + t * (currentAngle - startAngle);
+            const px = cx + Math.cos(angle) * reach;
+            const py = cy + Math.sin(angle) * reach;
+            const size = tipSize * (0.2 + 0.8 * t);
+            Display.drawRectangleWithAlpha(px - size / 2, py - size / 2, size, size, 'ffffff', Display.ctx, 0.1 + 0.9 * t);
+        }
     }
 
     tick(player) {
@@ -103,6 +145,7 @@ class MeleeWeapon extends Weapon {
         this.attackFacingRight = player.facingDirection === AnimationHelper.facingDirections.right;
         this.hitEnemies = new Set();
         this.attackTimer = this.attackDuration;
+        if (this.shootSound) SoundHandler[this.shootSound].stopAndPlay();
         // Cooldown covers both the animation and the recovery pause
         this.cooldownTimer = this.attackDuration + Math.round(this.interval * 60);
     }

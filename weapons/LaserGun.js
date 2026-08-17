@@ -13,6 +13,7 @@ class LaserGun extends GunWeapon {
         this.bulletSprite = 'Bullet 2';
         this.speed = 7;
         this.collidesWithWalls = false;
+        this.interactsWithSwitches = true;
     }
     getColor() { return '00e5ff'; }
     getDisplayName() { return 'Laser Gun'; }

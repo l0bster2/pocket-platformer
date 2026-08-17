@@ -7,6 +7,7 @@ class Enemy18 extends Enemy {
         this.canBeStomped = true;
         this.gapBehaviour = this.gapBehaviours.continueWalking;
         this.deathAnimation = 'upwardsAndRotate';
+        this.shootSound = 'gun4';
     }
 
 }

@@ -13,6 +13,7 @@ class Enemy2 extends Enemy {
         this.canBeStomped = false;
         // Always active (base defaults: alwaysActive / neverInactive).
         this.deathAnimation = 'upwardsAndRotate';
+        this.shootSound = 'gun4';
     }
 
 }

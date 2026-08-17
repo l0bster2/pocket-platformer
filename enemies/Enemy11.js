@@ -12,6 +12,7 @@ class Enemy11 extends Enemy {
         this.stunDuration = 1;
         this.lives = 2;
         // Simple left/right patrol; always turns at gaps and walls.
+        this.shootSound = 'gun4';
         this.movementBehaviour = this.movementBehaviours.startMovingLeft;
         this.gapBehaviour = this.gapBehaviours.changeDirection;
         this.wallBehaviour = this.wallBehaviours.changeDirection;

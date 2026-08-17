@@ -8,5 +8,6 @@ class Enemy7 extends Enemy6 {
         super(x, y, tileSize, type, tilemapHandler, extraAttributes);
         this.flyingBehaviour = this.flyingBehaviours.followPlayerPathfinding;
         EnemyFlyingHandler.resetFlyingState(this);
+        this.shootSound = 'gun4';
     }
 }

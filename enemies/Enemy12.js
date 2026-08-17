@@ -22,6 +22,7 @@ class Enemy12 extends Enemy {
         this.currentMaxSpeed = 3.2;
         this.air_acceleration = 0.17;
         this.air_friction = 0.97;
+        this.shootSound = 'gun4';
         // Fires three bullets straight up with heavy random spread, then reloads.
         this.attackPhases = [{
             id: this.makeid(5),

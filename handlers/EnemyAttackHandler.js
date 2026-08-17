@@ -149,6 +149,7 @@ class EnemyAttackHandler {
     }
 
     static fireVolley(enemy, phase) {
+        SoundHandler[enemy.shootSound || 'gun2'].stopAndPlay();
         phase.bullets.forEach(bulletConfig => this.spawnBullet(enemy, bulletConfig));
     }
 

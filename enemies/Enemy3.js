@@ -12,6 +12,7 @@ class Enemy3 extends Enemy {
         // Hops in place from time to time.
         this.jumpIntervalEnabled = true;
         this.jumpInterval = 2;
+        this.shootSound = 'gun4';
     }
 
 }

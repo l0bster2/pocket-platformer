@@ -146,8 +146,10 @@ class Enemy extends InteractiveLevelObject {
         // to true; specific enemy types (e.g. the ghost) opt out in their own constructor.
         this.killedBySpikes = true;
         this.killedByBullets = true;
-        // How the enemy looks when it dies (gameplay logic applied separately when value is used).
         this.deathAnimation = 'none';
+        this.hitSound = 'enemyHit';
+        this.deathSound = 'enemyDead';
+        this.shootSound = null;
         // Attack configuration: shooting is split into "phases", each with its own bullets, timing
         // and ammo. There is always at least one phase. Edited via the enemy editor's Attack tab.
         this.attackPhases = [{
@@ -357,7 +359,7 @@ class Enemy extends InteractiveLevelObject {
     }
 
     death() {
-        SoundHandler.enemyDead.stopAndPlay();
+        if (this.deathSound) SoundHandler[this.deathSound].stopAndPlay();
 
         if (this.dead) {
             return;
@@ -533,6 +535,9 @@ class Enemy extends InteractiveLevelObject {
             activationConfig: this.activationConfig,
             inactivationConfig: this.inactivationConfig,
             deathAnimation: this.deathAnimation,
+            hitSound: this.hitSound,
+            deathSound: this.deathSound,
+            shootSound: this.shootSound,
         };
     }
 
@@ -591,6 +596,9 @@ class Enemy extends InteractiveLevelObject {
         if (attributes.activationConfig !== undefined) this.activationConfig = attributes.activationConfig;
         if (attributes.inactivationConfig !== undefined) this.inactivationConfig = attributes.inactivationConfig;
         if (attributes.deathAnimation !== undefined) this.deathAnimation = attributes.deathAnimation;
+        if (attributes.hitSound !== undefined) this.hitSound = attributes.hitSound;
+        if (attributes.deathSound !== undefined) this.deathSound = attributes.deathSound;
+        if (attributes.shootSound !== undefined) this.shootSound = attributes.shootSound;
     }
 
 }

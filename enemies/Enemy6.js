@@ -9,6 +9,7 @@ class Enemy6 extends Enemy {
         this.canBeStomped = true;
         this.flyingBehaviour = this.flyingBehaviours.moveHorizontally;
         EnemyFlyingHandler.resetFlyingState(this);
+        this.shootSound = 'gun4';
     }
 
 }

@@ -18,7 +18,13 @@ class WeaponHandler {
 
     static drawActiveWeapon(player) {
         const weapon = player.activeWeapon;
-        if (!weapon || player.death) return;
+        if (!weapon || player.death || player.invisible) return;
         weapon.drawOnPlayer(player);
+    }
+
+    static drawWeaponBehindPlayer(player) {
+        const weapon = player.activeWeapon;
+        if (!weapon || player.death || player.invisible) return;
+        weapon.drawBehindPlayer(player);
     }
 }

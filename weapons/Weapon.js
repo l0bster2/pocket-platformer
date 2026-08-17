@@ -61,4 +61,5 @@ class Weapon extends LevelObject {
 
     tick(player) {}
     attack(player) {}
+    drawBehindPlayer(player) {}
 }

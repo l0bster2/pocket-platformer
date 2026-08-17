@@ -10,6 +10,7 @@ class Enemy10 extends Enemy6 {
         super(x, y, tileSize, type, tilemapHandler, extraAttributes);
         // Hover in place instead of drifting so the spread pattern stays centred.
         this.flyingBehaviour = this.flyingBehaviours.standStill;
+        this.shootSound = 'gun4';
         EnemyFlyingHandler.resetFlyingState(this);
 
         // Advance to the next phase after each single interval (volley).

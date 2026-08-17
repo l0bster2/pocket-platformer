@@ -16,6 +16,7 @@ class Enemy5 extends Enemy {
         this.jumpIntervalEnabled = true;
         this.jumpInterval = 2;
         EnemyJumpHandler.applyJumpLevel(this, 1);
+        this.shootSound = 'gun4';
         // Default attack: lob a gravity-affected bullet down-left (244°) with a slight random
         // spread, three shots then a short reload.
         this.attackPhases = [{

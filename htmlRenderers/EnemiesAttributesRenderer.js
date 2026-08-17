@@ -178,6 +178,12 @@ class EnemiesAttributesRenderer {
                                 ${this.createCheckboxInput('killedBySpikes', 'Killed by spikes', attributes.killedBySpikes, type)}
                                 ${this.createCheckboxInput('killedByBullets', "Can be killed by player's bullets", attributes.killedByBullets, type)}
                                 ${this.createDeathAnimationSection(attributes, type)}
+                                <details class="marginTop8">
+                                    <summary class="labelText" style="cursor:pointer;">Sounds</summary>
+                                    ${this.createSoundDropdown('hitSound', 'Hit sound', attributes.hitSound, type)}
+                                    ${this.createSoundDropdown('deathSound', 'Death sound', attributes.deathSound, type)}
+                                    ${this.createSoundDropdown('shootSound', 'Shoot sound', attributes.shootSound, type)}
+                                </details>
                             </div>
                         </div>
                     </div>
@@ -725,6 +731,22 @@ class EnemiesAttributesRenderer {
                     onchange="EnemiesAttributesRenderer.updateDeathAnimation('${type}', this.value)">
                     <option value="none" ${deathAnim === 'none' ? 'selected' : ''}>None</option>
                     <option value="upwardsAndRotate" ${deathAnim === 'upwardsAndRotate' ? 'selected' : ''}>Upwards &amp; Rotate</option>
+                </select>
+            </div>
+        `;
+    }
+
+    static createSoundDropdown(id, label, value, type) {
+        const sounds = (typeof SoundHandler !== 'undefined' && SoundHandler.sounds)
+            ? SoundHandler.sounds.filter(s => s.type === 'sound') : [];
+        const current = value || '';
+        return `
+            <div class="marginTop8">
+                <label class="labelText">${label}:</label>
+                <select class="textInput" style="width: 100%; margin-top: 4px;"
+                    onchange="EnemyTypeAttributesHandler.setAttribute('${type}', '${id}', this.value || null)">
+                    <option value="" ${!current ? 'selected' : ''}>None</option>
+                    ${sounds.map(s => `<option value="${s.key}" ${s.key === current ? 'selected' : ''}>${s.descriptiveName}</option>`).join('')}
                 </select>
             </div>
         `;

@@ -1011,7 +1011,6 @@
         <script src="weapons/Uzi.js"></script>
         <script src="weapons/MachineGun.js"></script>
         <script src="weapons/Bow.js"></script>
-        <script src="weapons/Sniper.js"></script>
         <script src="weapons/Spear.js"></script>
         <script src="weapons/Sword.js"></script>
         <script src="handlers/WeaponHandler.js"></script>
@@ -1210,6 +1209,7 @@
                         PlayMode.runPlayLogic();
                         SFXHandler.updateSfxAnimations();
                         DeadEnemyHandler.update(spriteCanvas);
+                        WeaponHandler.drawWeaponBehindPlayer(player);
                         player.draw();
                         WeaponHandler.drawActiveWeapon(player);
                         //foreground objects

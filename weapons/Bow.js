@@ -1,6 +1,7 @@
 class Bow extends GunWeapon {
     constructor(x, y, tileSize, type, tileMapHandler, extraAttributes = {}) {
         super(x, y, tileSize, type, tileMapHandler, extraAttributes);
+        this.shootSound = 'gun3';
         this.bulletLifeSpan = 150;
         this.bulletsAtOnce = 1;
         this.interval = 1.0;
@@ -13,6 +14,7 @@ class Bow extends GunWeapon {
         this.bulletSprite = 'Bullet 3';
         this.deceleration = 0.02;
         this.speed = 10;
+        this.interactsWithSwitches = true;
     }
     getColor() { return 'd2b48c'; }
     getDisplayName() { return 'Bow'; }

@@ -9,6 +9,7 @@ class Enemy15 extends Enemy {
         this.flyingBehaviour = this.flyingBehaviours.followPlayerPathfinding;
         this.canBeStomped = false;
         EnemyFlyingHandler.resetFlyingState(this);
+        this.shootSound = 'gun4';
     }
 
 }

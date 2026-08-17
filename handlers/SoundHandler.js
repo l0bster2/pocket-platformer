@@ -17,6 +17,12 @@ class SoundHandler {
     this.powerUpDefault = Base64Sounds.powerUpBase64;
     this.enemyHitDefault = Base64Sounds.enemyHitBase64;
     this.enemyDeadDefault = Base64Sounds.enemyDeadBase64;
+    this.gun1Default = Base64Sounds.gun1Base64;
+    this.gun2Default = Base64Sounds.gun2Base64;
+    this.gun3Default = Base64Sounds.gun3Base64;
+    this.gun4Default = Base64Sounds.gun4Base64;
+    this.sword1Default = Base64Sounds.sword1Base64;
+    this.sword2Default = Base64Sounds.sword2Base64;
     this.silence = Base64Sounds.silence;
     this.songDefault = "";
 
@@ -37,6 +43,12 @@ class SoundHandler {
       { key: "jumpReset", descriptiveName: "jump reset", value: this.jumpResetDefault, type: "sound" },
       { key: "enemyHit", descriptiveName: "enemy hit", value: this.enemyHitDefault, type: "sound" },
       { key: "enemyDead", descriptiveName: "enemy dead", value: this.enemyDeadDefault, type: "sound" },
+      { key: "gun1", descriptiveName: "gun shoot", value: this.gun1Default, type: "sound" },
+      { key: "gun2", descriptiveName: "enemy shoot", value: this.gun2Default, type: "sound" },
+      { key: "gun3", descriptiveName: "bow shoot", value: this.gun3Default, type: "sound" },
+      { key: "gun4", descriptiveName: "enemy shoot 2", value: this.gun4Default, type: "sound" },
+      { key: "sword1", descriptiveName: "spear attack", value: this.sword1Default, type: "sound" },
+      { key: "sword2", descriptiveName: "sword attack", value: this.sword2Default, type: "sound" },
       { key: "custom1", descriptiveName: "custom 1", value: this.silence, type: "sound" },
       { key: "custom2", descriptiveName: "custom 2", value: this.silence, type: "sound" },
       { key: "custom3", descriptiveName: "custom 3", value: this.silence, type: "sound" },

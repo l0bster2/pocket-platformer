@@ -96,7 +96,7 @@ class EnemyCollisionHandler {
             enemy.death();
         } else {
             enemy.hurtFrames = 30;
-            SoundHandler.enemyHit.stopAndPlay();
+            if (enemy.hitSound) SoundHandler[enemy.hitSound].stopAndPlay();
             AnimationHelper.setSquishValues(enemy, (enemy.width + enemy.widthOffset) * 1.2, (enemy.height + enemy.heightOffset) * 0.6);
 
             // If configured, a surviving enemy is stunned: it goes inactive for stunDuration

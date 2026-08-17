@@ -32,6 +32,7 @@ class Bullet extends InteractiveLevelObject {
         this.affectedByGravity = extraAttributes.affectedByGravity ?? false;
         this.gravity = extraAttributes.gravity ?? 0.2;
         this.deceleration = extraAttributes.deceleration ?? 0;
+        this.interactsWithSwitches = extraAttributes.interactsWithSwitches ?? false;
 
         // Allow overriding the default bullet sprite with any sprite by its descriptiveName.
         const spriteDescriptiveName = extraAttributes.spriteDescriptiveName;
@@ -105,9 +106,7 @@ class Bullet extends InteractiveLevelObject {
      * Returns true when the bullet was removed.
      */
     handleWallCollision() {
-        if (!this.collidesWithWalls) {
-            return false;
-        }
+        if (!this.collidesWithWalls && !this.interactsWithSwitches) return false;
         const cornerHitBox = 2;
         const left = this.x + cornerHitBox;
         const top = this.y + cornerHitBox;
@@ -119,15 +118,22 @@ class Bullet extends InteractiveLevelObject {
             { x: right, y: bottom },
             { x: left, y: bottom },
         ];
-        const hitSolidTile = corners.some(corner => {
+        for (const corner of corners) {
             const xPos = this.tileMapHandler.getTileValueForPosition(corner.x);
             const yPos = this.tileMapHandler.getTileValueForPosition(corner.y);
             const tileValue = this.tileMapHandler.getTileLayerValueByIndex(yPos, xPos);
-            return typeof tileValue === 'undefined' || !this.passableTiles.includes(tileValue);
-        });
-        if (hitSolidTile) {
-            this.deleteObjectFromLevel(this.tileMapHandler);
-            return true;
+            if (this.interactsWithSwitches && tileValue === ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch) {
+                const switchBlock = this.tileMapHandler.levelObjects.find(
+                    obj => obj.initialX === xPos && obj.initialY === yPos
+                );
+                if (switchBlock) switchBlock.switchWasHit();
+                this.deleteObjectFromLevel(this.tileMapHandler);
+                return true;
+            }
+            if (this.collidesWithWalls && (typeof tileValue === 'undefined' || !this.passableTiles.includes(tileValue))) {
+                this.deleteObjectFromLevel(this.tileMapHandler);
+                return true;
+            }
         }
         return false;
     }
