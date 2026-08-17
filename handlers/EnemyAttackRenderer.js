@@ -342,13 +342,13 @@ class EnemyAttackRenderer {
                 <label for="bulletSpeed" class="bulletSliderLabel">Speed:</label>
                 <input class="playerAttrSlider bulletSpeedSlider" type="range" min="0.5" max="10" step="0.05" value="${speed}" id="bulletSpeed" name="bulletSpeed"
                     oninput="EnemyAttackRenderer.updateSliderValue('bulletSpeed')">
-                <span id="bulletSpeedValue" class="playerAttrSliderValue">${speed}</span>
+                <span id="bulletSpeedValue" class="playerAttrSliderValue" style="float: none">${speed}</span>
             </div>
             <div class="playerAttributeWrapper marginTop8">
                 <label for="bulletDeceleration" class="bulletSliderLabel">Deceleration:</label>
-                <input class="playerAttrSlider" type="range" min="0" max="0.1" step="0.005" value="${deceleration}" id="bulletDeceleration" name="bulletDeceleration"
+                <input class="playerAttrSlider bulletDecelerationSlider" type="range" min="0" max="0.1" step="0.005" value="${deceleration}" id="bulletDeceleration" name="bulletDeceleration"
                     oninput="EnemyAttackRenderer.updateSliderValue('bulletDeceleration')">
-                <span id="bulletDecelerationValue" class="playerAttrSliderValue">${deceleration}</span>
+                <span id="bulletDecelerationValue"  style="float: none" class="playerAttrSliderValue">${deceleration}</span>
             </div>
             <div class="marginTop12">
                 <input type="checkbox" id="bulletAffectedByGravity" name="bulletAffectedByGravity" ${affectedByGravity ? 'checked' : ''}
@@ -394,7 +394,7 @@ class EnemyAttackRenderer {
                     <label for="bulletRandomAngleOffset" class="bulletSliderLabel">Random angle offset:</label>
                     <input class="playerAttrSlider bulletRandomAngleSlider" type="range" min="0" max="360" step="5" value="${randomAngleOffset}" id="bulletRandomAngleOffset" name="bulletRandomAngleOffset"
                         oninput="EnemyAttackRenderer.updateSliderValue('bulletRandomAngleOffset')">
-                    <span id="bulletRandomAngleOffsetValue" class="playerAttrSliderValue">${randomAngleOffset}</span>
+                    <span id="bulletRandomAngleOffsetValue" style="float: none" class="playerAttrSliderValue">${randomAngleOffset}</span>
                 </div>
             </div>
         `;

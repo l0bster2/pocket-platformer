@@ -576,6 +576,7 @@ input:checked+.switchSlider:before {
 
 .bulletSpeedSlider,
 .bulletGravitySlider,
+.bulletDecelerationSlider,
 .bulletRandomAngleSlider {
     width: 160px;
 }

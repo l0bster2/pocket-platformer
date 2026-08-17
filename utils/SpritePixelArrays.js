@@ -93,6 +93,7 @@ class SpritePixelArrays {
       ObjectTypes.BULLET,
       "bullet2",
       "bullet3",
+      "bullet4",
     ]
 
     this.customType = "custom";
@@ -1187,6 +1188,39 @@ class SpritePixelArrays {
             ["transp", "FF1C1C", "transp", "transp", "transp", "FF1C1C", "transp", "transp"],
             ["transp", "transp", "FF1C1C", "transp", "FF1C1C", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "FF1C1C", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ]
+      }
+      ]
+    };
+
+    this.BULLET_SPRITE_4 = {
+      name: "bullet4",
+      descriptiveName: "Bullet 4",
+      description: "An alternative bullet sprite (laser bolt). Use it to override the default bullet sprite.",
+      animation: [{
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "FF5555", "FF5555", "FF5555", "FF5555", "transp", "transp"],
+            ["transp", "FF5555", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "FF5555", "transp"],
+            ["transp", "transp", "FF5555", "FF5555", "FF5555", "FF5555", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+           ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
+            ["transp", "FFC6C6", "FF5555", "FF5555", "FF5555", "FF5555", "FFC6C6", "transp"],
+            ["transp", "transp", "FFC6C6", "FFC6C6", "FFC6C6", "FFC6C6", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
           ]
@@ -2558,7 +2592,7 @@ class SpritePixelArrays {
       ]
     };
 
-    
+
     this.ENEMY_1_IDLE = {
       name: ObjectTypes.ENEMY_1,
       maxHeight: 16,
@@ -2571,9 +2605,9 @@ class SpritePixelArrays {
           [
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "E37100", "E37100", "transp", "transp", "transp"],
-            ["transp", "transp", "E37100", "E37100", "E37100", "E37100", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "E37100", "FFFFFF", "E37100", "transp", "transp"],
             ["transp", "E37100", "000000", "E37100", "000000", "E37100", "E37100", "transp"],
-            ["FFFFFF", "713900", "713900", "713900", "713900", "FFFFFF", "E37100", "E37100"],
+            ["FFC68E", "713900", "713900", "713900", "713900", "FFC68E", "E37100", "E37100"],
             ["713900", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100"],
             ["transp", "transp", "transp", "E3E300", "E3E300", "713900", "transp", "transp"],
             ["transp", "transp", "713900", "713900", "E37100", "E37100", "transp", "transp"]
@@ -2592,9 +2626,9 @@ class SpritePixelArrays {
         sprite:
           [
             ["transp", "transp", "transp", "E37100", "E37100", "transp", "transp", "transp"],
-            ["transp", "transp", "E37100", "E37100", "E37100", "E37100", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "E37100", "FFFFFF", "E37100", "transp", "transp"],
             ["transp", "E37100", "000000", "E37100", "000000", "E37100", "E37100", "transp"],
-            ["FFFFFF", "713900", "713900", "713900", "713900", "FFFFFF", "E37100", "E37100"],
+            ["FFC68E", "713900", "713900", "713900", "713900", "FFC68E", "E37100", "E37100"],
             ["713900", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100"],
             ["transp", "transp", "713900", "FFFF55", "E3E300", "713900", "transp", "transp"],
             ["transp", "transp", "713900", "713900", "transp", "E37100", "transp", "transp"],
@@ -2606,9 +2640,9 @@ class SpritePixelArrays {
           [
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "E37100", "E37100", "transp", "transp", "transp"],
-            ["transp", "transp", "E37100", "E37100", "E37100", "E37100", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "E37100", "FFFFFF", "E37100", "transp", "transp"],
             ["transp", "E37100", "000000", "E37100", "000000", "E37100", "E37100", "transp"],
-            ["FFFFFF", "713900", "713900", "713900", "713900", "FFFFFF", "E37100", "E37100"],
+            ["FFC68E", "713900", "713900", "713900", "713900", "FFC68E", "E37100", "E37100"],
             ["713900", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100"],
             ["transp", "transp", "transp", "FFFF55", "E3E300", "713900", "E37100", "transp"],
             ["transp", "transp", "713900", "713900", "transp", "transp", "transp", "transp"]
@@ -2628,9 +2662,9 @@ class SpritePixelArrays {
           [
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "E37100", "E37100", "transp", "transp", "transp"],
-            ["transp", "transp", "E37100", "E37100", "E37100", "E37100", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "E37100", "FFFFFF", "E37100", "transp", "transp"],
             ["transp", "E37100", "000000", "E37100", "000000", "E37100", "E37100", "transp"],
-            ["FFFFFF", "713900", "713900", "713900", "713900", "FFFFFF", "E37100", "E37100"],
+            ["FFC68E", "713900", "713900", "713900", "713900", "FFC68E", "E37100", "E37100"],
             ["713900", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100", "E37100"],
             ["transp", "transp", "transp", "E3E300", "E3E300", "713900", "transp", "transp"],
             ["transp", "transp", "713900", "713900", "E37100", "E37100", "transp", "transp"]

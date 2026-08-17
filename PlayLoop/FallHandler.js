@@ -26,6 +26,7 @@ class FallHandler extends PlayMode {
 
     static fallHandler() {
         const { player } = this;
+        player.wallJumpSlide = false;
 
         if (player.falling && !player.fixedSpeed) {
             // x only for moving platforms
@@ -36,6 +37,7 @@ class FallHandler extends PlayMode {
                 (player.wallJumpLeft && (Controller.left || player.fixedSpeedLeft) ||
                     player.wallJumpRight && (Controller.right || player.fixedSpeedRight))) {
                 player.yspeed = player.wallJumpGravity;
+                player.wallJumpSlide = true;
             }
             else {
                 !player.wallJumping && player.currentWallJumpCoyoteFrame++;

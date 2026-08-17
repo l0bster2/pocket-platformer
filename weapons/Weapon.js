@@ -40,7 +40,9 @@ class Weapon extends LevelObject {
 
     // Returns a unit direction vector based on player facing + controller + directionAmount.
     _getAimDirection(player) {
-        const facingRight = player.facingDirection === AnimationHelper.facingDirections.right;
+        let facingRight = player.facingDirection === AnimationHelper.facingDirections.right;
+        // While wall sliding the player faces the wall, so aim the gun the other way.
+        if (player.wallJumpSlide) facingRight = !facingRight;
         const dirs = this.directionAmount || 2;
         const up = Controller.up && !Controller.down;
         const down = Controller.down && !Controller.up;
@@ -49,7 +51,10 @@ class Weapon extends LevelObject {
             const noH = !Controller.left && !Controller.right;
             if (up && noH) return { dx: 0, dy: -1 };
             if (down && noH) return { dx: 0, dy: 1 };
-            const hDir = Controller.right ? 1 : Controller.left ? -1 : (facingRight ? 1 : -1);
+            // While wall sliding the controller points into the wall, so aim away from it.
+            const hDir = player.wallJumpSlide
+                ? (facingRight ? 1 : -1)
+                : (Controller.right ? 1 : Controller.left ? -1 : (facingRight ? 1 : -1));
             const dy = up ? -1 : down ? 1 : 0;
             return { dx: hDir, dy };
         }

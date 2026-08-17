@@ -10,8 +10,8 @@ class LaserGun extends GunWeapon {
         this.gravity = 0;
         this.randomOffset = 0;
         this.directionAmount = 4;
-        this.bulletSprite = 'Bullet 2';
-        this.speed = 7;
+        this.bulletSprite = 'Bullet 4';
+        this.speed = 10.5;
         this.collidesWithWalls = false;
         this.interactsWithSwitches = true;
     }

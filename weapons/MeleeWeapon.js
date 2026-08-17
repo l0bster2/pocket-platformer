@@ -9,6 +9,7 @@ class MeleeWeapon extends Weapon {
             this.attackDir = null;
             this.attackFacingRight = true;
             this.hitEnemies = new Set();
+            this.pogoedThisAttack = false;
         }
     }
 
@@ -150,6 +151,7 @@ class MeleeWeapon extends Weapon {
         this.attackDir = this._getMeleeAimDirection(player);
         this.attackFacingRight = player.facingDirection === AnimationHelper.facingDirections.right;
         this.hitEnemies = new Set();
+        this.pogoedThisAttack = false;
         this.attackTimer = this.attackDuration;
         if (this.shootSound) SoundHandler[this.shootSound].stopAndPlay();
         // Cooldown covers both the animation and the recovery pause
@@ -189,13 +191,30 @@ class MeleeWeapon extends Weapon {
             enemy.lives -= 1;
             enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
             if (enemy.lives <= 0) enemy.death();
+            this._tryPogo(player);
         }
 
-        if (this.canSliceBullets) this._sliceProjectiles(weaponX, weaponY, ts);
+        if (this.canSliceBullets) this._sliceProjectiles(weaponX, weaponY, ts, player);
+    }
+
+    // Bounce the player upwards when a downward attack connects, matching a stomp jump.
+    _tryPogo(player) {
+        if (this.pogoedThisAttack || !player) return;
+        if (!this.attackDir || this.attackDir.dy !== 1) return;
+        if ((this.canSliceBullets ?? true) === false || (this.canPogoOnBullets ?? true) === false) return;
+        this.pogoedThisAttack = true;
+        player.setStretchAnimation();
+        player.forcedJumpSpeed = player.jumpSpeed * player.maxJumpFrames / (player.maxJumpFrames + player.extraTrampolineJumpFrames);
+        player.jumpframes = 0;
+        player.fixedSpeed = false;
+        player.temporaryDoubleJump = false;
+        player.doubleJumpActive = true;
+        player.doubleJumpUsed = false;
+        player.currentDashFrame = 0;
     }
 
     // Destroy nearby enemy projectiles (not the player's own good bullets) within the blade's reach.
-    _sliceProjectiles(weaponX, weaponY, ts) {
+    _sliceProjectiles(weaponX, weaponY, ts, player) {
         const projectiles = this.tileMapHandler.layers?.[4] || [];
         // Piercing only travels straight, so a box overlap is accurate; slicing sweeps an arc, so use radial distance.
         const weaponRect = { x: weaponX - ts / 2, y: weaponY - ts / 2, width: ts, height: ts, hitBoxOffset: 0 };
@@ -211,6 +230,7 @@ class MeleeWeapon extends Weapon {
                 if (dist > ts) continue;
             }
             projectile.deleteObjectFromLevel(this.tileMapHandler);
+            this._tryPogo(player);
         }
     }
 
@@ -221,6 +241,7 @@ class MeleeWeapon extends Weapon {
             attackDuration: this.attackDuration,
             interval: this.interval,
             canSliceBullets: this.canSliceBullets ?? true,
+            canPogoOnBullets: this.canPogoOnBullets ?? true,
             pickupSound: this.pickupSound,
         };
     }
@@ -231,6 +252,7 @@ class MeleeWeapon extends Weapon {
         if (attrs.attackDuration !== undefined) this.attackDuration = attrs.attackDuration;
         if (attrs.interval !== undefined) this.interval = attrs.interval;
         if (attrs.canSliceBullets !== undefined) this.canSliceBullets = attrs.canSliceBullets;
+        if (attrs.canPogoOnBullets !== undefined) this.canPogoOnBullets = attrs.canPogoOnBullets;
         if (attrs.pickupSound !== undefined) this.pickupSound = attrs.pickupSound;
     }
 }

@@ -212,6 +212,7 @@ class WeaponAttributesRenderer {
         const currentPickup = attrs.pickupSound || 'pickup';
         return `
             ${this.createCheckboxInput('canSliceBullets', 'Can slice bullets', attrs.canSliceBullets ?? true, type, 'marginTop16')}
+            ${(attrs.canSliceBullets ?? true) ? this.createCheckboxInput('canPogoOnBullets', 'Can pogo on bullets', attrs.canPogoOnBullets ?? true, type) : ''}
             <div class="playerAttributeWrapper marginTop16">
                 <label class="leftLabel">Pickup sound:</label>
                 <select class="textInput" style="flex:1;"

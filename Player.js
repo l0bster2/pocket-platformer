@@ -159,6 +159,7 @@ class Player {
         this.currentTrailFrame = 0;
         this.movingPlatformKey = null;
         this.onMovingPlatform = false;
+        this.wallJumpSlide = false;
 
         if (resetAutoRun) {
             this.fixedSpeedLeft = false;
