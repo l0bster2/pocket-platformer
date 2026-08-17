@@ -184,6 +184,22 @@ class MeleeWeapon extends Weapon {
             enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
             if (enemy.lives <= 0) enemy.death();
         }
+
+        if (this.canSliceBullets) this._sliceProjectiles(weaponX, weaponY, ts);
+    }
+
+    // Destroy nearby enemy projectiles (not the player's own good bullets) within the blade's reach.
+    _sliceProjectiles(weaponX, weaponY, ts) {
+        const projectiles = this.tileMapHandler.layers?.[4] || [];
+        for (let i = projectiles.length - 1; i >= 0; i--) {
+            const projectile = projectiles[i];
+            if (projectile.isGood || projectile.type === ObjectTypes.ROTATING_FIREBALL_CENTER) continue;
+            const px = projectile.x + (projectile.width || ts) / 2;
+            const py = projectile.y + (projectile.height || ts) / 2;
+            const dist = Math.sqrt((px - weaponX) ** 2 + (py - weaponY) ** 2);
+            if (dist > ts) continue;
+            projectile.deleteObjectFromLevel(this.tileMapHandler);
+        }
     }
 
     getEditableAttributes() {
@@ -192,6 +208,7 @@ class MeleeWeapon extends Weapon {
             reachTiles: this.reachTiles,
             attackDuration: this.attackDuration,
             interval: this.interval,
+            canSliceBullets: this.canSliceBullets ?? true,
             pickupSound: this.pickupSound,
         };
     }
@@ -201,6 +218,7 @@ class MeleeWeapon extends Weapon {
         if (attrs.reachTiles !== undefined) this.reachTiles = attrs.reachTiles;
         if (attrs.attackDuration !== undefined) this.attackDuration = attrs.attackDuration;
         if (attrs.interval !== undefined) this.interval = attrs.interval;
+        if (attrs.canSliceBullets !== undefined) this.canSliceBullets = attrs.canSliceBullets;
         if (attrs.pickupSound !== undefined) this.pickupSound = attrs.pickupSound;
     }
 }
