@@ -191,13 +191,19 @@ class MeleeWeapon extends Weapon {
     // Destroy nearby enemy projectiles (not the player's own good bullets) within the blade's reach.
     _sliceProjectiles(weaponX, weaponY, ts) {
         const projectiles = this.tileMapHandler.layers?.[4] || [];
+        // Piercing only travels straight, so a box overlap is accurate; slicing sweeps an arc, so use radial distance.
+        const weaponRect = { x: weaponX - ts / 2, y: weaponY - ts / 2, width: ts, height: ts, hitBoxOffset: 0 };
         for (let i = projectiles.length - 1; i >= 0; i--) {
             const projectile = projectiles[i];
             if (projectile.isGood || projectile.type === ObjectTypes.ROTATING_FIREBALL_CENTER) continue;
-            const px = projectile.x + (projectile.width || ts) / 2;
-            const py = projectile.y + (projectile.height || ts) / 2;
-            const dist = Math.sqrt((px - weaponX) ** 2 + (py - weaponY) ** 2);
-            if (dist > ts) continue;
+            if (this.attackType === 'piercing') {
+                if (!Collision.objectsColliding(weaponRect, projectile)) continue;
+            } else {
+                const px = projectile.x + (projectile.width || ts) / 2;
+                const py = projectile.y + (projectile.height || ts) / 2;
+                const dist = Math.sqrt((px - weaponX) ** 2 + (py - weaponY) ** 2);
+                if (dist > ts) continue;
+            }
             projectile.deleteObjectFromLevel(this.tileMapHandler);
         }
     }
