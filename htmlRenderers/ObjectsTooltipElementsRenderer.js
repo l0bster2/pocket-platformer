@@ -566,6 +566,87 @@ class ObjectsTooltipElementsRenderer {
         return dialogueWrapper;
     }
 
+    static enemySpawnerToolTip(currentObject) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "marginTop8";
+
+        // Enemy amount (number input)
+        const amountWrapper = document.createElement("div");
+        amountWrapper.className = "changeableAttributesWrapper marginTop8";
+        const amountLabel = document.createElement("label");
+        amountLabel.innerHTML = "Enemy amount:";
+        amountLabel.style.marginRight = "8px";
+        const amountInput = document.createElement("input");
+        amountInput.type = "number";
+        amountInput.min = "1";
+        amountInput.className = "textInput";
+        amountInput.style.width = "60px";
+        amountInput.value = currentObject.enemyAmount || 1;
+        amountInput.onchange = (event) => {
+            currentObject.addChangeableAttribute("enemyAmount", parseInt(event.target.value) || 1);
+        };
+        amountWrapper.append(amountLabel, amountInput);
+        wrapper.appendChild(amountWrapper);
+
+        // Interval (slider)
+        const intervalSlider = this.createSliderForChangeableAttribute(
+            { name: "spawnInterval", descriptiveName: "Interval (seconds)", minValue: 1, maxValue: 10, step: 1 },
+            currentObject
+        );
+        wrapper.appendChild(intervalSlider);
+
+        // Finite / infinite toggle
+        const modeToggle = this.createToggleSwitch(
+            {
+                name: "spawnMode", defaultValue: currentObject.spawnMode || "finite",
+                options: [{ "true": "infinite" }, { "false": "finite" }]
+            },
+            currentObject
+        );
+        wrapper.appendChild(modeToggle);
+
+        // Enemy type checkboxes
+        const enemiesHeading = this.createSmallHeading("Enemies to spawn:");
+        enemiesHeading.className = "subSection";
+        wrapper.appendChild(enemiesHeading);
+
+        const allTypes = EnemyTypeAttributesHandler.getAllEnemyTypes();
+        let enabledTypes = Array.isArray(currentObject.enabledEnemyTypes) && currentObject.enabledEnemyTypes.length
+            ? [...currentObject.enabledEnemyTypes]
+            : [allTypes[0]];
+        // Persist the resolved default so it is saved/exported even if untouched.
+        currentObject.addChangeableAttribute("enabledEnemyTypes", [...enabledTypes]);
+
+        const enemiesListWrapper = document.createElement("div");
+        enemiesListWrapper.className = "marginTop8";
+
+        allTypes.forEach(type => {
+            const row = document.createElement("div");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = "enemySpawnerType_" + type;
+            checkbox.checked = enabledTypes.includes(type);
+            checkbox.onclick = (event) => {
+                if (event.target.checked) {
+                    if (!enabledTypes.includes(type)) enabledTypes.push(type);
+                } else {
+                    enabledTypes = enabledTypes.filter(t => t !== type);
+                }
+                currentObject.addChangeableAttribute("enabledEnemyTypes", [...enabledTypes]);
+            };
+            const label = document.createElement("label");
+            label.className = "checkBoxText";
+            label.style.marginLeft = "8px";
+            Helpers.addAttributesToHTMLElement(label, { "for": checkbox.id });
+            label.innerHTML = EnemiesAttributesRenderer.getEnemyTypeDisplayName(type);
+            row.append(checkbox, label);
+            enemiesListWrapper.appendChild(row);
+        });
+        wrapper.appendChild(enemiesListWrapper);
+
+        return wrapper;
+    }
+
     static resetDialogueContent(event, attribute, currentObject, dialogueWrapper, allDialogues, allAvatars) {
         event.stopPropagation();
         currentObject.addChangeableAttribute(attribute.name, allDialogues);

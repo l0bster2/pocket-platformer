@@ -71,6 +71,10 @@ class ObjectTypes {
     return 'barrelCannon';
   }
 
+  static get ENEMY_SPAWNER() {
+    return 'enemySpawner';
+  }
+
   static get JUMP_RESET() {
     return 'jumpReset';
   }
@@ -302,6 +306,7 @@ class ObjectTypes {
       [this.LASER_CANON]: LaserCanon,
       [this.LASER]: Laser,
       [this.BARREL_CANNON]: BarrelCannon,
+      [this.ENEMY_SPAWNER]: EnemySpawner,
       [this.JUMP_RESET]: JumpReset,
       [this.SFX]: SFX,
       [this.RED_BLUE_BLOCK_SWITCH]: RedBlueSwitch,

@@ -421,11 +421,15 @@ class BuildMode {
                 const finishFlagToolTip = ObjectsTooltipElementsRenderer.finishFlagToolTip(currentObject, this.tileMapHandler);
                 content.appendChild(finishFlagToolTip);
             }
+            else if (currentObject?.type === ObjectTypes.ENEMY_SPAWNER) {
+                const enemySpawnerToolTip = ObjectsTooltipElementsRenderer.enemySpawnerToolTip(currentObject);
+                content.appendChild(enemySpawnerToolTip);
+            }
             if (spriteObject.directions && currentObject?.type !== ObjectTypes.PATH_POINT) {
                 const rotationWrapper = ObjectsTooltipElementsRenderer.createRotationHandlerForObjects(currentObject, spriteObject.directions);
                 content.appendChild(rotationWrapper);
             }
-            if (spriteObject.changeableAttributes && currentObject?.type !== ObjectTypes.FINISH_FLAG) {
+            if (spriteObject.changeableAttributes && currentObject?.type !== ObjectTypes.FINISH_FLAG && currentObject?.type !== ObjectTypes.ENEMY_SPAWNER) {
                 spriteObject.changeableAttributes.forEach(attribute => {
                     if (attribute.name === SpritePixelArrays.changeableAttributeTypes.dialogue) {
                         const dialogueWindow = ObjectsTooltipElementsRenderer.createDialogueWindow(attribute, currentObject);

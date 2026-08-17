@@ -337,14 +337,14 @@ class Enemy extends InteractiveLevelObject {
             SFXHandler.createSFX(this.x, this.y, 1);
         }
         this.dead = true;
+        tileMapHandler.defeatedEnemyCount = (tileMapHandler.defeatedEnemyCount || 0) + 1;
         this.deleteEnemyFromLevel(tileMapHandler, false);
         this.checkIfRequiredEnemiesDefeated();
     }
 
     checkIfRequiredEnemiesDefeated() {
         const finishFlags = tileMapHandler.filterObjectsByTypes(ObjectTypes.FINISH_FLAG);
-        const initialEnemyCount = WorldDataHandler.levels[tileMapHandler.currentLevel].enemies.length;
-        const defeatedEnemies = initialEnemyCount - tileMapHandler.enemies.length;
+        const defeatedEnemies = tileMapHandler.defeatedEnemyCount || 0;
         const justReachedRequirement = finishFlags.some(finishFlag =>
             finishFlag.enemiesNeeded && defeatedEnemies === (parseInt(finishFlag.enemiesToDefeat) || 0)
         );
@@ -376,8 +376,11 @@ class Enemy extends InteractiveLevelObject {
                         this.yspeed *= f;
                         if (Math.abs(this.yspeed) < 0.5) this.yspeed = 0;
                     }
-                    this.bonusSpeedX *= f;
-                    if (Math.abs(this.bonusSpeedX) < 0.3) this.bonusSpeedX = 0;
+                    // Don't bleed off the carry speed while riding a platform, or the enemy slides relative to it.
+                    if (!this.onMovingPlatform) {
+                        this.bonusSpeedX *= f;
+                        if (Math.abs(this.bonusSpeedX) < 0.3) this.bonusSpeedX = 0;
+                    }
                 }
                 // Reset attack timers so the start delay is honoured again on the next activation.
                 EnemyAttackHandler.resetState(this);

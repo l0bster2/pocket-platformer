@@ -61,6 +61,7 @@ class TileMapHandler {
         this.paths = this.createInitialPaths(WorldDataHandler.levels[levelIndex].paths);
         this.effects = EffectsHandler.getCurrentLevelEffects(this.currentLevel);
         this.currentGeneralFrameCounter = 0;
+        this.defeatedEnemyCount = 0;
         this.player.resetAll();
         WorldColorChanger.changeLevelColor(levelIndex);
         this.changeTileCanvasSize();
@@ -313,6 +314,7 @@ class TileMapHandler {
         }
         this.paths.forEach(path => path.resetObjectsToInitialPosition());
         DeadEnemyHandler.reset();
+        this.defeatedEnemyCount = 0;
         //Check here if tilemaphandler is missing objects from WorldDataHandler (if somethign was deleted)
         this.enemies.length = 0;
         this.enemies = this.createInitialObjects(WorldDataHandler.levels[this.currentLevel].enemies);

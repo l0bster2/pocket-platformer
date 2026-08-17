@@ -1210,7 +1210,7 @@ class SpritePixelArrays {
             ["transp", "transp", "FF5555", "FF5555", "FF5555", "FF5555", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
             ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-           ]
+          ]
       },
       {
         sprite:
@@ -1688,6 +1688,46 @@ class SpritePixelArrays {
             ["FF5555", "FF5555", "transp", "transp", "transp", "transp", "FF5555", "FF5555"],
           ]
       },
+      ]
+    };
+
+    this.ENEMY_SPAWNER_SPRITE = {
+      name: ObjectTypes.ENEMY_SPAWNER,
+      changeableAttributes: [
+        { name: "enemyAmount", defaultValue: 1 },
+        { name: "spawnInterval", defaultValue: 2 },
+        { name: "spawnMode", defaultValue: "finite" },
+        { name: "enabledEnemyTypes", defaultValue: null },
+      ],
+      descriptiveName: "Enemy spawner",
+      type: this.SPRITE_TYPES.object,
+      squishAble: true,
+      description: "Spawns enemies over time. Click on it after placing it again, to set the amount, interval, whether it spawns a finite or infinite number of enemies, and which enemy types can be spawned.",
+      animation: [
+        {
+          "sprite": [
+            ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"],
+            ["transp", "transp", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "transp", "transp"],
+            ["transp", "AA00AA", "AA00AA", "E300E3", "E300E3", "AA00AA", "AA00AA", "transp"],
+            ["FFFFFF", "AA00AA", "E300E3", "FF55FF", "FF55FF", "E300E3", "AA00AA", "FFFFFF"],
+            ["FFFFFF", "AA00AA", "E300E3", "FF55FF", "FF55FF", "E300E3", "AA00AA", "FFFFFF"],
+            ["transp", "AA00AA", "AA00AA", "E300E3", "E300E3", "AA00AA", "AA00AA", "transp"],
+            ["transp", "transp", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "transp", "transp"],
+            ["transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp"]
+          ]
+        },
+        {
+          "sprite": [
+            ["transp", "transp", "transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp"],
+            ["transp", "transp", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "transp", "transp"],
+            ["FFFFFF", "AA00AA", "AA00AA", "E300E3", "E300E3", "AA00AA", "AA00AA", "transp"],
+            ["FFFFFF", "AA00AA", "E300E3", "FF55FF", "FF55FF", "E300E3", "AA00AA", "transp"],
+            ["transp", "AA00AA", "E300E3", "FF55FF", "FF55FF", "E300E3", "AA00AA", "FFFFFF"],
+            ["transp", "AA00AA", "AA00AA", "E300E3", "E300E3", "AA00AA", "AA00AA", "FFFFFF"],
+            ["transp", "transp", "AA00AA", "AA00AA", "AA00AA", "AA00AA", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "FFFFFF", "transp", "transp", "transp", "transp"]
+          ]
+        }
       ]
     };
 
@@ -2592,6 +2632,142 @@ class SpritePixelArrays {
       ]
     };
 
+
+    this.WEAPON_PISTOL_SPRITE = {
+      name: ObjectTypes.WEAPON_PISTOL, descriptiveName: 'Pistol',
+      type: this.SPRITE_TYPES.weapons,
+      animation: [{
+        sprite: [
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "transp", "transp"],
+          ["transp", "AAAAAA", "717171", "717171", "717171", "717171", "transp", "transp"],
+          ["transp", "FF8E1C", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
+          ["E37100", "E37100", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+        ]
+      }]
+    };
+
+    this.WEAPON_LASER_GUN_SPRITE = {
+      name: ObjectTypes.WEAPON_LASER_GUN, descriptiveName: 'Laser Gun',
+      type: this.SPRITE_TYPES.weapons,
+      animation: [{
+        sprite: [
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "FF1C1C", "transp"],
+          ["transp", "AAAAAA", "FF5555", "FF5555", "FF5555", "FF5555", "FF1C1C", "transp"],
+          ["transp", "717171", "717171", "transp", "transp", "transp", "transp", "transp"],
+          ["555555", "555555", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+        ]
+      }]
+    };
+
+    this.WEAPON_SHOTGUN_SPRITE = {
+      name: ObjectTypes.WEAPON_SHOTGUN, descriptiveName: 'Shotgun',
+      type: this.SPRITE_TYPES.weapons,
+      animation: [{
+        sprite: [
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6"],
+          ["8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "C6C6C6", "8E8E8E", "C6C6C6", "8E8E8E"],
+          ["FF8E1C", "FF8E1C", "FFFFFF", "transp", "C6C6C6", "8E8E8E", "C6C6C6", "8E8E8E"],
+          ["E37100", "E37100", "E37100", "transp", "transp", "transp", "transp", "transp"],
+          ["E37100", "E37100", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+        ]
+      }]
+    };
+
+    this.WEAPON_UZI_SPRITE = {
+      name: ObjectTypes.WEAPON_UZI, descriptiveName: 'Uzi',
+      type: this.SPRITE_TYPES.weapons,
+      animation: [{
+        sprite: [
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "transp"],
+          ["AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "C6C6C6", "C6C6C6", "E3E3E3"],
+          ["555555", "555555", "555555", "555555", "555555", "555555", "C6C6C6", "transp"],
+          ["transp", "555555", "717171", "717171", "FFFFFF", "transp", "transp", "transp"],
+          ["transp", "transp", "AAAAAA", "AAAAAA", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "AAAAAA", "717171", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "AAAAAA", "717171", "transp", "transp", "transp", "transp"]
+        ]
+      }]
+    };
+
+    this.WEAPON_MACHINE_GUN_SPRITE = {
+      name: ObjectTypes.WEAPON_MACHINE_GUN, descriptiveName: 'Machine Gun',
+      type: this.SPRITE_TYPES.weapons,
+      animation: [{
+        sprite: [
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6"],
+          ["8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "transp"],
+          ["transp", "FF8E1C", "FFFFFF", "transp", "717171", "AAC6E3", "transp", "transp"],
+          ["E37100", "E37100", "E37100", "transp", "transp", "717171", "AAC6E3", "transp"],
+          ["E37100", "E37100", "transp", "transp", "transp", "transp", "717171", "AAC6E3"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+        ]
+      }]
+    };
+
+    this.WEAPON_BOW_SPRITE = {
+      name: ObjectTypes.WEAPON_BOW, descriptiveName: 'Bow',
+      type: this.SPRITE_TYPES.weapons,
+      animation: [{
+        sprite: [
+          ["transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "C6C6C6", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
+          ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
+          ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
+          ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
+          ["transp", "C6C6C6", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"]
+        ]
+      }]
+    };
+
+    this.WEAPON_SPEAR_SPRITE = {
+      name: ObjectTypes.WEAPON_SPEAR, descriptiveName: 'Spear',
+      type: this.SPRITE_TYPES.weapons,
+      animation: [{
+        sprite: [
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "C6C6C6", "transp"],
+          ["E37100", "E37100", "E37100", "E37100", "E37100", "C6C6C6", "C6C6C6", "C6C6C6"],
+          ["AA5500", "E37100", "AA5500", "E37100", "AA5500", "8E8E8E", "8E8E8E", "8E8E8E"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "8E8E8E", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+        ]
+      }]
+    };
+
+    this.WEAPON_SWORD_SPRITE = {
+      name: ObjectTypes.WEAPON_SWORD, descriptiveName: 'Sword',
+      type: this.SPRITE_TYPES.weapons,
+      animation: [{
+        sprite: [
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
+          ["E37100", "E37100", "FF8E1C", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA"],
+          ["E37100", "E37100", "FF8E1C", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "transp"],
+          ["transp", "transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
+        ]
+      }]
+    };
 
     this.ENEMY_1_IDLE = {
       name: ObjectTypes.ENEMY_1,
@@ -3995,142 +4171,6 @@ class SpritePixelArrays {
           ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
           ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
           ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }]
-    };
-
-    this.WEAPON_PISTOL_SPRITE = {
-      name: ObjectTypes.WEAPON_PISTOL, descriptiveName: 'Pistol',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "transp", "transp"],
-          ["transp", "AAAAAA", "717171", "717171", "717171", "717171", "transp", "transp"],
-          ["transp", "FF8E1C", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
-          ["E37100", "E37100", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
-        ]
-      }]
-    };
-
-    this.WEAPON_LASER_GUN_SPRITE = {
-      name: ObjectTypes.WEAPON_LASER_GUN, descriptiveName: 'Laser Gun',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "FF1C1C", "transp"],
-          ["transp", "AAAAAA", "FF5555", "FF5555", "FF5555", "FF5555", "FF1C1C", "transp"],
-          ["transp", "717171", "717171", "transp", "transp", "transp", "transp", "transp"],
-          ["555555", "555555", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
-        ]
-      }]
-    };
-
-    this.WEAPON_SHOTGUN_SPRITE = {
-      name: ObjectTypes.WEAPON_SHOTGUN, descriptiveName: 'Shotgun',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6"],
-          ["8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "C6C6C6", "8E8E8E", "C6C6C6", "8E8E8E"],
-          ["FF8E1C", "FF8E1C", "FFFFFF", "transp", "C6C6C6", "8E8E8E", "C6C6C6", "8E8E8E"],
-          ["E37100", "E37100", "E37100", "transp", "transp", "transp", "transp", "transp"],
-          ["E37100", "E37100", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
-        ]
-      }]
-    };
-
-    this.WEAPON_UZI_SPRITE = {
-      name: ObjectTypes.WEAPON_UZI, descriptiveName: 'Uzi',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "transp"],
-          ["AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "C6C6C6", "C6C6C6", "E3E3E3"],
-          ["555555", "555555", "555555", "555555", "555555", "555555", "C6C6C6", "transp"],
-          ["transp", "555555", "717171", "717171", "FFFFFF", "transp", "transp", "transp"],
-          ["transp", "transp", "AAAAAA", "AAAAAA", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "AAAAAA", "717171", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "AAAAAA", "717171", "transp", "transp", "transp", "transp"]
-        ]
-      }]
-    };
-
-    this.WEAPON_MACHINE_GUN_SPRITE = {
-      name: ObjectTypes.WEAPON_MACHINE_GUN, descriptiveName: 'Machine Gun',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6"],
-          ["8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "8E8E8E", "transp"],
-          ["transp", "FF8E1C", "FFFFFF", "transp", "717171", "AAC6E3", "transp", "transp"],
-          ["E37100", "E37100", "E37100", "transp", "transp", "717171", "AAC6E3", "transp"],
-          ["E37100", "E37100", "transp", "transp", "transp", "transp", "717171", "AAC6E3"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
-        ]
-      }]
-    };
-
-    this.WEAPON_BOW_SPRITE = {
-      name: ObjectTypes.WEAPON_BOW, descriptiveName: 'Bow',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ["transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "C6C6C6", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
-          ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
-          ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
-          ["transp", "C6C6C6", "transp", "FF8E1C", "transp", "transp", "transp", "transp"],
-          ["transp", "C6C6C6", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"]
-        ]
-      }]
-    };
-
-    this.WEAPON_SPEAR_SPRITE = {
-      name: ObjectTypes.WEAPON_SPEAR, descriptiveName: 'Spear',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "C6C6C6", "transp"],
-          ["E37100", "E37100", "E37100", "E37100", "E37100", "C6C6C6", "C6C6C6", "C6C6C6"],
-          ["AA5500", "E37100", "AA5500", "E37100", "AA5500", "8E8E8E", "8E8E8E", "8E8E8E"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "8E8E8E", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
-        ]
-      }]
-    };
-
-    this.WEAPON_SWORD_SPRITE = {
-      name: ObjectTypes.WEAPON_SWORD, descriptiveName: 'Sword',
-      type: this.SPRITE_TYPES.weapons,
-      animation: [{
-        sprite: [
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
-          ["E37100", "E37100", "FF8E1C", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA", "AAAAAA"],
-          ["E37100", "E37100", "FF8E1C", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "transp"],
-          ["transp", "transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
-          ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"]
         ]
       }]
     };

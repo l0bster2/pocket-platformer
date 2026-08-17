@@ -81,8 +81,7 @@ class FinishFlag extends InteractiveLevelObject {
 
     checkIfEnoughEnemiesDefeated() {
         const requiredKills = parseInt(this.enemiesToDefeat) || 0;
-        const initialEnemyCount = WorldDataHandler.levels[this.tilemapHandler.currentLevel].enemies.length;
-        const defeatedEnemies = initialEnemyCount - this.tilemapHandler.enemies.length;
+        const defeatedEnemies = this.tilemapHandler.defeatedEnemyCount || 0;
         return defeatedEnemies >= requiredKills;
     }
 
