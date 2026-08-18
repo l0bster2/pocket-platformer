@@ -65,6 +65,11 @@ class GunWeapon extends Weapon {
 
         this.intervalTimer = Math.round(this.interval * 60);
         this.recoilTimer = 8;
+        if (this.bottomShotBounce && dy === 1) {
+            player.forcedJumpSpeed = player.jumpSpeed * player.maxJumpFrames / (player.maxJumpFrames + player.extraTrampolineJumpFrames);
+            player.jumpframes = 0;
+            player.fixedSpeed = false;
+        }
         if (this.shootSound) SoundHandler[this.shootSound].stopAndPlay();
         if (this.ammo) {
             this.shotsRemaining--;
@@ -124,6 +129,7 @@ class GunWeapon extends Weapon {
             interactsWithSwitches: this.interactsWithSwitches ?? false,
             shootSound: this.shootSound ?? null,
             wallCollision: this.wallCollision ?? 'destroy',
+            bottomShotBounce: this.bottomShotBounce ?? false,
             pickupSound: this.pickupSound,
         };
     }
@@ -145,6 +151,7 @@ class GunWeapon extends Weapon {
         if ('shootSound' in attrs) this.shootSound = attrs.shootSound;
         if ('wallCollision' in attrs) this.wallCollision = attrs.wallCollision;
         else if ('collidesWithWalls' in attrs) this.wallCollision = attrs.collidesWithWalls ? 'destroy' : 'none';
+        if ('bottomShotBounce' in attrs) this.bottomShotBounce = attrs.bottomShotBounce;
         if (attrs.pickupSound !== undefined) this.pickupSound = attrs.pickupSound;
         // Reset runtime state so new ammo settings take effect
         this.intervalTimer = undefined;

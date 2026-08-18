@@ -124,7 +124,10 @@ class Bullet extends InteractiveLevelObject {
         };
         const isSolid = (x, y) => {
             const v = getTile(x, y);
-            return typeof v === 'undefined' || !this.passableTiles.includes(v);
+            if (typeof v === 'undefined') return true;
+            if (v === 0) return false;
+            if (v === 5) return this.yspeed > 0; // one-way platform: solid only when entering from above
+            return !this.passableTiles.includes(v);
         };
 
         if (this.interactsWithSwitches) {

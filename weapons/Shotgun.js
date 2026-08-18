@@ -12,6 +12,7 @@ class Shotgun extends GunWeapon {
         this.directionAmount = 4;
         this.bulletSprite = 'Bullet';
         this.speed = 6;
+        this.bottomShotBounce = true;
     }
     getDisplayName() { return 'Shotgun'; }
 }

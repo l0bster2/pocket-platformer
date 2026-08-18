@@ -178,7 +178,9 @@ class WeaponAttributesRenderer {
         const currentPickup = attrs.pickupSound || 'pickup';
         const wallCollision = attrs.wallCollision ?? 'destroy';
         return `
-            <div class="playerAttributeWrapper marginTop16">
+            <div class="marginTop16">${this.createCheckboxInput('interactsWithSwitches', 'Activates switches on hit', attrs.interactsWithSwitches ?? false, type)}</div>
+            ${this.createCheckboxInput('bottomShotBounce', 'Bottom shot bounce', attrs.bottomShotBounce ?? false, type)}
+            <div class="playerAttributeWrapper marginTop8">
                 <label class="leftLabel">Wall collision:</label>
                 <select class="textInput" style="flex:1;"
                     onchange="WeaponAttributesRenderer.onAttributeChanged('${type}', 'wallCollision', this.value)">
@@ -187,7 +189,7 @@ class WeaponAttributesRenderer {
                     <option value="bounce" ${wallCollision === 'bounce' ? 'selected' : ''}>Bounce off walls</option>
                 </select>
             </div>
-            ${this.createCheckboxInput('interactsWithSwitches', 'Activates switches on hit', attrs.interactsWithSwitches ?? false, type)}
+            <div class="subSection">
             ${this.createSoundDropdown('shootSound', 'Shoot sound', attrs.shootSound ?? null, type)}
             <div class="playerAttributeWrapper marginTop8">
                 <label class="leftLabel">Pickup sound:</label>
@@ -195,6 +197,7 @@ class WeaponAttributesRenderer {
                     onchange="WeaponAttributesRenderer.onAttributeChanged('${type}', 'pickupSound', this.value)">
                     ${sounds.map(s => `<option value="${s.key}" ${s.key === currentPickup ? 'selected' : ''}>${s.descriptiveName}</option>`).join('')}
                 </select>
+            </div>
             </div>
         `;
     }
