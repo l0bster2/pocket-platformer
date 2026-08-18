@@ -4,8 +4,8 @@ class Uzi extends GunWeapon {
         this.bulletLifeSpan = 150;
         this.bulletsAtOnce = 1;
         this.interval = 0.12;
-        this.ammo = false;
-        this.reloadTime = 1.5;
+        this.ammo = 6;
+        this.reloadTime = 0.5;
         this.affectedByGravity = false;
         this.gravity = 0;
         this.randomOffset = 20;
@@ -13,6 +13,5 @@ class Uzi extends GunWeapon {
         this.bulletSprite = 'Bullet';
         this.speed = 6;
     }
-    getColor() { return '666666'; }
     getDisplayName() { return 'Uzi'; }
 }

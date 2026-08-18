@@ -5,6 +5,9 @@ class Enemy16 extends Enemy {
         super(x, y, tileSize, type, hitBoxOffset, extraAttributes);
         this.walkDirection = this.walkDirections.left;
         this.canBeStomped = false;
+        this.killsPlayer = false;
+        this.killedBySpikes = false;
+
         // Flying, stationary
         this.flying = true;
         EnemyFlyingHandler.resetFlyingState(this);

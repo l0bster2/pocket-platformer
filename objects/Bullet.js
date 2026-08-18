@@ -9,8 +9,8 @@
  * - isGood:               boolean, whether the bullet hurts enemies (true) or the player (false).
  * - speed:                number, travel speed in pixels per frame.
  * - angle:                number, travel direction in degrees (0 = right, 90 = down, 180 = left, 270 = up).
- * - collidesWithWalls:    boolean, whether solid tiles stop/destroy the bullet. When false the
- *                         bullet phases through walls and is removed once it leaves the level.
+ * - wallCollision:        'destroy'|'bounce'|'none'. 'destroy' stops the bullet on wall contact,
+ *                         'bounce' reflects it off walls, 'none' phases through walls.
  * - affectedByGravity:    boolean, whether gravity is applied to the vertical velocity each frame.
  * - gravity:              number, gravity strength applied while affectedByGravity is true.
  * - spriteDescriptiveName:string, optional descriptiveName of a sprite (from SpritePixelArrays)
@@ -28,7 +28,9 @@ class Bullet extends InteractiveLevelObject {
         this.isGood = extraAttributes.isGood ?? false;
         this.speed = extraAttributes.speed ?? 3;
         this.angle = extraAttributes.angle ?? 0;
-        this.collidesWithWalls = extraAttributes.collidesWithWalls ?? true;
+        // legacy boolean support
+        const legacyCollides = extraAttributes.collidesWithWalls !== false ? 'destroy' : 'none';
+        this.wallCollision = extraAttributes.wallCollision ?? legacyCollides;
         this.affectedByGravity = extraAttributes.affectedByGravity ?? false;
         this.gravity = extraAttributes.gravity ?? 0.2;
         this.deceleration = extraAttributes.deceleration ?? 0;
@@ -102,39 +104,74 @@ class Bullet extends InteractiveLevelObject {
     }
 
     /**
-     * Destroy the bullet when it hits a solid tile (only while collidesWithWalls is enabled).
+     * Handle bullet-wall interactions based on wallCollision mode.
      * Returns true when the bullet was removed.
      */
     handleWallCollision() {
-        if (!this.collidesWithWalls && !this.interactsWithSwitches) return false;
+        if (this.wallCollision === 'none' && !this.interactsWithSwitches) return false;
         const cornerHitBox = 2;
         const left = this.x + cornerHitBox;
         const top = this.y + cornerHitBox;
         const right = this.x + this.tileSize - cornerHitBox;
         const bottom = this.y + this.tileSize - cornerHitBox;
-        const corners = [
-            { x: left, y: top },
-            { x: right, y: top },
-            { x: right, y: bottom },
-            { x: left, y: bottom },
-        ];
-        for (const corner of corners) {
-            const xPos = this.tileMapHandler.getTileValueForPosition(corner.x);
-            const yPos = this.tileMapHandler.getTileValueForPosition(corner.y);
-            const tileValue = this.tileMapHandler.getTileLayerValueByIndex(yPos, xPos);
-            if (this.interactsWithSwitches && tileValue === ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch) {
-                const switchBlock = this.tileMapHandler.levelObjects.find(
-                    obj => obj.initialX === xPos && obj.initialY === yPos
-                );
-                if (switchBlock) switchBlock.switchWasHit();
-                this.deleteObjectFromLevel(this.tileMapHandler);
-                return true;
-            }
-            if (this.collidesWithWalls && (typeof tileValue === 'undefined' || !this.passableTiles.includes(tileValue))) {
-                this.deleteObjectFromLevel(this.tileMapHandler);
-                return true;
+        const centerX = this.x + this.tileSize / 2;
+        const centerY = this.y + this.tileSize / 2;
+
+        const getTile = (x, y) => {
+            const xPos = this.tileMapHandler.getTileValueForPosition(x);
+            const yPos = this.tileMapHandler.getTileValueForPosition(y);
+            return this.tileMapHandler.getTileLayerValueByIndex(yPos, xPos);
+        };
+        const isSolid = (x, y) => {
+            const v = getTile(x, y);
+            return typeof v === 'undefined' || !this.passableTiles.includes(v);
+        };
+
+        if (this.interactsWithSwitches) {
+            for (const corner of [{ x: left, y: top }, { x: right, y: top }, { x: right, y: bottom }, { x: left, y: bottom }]) {
+                const v = getTile(corner.x, corner.y);
+                if (v === ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch) {
+                    const xPos = this.tileMapHandler.getTileValueForPosition(corner.x);
+                    const yPos = this.tileMapHandler.getTileValueForPosition(corner.y);
+                    const switchBlock = this.tileMapHandler.levelObjects.find(
+                        obj => obj.initialX === xPos && obj.initialY === yPos
+                    );
+                    if (switchBlock) switchBlock.switchWasHit();
+                    if (this.wallCollision !== 'none') {
+                        this.deleteObjectFromLevel(this.tileMapHandler);
+                        return true;
+                    }
+                }
             }
         }
+
+        if (this.wallCollision === 'none') return false;
+
+        if (this.wallCollision === 'destroy') {
+            if (isSolid(left, top) || isSolid(right, top) || isSolid(right, bottom) || isSolid(left, bottom)) {
+                this.deleteObjectFromLevel(this.tileMapHandler);
+                return true;
+            }
+            return false;
+        }
+
+        if (this.wallCollision === 'bounce') {
+            const hitX = isSolid(left, centerY) || isSolid(right, centerY);
+            const hitY = isSolid(centerX, top) || isSolid(centerX, bottom);
+            if (hitX) {
+                this.firedX *= -1;
+                this.xspeed = this.firedX;
+                this.x += this.xspeed;
+            }
+            if (hitY) {
+                this.firedY *= -1;
+                this.gravityY *= -1;
+                this.yspeed = this.firedY + this.gravityY;
+                this.y += this.yspeed;
+            }
+            return false;
+        }
+
         return false;
     }
 

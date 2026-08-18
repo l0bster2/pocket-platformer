@@ -7,7 +7,6 @@ class Weapon extends LevelObject {
         this.pickupSound = 'pickup';
     }
 
-    getColor() { return 'aaaaaa'; }
     getCategory() { return 'unknown'; }
     getDisplayName() { return 'Weapon'; }
     getEditableAttributes() { return {}; }

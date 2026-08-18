@@ -13,6 +13,5 @@ class MachineGun extends GunWeapon {
         this.bulletSprite = 'Bullet';
         this.speed = 8;
     }
-    getColor() { return '556b2f'; }
     getDisplayName() { return 'Machine Gun'; }
 }

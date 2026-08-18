@@ -7,6 +7,5 @@ class Spear extends MeleeWeapon {
         this.attackDuration = 14;
         this.interval = 0.35;
     }
-    getColor() { return '3d6b9f'; }
     getDisplayName() { return 'Spear'; }
 }

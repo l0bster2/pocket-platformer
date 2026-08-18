@@ -16,6 +16,5 @@ class Bow extends GunWeapon {
         this.speed = 10;
         this.interactsWithSwitches = true;
     }
-    getColor() { return 'd2b48c'; }
     getDisplayName() { return 'Bow'; }
 }

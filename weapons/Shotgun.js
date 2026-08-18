@@ -13,6 +13,5 @@ class Shotgun extends GunWeapon {
         this.bulletSprite = 'Bullet';
         this.speed = 6;
     }
-    getColor() { return 'a0522d'; }
     getDisplayName() { return 'Shotgun'; }
 }

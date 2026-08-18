@@ -132,7 +132,7 @@ class Controller {
                 this.confirm = primaryButtonPressed;
                 this.attackPressed = myGamepad.buttons[1].pressed || myGamepad.buttons[7].pressed;
                 this.alternativeActionButton = myGamepad.buttons[2].pressed;
-                this.switchWeapon = myGamepad.buttons[5].pressed;
+                this.switchWeapon = myGamepad.buttons[3].pressed || myGamepad.buttons[5].pressed;
                 const enterAndPause = myGamepad.buttons[9].pressed || myGamepad.buttons[8].pressed;
                 this.enter = enterAndPause;
                 this.pause = enterAndPause;

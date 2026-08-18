@@ -14,6 +14,5 @@ class Pistol extends GunWeapon {
         this.speed = 5;
         this.interactsWithSwitches = true;
     }
-    getColor() { return 'b5b5b5'; }
     getDisplayName() { return 'Pistol'; }
 }

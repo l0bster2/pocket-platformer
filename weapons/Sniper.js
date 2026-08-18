@@ -13,6 +13,5 @@ class Sniper extends GunWeapon {
         this.bulletSprite = 'Bullet 2';
         this.speed = 14;
     }
-    getColor() { return '4a6380'; }
     getDisplayName() { return 'Sniper'; }
 }

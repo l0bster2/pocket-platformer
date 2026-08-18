@@ -53,7 +53,7 @@ class GunWeapon extends Weapon {
                     angle,
                     affectedByGravity: this.affectedByGravity,
                     gravity: this.gravity,
-                    collidesWithWalls: this.collidesWithWalls !== false,
+                    wallCollision: this.wallCollision ?? 'destroy',
                     spriteDescriptiveName: this.bulletSprite,
                     lifeSpan: this.bulletLifeSpan,
                     deceleration: this.deceleration ?? 0,
@@ -123,7 +123,7 @@ class GunWeapon extends Weapon {
             deceleration: this.deceleration ?? 0,
             interactsWithSwitches: this.interactsWithSwitches ?? false,
             shootSound: this.shootSound ?? null,
-            collidesWithWalls: this.collidesWithWalls !== false,
+            wallCollision: this.wallCollision ?? 'destroy',
             pickupSound: this.pickupSound,
         };
     }
@@ -143,7 +143,8 @@ class GunWeapon extends Weapon {
         if (attrs.deceleration !== undefined) this.deceleration = attrs.deceleration;
         if ('interactsWithSwitches' in attrs) this.interactsWithSwitches = attrs.interactsWithSwitches;
         if ('shootSound' in attrs) this.shootSound = attrs.shootSound;
-        if ('collidesWithWalls' in attrs) this.collidesWithWalls = attrs.collidesWithWalls;
+        if ('wallCollision' in attrs) this.wallCollision = attrs.wallCollision;
+        else if ('collidesWithWalls' in attrs) this.wallCollision = attrs.collidesWithWalls ? 'destroy' : 'none';
         if (attrs.pickupSound !== undefined) this.pickupSound = attrs.pickupSound;
         // Reset runtime state so new ammo settings take effect
         this.intervalTimer = undefined;

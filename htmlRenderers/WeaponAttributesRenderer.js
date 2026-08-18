@@ -176,8 +176,17 @@ class WeaponAttributesRenderer {
         const sounds = (typeof SoundHandler !== 'undefined' && SoundHandler.sounds)
             ? SoundHandler.sounds.filter(s => s.type === 'sound') : [];
         const currentPickup = attrs.pickupSound || 'pickup';
+        const wallCollision = attrs.wallCollision ?? 'destroy';
         return `
-            ${this.createCheckboxInput('collidesWithWalls', 'Collides with walls', attrs.collidesWithWalls !== false, type, 'marginTop16')}
+            <div class="playerAttributeWrapper marginTop16">
+                <label class="leftLabel">Wall collision:</label>
+                <select class="textInput" style="flex:1;"
+                    onchange="WeaponAttributesRenderer.onAttributeChanged('${type}', 'wallCollision', this.value)">
+                    <option value="destroy" ${wallCollision === 'destroy' ? 'selected' : ''}>Destroy bullet</option>
+                    <option value="none" ${wallCollision === 'none' ? 'selected' : ''}>None (phase through)</option>
+                    <option value="bounce" ${wallCollision === 'bounce' ? 'selected' : ''}>Bounce off walls</option>
+                </select>
+            </div>
             ${this.createCheckboxInput('interactsWithSwitches', 'Activates switches on hit', attrs.interactsWithSwitches ?? false, type)}
             ${this.createSoundDropdown('shootSound', 'Shoot sound', attrs.shootSound ?? null, type)}
             <div class="playerAttributeWrapper marginTop8">

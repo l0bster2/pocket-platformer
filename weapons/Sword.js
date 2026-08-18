@@ -7,6 +7,5 @@ class Sword extends MeleeWeapon {
         this.attackDuration = 18;
         this.interval = 0.4;
     }
-    getColor() { return 'c0c0c0'; }
     getDisplayName() { return 'Sword'; }
 }
