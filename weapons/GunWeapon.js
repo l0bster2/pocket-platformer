@@ -65,7 +65,7 @@ class GunWeapon extends Weapon {
 
         this.intervalTimer = Math.round(this.interval * 60);
         this.recoilTimer = 8;
-        if (this.bottomShotBounce && dy === 1) {
+        if (this.bottomShotBounce && dx === 0 && dy === 1) {
             player.forcedJumpSpeed = player.jumpSpeed * player.maxJumpFrames / (player.maxJumpFrames + player.extraTrampolineJumpFrames);
             player.jumpframes = 0;
             player.fixedSpeed = false;
