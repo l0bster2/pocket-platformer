@@ -1,25 +1,24 @@
 class WeaponInventoryRenderer {
 
+    static defaultText() {
+        return '<div class="marginTop4" style="color:#888;font-size:12px">player didn\'t obtain any weapons</div>';
+    }
+
     static render() {
         const container = document.getElementById('weaponInventoryList');
         if (!container) return;
 
-        const allTypes = new Set();
-        (WorldDataHandler.levels || []).forEach(level => {
-            (level.weapons || []).forEach(w => allTypes.add(w.type));
-        });
-        (player.weapons || []).forEach(w => allTypes.add(w.type));
+        const heldTypes = [...new Set((player.weapons || []).map(w => w.type))];
 
-        if (allTypes.size === 0) {
-            container.innerHTML = '<div class="marginTop4" style="color:#888;font-size:12px">No weapons placed in any level.</div>';
+        if (heldTypes.length === 0) {
+            container.innerHTML = WeaponInventoryRenderer.defaultText();
             return;
         }
 
-        container.innerHTML = [...allTypes].map(type => {
-            const held = player.weapons.some(w => w.type === type);
+        container.innerHTML = heldTypes.map(type => {
             const name = type.replace('weapon_', '').replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-            return `<div class="marginTop4">
-                <input type="checkbox" id="weaponInv_${type}" ${held ? 'checked' : ''}
+            return `<div class="marginTop4" id="weaponInvRow_${type}">
+                <input type="checkbox" id="weaponInv_${type}" checked
                     onchange="WeaponInventoryRenderer.onToggle('${type}', this.checked)">
                 <label for="weaponInv_${type}" class="checkBoxText">${name}</label>
             </div>`;
@@ -60,6 +59,13 @@ class WeaponInventoryRenderer {
                     tileMapHandler.weapons.push(instance);
                 }
             });
+            // remove the row element and fall back to default text if list is now empty
+            const row = document.getElementById(`weaponInvRow_${type}`);
+            if (row) row.remove();
+            const container = document.getElementById('weaponInventoryList');
+            if (container && container.querySelectorAll('[id^="weaponInvRow_"]').length === 0) {
+                container.innerHTML = WeaponInventoryRenderer.defaultText();
+            }
         }
         WorldDataHandler.pickedUpWeaponTypes = new Set(player.weapons.map(w => w.type));
     }

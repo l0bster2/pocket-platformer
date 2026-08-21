@@ -140,7 +140,7 @@ class Bullet extends InteractiveLevelObject {
                         obj => obj.initialX === xPos && obj.initialY === yPos
                     );
                     if (switchBlock) switchBlock.switchWasHit();
-                    if (this.wallCollision !== 'none') {
+                    if (this.wallCollision === 'destroy') {
                         this.deleteObjectFromLevel(this.tileMapHandler);
                         return true;
                     }
@@ -201,6 +201,10 @@ class Bullet extends InteractiveLevelObject {
                         enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
                         if (enemy.lives <= 0) {
                             enemy.death();
+                        } else {
+                            enemy.hurtFrames = 30;
+                            if (enemy.hitSound) SoundHandler[enemy.hitSound].stopAndPlay();
+                            AnimationHelper.setSquishValues(enemy, (enemy.width + enemy.widthOffset) * 1.2, (enemy.height + enemy.heightOffset) * 0.6);
                         }
                     }
                     this.deleteObjectFromLevel(this.tileMapHandler);

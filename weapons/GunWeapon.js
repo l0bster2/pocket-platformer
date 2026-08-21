@@ -34,8 +34,10 @@ class GunWeapon extends Weapon {
         const baseAngle = this._getFireAngle(player);
         const ts = player.tileSize;
         const { dx, dy } = this._getAimDirection(player);
-        const spawnTileX = (player.x + dx * ts) / ts;
-        const spawnTileY = (player.y + player.height / 2 - ts / 2 + dy * ts) / ts;
+        const hw = player.width / 2;
+        const hh = player.height / 2;
+        const spawnTileX = (player.x + hw + dx * (hw + ts / 2) - ts / 2) / ts;
+        const spawnTileY = (player.y + hh + dy * (hh + ts / 2) - ts / 2) / ts;
         for (let i = 0; i < this.bulletsAtOnce; i++) {
             const spread = this.bulletsAtOnce > 1
                 ? (i / (this.bulletsAtOnce - 1) - 0.5) * this.randomOffset
@@ -91,8 +93,10 @@ class GunWeapon extends Weapon {
         const recoilDuration = 8;
         const maxRecoil = ts * 0.35;
         const recoilOffset = this.recoilTimer > 0 ? (this.recoilTimer / recoilDuration) * maxRecoil : 0;
-        const x = Math.round(player.x + dx * ts - dx * recoilOffset);
-        const y = Math.round(player.y + player.height / 2 - ts / 2 + dy * ts - dy * recoilOffset);
+        const hw = player.width / 2;
+        const hh = player.height / 2;
+        const x = Math.round(player.x + hw + dx * (hw + ts / 2) - ts / 2 - dx * recoilOffset);
+        const y = Math.round(player.y + hh + dy * (hh + ts / 2) - ts / 2 - dy * recoilOffset);
         const facingLeft = player.facingDirection === AnimationHelper.facingDirections.left;
         const mirror = dx < 0 || (dx === 0 && facingLeft);
         this.checkFrameAndDraw((canvasXSpritePos) => {
