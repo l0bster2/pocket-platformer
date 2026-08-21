@@ -4,8 +4,7 @@ class Enemy extends InteractiveLevelObject {
         this.key = this.makeid(5);
 
         // size
-        this.width = tileSize - 2
-        this.height = tileSize - 1
+        this.widthOffset = 2;
         this.heightOffset = 3
         this.hitBoxOffset = 0
 
@@ -151,15 +150,41 @@ class Enemy extends InteractiveLevelObject {
         // activation config
         this.activationConfig = { type: "alwaysActive" }; // activates immediately by default
         this.inactivationConfig = { type: "neverInactive" }; // never deactivates by default
-        
+
+        this.applySpriteDimensions();
         this.resetObject();
+    }
+
+    applySpriteDimensions() {
+        const { pixelArrayUnitSize } = WorldDataHandler;
+        const idleSprite = this.spriteObject?.find(s => s.descriptiveName?.toLowerCase().includes('idle'))
+            || this.spriteObject?.[0];
+        this.drawWidth = idleSprite?.animation?.[0]?.sprite?.[0]?.length
+            ? idleSprite.animation[0].sprite[0].length * pixelArrayUnitSize
+            : this.tileSize;
+        this.drawHeight = idleSprite?.animation?.[0]?.sprite?.length
+            ? idleSprite.animation[0].sprite.length * pixelArrayUnitSize
+            : this.tileSize;
+        this.width = this.drawWidth - this.widthOffset;
+        this.height = this.drawHeight - 1;
+        this.updateExtraColissionPoints();
+    }
+
+    updateExtraColissionPoints() {
+        this.extraHeightPoints = Math.floor((this.height + 3) / this.tileSize);
+        this.heightForExtraColissionPoints = this.extraHeightPoints
+            ? Math.round(this.height / (this.extraHeightPoints + 1)) : 0;
+        this.extraWidthPoints = Math.floor((this.width + 2) / this.tileSize);
+        this.widthForExtraColissionPoints = this.extraWidthPoints
+            ? Math.round(this.width / (this.extraWidthPoints + 1)) : 0;
     }
 
     resetObject() {
         // position
         this.dead = false;
         this.x = this.initialX * this.tileSize;
-        this.y = this.initialY * this.tileSize;
+        // anchor feet to the bottom of initialY's tile so taller enemies extend upward
+        this.y = (this.initialY + 1) * this.tileSize - this.drawHeight;
         this.resetSpeed();
 
         // lives reset to base default (subclasses and setEditableAttributes override after)

@@ -64,7 +64,7 @@ class EnemyCollisionHandler {
         // Player is considered "above" the enemy if its feet are over the enemy's upper half,
         // OR if the previous frame its feet were above the enemy (handles fast falls where the
         // player moves past the enemy's center within a single frame).
-        const stompThreshold = enemy.y + tileMapHandler.halfTileSize;
+        const stompThreshold = enemy.y + enemy.height / 2;
         const playerAboveEnemy = player.bottom_left_pos.y < stompThreshold
             || player.prev_bottom_y <= stompThreshold;
 

@@ -643,19 +643,26 @@ class BuildMode {
 
     static drawObjectPreviewOnScreen(actualXPos, actualYPos) {
         const { tileSize } = tileMapHandler;
-        const animationLength = this.currentSelectedObject.sprite.animation.length;
+        const sprite = this.currentSelectedObject.sprite;
+        const animationLength = sprite.animation.length;
+        const pixelArrayUnitSize = tileMapHandler.pixelArrayUnitSize;
+        const framePixelWidth = (sprite.animation[0]?.sprite?.[0]?.length ?? 8) * pixelArrayUnitSize;
+        const framePixelHeight = (sprite.animation[0]?.sprite?.length ?? 8) * pixelArrayUnitSize;
 
         let xPosInSpriteCanvas = 0;
         if (this.currentObjectDirection) {
-            const index = this.currentSelectedObject.sprite.directions.indexOf(this.currentObjectDirection);
-            xPosInSpriteCanvas = index * animationLength * tileSize;
+            const index = sprite.directions.indexOf(this.currentObjectDirection);
+            xPosInSpriteCanvas = index * animationLength * framePixelWidth;
         }
+
+        // bottom-anchor: align feet to the bottom of the hovered tile
+        const destY = actualYPos + tileSize - framePixelHeight;
 
         Display.drawImageWithAlpha(tileMapHandler.spriteCanvas,
             xPosInSpriteCanvas, this.currentSelectedObject.canvasYSpritePos,
-            tileSize, tileSize,
-            actualXPos, actualYPos,
-            tileSize, tileSize, 0.6);
+            framePixelWidth, framePixelHeight,
+            actualXPos, destY,
+            framePixelWidth, framePixelHeight, 0.6);
     }
 
     static drawPermissionSquare(x, y, endPosX, endPosY, color, centerOffset = 0) {

@@ -92,10 +92,12 @@ class DrawSectionHandler {
         SpritePixelArrays.allSprites.forEach(sprite => {
             if (this.currentSprite.sprite.commonType === sprite.commonType && sprite.descriptiveName != "Player wall jump") {
                 sprite.animation.forEach(animationFrame => {
+                    const frameW = animationFrame.sprite[0].length * this.tileMapHandler.pixelArrayUnitSize;
+                    const frameH = animationFrame.sprite.length * this.tileMapHandler.pixelArrayUnitSize;
                     var canvas = document.createElement('canvas');
                     Helpers.addAttributesToHTMLElement(canvas, {
-                        "width": this.currentSpriteWidth * this.tileMapHandler.pixelArrayUnitSize,
-                        "height": this.currentSpriteHeight * this.tileMapHandler.pixelArrayUnitSize,
+                        "width": frameW,
+                        "height": frameH,
                         "id": 1, "class": "canvasInSpriteSelector"
                     });
                     canvas.onclick = (e) => {
@@ -172,6 +174,30 @@ class DrawSectionHandler {
         this.changeDrawCanvasSize(true);
     }
 
+    static isEnemySprite(sprite) {
+        return typeof EnemyTypeAttributesHandler !== 'undefined'
+            && EnemyTypeAttributesHandler.getAllEnemyTypes().includes(sprite.name);
+    }
+
+    static refreshLiveEnemies() {
+        if (!tileMapHandler?.enemies) return;
+        // refresh every enemy — indexAllSprites creates new copies so ALL spriteObject refs are stale
+        tileMapHandler.enemies.forEach(enemy => {
+            enemy.setSpriteAttributes(enemy.type);
+            enemy.applySpriteDimensions();
+        });
+    }
+
+    static updateAfterEnemySpriteChange(enemyType) {
+        this.changeCurrentSelectedSpriteDimensions();
+        SpritePixelArrays.indexAllSprites();
+        player.setAnimationProperties();
+        this.refreshLiveEnemies();
+        spriteSheetCreator.createSpriteSheet();
+        TabNavigation.redrawCustomTabIcons();
+        this.changeDrawCanvasSize(true);
+    }
+
     static getSpriteSizeValueChanges(oldValue, newValue) {
         const newSpriteBigger = newValue > oldValue;
         const difference = Math.abs(newValue - oldValue);
@@ -180,71 +206,98 @@ class DrawSectionHandler {
 
     static changeSpriteWidth(event) {
         const currentSpriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(this.currentSprite.sprite.descriptiveName)?.[0];
-        let objectToChange = currentSpriteObject.commonType === "player" ? player : this.getObjectByCommonType(currentSpriteObject.type);
-        const newValue = event.target.value;
+        const newValue = Number(event.target.value);
         const { newSpriteBigger, difference } = this.getSpriteSizeValueChanges(this.currentSpriteWidth, newValue);
-
-        objectToChange.width = tileMapHandler.pixelArrayUnitSize * newValue;
         document.getElementById("widthsliderValue").innerHTML = newValue;
-        objectToChange.resetAnimationAttributes();
 
-        SpritePixelArrays.allSprites.filter(sprite => sprite.commonType === currentSpriteObject.commonType).forEach(sprite => {
-            sprite.animation.forEach(animationSprite => {
-                if (newSpriteBigger) {
-                    for (var i = 0; i < difference; i++) {
-                        for (var j = 0; j < this.currentSpriteHeight; j++) {
-                            animationSprite.sprite[j].push("transp")
-                        }
+        if (this.isEnemySprite(currentSpriteObject)) {
+            SpritePixelArrays.allSprites.filter(s => s.name === currentSpriteObject.name).forEach(sprite => {
+                sprite.animation.forEach(animationSprite => {
+                    if (newSpriteBigger) {
+                        for (var i = 0; i < difference; i++)
+                            for (var j = 0; j < this.currentSpriteHeight; j++)
+                                animationSprite.sprite[j].push("transp");
+                    } else {
+                        for (var i = 0; i < difference; i++)
+                            for (var j = 0; j < this.currentSpriteHeight; j++)
+                                animationSprite.sprite[j].pop();
                     }
-                }
-                else {
-                    for (var i = 0; i < difference; i++) {
-                        for (var j = 0; j < this.currentSpriteHeight; j++) {
-                            animationSprite.sprite[j].pop();
-                        }
+                });
+            });
+            this.updateAfterEnemySpriteChange(currentSpriteObject.name);
+        } else {
+            let objectToChange = currentSpriteObject.commonType === "player" ? player : this.getObjectByCommonType(currentSpriteObject.type);
+            objectToChange.width = tileMapHandler.pixelArrayUnitSize * newValue;
+            objectToChange.resetAnimationAttributes();
+            SpritePixelArrays.allSprites.filter(sprite => sprite.commonType === currentSpriteObject.commonType).forEach(sprite => {
+                sprite.animation.forEach(animationSprite => {
+                    if (newSpriteBigger) {
+                        for (var i = 0; i < difference; i++)
+                            for (var j = 0; j < this.currentSpriteHeight; j++)
+                                animationSprite.sprite[j].push("transp");
+                    } else {
+                        for (var i = 0; i < difference; i++)
+                            for (var j = 0; j < this.currentSpriteHeight; j++)
+                                animationSprite.sprite[j].pop();
                     }
-                }
-            })
-            spriteSheetCreator.redrawSprite(sprite, SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName"))
-        });
-        this.updateAfterSpriteSizeChange(objectToChange);
+                });
+                spriteSheetCreator.redrawSprite(sprite, SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName"));
+            });
+            this.updateAfterSpriteSizeChange(objectToChange);
+        }
     }
 
     static changeSpriteHeight(event) {
         const currentSpriteObject = SpritePixelArrays.getSpritesByDescrpitiveName(this.currentSprite.sprite.descriptiveName)?.[0];
-        let objectToChange = currentSpriteObject.commonType === "player" ? player : this.getObjectByCommonType(currentSpriteObject.type);
-        const oldHeight = objectToChange.height;
-        const newValue = event.target.value;
+        const newValue = Number(event.target.value);
         const { newSpriteBigger, difference } = this.getSpriteSizeValueChanges(this.currentSpriteHeight, newValue);
-
-        objectToChange.height = tileMapHandler.pixelArrayUnitSize * newValue - objectToChange.heightOffset;
-        objectToChange.y += oldHeight - objectToChange.height;
         document.getElementById("heightsliderValue").innerHTML = newValue;
-        objectToChange.resetAnimationAttributes();
 
-        SpritePixelArrays.allSprites.filter(sprite => sprite.commonType === currentSpriteObject.commonType).forEach(sprite => {
-            sprite.animation.forEach(animationSprite => {
-                if (newSpriteBigger) {
-                    for (var i = 0; i < difference; i++) {
-                        const widthArray = Array(this.currentSpriteWidth).fill("transp")
-                        animationSprite.sprite.unshift(widthArray)
+        if (this.isEnemySprite(currentSpriteObject)) {
+            SpritePixelArrays.allSprites.filter(s => s.name === currentSpriteObject.name).forEach(sprite => {
+                sprite.animation.forEach(animationSprite => {
+                    if (newSpriteBigger) {
+                        for (var i = 0; i < difference; i++) {
+                            const widthArray = Array(this.currentSpriteWidth).fill("transp");
+                            animationSprite.sprite.unshift(widthArray);
+                        }
+                    } else {
+                        for (var i = 0; i < difference; i++)
+                            animationSprite.sprite.shift();
                     }
-                }
-                else {
-                    for (var i = 0; i < difference; i++) {
-                        animationSprite.sprite.shift()
+                });
+            });
+            this.updateAfterEnemySpriteChange(currentSpriteObject.name);
+        } else {
+            let objectToChange = currentSpriteObject.commonType === "player" ? player : this.getObjectByCommonType(currentSpriteObject.type);
+            const oldHeight = objectToChange.height;
+            objectToChange.height = tileMapHandler.pixelArrayUnitSize * newValue - objectToChange.heightOffset;
+            objectToChange.y += oldHeight - objectToChange.height;
+            objectToChange.resetAnimationAttributes();
+            SpritePixelArrays.allSprites.filter(sprite => sprite.commonType === currentSpriteObject.commonType).forEach(sprite => {
+                sprite.animation.forEach(animationSprite => {
+                    if (newSpriteBigger) {
+                        for (var i = 0; i < difference; i++) {
+                            const widthArray = Array(this.currentSpriteWidth).fill("transp");
+                            animationSprite.sprite.unshift(widthArray);
+                        }
+                    } else {
+                        for (var i = 0; i < difference; i++)
+                            animationSprite.sprite.shift();
                     }
-                }
-            })
-            spriteSheetCreator.redrawSprite(sprite, SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName"))
-        });
-        this.updateAfterSpriteSizeChange(objectToChange);
+                });
+                spriteSheetCreator.redrawSprite(sprite, SpritePixelArrays.getIndexOfSprite(sprite.descriptiveName, 0, "descriptiveName"));
+            });
+            this.updateAfterSpriteSizeChange(objectToChange);
+        }
     }
 
     static checkHeightWidthSlidersVisibility(sprite) {
         const heightChanger = document.getElementById("heightAnimationChanger");
         const widthChanger = document.getElementById("widthAnimationChanger");
-        if (sprite.name.toString().toLowerCase().includes("player") && sprite.commonType) {
+        const isPlayer = sprite.name.toString().toLowerCase().includes("player") && sprite.commonType;
+        const isEnemy = this.isEnemySprite(sprite);
+        if (isPlayer || isEnemy) {
             heightChanger.style.display = "flex";
             document.getElementById("spriteHeightSlider").value = this.currentSpriteHeight;
             document.getElementById("heightsliderValue").innerHTML = this.currentSpriteHeight;

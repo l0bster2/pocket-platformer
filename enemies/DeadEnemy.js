@@ -1,5 +1,5 @@
 class DeadEnemy {
-    constructor(x, y, tileSize, spriteObject, facingDirection, speedX, speedY, rotationSpeed) {
+    constructor(x, y, tileSize, spriteObject, facingDirection, speedX, speedY, rotationSpeed, drawWidth, drawHeight) {
         this.x = x;
         this.y = y;
         this.tileSize = tileSize;
@@ -11,6 +11,8 @@ class DeadEnemy {
         this.angle = 0;
         this.rotationSpeed = rotationSpeed;
         this.ended = false;
+        this.drawWidth = drawWidth || tileSize;
+        this.drawHeight = drawHeight || tileSize;
     }
 
     update(spriteCanvas) {

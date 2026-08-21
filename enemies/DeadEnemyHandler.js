@@ -12,7 +12,8 @@ class DeadEnemyHandler {
         this.deadEnemies.push(new DeadEnemy(
             enemy.x, enemy.y, enemy.tileSize,
             enemy.spriteObject, enemy.facingDirection,
-            speedX, speedY, rotationSpeed
+            speedX, speedY, rotationSpeed,
+            enemy.drawWidth, enemy.drawHeight
         ));
     }
 

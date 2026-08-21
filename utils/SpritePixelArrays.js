@@ -4383,15 +4383,10 @@ class SpritePixelArrays {
   }
 
   static getCanvasSpriteYPosition(spriteObjectIndex) {
-    const { pixelArrayUnitSize, tileSize } = WorldDataHandler;
+    const { pixelArrayUnitSize } = WorldDataHandler;
     let currentYPos = 0;
     for (var i = 0; i < spriteObjectIndex; i++) {
-      if (!this.allSprites[i].commonType && !this.allSprites[i].custom) {
-        currentYPos += tileSize;
-      }
-      else {
-        currentYPos += SpritePixelArrays.allSprites[i].animation[0].sprite.length * pixelArrayUnitSize;
-      }
+      currentYPos += SpritePixelArrays.allSprites[i].animation[0].sprite.length * pixelArrayUnitSize;
     }
     return currentYPos;
   }

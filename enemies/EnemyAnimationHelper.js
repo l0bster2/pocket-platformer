@@ -77,23 +77,26 @@ class EnemyAnimationHelper {
             ? animationLength
             : 0;
 
-        const canvasXSpritePos = (frameIndex + directionOffset) * enemy.tileSize;
+        // use actual frame pixel dimensions as source so larger sprites aren't cropped+stretched
+        const framePixelWidth = (currentSprite.animation[0]?.sprite[0]?.length ?? 8) * WorldDataHandler.pixelArrayUnitSize;
+        const framePixelHeight = (currentSprite.animation[0]?.sprite?.length ?? 8) * WorldDataHandler.pixelArrayUnitSize;
+        const canvasXSpritePos = (frameIndex + directionOffset) * framePixelWidth;
         const canvasYSpritePos = currentSprite.canvasYPos;
 
         // Teleport animation: invisible at scale 0; scaled + rotated while transitioning
         if (enemy.teleportScale === 0) return;
 
         if (enemy.teleportScale !== undefined && enemy.teleportScale !== 1) {
-            const scaledSize = Math.round(enemy.tileSize * enemy.teleportScale);
-            const offset = Math.round((enemy.tileSize - scaledSize) / 2);
+            const scaledSize = Math.round(enemy.drawWidth * enemy.teleportScale);
+            const offset = Math.round((enemy.drawWidth - scaledSize) / 2);
             Display.drawImageWithRotation(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
-                enemy.tileSize, enemy.tileSize,
+                framePixelWidth, framePixelHeight,
                 Math.round(enemy.x) + offset, Math.round(enemy.y) + offset,
                 scaledSize, scaledSize,
                 enemy.teleportRotation);
         } else {
             Display.drawImage(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
-                enemy.tileSize, enemy.tileSize, Math.round(enemy.x), Math.round(enemy.y), enemy.tileSize, enemy.tileSize);
+                framePixelWidth, framePixelHeight, Math.round(enemy.x), Math.round(enemy.y), enemy.drawWidth, enemy.drawHeight);
         }
     }
 
@@ -131,10 +134,12 @@ class EnemyAnimationHelper {
         const animationLength = currentSprite.animation ? currentSprite.animation.length : 1;
         const directionOffset = enemy.facingDirection === AnimationHelper.facingDirections.right
             ? animationLength : 0;
-        const canvasXSpritePos = directionOffset * enemy.tileSize; // always use frame 0
+        const framePixelWidth = (currentSprite.animation[0]?.sprite[0]?.length ?? 8) * WorldDataHandler.pixelArrayUnitSize;
+        const framePixelHeight = (currentSprite.animation[0]?.sprite?.length ?? 8) * WorldDataHandler.pixelArrayUnitSize;
+        const canvasXSpritePos = directionOffset * framePixelWidth; // always use frame 0
         const canvasYSpritePos = currentSprite.canvasYPos;
         Display.drawImageWithRotation(spriteCanvas, canvasXSpritePos, canvasYSpritePos,
-            enemy.tileSize, enemy.tileSize, Math.round(enemy.x), Math.round(enemy.y),
-            enemy.tileSize, enemy.tileSize, radians);
+            framePixelWidth, framePixelHeight, Math.round(enemy.x), Math.round(enemy.y),
+            enemy.drawWidth, enemy.drawHeight, radians);
     }
 }
