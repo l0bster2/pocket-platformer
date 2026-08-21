@@ -10,6 +10,7 @@ class Enemy15 extends Enemy {
         this.canBeStomped = false;
         EnemyFlyingHandler.resetFlyingState(this);
         this.shootSound = 'gun4';
+        this.killedBySpikes = false;
     }
 
 }

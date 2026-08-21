@@ -94,7 +94,7 @@ class EnemyFlyingHandler {
                 break;
 
             case behaviours.followPlayerPathfinding:
-                this.followPlayerWithPathfinding(enemy, speed, 30);
+                this.followPlayerWithPathfinding(enemy, speed, 24);
                 break;
 
             case behaviours.alignPlayerHorizontally:
@@ -186,8 +186,8 @@ class EnemyFlyingHandler {
             || (!enemy.flyHasLineOfSight && !enemy.flyPath);
         if (needsRecompute) {
             enemy.flyRecomputeTimer = 0;
-            // Clear line of sight beats pathfinding: just fly straight at the player.
-            enemy.flyHasLineOfSight = TilemapHelpers.doTwoObjectsSeeEachOther(enemy, player, tileMapHandler);
+            // All 4 corners must have LOS so the enemy won't clip a corner tile while flying straight.
+            enemy.flyHasLineOfSight = this.cornersHaveLineOfSight(enemy, player);
             enemy.flyPath = enemy.flyHasLineOfSight ? null : this.computePath(enemy, player);
             enemy.flyPathIndex = 0;
         }
@@ -372,5 +372,37 @@ class EnemyFlyingHandler {
 
     static centerY(obj) {
         return obj.y + obj.height / 2;
+    }
+
+    /**
+     * Returns true only when all 4 corners of the enemy have an unobstructed tile-ray to the
+     * player centre. Prevents the enemy from getting snagged on a corner tile while flying straight.
+     */
+    static cornersHaveLineOfSight(enemy, player) {
+        const tmh = tileMapHandler;
+        const px = this.centerX(player);
+        const py = this.centerY(player);
+        const halfTile = tmh.halfTileSize;
+        const corners = [
+            { x: enemy.x - 1,               y: enemy.y - 1 },
+            { x: enemy.x + enemy.width + 1, y: enemy.y - 1 },
+            { x: enemy.x - 1,               y: enemy.y + enemy.height + 1 },
+            { x: enemy.x + enemy.width + 1, y: enemy.y + enemy.height + 1 },
+        ];
+        for (const corner of corners) {
+            const dx = px - corner.x;
+            const dy = py - corner.y;
+            const steps = Math.max(Math.abs(Math.round(dx / halfTile)), Math.abs(Math.round(dy / halfTile)));
+            if (steps === 0) continue;
+            const ix = dx / steps;
+            const iy = dy / steps;
+            for (let s = 0; s < steps - 1; s++) {
+                const tile = tmh.getTileLayerValueByIndex(
+                    tmh.getTileValueForPosition(corner.y + iy * s),
+                    tmh.getTileValueForPosition(corner.x + ix * s));
+                if (tile !== 0 && tile !== 5) { return false; }
+            }
+        }
+        return true;
     }
 }
