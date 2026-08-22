@@ -11,6 +11,7 @@ class SwitchableBlock extends InteractiveLevelObject {
         this.tilemapHandler.tileMap[this.y / this.tileSize][this.x / this.tileSize] = tileIndex;
         this.active = activeState;
         this.checkIfPlayerIsInTheWay(activeState);
+        this.checkIfEnemiesAreInTheWay(activeState);
     }
 
     checkIfPlayerIsInTheWay(activeState) {
@@ -21,6 +22,16 @@ class SwitchableBlock extends InteractiveLevelObject {
             if (playerAtPosition && Collision.objectsColliding(this.tilemapHandler.player, this)) {
                 PlayMode.playerDeath();
             }
+        }
+    }
+
+    checkIfEnemiesAreInTheWay(activeState) {
+        if (activeState) {
+            this.tilemapHandler.enemies.forEach(enemy => {
+                if (Collision.objectsColliding(enemy, this)) {
+                    enemy.death();
+                }
+            });
         }
     }
 

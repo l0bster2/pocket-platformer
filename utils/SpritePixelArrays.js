@@ -2636,6 +2636,7 @@ class SpritePixelArrays {
     this.WEAPON_PISTOL_SPRITE = {
       name: ObjectTypes.WEAPON_PISTOL, descriptiveName: 'Pistol',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2653,6 +2654,7 @@ class SpritePixelArrays {
     this.WEAPON_LASER_GUN_SPRITE = {
       name: ObjectTypes.WEAPON_LASER_GUN, descriptiveName: 'Laser Gun',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"<br>By default laser bullets bounce off walls',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2670,6 +2672,7 @@ class SpritePixelArrays {
     this.WEAPON_SHOTGUN_SPRITE = {
       name: ObjectTypes.WEAPON_SHOTGUN, descriptiveName: 'Shotgun',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"<br>By default, shooting downward propels you upward',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2687,6 +2690,7 @@ class SpritePixelArrays {
     this.WEAPON_UZI_SPRITE = {
       name: ObjectTypes.WEAPON_UZI, descriptiveName: 'Uzi',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2704,6 +2708,7 @@ class SpritePixelArrays {
     this.WEAPON_MACHINE_GUN_SPRITE = {
       name: ObjectTypes.WEAPON_MACHINE_GUN, descriptiveName: 'Machine Gun',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2721,6 +2726,7 @@ class SpritePixelArrays {
     this.WEAPON_BOW_SPRITE = {
       name: ObjectTypes.WEAPON_BOW, descriptiveName: 'Bow',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"<br>By default, arrows are affected by gravity',
       animation: [{
         sprite: [
           ["transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2738,6 +2744,7 @@ class SpritePixelArrays {
     this.WEAPON_SPEAR_SPRITE = {
       name: ObjectTypes.WEAPON_SPEAR, descriptiveName: 'Spear',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A melee weapon. Press SHIFT to attack. If multiple weapons are collected, switch them with "E"<br>By default, bullets can be destroyed by slicing them',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2755,6 +2762,7 @@ class SpritePixelArrays {
     this.WEAPON_SWORD_SPRITE = {
       name: ObjectTypes.WEAPON_SWORD, descriptiveName: 'Sword',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A melee weapon. Press SHIFT to attack. If multiple weapons are collected, switch them with "E"<br>By default, bullets can be destroyed by slicing them',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],

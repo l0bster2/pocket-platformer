@@ -292,6 +292,15 @@ class DrawSectionHandler {
     static displaySpriteDescription(sprite) {
         if (sprite.description) {
             this.spriteDescriptionWrapper.innerHTML = sprite.description;
+            if (sprite.type === SpritePixelArrays.SPRITE_TYPES.weapons &&
+                typeof WeaponAttributesRenderer !== 'undefined' &&
+                typeof WeaponTypeAttributesHandler !== 'undefined' &&
+                WeaponTypeAttributesHandler.getAllWeaponTypes().includes(sprite.name)) {
+                this.spriteDescriptionWrapper.innerHTML +=
+                    `<div class="marginTop8 paddingTop8" style="border-top: 1px solid #ccc;"><span class="textAsLink"
+            onclick="WeaponAttributesRenderer.openForType('${sprite.name}')">\u25ba Weapon attributes
+        </span></div>`;
+            }
         }
         else if (sprite.multipleSprites) {
             this.spriteDescriptionWrapper.innerHTML = sprite.description || "";

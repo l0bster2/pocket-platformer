@@ -238,4 +238,38 @@ class EventsTooltipRenderer {
     static changeScreenshakeIntensity(e) {
         document.getElementById("screenshakeIntensityValue").innerHTML = e.target.value;
     }
+
+    static renderRemoveWeaponAttributes(event = null) {
+        const allTypes = WeaponTypeAttributesHandler.getAllWeaponTypes();
+        const selected = event?.weaponsToRemove || [];
+        return `
+            <div style="padding: 8px 0;">
+                <div class="subSectionBottom textBreakNormal">Player will lose the selected weapons on collision.</div>
+                <input type="hidden" name="weaponsToRemove" id="weaponsToRemoveInput" value='${JSON.stringify(selected)}'>
+                <div class="marginTop8">
+                    ${allTypes.map(type => {
+                        const name = WeaponAttributesRenderer.getWeaponDisplayName(type);
+                        const isChecked = selected.includes(type);
+                        return `<div class="marginTop4">
+                            <input type="checkbox" id="removeWeapon_${type}" ${isChecked ? 'checked' : ''}
+                                onchange="EventsTooltipRenderer.onRemoveWeaponToggle('${type}', this.checked)">
+                            <label for="removeWeapon_${type}" class="checkBoxText">${name}</label>
+                        </div>`;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    static onRemoveWeaponToggle(type, checked) {
+        const input = document.getElementById('weaponsToRemoveInput');
+        const current = JSON.parse(input.value || '[]');
+        if (checked) {
+            if (!current.includes(type)) current.push(type);
+        } else {
+            const idx = current.indexOf(type);
+            if (idx !== -1) current.splice(idx, 1);
+        }
+        input.value = JSON.stringify(current);
+    }
 }
