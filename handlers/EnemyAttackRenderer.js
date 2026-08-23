@@ -311,7 +311,7 @@ class EnemyAttackRenderer {
         const affectedByGravity = bullet?.affectedByGravity ?? false;
         const gravity = bullet?.gravity ?? 0.2;
         const speed = bullet?.speed ?? 3;
-        const collidesWithWalls = bullet?.collidesWithWalls ?? true;
+        const wallCollision = bullet?.wallCollision ?? 'destroy';
         const angle = bullet?.angle ?? 0;
         const randomAngleOffset = bullet?.randomAngleOffset ?? 0;
         const shootInPlayerDirection = bullet?.shootInPlayerDirection ?? false;
@@ -322,6 +322,7 @@ class EnemyAttackRenderer {
         else if (shootInPlayerDirection) directionMode = 'playerDirection';
         else if (shootInWalkDirection) directionMode = 'walkDirection';
         const deceleration = bullet?.deceleration ?? 0;
+        const lifeSpan = bullet?.lifeSpan ?? 300;
         const spriteName = bullet?.spriteDescriptiveName ?? null;
         const bulletSprites = SpritePixelArrays.getBulletSprites();
 
@@ -350,6 +351,12 @@ class EnemyAttackRenderer {
                     oninput="EnemyAttackRenderer.updateSliderValue('bulletDeceleration')">
                 <span id="bulletDecelerationValue"  style="float: none" class="playerAttrSliderValue">${deceleration}</span>
             </div>
+            <div class="playerAttributeWrapper marginTop8">
+                <label for="bulletLifeSpan" class="bulletSliderLabel">Lifespan (frames):</label>
+                <input class="playerAttrSlider bulletSpeedSlider" type="range" min="10" max="300" step="10" value="${lifeSpan}" id="bulletLifeSpan" name="bulletLifeSpan"
+                    oninput="EnemyAttackRenderer.updateSliderValue('bulletLifeSpan')">
+                <span id="bulletLifeSpanValue" class="playerAttrSliderValue" style="float: none">${lifeSpan}</span>
+            </div>
             <div class="marginTop12">
                 <input type="checkbox" id="bulletAffectedByGravity" name="bulletAffectedByGravity" ${affectedByGravity ? 'checked' : ''}
                     onchange="EnemyAttackRenderer.updateGravityRowVisibility()">
@@ -361,9 +368,13 @@ class EnemyAttackRenderer {
                     oninput="EnemyAttackRenderer.updateSliderValue('bulletGravity')">
                 <span id="bulletGravityValue" class="playerAttrSliderValue">${gravity}</span>
             </div>
-            <div class="marginTop12">
-                <input type="checkbox" id="bulletCollidesWithWalls" name="bulletCollidesWithWalls" ${collidesWithWalls ? 'checked' : ''}>
-                <label for="bulletCollidesWithWalls" class="checkBoxText">Collides with walls</label>
+            <div class="playerAttributeWrapper marginTop12">
+                <label class="leftLabel">Wall collision:</label>
+                <select class="textInput" style="flex:1;" id="bulletWallCollision" name="bulletWallCollision">
+                    <option value="destroy" ${wallCollision === 'destroy' ? 'selected' : ''}>Destroy bullet</option>
+                    <option value="none" ${wallCollision === 'none' ? 'selected' : ''}>None (phase through)</option>
+                    <option value="bounce" ${wallCollision === 'bounce' ? 'selected' : ''}>Bounce off walls</option>
+                </select>
             </div>
             <div class="subSection">
                 <div>
@@ -479,10 +490,11 @@ class EnemyAttackRenderer {
             gravity: parseFloat(elements.bulletGravity.value),
             speed: parseFloat(elements.bulletSpeed.value),
             spriteDescriptiveName: elements.bulletSprite.value,
-            collidesWithWalls: elements.bulletCollidesWithWalls.checked,
+            wallCollision: elements.bulletWallCollision.value,
             angle: this.normalizeDegrees(parseInt(elements.bulletAngle?.value ?? '0', 10)),
             randomAngleOffset: parseInt(elements.bulletRandomAngleOffset.value, 10) || 0,
             deceleration: parseFloat(elements.bulletDeceleration?.value ?? 0) || 0,
+            lifeSpan: parseInt(elements.bulletLifeSpan.value, 10),
             shootDirectlyAtPlayer: elements.bulletDirectionMode.value === 'towardsPlayer',
             shootInPlayerDirection: elements.bulletDirectionMode.value === 'playerDirection',
             shootInWalkDirection: elements.bulletDirectionMode.value === 'walkDirection',

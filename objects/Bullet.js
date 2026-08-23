@@ -167,9 +167,10 @@ class Bullet extends InteractiveLevelObject {
                 this.x += this.xspeed;
             }
             if (hitY) {
-                this.firedY *= -1;
-                this.gravityY *= -1;
-                this.yspeed = this.firedY + this.gravityY;
+                // reflect total Y velocity and restart gravity from zero so it accumulates correctly after the bounce
+                this.firedY = -(this.firedY + this.gravityY);
+                this.gravityY = 0;
+                this.yspeed = this.firedY;
                 this.y += this.yspeed;
             }
             return false;

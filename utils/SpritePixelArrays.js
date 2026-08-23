@@ -4056,131 +4056,161 @@ class SpritePixelArrays {
     };
 
     this.ENEMY_17_IDLE = {
-      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
-      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      name: ObjectTypes.ENEMY_17,
+      maxHeight: 16,
+      multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies,
+      squishAble: true,
       descriptiveName: "Enemy 17 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "transp", "transp", "FFFFFF", "8E8E8E", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "C6C6C6", "C6C6C6", "8E8E8E", "transp", "transp"],
+            ["transp", "FFFFFF", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "8E8E8E", "transp"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["FFAACC", "EE4499", "FFFFFF", "EE4499", "FFFFFF", "EE4499", "EE4499", "AA0055"],
+            ["FFAACC", "EE4499", "000000", "EE4499", "000000", "EE4499", "EE4499", "AA0055"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["transp", "FF8E1C", "FF8E1C", "transp", "transp", "AA5500", "AA5500", "transp"]
+          ]
+      }
+      ]
     };
     this.ENEMY_17_WALK = {
-      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
+      name: ObjectTypes.ENEMY_17,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 17 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"]
-        ]
-      }, {
-        sprite: [
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"],
-          ["AA5500", "FFCC77", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFCC77", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFCC77", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFCC77", "AA5500"],
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "transp", "transp", "FFFFFF", "8E8E8E", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "C6C6C6", "C6C6C6", "8E8E8E", "transp", "transp"],
+            ["transp", "FFFFFF", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "8E8E8E", "transp"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["FFAACC", "EE4499", "FFFFFF", "EE4499", "FFFFFF", "EE4499", "EE4499", "AA0055"],
+            ["FFAACC", "EE4499", "000000", "EE4499", "000000", "EE4499", "EE4499", "AA5500"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "AA5500", "transp"],
+            ["FF8E1C", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FFFFFF", "8E8E8E", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "C6C6C6", "C6C6C6", "8E8E8E", "transp", "transp"],
+            ["transp", "FFFFFF", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "8E8E8E", "transp"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["FFAACC", "EE4499", "FFFFFF", "EE4499", "FFFFFF", "EE4499", "EE4499", "AA0055"],
+            ["FF8E1C", "EE4499", "000000", "EE4499", "000000", "EE4499", "EE4499", "AA0055"],
+            ["transp", "FF8E1C", "EE4499", "EE4499", "EE4499", "EE4499", "AA5500", "AA5500"]
+          ]
+      }
+      ]
     };
     this.ENEMY_17_JUMP = {
-      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
+      name: ObjectTypes.ENEMY_17,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 17 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "transp", "transp", "FFFFFF", "8E8E8E", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "C6C6C6", "C6C6C6", "8E8E8E", "transp", "transp"],
+            ["transp", "FFFFFF", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "8E8E8E", "transp"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["transp", "EE4499", "FFFFFF", "EE4499", "FFFFFF", "EE4499", "EE4499", "transp"],
+            ["FFAACC", "EE4499", "000000", "EE4499", "000000", "EE4499", "EE4499", "AA0055"],
+            ["FFAACC", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "AA0055"],
+            ["transp", "FF8E1C", "FF8E1C", "transp", "transp", "AA5500", "AA5500", "transp"]
+          ]
+      }
+      ]
     };
 
     this.ENEMY_18_IDLE = {
-      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
-      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      name: ObjectTypes.ENEMY_18,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 18 idle",
+      type: this.SPRITE_TYPES.enemies,
+      squishAble: true,
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "transp"],
+            ["FFFFFF", "A05C2A", "FFFFFF", "A05C2A", "A05C2A", "5C3215", "5C3215", "transp"],
+            ["A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "E30000", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"]
+          ]
+      }
+      ]
     };
     this.ENEMY_18_WALK = {
-      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
+      name: ObjectTypes.ENEMY_18,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 18 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }, {
-        sprite: [
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"],
-          ["AA0077", "FF77DD", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF77DD", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF77DD", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF77DD", "AA0077"],
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "transp"],
+            ["FFFFFF", "A05C2A", "FFFFFF", "A05C2A", "A05C2A", "5C3215", "5C3215", "transp"],
+            ["A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "E30000", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "transp"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "transp"],
+            ["FFFFFF", "A05C2A", "FFFFFF", "A05C2A", "A05C2A", "5C3215", "5C3215", "transp"],
+            ["A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "E30000", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"]
+          ]
+      }
+      ]
     };
     this.ENEMY_18_JUMP = {
-      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
+      name: ObjectTypes.ENEMY_18,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 18 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "transp"],
+            ["FFFFFF", "A05C2A", "FFFFFF", "A05C2A", "A05C2A", "5C3215", "5C3215", "transp"],
+            ["A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "E30000", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"]
+          ]
+      }
+      ]
     };
 
     this.PLAYER_IDLE_SPRITE = {
