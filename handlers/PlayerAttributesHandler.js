@@ -1,60 +1,19 @@
-const jumpSpeedMapValues = [
-    {
-        sliderValue: 1,
-        jumpSpeed: 0.33,
-        maxJumpFrames: 18,
-    },
-    {
-        sliderValue: 2,
-        jumpSpeed: 0.40,
-        maxJumpFrames: 18,
-    },
-    {
-        sliderValue: 3,
-        jumpSpeed: 0.44,
-        maxJumpFrames: 18,
-    },
-    {
-        sliderValue: 4,
-        jumpSpeed: 0.46,
-        maxJumpFrames: 20,
-    },
-    {
-        sliderValue: 5,
-        jumpSpeed: 0.46,
-        maxJumpFrames: 22,
-    },
-    {
-        sliderValue: 6,
-        jumpSpeed: 0.46,
-        maxJumpFrames: 23,
-    },
-    {
-        sliderValue: 7,
-        jumpSpeed: 0.47,
-        maxJumpFrames: 24,
-    },
-    {
-        sliderValue: 8,
-        jumpSpeed: 0.47,
-        maxJumpFrames: 25,
-    },
-    {
-        sliderValue: 9,
-        jumpSpeed: 0.48,
-        maxJumpFrames: 25,
-    },
-    {
-        sliderValue: 10,
-        jumpSpeed: 0.48,
-        maxJumpFrames: 26,
-    }
-];
-
 const dashChecked = "dashChecked";
 const runChecked = "runChecked";
 
 class PlayerAttributesHandler {
+    static jumpSpeedMapValues = [
+        { sliderValue: 1, jumpSpeed: 0.33, maxJumpFrames: 18 },
+        { sliderValue: 2, jumpSpeed: 0.40, maxJumpFrames: 18 },
+        { sliderValue: 3, jumpSpeed: 0.44, maxJumpFrames: 18 },
+        { sliderValue: 4, jumpSpeed: 0.46, maxJumpFrames: 20 },
+        { sliderValue: 5, jumpSpeed: 0.46, maxJumpFrames: 22 },
+        { sliderValue: 6, jumpSpeed: 0.46, maxJumpFrames: 23 },
+        { sliderValue: 7, jumpSpeed: 0.47, maxJumpFrames: 24 },
+        { sliderValue: 8, jumpSpeed: 0.47, maxJumpFrames: 25 },
+        { sliderValue: 9, jumpSpeed: 0.48, maxJumpFrames: 25 },
+        { sliderValue: 10, jumpSpeed: 0.48, maxJumpFrames: 26 },
+    ];
     static staticConstructor(player) {
         this.player = player;
         this.sliderValues = ["groundAcceleration", "air_acceleration", "maxSpeed", "groundFriction", "air_friction", "jumpSpeed", "maxFallSpeed"];
@@ -155,12 +114,12 @@ class PlayerAttributesHandler {
     }
 
     static mapJumpValueToSliderValue(value){
-        const jumpSpeedObj = jumpSpeedMapValues.filter(jumpSpeedObj => jumpSpeedObj.jumpSpeed === value);
+        const jumpSpeedObj = PlayerAttributesHandler.jumpSpeedMapValues.filter(jumpSpeedObj => jumpSpeedObj.jumpSpeed === value);
         return jumpSpeedObj;
     }
 
     static mapJumpSliderValueToRealValue(value) {
-        const jumpSpeedObj = jumpSpeedMapValues.filter(jumpSpeedObj => jumpSpeedObj.sliderValue === value);
+        const jumpSpeedObj = PlayerAttributesHandler.jumpSpeedMapValues.filter(jumpSpeedObj => jumpSpeedObj.sliderValue === value);
         return jumpSpeedObj;
     }
 }

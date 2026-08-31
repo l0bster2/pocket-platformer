@@ -893,6 +893,27 @@ class SpritePixelArrays {
       ]
     };
 
+     this.DESTRUCTIBLE_BLOCK_SPRITE = {
+      name: ObjectTypes.DESTRUCTIBLE_BLOCK,
+      descriptiveName: "Destructible block",
+      description: "A block that gets destroyed when the player hits it with his head, shoots it or hits it with a melee weapon. It reappears when the level restarts.",
+      type: this.SPRITE_TYPES.tile,
+      animation: [{
+        sprite:
+          [
+            ["B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B"],
+            ["FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C"],
+            ["B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B"],
+            ["B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B"],
+            ["B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B"],
+            ["FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C"],
+            ["B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B"],
+            ["B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B"],
+          ]
+      }
+      ]
+    };
+
     this.ICE_BLOCK = {
       name: ObjectTypes.ICE_BLOCK,
       descriptiveName: "Ice block",

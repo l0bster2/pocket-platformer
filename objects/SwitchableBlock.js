@@ -26,7 +26,7 @@ class SwitchableBlock extends InteractiveLevelObject {
     }
 
     checkIfEnemiesAreInTheWay(activeState) {
-        if (activeState) {
+        if (activeState && this.tilemapHandler?.enemies) {
             this.tilemapHandler.enemies.forEach(enemy => {
                 if (Collision.objectsColliding(enemy, this)) {
                     enemy.death();

@@ -13,11 +13,11 @@ class Enemy4 extends Enemy {
         this.movementBehaviour = this.movementBehaviours.towardsPlayer;
         this.gapBehaviour = this.gapBehaviours.jump;
         this.groundAcceleration = 0.12;
-        this.maxSpeed = 3.5;
-        this.currentMaxSpeed = 3.5;
+        this.maxSpeed = 3.3;
+        this.currentMaxSpeed = 3.3;
         // High slipperiness: keeps its momentum and slides around.
         this.groundFriction = 0.97;
-        this.activationConfig = { type: "playerInDistance", value: 7 };
+        this.activationConfig = { type: "playerApproxSameY", value: 2 };
         this.inactivationConfig = { type: "playerFurtherThanDistance", value: 10 };
         this.deathAnimation = 'upwardsAndRotate';
         this.shootSound = 'gun4';

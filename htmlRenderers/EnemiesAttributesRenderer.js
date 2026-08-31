@@ -340,9 +340,9 @@ class EnemiesAttributesRenderer {
     static mapEnemyJumpToSliderValue(attributes) {
         const jumpSpeed = attributes.jumpSpeed ?? 0.44;
         const maxJumpFrames = attributes.maxJumpFrames ?? 18;
-        const match = jumpSpeedMapValues.find(v => v.jumpSpeed === jumpSpeed && v.maxJumpFrames === maxJumpFrames)
-            || jumpSpeedMapValues.find(v => v.jumpSpeed === jumpSpeed)
-            || jumpSpeedMapValues[2];
+        const match = PlayerAttributesHandler.jumpSpeedMapValues.find(v => v.jumpSpeed === jumpSpeed && v.maxJumpFrames === maxJumpFrames)
+            || PlayerAttributesHandler.jumpSpeedMapValues.find(v => v.jumpSpeed === jumpSpeed)
+            || PlayerAttributesHandler.jumpSpeedMapValues[2];
         return match.sliderValue;
     }
 
@@ -366,7 +366,7 @@ class EnemiesAttributesRenderer {
      */
     static updateEnemyJumpHeight(type, sliderValue) {
         const value = parseInt(sliderValue, 10);
-        const mapped = jumpSpeedMapValues.find(v => v.sliderValue === value) || jumpSpeedMapValues[2];
+        const mapped = PlayerAttributesHandler.jumpSpeedMapValues.find(v => v.sliderValue === value) || PlayerAttributesHandler.jumpSpeedMapValues[2];
         EnemyTypeAttributesHandler.setAttribute(type, 'jumpSpeed', mapped.jumpSpeed);
         EnemyTypeAttributesHandler.setAttribute(type, 'maxJumpFrames', mapped.maxJumpFrames);
         const panel = document.getElementById("enemyDetailsPanel");

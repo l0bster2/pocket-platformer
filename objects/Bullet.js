@@ -108,7 +108,7 @@ class Bullet extends InteractiveLevelObject {
      * Returns true when the bullet was removed.
      */
     handleWallCollision() {
-        if (this.wallCollision === 'none' && !this.interactsWithSwitches) return false;
+        if (this.wallCollision === 'none' && !this.interactsWithSwitches && !this.isGood) return false;
         const cornerHitBox = 2;
         const left = this.x + cornerHitBox;
         const top = this.y + cornerHitBox;
@@ -130,8 +130,10 @@ class Bullet extends InteractiveLevelObject {
             return !this.passableTiles.includes(v);
         };
 
+        const corners = [{ x: left, y: top }, { x: right, y: top }, { x: right, y: bottom }, { x: left, y: bottom }];
+
         if (this.interactsWithSwitches) {
-            for (const corner of [{ x: left, y: top }, { x: right, y: top }, { x: right, y: bottom }, { x: left, y: bottom }]) {
+            for (const corner of corners) {
                 const v = getTile(corner.x, corner.y);
                 if (v === ObjectTypes.SPECIAL_BLOCK_VALUES.redBlueSwitch) {
                     const xPos = this.tileMapHandler.getTileValueForPosition(corner.x);
@@ -143,6 +145,56 @@ class Bullet extends InteractiveLevelObject {
                     if (this.wallCollision === 'destroy') {
                         this.deleteObjectFromLevel(this.tileMapHandler);
                         return true;
+                    }
+                }
+            }
+        }
+
+        if (this.isGood) {
+            if (!this.destroyedBlock) {
+                const isDestructible = (x, y) => getTile(x, y) === ObjectTypes.SPECIAL_BLOCK_VALUES.destructibleBlock;
+                // Use the same mid-edge points as the regular bounce so axis detection is consistent
+                let blockHitX = isDestructible(left, centerY) || isDestructible(right, centerY);
+                let blockHitY = isDestructible(centerX, top) || isDestructible(centerX, bottom);
+                if (!blockHitX && !blockHitY && corners.some(pt => isDestructible(pt.x, pt.y))) {
+                    // pure corner hit — velocity direction is the best axis guess
+                    blockHitX = Math.abs(this.xspeed) >= Math.abs(this.yspeed);
+                    blockHitY = !blockHitX;
+                }
+                if (blockHitX || blockHitY) {
+                    const checkPts = [{ x: left, y: centerY }, { x: right, y: centerY },
+                                      { x: centerX, y: top }, { x: centerX, y: bottom }, ...corners];
+                    for (const pt of checkPts) {
+                        if (isDestructible(pt.x, pt.y)) {
+                            DestructibleBlock.destroyBlockAtTile(
+                                this.tileMapHandler,
+                                this.tileMapHandler.getTileValueForPosition(pt.x),
+                                this.tileMapHandler.getTileValueForPosition(pt.y)
+                            );
+                            break;
+                        }
+                    }
+                    this.destroyedBlock = true;
+                    if (this.wallCollision === 'destroy') {
+                        this.deleteObjectFromLevel(this.tileMapHandler);
+                        return true;
+                    }
+                    if (this.wallCollision === 'bounce') {
+                        if (blockHitX) {
+                            this.x -= this.xspeed;
+                            this.firedX *= -1;
+                            this.xspeed = this.firedX;
+                            this.x += this.xspeed;
+                        }
+                        if (blockHitY) {
+                            this.y -= this.yspeed;
+                            this.firedY = -(this.firedY + this.gravityY);
+                            this.gravityY = 0;
+                            this.yspeed = this.firedY;
+                            this.y += this.yspeed;
+                        }
+                        this.destroyedBlock = false;
+                        return false;
                     }
                 }
             }
@@ -162,11 +214,13 @@ class Bullet extends InteractiveLevelObject {
             const hitX = isSolid(left, centerY) || isSolid(right, centerY);
             const hitY = isSolid(centerX, top) || isSolid(centerX, bottom);
             if (hitX) {
+                this.x -= this.xspeed; // push out before reversing so the bullet starts outside the wall
                 this.firedX *= -1;
                 this.xspeed = this.firedX;
                 this.x += this.xspeed;
             }
             if (hitY) {
+                this.y -= this.yspeed;
                 // reflect total Y velocity and restart gravity from zero so it accumulates correctly after the bounce
                 this.firedY = -(this.firedY + this.gravityY);
                 this.gravityY = 0;

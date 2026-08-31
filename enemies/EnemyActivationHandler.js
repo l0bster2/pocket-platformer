@@ -130,10 +130,14 @@ class EnemyActivationHandler {
     static isPlayerApproximatelySameY(enemy, bufferTiles = 0.5) {
         if (!PlayMode.player) return false;
 
-        const buffer = bufferTiles * enemy.tileSize;
-        const dy = Math.abs(PlayMode.player.y - enemy.y);
+        const player = PlayMode.player;
+        const playerTop = player.y;
+        const playerBottom = player.y + player.height - 2;
+        const enemyTop = enemy.y;
+        const enemyBottom = enemy.y + enemy.height;
 
-        return dy <= buffer;
+        return !player.falling && !player.jumping &&
+            playerBottom > enemyTop && playerTop < enemyBottom;
     }
 
     /**

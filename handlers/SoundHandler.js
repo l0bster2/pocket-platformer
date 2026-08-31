@@ -23,6 +23,7 @@ class SoundHandler {
     this.gun4Default = Base64Sounds.gun4Base64;
     this.sword1Default = Base64Sounds.sword1Base64;
     this.sword2Default = Base64Sounds.sword2Base64;
+    this.blockDestroyDefault = Base64Sounds.blockDestroy64;
     this.silence = Base64Sounds.silence;
     this.songDefault = "";
 
@@ -49,6 +50,7 @@ class SoundHandler {
       { key: "gun4", descriptiveName: "enemy shoot 2", value: this.gun4Default, type: "sound" },
       { key: "sword1", descriptiveName: "spear attack", value: this.sword1Default, type: "sound" },
       { key: "sword2", descriptiveName: "sword attack", value: this.sword2Default, type: "sound" },
+      { key: "blockDestroy", descriptiveName: "block destroy", value: this.blockDestroyDefault, type: "sound" },
       { key: "custom1", descriptiveName: "custom 1", value: this.silence, type: "sound" },
       { key: "custom2", descriptiveName: "custom 2", value: this.silence, type: "sound" },
       { key: "custom3", descriptiveName: "custom 3", value: this.silence, type: "sound" },
