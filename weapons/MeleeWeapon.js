@@ -163,6 +163,7 @@ class MeleeWeapon extends Weapon {
         const enemies = this.tileMapHandler.enemies || [];
         const ts = player.tileSize;
         const reach = this.reachTiles * ts;
+        const hitbox = (this.hitboxTiles ?? 1) * ts;
         const cx = player.x + player.width / 2;
         const cy = player.y + player.height / 2;
         let weaponX, weaponY;
@@ -186,7 +187,7 @@ class MeleeWeapon extends Weapon {
             const ex = enemy.x + (enemy.width || ts) / 2;
             const ey = enemy.y + (enemy.height || ts) / 2;
             const dist = Math.sqrt((ex - weaponX) ** 2 + (ey - weaponY) ** 2);
-            if (dist > ts) continue;
+            if (dist > hitbox) continue;
             this.hitEnemies.add(enemy);
             enemy.lives -= 1;
             enemy.phaseHitsTaken = (enemy.phaseHitsTaken || 0) + 1;
@@ -231,8 +232,9 @@ class MeleeWeapon extends Weapon {
     // Destroy nearby enemy projectiles (not the player's own good bullets) within the blade's reach.
     _sliceProjectiles(weaponX, weaponY, ts, player) {
         const projectiles = this.tileMapHandler.layers?.[4] || [];
+        const hitbox = (this.hitboxTiles ?? 1) * ts;
         // Piercing only travels straight, so a box overlap is accurate; slicing sweeps an arc, so use radial distance.
-        const weaponRect = { x: weaponX - ts / 2, y: weaponY - ts / 2, width: ts, height: ts, hitBoxOffset: 0 };
+        const weaponRect = { x: weaponX - hitbox / 2, y: weaponY - hitbox / 2, width: hitbox, height: hitbox, hitBoxOffset: 0 };
         for (let i = projectiles.length - 1; i >= 0; i--) {
             const projectile = projectiles[i];
             if (projectile.isGood || projectile.type === ObjectTypes.ROTATING_FIREBALL_CENTER) continue;
@@ -242,7 +244,7 @@ class MeleeWeapon extends Weapon {
                 const px = projectile.x + (projectile.width || ts) / 2;
                 const py = projectile.y + (projectile.height || ts) / 2;
                 const dist = Math.sqrt((px - weaponX) ** 2 + (py - weaponY) ** 2);
-                if (dist > ts) continue;
+                if (dist > hitbox) continue;
             }
             projectile.deleteObjectFromLevel(this.tileMapHandler);
             this._tryPogo(player);
@@ -253,6 +255,7 @@ class MeleeWeapon extends Weapon {
         return {
             attackType: this.attackType,
             reachTiles: this.reachTiles,
+            hitboxTiles: this.hitboxTiles ?? 1,
             attackDuration: this.attackDuration,
             interval: this.interval,
             canSliceBullets: this.canSliceBullets ?? true,
@@ -264,6 +267,7 @@ class MeleeWeapon extends Weapon {
     setEditableAttributes(attrs) {
         if (attrs.attackType !== undefined) this.attackType = attrs.attackType;
         if (attrs.reachTiles !== undefined) this.reachTiles = attrs.reachTiles;
+        if (attrs.hitboxTiles !== undefined) this.hitboxTiles = attrs.hitboxTiles;
         if (attrs.attackDuration !== undefined) this.attackDuration = attrs.attackDuration;
         if (attrs.interval !== undefined) this.interval = attrs.interval;
         if (attrs.canSliceBullets !== undefined) this.canSliceBullets = attrs.canSliceBullets;

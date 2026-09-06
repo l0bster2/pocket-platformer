@@ -213,6 +213,7 @@ class WeaponAttributesRenderer {
                 </select>
             </div>
             ${this.createSliderInput('reachTiles', 'Reach (tiles)', attrs.reachTiles, 0.5, 4, 0.5, type)}
+            ${this.createSliderInput('hitboxTiles', 'Hitbox (tiles)', attrs.hitboxTiles ?? 1, 0.5, 3, 0.25, type)}
             ${this.createSliderInput('attackDuration', 'Attack duration (frames)', attrs.attackDuration, 5, 60, 1, type)}
             ${this.createSliderInput('interval', 'Attack interval (s)', attrs.interval, 0.1, 5, 0.1, type)}
         `;
