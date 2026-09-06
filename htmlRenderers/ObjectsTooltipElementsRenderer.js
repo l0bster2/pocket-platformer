@@ -324,7 +324,7 @@ class ObjectsTooltipElementsRenderer {
             "Collectibles needed for opening",
             currentObject);
 
-        const enemiesAttribute = currentObject.spriteObject[0].changeableAttributes[1];
+        const enemiesAttribute = currentObject.spriteObject[0].changeableAttributes[1] ?? { name: "enemiesNeeded", defaultValue: false };
         const enemiesCheckboxWrapper = this.createCheckbox(enemiesAttribute,
             "Defeating enemies needed for opening",
             currentObject);

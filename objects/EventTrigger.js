@@ -79,6 +79,18 @@ class EventTrigger extends InteractiveLevelObject {
                         const imgObj = new ImageInGame(event.imageName, event.imageAnimationDuration, event.fadeInAnimation, event.fadeInAnimationDuration, event.staticImageSize);
                         this.tilemapHandler.levelObjects.push(imgObj);
                         break;
+                    case "remove-weapon":
+                        (event.weaponsToRemove || []).forEach(type => {
+                            const idx = player.weapons.findIndex(w => w.type === type);
+                            if (idx === -1) return;
+                            player.weapons.splice(idx, 1);
+                            if (player.activeWeaponIndex >= player.weapons.length) {
+                                player.activeWeaponIndex = Math.max(0, player.weapons.length - 1);
+                            }
+                            WorldDataHandler.pickedUpWeaponTypes.delete(type);
+                        });
+                        if (typeof WeaponInventoryRenderer !== 'undefined') WeaponInventoryRenderer.render();
+                        break;
                 }
             })
         }

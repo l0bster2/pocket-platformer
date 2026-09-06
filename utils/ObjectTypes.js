@@ -39,6 +39,10 @@ class ObjectTypes {
     return 'connectedDisappearingBlock';
   }
 
+  static get DESTRUCTIBLE_BLOCK() {
+    return 'destructibleBlock';
+  }
+
   static get EVENT_TRIGGER() {
     return 'eventTrigger'
   }
@@ -285,6 +289,7 @@ class ObjectTypes {
       treadmillRight: 900,
       treadmillLeft: 901,
       iceBlock: 902,
+      destructibleBlock: 903,
     }
   };
 
@@ -298,6 +303,7 @@ class ObjectTypes {
       [this.NPC]: Npc,
       [this.DISAPPEARING_BLOCK]: DisappearingBlock,
       [this.CONNECTED_DISAPPEARING_BLOCK]: ConnectedDisappearingBlock,
+      [this.DESTRUCTIBLE_BLOCK]: DestructibleBlock,
       [this.DEKO]: Deko,
       [this.STOMPER]: Stomper,
       [this.CANON]: Canon,

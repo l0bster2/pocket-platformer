@@ -29,6 +29,9 @@ class EventHandler {
             case "show-static-image":
                 document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderStaticImageAttributes(currentEvent);
                 break;
+            case "remove-weapon":
+                document.getElementById("eventModalForm").innerHTML = EventsTooltipRenderer.renderRemoveWeaponAttributes(currentEvent);
+                break;
             default:
                 console.log('Did not find event');
         }
@@ -139,6 +142,11 @@ class EventHandler {
                 }
                 const newStaticImageEvent = this.createNewEvent("show-static-image", additionalStaticImageAttributes, this.currentObject);
                 this.handleEventSubmit(newStaticImageEvent);
+                break;
+            case "remove-weapon":
+                const weaponsToRemove = JSON.parse(attributes.weaponsToRemove?.value || '[]');
+                const newRemoveWeaponEvent = this.createNewEvent("remove-weapon", { weaponsToRemove }, this.currentObject);
+                this.handleEventSubmit(newRemoveWeaponEvent);
                 break;
             default:
                 console.log('Did not find event');

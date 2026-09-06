@@ -102,7 +102,7 @@ class EnemyJumpHandler {
      * @param {number} level - integer 1–10
      */
     static applyJumpLevel(enemy, level) {
-        const mapped = jumpSpeedMapValues.find(v => v.sliderValue === level) || jumpSpeedMapValues[2];
+        const mapped = PlayerAttributesHandler.jumpSpeedMapValues.find(v => v.sliderValue === level) || PlayerAttributesHandler.jumpSpeedMapValues[2];
         enemy.jumpSpeed = mapped.jumpSpeed;
         enemy.maxJumpFrames = mapped.maxJumpFrames;
     }

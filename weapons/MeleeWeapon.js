@@ -194,7 +194,22 @@ class MeleeWeapon extends Weapon {
             this._tryPogo(player);
         }
 
+        this._checkDestructibleBlocks(weaponX, weaponY, cx, cy);
+
         if (this.canSliceBullets) this._sliceProjectiles(weaponX, weaponY, ts, player);
+    }
+
+    // Break destructible blocks the blade currently overlaps. Also checks a midpoint for wider slicing coverage.
+    _checkDestructibleBlocks(weaponX, weaponY, cx, cy) {
+        const tryDestroy = (px, py) => {
+            const xPos = this.tileMapHandler.getTileValueForPosition(px);
+            const yPos = this.tileMapHandler.getTileValueForPosition(py);
+            if (this.tileMapHandler.getTileLayerValueByIndex(yPos, xPos) === ObjectTypes.SPECIAL_BLOCK_VALUES.destructibleBlock) {
+                DestructibleBlock.destroyBlockAtTile(this.tileMapHandler, xPos, yPos);
+            }
+        };
+        tryDestroy(weaponX, weaponY);
+        tryDestroy((weaponX + cx) / 2, (weaponY + cy) / 2);
     }
 
     // Bounce the player upwards when a downward attack connects, matching a stomp jump.

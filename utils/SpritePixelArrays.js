@@ -893,6 +893,27 @@ class SpritePixelArrays {
       ]
     };
 
+     this.DESTRUCTIBLE_BLOCK_SPRITE = {
+      name: ObjectTypes.DESTRUCTIBLE_BLOCK,
+      descriptiveName: "Destructible block",
+      description: "A block that gets destroyed when the player hits it with his head, shoots it or hits it with a melee weapon. It reappears when the level restarts.",
+      type: this.SPRITE_TYPES.tile,
+      animation: [{
+        sprite:
+          [
+            ["B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B"],
+            ["FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C"],
+            ["B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B"],
+            ["B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B"],
+            ["B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B"],
+            ["FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C", "FF8E1C"],
+            ["B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B"],
+            ["B24B3B", "B24B3B", "FF8E1C", "B24B3B", "B24B3B", "B24B3B", "B24B3B", "B24B3B"],
+          ]
+      }
+      ]
+    };
+
     this.ICE_BLOCK = {
       name: ObjectTypes.ICE_BLOCK,
       descriptiveName: "Ice block",
@@ -2636,6 +2657,7 @@ class SpritePixelArrays {
     this.WEAPON_PISTOL_SPRITE = {
       name: ObjectTypes.WEAPON_PISTOL, descriptiveName: 'Pistol',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2653,6 +2675,7 @@ class SpritePixelArrays {
     this.WEAPON_LASER_GUN_SPRITE = {
       name: ObjectTypes.WEAPON_LASER_GUN, descriptiveName: 'Laser Gun',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"<br>By default laser bullets bounce off walls',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2670,6 +2693,7 @@ class SpritePixelArrays {
     this.WEAPON_SHOTGUN_SPRITE = {
       name: ObjectTypes.WEAPON_SHOTGUN, descriptiveName: 'Shotgun',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"<br>By default, shooting downward propels you upward',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2687,6 +2711,7 @@ class SpritePixelArrays {
     this.WEAPON_UZI_SPRITE = {
       name: ObjectTypes.WEAPON_UZI, descriptiveName: 'Uzi',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2704,6 +2729,7 @@ class SpritePixelArrays {
     this.WEAPON_MACHINE_GUN_SPRITE = {
       name: ObjectTypes.WEAPON_MACHINE_GUN, descriptiveName: 'Machine Gun',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2721,6 +2747,7 @@ class SpritePixelArrays {
     this.WEAPON_BOW_SPRITE = {
       name: ObjectTypes.WEAPON_BOW, descriptiveName: 'Bow',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A range weapon. Press SHIFT to shoot. If multiple weapons are collected, switch them with "E"<br>By default, arrows are affected by gravity',
       animation: [{
         sprite: [
           ["transp", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2738,6 +2765,7 @@ class SpritePixelArrays {
     this.WEAPON_SPEAR_SPRITE = {
       name: ObjectTypes.WEAPON_SPEAR, descriptiveName: 'Spear',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A melee weapon. Press SHIFT to attack. If multiple weapons are collected, switch them with "E"<br>By default, bullets can be destroyed by slicing them',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -2755,6 +2783,7 @@ class SpritePixelArrays {
     this.WEAPON_SWORD_SPRITE = {
       name: ObjectTypes.WEAPON_SWORD, descriptiveName: 'Sword',
       type: this.SPRITE_TYPES.weapons,
+      description: 'A melee weapon. Press SHIFT to attack. If multiple weapons are collected, switch them with "E"<br>By default, bullets can be destroyed by slicing them',
       animation: [{
         sprite: [
           ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
@@ -4048,131 +4077,161 @@ class SpritePixelArrays {
     };
 
     this.ENEMY_17_IDLE = {
-      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
-      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      name: ObjectTypes.ENEMY_17,
+      maxHeight: 16,
+      multipleSprites: true,
+      type: this.SPRITE_TYPES.enemies,
+      squishAble: true,
       descriptiveName: "Enemy 17 idle",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "transp", "transp", "FFFFFF", "8E8E8E", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "C6C6C6", "C6C6C6", "8E8E8E", "transp", "transp"],
+            ["transp", "FFFFFF", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "8E8E8E", "transp"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["FFAACC", "EE4499", "FFFFFF", "EE4499", "FFFFFF", "EE4499", "EE4499", "AA0055"],
+            ["FFAACC", "EE4499", "000000", "EE4499", "000000", "EE4499", "EE4499", "AA0055"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["transp", "FF8E1C", "FF8E1C", "transp", "transp", "AA5500", "AA5500", "transp"]
+          ]
+      }
+      ]
     };
     this.ENEMY_17_WALK = {
-      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
+      name: ObjectTypes.ENEMY_17,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 17 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"]
-        ]
-      }, {
-        sprite: [
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"],
-          ["AA5500", "FFCC77", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFCC77", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFCC77", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFCC77", "AA5500"],
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "transp", "transp", "FFFFFF", "8E8E8E", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "C6C6C6", "C6C6C6", "8E8E8E", "transp", "transp"],
+            ["transp", "FFFFFF", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "8E8E8E", "transp"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["FFAACC", "EE4499", "FFFFFF", "EE4499", "FFFFFF", "EE4499", "EE4499", "AA0055"],
+            ["FFAACC", "EE4499", "000000", "EE4499", "000000", "EE4499", "EE4499", "AA5500"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "AA5500", "transp"],
+            ["FF8E1C", "FF8E1C", "transp", "transp", "transp", "transp", "transp", "transp"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "transp", "transp", "FFFFFF", "8E8E8E", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "C6C6C6", "C6C6C6", "8E8E8E", "transp", "transp"],
+            ["transp", "FFFFFF", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "8E8E8E", "transp"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["FFAACC", "EE4499", "FFFFFF", "EE4499", "FFFFFF", "EE4499", "EE4499", "AA0055"],
+            ["FF8E1C", "EE4499", "000000", "EE4499", "000000", "EE4499", "EE4499", "AA0055"],
+            ["transp", "FF8E1C", "EE4499", "EE4499", "EE4499", "EE4499", "AA5500", "AA5500"]
+          ]
+      }
+      ]
     };
     this.ENEMY_17_JUMP = {
-      name: ObjectTypes.ENEMY_17, maxHeight: 16, multipleSprites: true,
+      name: ObjectTypes.ENEMY_17,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 17 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "FFAA55", "AA5500"],
-          ["AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500", "AA5500"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "transp", "transp", "FFFFFF", "8E8E8E", "transp", "transp", "transp"],
+            ["transp", "transp", "FFFFFF", "C6C6C6", "C6C6C6", "8E8E8E", "transp", "transp"],
+            ["transp", "FFFFFF", "C6C6C6", "C6C6C6", "C6C6C6", "C6C6C6", "8E8E8E", "transp"],
+            ["transp", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "transp"],
+            ["transp", "EE4499", "FFFFFF", "EE4499", "FFFFFF", "EE4499", "EE4499", "transp"],
+            ["FFAACC", "EE4499", "000000", "EE4499", "000000", "EE4499", "EE4499", "AA0055"],
+            ["FFAACC", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "EE4499", "AA0055"],
+            ["transp", "FF8E1C", "FF8E1C", "transp", "transp", "AA5500", "AA5500", "transp"]
+          ]
+      }
+      ]
     };
 
     this.ENEMY_18_IDLE = {
-      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
-      type: this.SPRITE_TYPES.enemies, squishAble: true,
+      name: ObjectTypes.ENEMY_18,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 18 idle",
+      type: this.SPRITE_TYPES.enemies,
+      squishAble: true,
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "transp"],
+            ["FFFFFF", "A05C2A", "FFFFFF", "A05C2A", "A05C2A", "5C3215", "5C3215", "transp"],
+            ["A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "E30000", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"]
+          ]
+      }
+      ]
     };
     this.ENEMY_18_WALK = {
-      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
+      name: ObjectTypes.ENEMY_18,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 18 walk",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }, {
-        sprite: [
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"],
-          ["AA0077", "FF77DD", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF77DD", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF77DD", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF77DD", "AA0077"],
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "transp", "transp", "transp", "transp", "transp", "transp", "transp"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "transp"],
+            ["FFFFFF", "A05C2A", "FFFFFF", "A05C2A", "A05C2A", "5C3215", "5C3215", "transp"],
+            ["A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "E30000", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "transp"]
+          ]
+      },
+      {
+        sprite:
+          [
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "transp"],
+            ["FFFFFF", "A05C2A", "FFFFFF", "A05C2A", "A05C2A", "5C3215", "5C3215", "transp"],
+            ["A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "E30000", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"]
+          ]
+      }
+      ]
     };
     this.ENEMY_18_JUMP = {
-      name: ObjectTypes.ENEMY_18, maxHeight: 16, multipleSprites: true,
+      name: ObjectTypes.ENEMY_18,
+      maxHeight: 16,
+      multipleSprites: true,
       descriptiveName: "Enemy 18 jump",
       directions: [AnimationHelper.facingDirections.right, AnimationHelper.facingDirections.left],
       animation: [{
-        sprite: [
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "FF55CC", "AA0077"],
-          ["AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077", "AA0077"]
-        ]
-      }]
+        sprite:
+          [
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "transp"],
+            ["FFFFFF", "A05C2A", "FFFFFF", "A05C2A", "A05C2A", "5C3215", "5C3215", "transp"],
+            ["A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "E30000", "transp", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp", "5C3215"],
+            ["transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "transp", "A05C2A", "5C3215"],
+            ["transp", "transp", "A05C2A", "A05C2A", "A05C2A", "A05C2A", "5C3215", "transp"]
+          ]
+      }
+      ]
     };
 
     this.PLAYER_IDLE_SPRITE = {
