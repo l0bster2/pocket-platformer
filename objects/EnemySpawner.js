@@ -19,6 +19,9 @@ class EnemySpawner extends InteractiveLevelObject {
         this.hidden = false;
     }
 
+    collisionEvent(obj) {
+    }
+
     // Enabled enemy types fall back to the first available type if none are stored.
     getEnabledEnemyTypes() {
         const allTypes = EnemyTypeAttributesHandler.getAllEnemyTypes();
