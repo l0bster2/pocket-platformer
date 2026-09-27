@@ -48,6 +48,7 @@ class Controller {
             e.preventDefault();
         }, false);
         document.addEventListener('scroll', () => { this.onScroll() });
+        document.addEventListener('play', () => { this.jump, this.confirm }
         this.onScroll();
         //endRemoval
 
