@@ -165,6 +165,10 @@ class Controller {
        That way, the function can be reused for key-down and up
     */
     static handleKeyPresses(pressed, e) {
+        // Ignore game controls when typing in text fields or chats
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+            return;
+        }
         const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
         switch (key) {
             case "Enter": this.enter = pressed; break;
@@ -174,12 +178,13 @@ class Controller {
             case "a": this.left = pressed; break;
             case "Up": case "ArrowUp": case "w": this.up = pressed; break;
             case "z": case "j": case "c": this.jump = pressed; this.confirm = pressed; break;
+            case " ": this.jump = pressed; e.preventDefault(); break; // Space jumps only, no confirm
             case "x": case "k": this.alternativeActionButton = pressed; break;
             case "e": this.switchWeapon = pressed; break;
             case "Down": case "ArrowDown": case "s": this.down = pressed; break;
             case "Control": this.ctrlPressed = pressed; break;
             case "Shift": this.shiftPressed = pressed; this.attackPressed = pressed; break;
-            case "Escape": case "p": this.pause = pressed;
+            case "Escape": case "p": this.pause = pressed; break;
         }
     }
 
