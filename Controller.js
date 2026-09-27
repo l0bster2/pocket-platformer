@@ -48,7 +48,6 @@ class Controller {
             e.preventDefault();
         }, false);
         document.addEventListener('scroll', () => { this.onScroll() });
-        document.addEventListener('play', () => { this.jump, this.confirm }
         this.onScroll();
         //endRemoval
 
@@ -180,7 +179,7 @@ class Controller {
             case "Down": case "ArrowDown": case "s": this.down = pressed; break;
             case "Control": this.ctrlPressed = pressed; break;
             case "Shift": this.shiftPressed = pressed; this.attackPressed = pressed; break;
-            case "Escape": case "p": this.pause = pressed; break;
+            case "Escape": case "p": this.pause = pressed;
         }
     }
 
